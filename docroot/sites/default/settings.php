@@ -552,10 +552,12 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 # $conf['allow_authorize_operations'] = FALSE;
 
 // Load local conf customization file.
-$local_root = $_SERVER['DOCUMENT_ROOT'];
+//$local_root = $_SERVER['DOCUMENT_ROOT'] . base_path();
+$local_root = DRUPAL_ROOT;
 if (empty($local_root) && function_exists('drush_get_context')) {
   $local_root = drush_get_context('DRUSH_DRUPAL_ROOT');
 }
+
 if (file_exists($local_root . '/sites/default/local.settings.php')) {
   require_once($local_root . '/sites/default/local.settings.php');
 }
