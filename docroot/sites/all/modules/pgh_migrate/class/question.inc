@@ -4,24 +4,34 @@ class MigratePGHQuestionMigration extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
 
-    // create source
-    $query = Database::getConnection('default', 'pgh_migrate')
-      ->select('text_question', 'p')
-      ->fields('p', array('id', 'label'));
-    $this->source = new MigrateSourceSQL($query);
+    // create CSV source
+    $columns = array(
+      0 => array('id', 'id'),
+      3 => array('type', 'type'),
+      6 => array('prompty', 'prompt')
+    );
 
-    // create destination
+    $this->source = new MigrateSourceCSV(
+      drupal_get_path('module', 'pgh_migrate') . '/sample/sample.csv',
+      $columns,
+      array('header_rows' => 1)
+    );
+
+    // create Node destination
     $this->destination = new MigrateDestinationNode('page');
 
     $this->map = new MigrateSQLMap($this->machineName,
       array(
-        'id' => array('type' => 'int')
+        'id' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+        )
       ),
       MigrateDestinationNode::getKeySchema()
     );
 
-    $this->addFieldMapping('title', 'label');
-    // $this->addFieldMapping('body', 'page_body');
+    $this->addFieldMapping('title', 'type');
   }
 }
 
