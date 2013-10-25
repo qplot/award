@@ -1,11 +1,12 @@
 name = PGH Award Migrate
 description = Migrate PGH Awards
 package = Practice Greenhealth
+version = 7.x-0.1
 core = 7.x
 project = pgh_migrate
 
 dependencies[] = migrate
 
-#  include the files that contain your Migrate classes 
+#  include the files that contain your Migrate classes
 files[] = pgh_migrate.migrate.inc
 files[] = class/question.inc
