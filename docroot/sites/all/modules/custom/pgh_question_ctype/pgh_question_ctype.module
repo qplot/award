@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Question Content Type feature.
+ */
+
+include_once 'pgh_question_ctype.features.inc';
