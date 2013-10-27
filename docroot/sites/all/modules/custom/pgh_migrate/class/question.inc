@@ -7,8 +7,17 @@ class MigratePGHQuestionMigration extends Migration {
     // create CSV source
     $columns = array(
       0 => array('id', 'id'),
+      1 => array('pid', 'parent id'),
+      2 => array('pvalue', 'parent required value'),
       3 => array('type', 'type'),
-      6 => array('prompty', 'prompt')
+      4 => array('style', 'style'),
+      5 => array('layout', 'layout'),
+      6 => array('prompt', 'prompt'),
+      7 => array('options', 'options'),
+      8 => array('validation', 'validation'),
+      9 => array('dformula', 'default value from question'),
+      10 => array('dvalue', 'default value'),
+      11 => array('pprompt', 'post prompt')
     );
 
     $this->source = new MigrateSourceCSV(
@@ -36,7 +45,17 @@ class MigratePGHQuestionMigration extends Migration {
     );
 
     $this->addFieldMapping('title', 'id');
+    $this->addFieldMapping('field_question_parent_qid', 'pid');
+    $this->addFieldMapping('field_question_parent_value', 'pvalue');
     $this->addFieldMapping('field_question_type', 'type');
+    $this->addFieldMapping('field_question_style', 'style');
+    $this->addFieldMapping('field_question_layout', 'layout');
+    $this->addFieldMapping('field_question_prompt', 'prompt');
+    $this->addFieldMapping('field_question_post_prompt', 'pprompt');
+    $this->addFieldMapping('field_question_options', 'options');
+    $this->addFieldMapping('field_question_validation', 'validation');
+    $this->addFieldMapping('field_question_default', 'dvalue');
+    $this->addFieldMapping('field_question_formula', 'dformula');
   }
 }
 
