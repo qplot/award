@@ -18,10 +18,10 @@ class MigratePGHQuestionMigration extends Migration {
     );
 
     // create Node destination
-    // $this->destination = new MigrateDestinationNode('page');
+    $this->destination = new MigrateDestinationNode('question');
 
     // create Entity destination
-    $this->destination = new MigrateDestinationEntityAPI('question', 'text');
+    // $this->destination = new MigrateDestinationEntityAPI('question', 'text');
 
     $this->map = new MigrateSQLMap($this->machineName,
       array(
@@ -31,12 +31,12 @@ class MigratePGHQuestionMigration extends Migration {
           'not null' => TRUE,
         )
       ),
-      // MigrateDestinationNode::getKeySchema()
-      $this->destination->getKeySchema()
+      MigrateDestinationNode::getKeySchema()
+      // $this->destination->getKeySchema()
     );
 
-    $this->addFieldMapping('title', 'type');
-    $this->addFieldMapping('tag', 'id');
+    $this->addFieldMapping('title', 'id');
+    $this->addFieldMapping('field_question_type', 'type');
   }
 }
 
