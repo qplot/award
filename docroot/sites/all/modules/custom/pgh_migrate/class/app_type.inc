@@ -1,27 +1,18 @@
 <?php
 
-class MigratePGHQuestionMigration extends Migration {
+class MigratePGHAppTypeMigration extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
 
     // create CSV source
     $columns = array(
       0 => array('id', 'id'),
-      1 => array('pid', 'parent id'),
-      2 => array('pvalue', 'parent required value'),
-      3 => array('type', 'type'),
-      4 => array('style', 'style'),
-      5 => array('layout', 'layout'),
-      6 => array('prompt', 'prompt'),
-      7 => array('options', 'options'),
-      8 => array('validation', 'validation'),
-      9 => array('dformula', 'default value from question'),
-      10 => array('dvalue', 'default value'),
-      11 => array('pprompt', 'post prompt')
+      1 => array('name', 'name'),
+      2 => array('pages', 'pages'),
     );
 
     $this->source = new MigrateSourceCSV(
-      drupal_get_path('module', 'pgh_migrate') . '/sample/question.csv',
+      drupal_get_path('module', 'pgh_migrate') . '/sample/app_type.csv',
       $columns,
       array('header_rows' => 1)
     );

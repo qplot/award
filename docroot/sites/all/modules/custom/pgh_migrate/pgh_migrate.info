@@ -10,3 +10,4 @@ dependencies[] = migrate
 #  include the files that contain your Migrate classes
 files[] = pgh_migrate.migrate.inc
 files[] = class/question.inc
+files[] = class/section.inc

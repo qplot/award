@@ -13,6 +13,10 @@ function pgh_migrate_migrate_api() {
         'class_name' => 'MigratePGHQuestionMigration',
         'group_name' => 'PGH',
       ),
+      'Section' => array(
+        'class_name' => 'MigratePGHSectionMigration',
+        'group_name' => 'PGH',
+      ),
     ),
   );
   return $api;
