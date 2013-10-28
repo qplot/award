@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Category Content Type feature.
+ */
+
+include_once 'pgh_category_ctype.features.inc';

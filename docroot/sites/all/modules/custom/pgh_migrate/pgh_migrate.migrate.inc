@@ -16,6 +16,12 @@ function pgh_migrate_migrate_api() {
       'Section' => array(
         'class_name' => 'MigratePGHSectionMigration',
         'group_name' => 'PGH',
+        'soft_dependencies' => array('Question')
+      ),
+      'Category' => array(
+        'class_name' => 'MigratePGHCategoryMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('Section')
       ),
     ),
   );

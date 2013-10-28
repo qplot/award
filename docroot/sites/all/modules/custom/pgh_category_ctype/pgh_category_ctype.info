@@ -1,0 +1,15 @@
+name = Category Content Type
+description = PGH Category Content Type
+core = 7.x
+package = Practice Greenhealth
+version = 7.x-1.0
+project = pgh_category_ctype
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = pgh_question_ctype
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_category_sections
+features[field_instance][] = node-category-body
+features[field_instance][] = node-category-field_category_sections
+features[node][] = category
