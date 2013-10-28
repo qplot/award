@@ -1,0 +1,145 @@
+# PGH Awards Question Specification
+
+This document includes formatting guidelines for question data which will be imported into the new Awards system. This specification will be updated over the course of the project to reflect changes and updates to the process.
+
+## Overview
+Each distinct question will be represented by a row in a Google Docs spreadsheet. Migration code in the Drupal site will read the spreadsheet data and turn each row into an instance of a Question entity.
+
+This specification is initially being provided before the implementation of the awards system to allow question entry to occur as soon as possible. There will certainly be changes as the project progresses.
+
+## Fields
+Each question will provide a number of fields, described in detail below. Some fields are optional. Some fields are required depending on the values of other fields
+
+### id
+Every question must have a unique id. These are referred in this document and elsewhere as "Question IDs".
+Question IDs are strings beginning with "pghq" and followed by an identifier consisting of only lowercase alphanumeric characters and underscores (no spaces).
+
+Question IDs must be no more than 255 characters.
+
+##### Some valid examples are:
+
+- `pghq_pfc_l28i1`
+- `pghq_pfc_l28i2`
+- `pghq_pfc_l28i3`
+- `pghq_pfc_l28i4`
+
+### prompt
+The prompt is text which will be displayed to the user. Typically this is the text which directs the user how to answer the question. Prompt text is displayed before the form field for questions which have form fields.
+
+This field is also used to store user-facing text for the `html` questions type which does not have an associated form field.
+
+This field may be left blank.
+
+##### Some example prompts
+
+- `Does the facility write a publicly available annual report that details environmental stewardship accomplishments?`
+- `Please indicate the type of report issued`
+- `Date`
+
+### prompt_post
+Some questions include text displayed immediately after the form field. The `prompt_post` field is used to specify that text.
+
+##### Some example prompt_posts
+- `tons of waste`
+- `hours per week`
+- `(Note: this question is for informational purposes only and will not affect your final score.)`
+
+### type
+Questions collect a variety of information for an application. The type of a question determines how it is displayed to the user, how it's responses are stored, and how it is reported. The type determines if the questions will be a text field, a set of checkboxes, or simply a paragraph of informational text.
+
+Types are entered as text and must be one of the following:  `html`,` text`, `file`, `select`, `container`
+
+#### html
+The `html` question type allows an application to include a section of filtered markup within the body of an application. This might be some detailed explanatory information, legal information, or other custom text. It does not display a form field and any response for this question will be blank and may be ignored.
+
+Content may include image tags and anchors. All other tags will be stripped out. 
+
+Content for questions of this type can is specified in the prompt field.
+
+`html` fields support only the `default` style.
+
+#### text
+The `text` question type stores text responses. This may be a single line text field or a multiline textarea.
+
+Valid styles are:
+
+- `default`  A standard single-line textfield.
+- `textarea`  A multiline textarea.
+
+There is no limitation on storage length for `text` questions.
+
+See the validation section for validation options.
+
+#### file
+The `file` question type accepts a URL or a file uploaded by the applicant. This question also includes a required description field.
+
+File uploads will be handled by Drupal's upload functionality.
+
+`file` fields support only the `default` style.
+
+#### select
+The `select` question type allows a user to choose one or more options from a set of options. These can include Yes/No questions, selecting a Month from a list of months or checking all items that apply in a list of checkboxes. 
+
+All `select` question must also include the `options` field.
+
+All `select` questions will have no value selected by default. If a question should have a "Not available" or "Decline to respond" option, it must be explicitly included as an option for the question.
+
+Options will be rendered in the order they are specified in the options field.
+
+There are three valid styles for `select` questions:
+
+- `dropdown` (This is also the default) The options will be displayed in a standard dropdown. Only one choice may be selected.
+- `radios` The options will be displayed as a vertically arranged list of radio buttons with labels to the right. Only one choice may be selected.
+- `checkboxes` The options will be displayed as a vertically arranged list of checkboxes with labels to the right. Multiple choices may be selected.
+
+#### container
+This `container` question type's primary purpose is to arrange the layout of other questions. Containers are used typically for groups of questions which have a table layout but are made up of multiple individual questions with their own Question IDs. Containers do not display their own form field and any response for this question will be blank and may be ignored.
+
+The container type allows a natural specification of the placement of each question as well as including additional labels which would not be possible otherwise.
+
+`container` questions must also have a `layout` field specified. See below for specifics.
+
+### style
+`style` is an additional text parameter which determines how certain question types are rendered, stored, and reported. See above for which styles are supported for each type.
+
+### parent_id and parent_required_value
+Some questions should only be displayed if a previous question has a specific value. e.g. "If you answered 'Yes' to the previous question, please upload a document." This functionality is referred to here and elsewhere as Dependent Questions.
+
+The `parent_id` field stores the Question ID of a question and `parent_required_value` should be set to a possible value of that question. 
+
+If that question's value in the application matches `parent_required_value` then this question will be displayed, otherwise it will be hidden.
+
+### default_value_from_question
+Some questions are pre-filled with data from another part of the application. 
+
+### options
+The `options` field provides values for use by `select` fields. Options are specified as a pipe-delimited list of user-facing text strings.
+
+These strings will be stored as responses and used in reporting.
+
+#### Example options strings
+
+- `Yes|No|Unspecified`
+- `6 Months|1 Year|10 Years`
+- `1|2|3|4|5|6|7|8|9|10`
+
+### layout
+The specific format for the `layout` field will be determined at a later date.
+
+### validation
+Validation rules for responses to a given question is determined by entries in the `validation` field. By default, no validation is performed on responses to questions.
+
+This field may be left blank or one or more comma-separated validation options may be specified.
+
+Validation failure will not prevent application progress from being saved. However the validation failure will be displayed to the applicant. Additionally, all questions must pass validation for an application to be submitted.
+
+Some validation options are mutually exclusive and will cause a question to fail validation no matter what is entered. It is up to the question administrator to ensure correct validation rules are provided.
+
+These validation rules are applied on a per-question basis. A rule which states that the value of 4 different questions must add up to 100 would not be definable here and must be handled with custom code in the application system.
+
+#### validation options
+- `required` A value for this field must be provided.
+- `integer` The provided value must be an integer.
+- `nonnegative` The provided value must be a non-negative number.
+- `nonzero` The provided value must not be a non-zero number.
+- `percentage` The provided value must be an integer between 0 and 100.
