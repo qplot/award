@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * hook menu
+ */
+function pgh_form_menu() {
+  $items['app/forms'] = array(
+    'title' => 'Application Form Demo',
+    'description' => 'Demo the application page section logic',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pgh_application_form'),
+    'access callback' => TRUE,
+  );
+
+  return $items;
+
+}
+
+/**
+ * Application form
+ */
+function pgh_application_form($form_state) {  
+  $form['name'] = array(
+    '#type' => 'item',
+    '#title' => t('Notes'),
+    '#markup' => 'This is for demonstration purpose :) It lists all questions for PFC <b>application type</b> and Leadership <b>category</b>. '
+  );
+
+  // this is the dynamic page generation part
+  // for this demo, i'd like to first pull the PFC Application
+  // find out category Leadership's all sections and questions
+
+  // I guess we don't need to load apptype node
+  // $app = node_load_multiple(array(), array('title' => 'partner_for_change'));
+
+  // load cateogry by name, can be id as well
+  $cats = node_load_multiple(array(), array('title' => 'pfc_leadership'));
+
+  if (!empty($cats)) 
+    $cat = reset($cats);
+  else 
+    return $form;
+
+  if (!empty($cat->field_category_sections['und'])) {
+    foreach ($cat->field_category_sections['und'] as $sec_id) {
+      if ($sec = node_load($sec_id['target_id'])) {
+        $caption = field_extract_value('node', $sec, 'body', 0,array('key'=>'value'));
+        // dsm($sec);
+
+        // add a fieldset to hold section info
+        $fieldset = 'fieldset_' . $sec->title;
+        $form[$fieldset] = array(
+          '#type' => 'fieldset',
+          '#title' => t($caption),
+          '#collapsible' => TRUE,
+          '#collapsed' => FALSE,
+        );
+
+        // add all question inside this section
+        if (!empty($sec->field_section_questions['und'])) {
+          foreach ($sec->field_section_questions['und'] as $q_id) {
+            if ($question = node_load($q_id['target_id'])) {
+              // dsm($question);
+
+              // $q_caption = field_extract_value('node', $question, 'body', 0,array('key'=>'value'));
+              $type = field_extract_value('node', $question, 'field_question_type');
+              $prompt = field_extract_value('node', $question, 'field_question_prompt');
+
+              // based on different question type
+              switch ($type) {
+                case 'selection':
+                  $options = field_extract_values('node', $question, 'field_question_options');
+                  break;
+                
+                default:
+                  # code...
+                  break;
+              }
+
+              $form[$fieldset]['question_' . $question->title] = array(
+                '#type' => 'radios',
+                '#title' => t($prompt),
+                '#default_value' => 0,
+                '#options' => $options,
+                // '#description' => '',
+                // '#access'
+              );
+
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  return $form;
+}
