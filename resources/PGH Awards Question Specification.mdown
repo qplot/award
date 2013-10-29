@@ -36,10 +36,10 @@ This field may be left blank.
 - `Please indicate the type of report issued`
 - `Date`
 
-### prompt_post
-Some questions include text displayed immediately after the form field. The `prompt_post` field is used to specify that text.
+### post prompt
+Some questions include text displayed immediately after the form field. The `post prompt` field is used to specify that text.
 
-##### Some example prompt_posts
+##### Some example for post prompt
 - `tons of waste`
 - `hours per week`
 - `(Note: this question is for informational purposes only and will not affect your final score.)`
@@ -102,15 +102,15 @@ The container type allows a natural specification of the placement of each quest
 ### style
 `style` is an additional text parameter which determines how certain question types are rendered, stored, and reported. See above for which styles are supported for each type.
 
-### parent_id and parent_required_value
+### parent id & parent required value
 Some questions should only be displayed if a previous question has a specific value. e.g. "If you answered 'Yes' to the previous question, please upload a document." This functionality is referred to here and elsewhere as Dependent Questions.
 
-The `parent_id` field stores the Question ID of a question and `parent_required_value` should be set to a possible value of that question. 
+The `parent id` field stores the Question ID of a question and `parent required value` should be set to a possible value of that question. 
 
-If that question's value in the application matches `parent_required_value` then this question will be displayed, otherwise it will be hidden.
+If that question's value in the application matches `parent required value` then this question will be displayed, otherwise it will be hidden.
 
-### default_value_from_question
-Some questions are pre-filled with data from another part of the application. 
+### default formula
+Some questions are pre-filled with data from another question value, ex.  `pghq_pfc_l28i1`
 
 ### options
 The `options` field provides values for use by `select` fields. Options are specified as a pipe-delimited list of user-facing text strings.
