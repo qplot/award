@@ -62,7 +62,23 @@ function pgh_application_form($form_state) {
             if ($question = node_load($q_id['target_id'])) {
               // dsm($question);
 
-              $form[$fieldset]['question_' . $question->title] = pgh_gen_form_question($question);
+              $major = 'question_' . $question->title;
+              $form[$fieldset][$major] = pgh_gen_form_question($question);
+
+              // support one level of layout here
+              $layout = array('pghq_pfc_l1i1', 'pghq_pfc_l1i2');
+              if (!empty($layout)) {
+                foreach ($layout as $row) {
+                  $children = node_load_multiple(array(), array('title' => $row));
+                  if (!empty($children)) {
+                    $child = reset($children);
+
+                    $minor = 'question_' . $child->title;
+                    $form[$fieldset][$minor] = pgh_gen_form_question($child);
+                  }
+                }
+              }
+
             }
           }
         }
@@ -81,10 +97,19 @@ function pgh_gen_form_question($question) {
   $type = field_extract_value('node', $question, 'field_question_type');
   $prompt = field_extract_value('node', $question, 'field_question_prompt');
 
+  $form = array();
+  $form['#title'] = t($prompt);
+
   // based on different question type
   switch ($type) {
+    case 'text':
+      $form['#type'] = 'textfield';
+      break;
     case 'selection':
       $options = field_extract_values('node', $question, 'field_question_options');
+      $form['#type'] = 'radios';
+      $form['#default_value'] = 0;
+      $form['#options'] = $options;
       break;
     
     default:
@@ -92,14 +117,12 @@ function pgh_gen_form_question($question) {
       break;
   }
 
-  return array(
-    '#type' => 'radios',
-    '#title' => t($prompt),
-    '#default_value' => 0,
-    '#options' => $options,
-    // '#description' => '',
-    // '#access'
-  );
+  return $form;
+
+  // return array(
+  //   '#description' => '',
+  //   '#access'
+  // );
 
 }
 
