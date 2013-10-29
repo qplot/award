@@ -62,30 +62,7 @@ function pgh_application_form($form_state) {
             if ($question = node_load($q_id['target_id'])) {
               // dsm($question);
 
-              // $q_caption = field_extract_value('node', $question, 'body', 0,array('key'=>'value'));
-              $type = field_extract_value('node', $question, 'field_question_type');
-              $prompt = field_extract_value('node', $question, 'field_question_prompt');
-
-              // based on different question type
-              switch ($type) {
-                case 'selection':
-                  $options = field_extract_values('node', $question, 'field_question_options');
-                  break;
-                
-                default:
-                  # code...
-                  break;
-              }
-
-              $form[$fieldset]['question_' . $question->title] = array(
-                '#type' => 'radios',
-                '#title' => t($prompt),
-                '#default_value' => 0,
-                '#options' => $options,
-                // '#description' => '',
-                // '#access'
-              );
-
+              $form[$fieldset]['question_' . $question->title] = pgh_gen_form_question($question);
             }
           }
         }
@@ -95,4 +72,41 @@ function pgh_application_form($form_state) {
   }
 
   return $form;
+}
+
+/**
+ * Return form element based on question settings
+ */
+function pgh_gen_form_question($question) {
+  $type = field_extract_value('node', $question, 'field_question_type');
+  $prompt = field_extract_value('node', $question, 'field_question_prompt');
+
+  // based on different question type
+  switch ($type) {
+    case 'selection':
+      $options = field_extract_values('node', $question, 'field_question_options');
+      break;
+    
+    default:
+      # code...
+      break;
+  }
+
+  return array(
+    '#type' => 'radios',
+    '#title' => t($prompt),
+    '#default_value' => 0,
+    '#options' => $options,
+    // '#description' => '',
+    // '#access'
+  );
+
+}
+
+/**
+ * Parser layout string into array
+ * Given a string with ; and , delimiter for rows and columns
+ */
+function pgh_parser_layout($str) {  
+
 }
