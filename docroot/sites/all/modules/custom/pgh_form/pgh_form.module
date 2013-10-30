@@ -44,11 +44,12 @@ function pgh_application_form($form_state) {
   if (!empty($cat->field_category_sections['und'])) {
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
-        $caption = field_extract_value('node', $sec, 'body', 0,array('key'=>'value'));
-        // dsm($sec);
+        $sec_wrapper = entity_metadata_wrapper('node', $sec);
+
+        $caption = $sec_wrapper->body->value()['value'];
 
         // add a fieldset to hold section info
-        $fieldset = 'fieldset_' . $sec->title;
+        $fieldset = 'fieldset_' . $sec_wrapper->title->value();
         $form[$fieldset] = array(
           '#type' => 'fieldset',
           '#title' => t($caption),
@@ -57,32 +58,23 @@ function pgh_application_form($form_state) {
         );
 
         // add all question inside this section
-        if (!empty($sec->field_section_questions['und'])) {
-          foreach ($sec->field_section_questions['und'] as $q_id) {
-            if ($question = node_load($q_id['target_id'])) {
-              // dsm($question);
+        foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
 
-              $major = 'question_' . $question->title;
-              $form[$fieldset][$major] = pgh_gen_form_question($question);
+          $major = 'question_' . $q_wrapper->label();
+          $form[$fieldset][$major] = pgh_gen_form_question($q_wrapper->value());
 
-              // support one level of layout here
-              $layout = array('pghq_pfc_l1i1', 'pghq_pfc_l1i2');
-              if (!empty($layout)) {
-                foreach ($layout as $row) {
-                  $children = node_load_multiple(array(), array('title' => $row));
-                  if (!empty($children)) {
-                    $child = reset($children);
+          // support one level of layout here
+          $layout = array('pghq_pfc_l1i1', 'pghq_pfc_l1i2');
+          foreach ($layout as $row) {
+            $children = node_load_multiple(array(), array('title' => $row));
+            if (!empty($children)) {
+              $child = reset($children);
 
-                    $minor = 'question_' . $child->title;
-                    $form[$fieldset][$minor] = pgh_gen_form_question($child);
-                  }
-                }
-              }
-
+              $minor = 'question_' . $child->title;
+              $form[$fieldset][$minor] = pgh_gen_form_question($child);
             }
           }
         }
-
       }
     }
   }
@@ -94,8 +86,9 @@ function pgh_application_form($form_state) {
  * Return form element based on question settings
  */
 function pgh_gen_form_question($question) {
-  $type = field_extract_value('node', $question, 'field_question_type');
-  $prompt = field_extract_value('node', $question, 'field_question_prompt');
+  $wrapper = entity_metadata_wrapper('node', $question);
+  $type = $wrapper->field_question_type->value();
+  $prompt = $wrapper->field_question_prompt->value();
 
   $form = array();
   $form['#title'] = t($prompt);
@@ -106,7 +99,7 @@ function pgh_gen_form_question($question) {
       $form['#type'] = 'textfield';
       break;
     case 'selection':
-      $options = field_extract_values('node', $question, 'field_question_options');
+      $options = $wrapper->field_question_options->value();
       $form['#type'] = 'radios';
       $form['#default_value'] = 0;
       $form['#options'] = $options;
