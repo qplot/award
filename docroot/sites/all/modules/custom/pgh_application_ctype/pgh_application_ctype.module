@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Application Content Type feature.
+ */
+
+include_once 'pgh_application_ctype.features.inc';

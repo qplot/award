@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Response Content Type feature.
+ */
+
+include_once 'pgh_response_ctype.features.inc';
