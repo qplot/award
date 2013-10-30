@@ -16,6 +16,16 @@ Question IDs are strings beginning with "pghq" and followed by an identifier con
 
 Question IDs must be no more than 255 characters.
 
+Question IDs can be any unique valid string however it is useful to have a consistent pattern when creating new ids. The following format can be used:
+
+`pghq_APP_S_Q_SQ`
+
+- APP = Application (for example PFC = Partner for Change)
+- S = Section #
+- Q = Question #
+- SQ = Sub-question #
+
+
 ##### Some valid examples are:
 
 - `pghq_pfc_l28i1`
