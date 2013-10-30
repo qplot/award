@@ -28,6 +28,16 @@ function pgh_migrate_migrate_api() {
         'group_name' => 'PGH',
         'soft_dependencies' => array('Category')
       ),
+      'Application' => array(
+        'class_name' => 'MigratePGHApplicationMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('ApplicationType')
+      ),
+      'Response' => array(
+        'class_name' => 'MigratePGHResponseMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('Application', 'Question')
+      ),
     ),
   );
   return $api;

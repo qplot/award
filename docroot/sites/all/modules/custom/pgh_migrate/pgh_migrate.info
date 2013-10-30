@@ -13,3 +13,5 @@ files[] = class/question.inc
 files[] = class/section.inc
 files[] = class/category.inc
 files[] = class/apptype.inc
+files[] = class/application.inc
+files[] = class/response.inc
