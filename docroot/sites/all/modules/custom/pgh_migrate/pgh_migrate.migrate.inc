@@ -42,5 +42,3 @@ function pgh_migrate_migrate_api() {
   );
   return $api;
 }
-
-?>

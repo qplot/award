@@ -35,5 +35,3 @@ class MigratePGHApplicationMigration extends Migration {
          ->sourceMigration('ApplicationType');
   }
 }
-
-?>

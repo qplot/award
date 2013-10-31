@@ -38,5 +38,3 @@ class MigratePGHAppTypeMigration extends Migration {
          ->sourceMigration('Category');
   }
 }
-
-?>
