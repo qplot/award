@@ -4,11 +4,19 @@
  * hook menu
  */
 function pgh_form_menu() {
-  $items['app/forms'] = array(
-    'title' => 'Application Form Demo',
-    'description' => 'Demo the application page section logic',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('pgh_application_form'),
+  // $items['app/forms'] = array(
+  //   'title' => 'Application Form Demo',
+  //   'description' => 'Demo the application page section logic',
+  //   'page callback' => 'drupal_get_form',
+  //   'page arguments' => array('pgh_application_form'),
+  //   'access callback' => TRUE,
+  // );
+
+  $items['application/%/category/%/edit'] = array(
+    'title' => 'Fill Application',
+    'description' => 'Fill an application',
+    'page callback' => 'pgh_application_edit_form',
+    'page arguments' => array(1, 3),
     'access callback' => TRUE,
   );
 
@@ -17,14 +25,54 @@ function pgh_form_menu() {
 }
 
 /**
+ * Fill an application form
+ */
+function pgh_application_edit_form($app_id, $cat_id) {
+  // load the app by app_id
+  if ($app = node_load($app_id)) {
+    $app_wrapper = entity_metadata_wrapper('node', $app);
+    $apptype = $app_wrapper->field_application_type->value();
+
+    $type_wrapper = entity_metadata_wrapper('node', $apptype);
+
+    // set the page title
+    $body = $type_wrapper->body->value();
+    $title = $body['value'];
+    drupal_set_title('Application: ' . $title);
+
+    // list all categories of the app
+    $lists = array();
+    foreach ($type_wrapper->field_apptype_categories->getIterator() as $cat_wrapper) {
+      $cat_body = $cat_wrapper->body->value();
+      $lists[] = l($cat_body['value'], 'application/' . $app_id . '/category/' . $cat_wrapper-> getIdentifier() . '/edit');
+    };
+
+    $out['categories'] = array(
+      '#theme' => 'item_list',
+      '#items' => $lists,
+      '#title' => t('Categories'),
+      // '#attributes' => array('class' => array('my-links')),
+    );
+
+    // render category form
+    $out['forms'] = drupal_get_form('pgh_application_form', $cat_id);
+
+    return drupal_render($out);
+
+  }
+
+  return '123';
+}
+
+/**
  * Application form
  */
-function pgh_application_form($form_state) {  
-  $form['name'] = array(
-    '#type' => 'item',
-    '#title' => t('Notes'),
-    '#markup' => 'This is for demonstration purpose :) It lists all questions for PFC <b>application type</b> and Leadership <b>category</b>. '
-  );
+function pgh_application_form($form, &$form_state, $cat_id = NULL) {  
+  // $form['name'] = array(
+  //   '#type' => 'item',
+  //   '#title' => t('Notes'),
+  //   '#markup' => 'This is for demonstration purpose :) It lists all questions for PFC <b>application type</b> and Leadership <b>category</b>. '
+  // );
 
   // this is the dynamic page generation part
   // for this demo, i'd like to first pull the PFC Application
@@ -34,19 +82,25 @@ function pgh_application_form($form_state) {
   // $app = node_load_multiple(array(), array('title' => 'partner_for_change'));
 
   // load cateogry by name, can be id as well
-  $cats = node_load_multiple(array(), array('title' => 'pfc_leadership'));
-
-  if (!empty($cats)) 
-    $cat = reset($cats);
+  if ($cat_id) 
+    $cat = node_load($cat_id);
   else 
-    return $form;
+    return $form;  
+
+  // $cats = node_load_multiple(array(), array('title' => 'pfc_leadership'));
+
+  // if (!empty($cats)) 
+  //   $cat = reset($cats);
+  // else 
+  //   return $form;
 
   if (!empty($cat->field_category_sections['und'])) {
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
 
-        $caption = $sec_wrapper->body->value()['value'];
+        $body = $sec_wrapper->body->value();
+        $caption = $body['value'];
 
         // add a fieldset to hold section info
         $fieldset = 'fieldset_' . $sec_wrapper->title->value();
