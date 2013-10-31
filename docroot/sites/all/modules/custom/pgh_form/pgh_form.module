@@ -36,12 +36,12 @@ function pgh_application_edit_form($app_id, $cat_id) {
 
     // set the page title
     $title = $type_wrapper->body->value->raw();
-    drupal_set_title('Application: ' . $title);
+    drupal_set_title($app_wrapper->getIdentifier() . ' - ' . 'Application: ' . $title);
 
     // list all categories of the app
     $lists = array();
     foreach ($type_wrapper->field_apptype_categories->getIterator() as $cat_wrapper) {
-      $cat_label = $cat_wrapper->body->value->raw();
+      $cat_label = $cat_wrapper->getIdentifier() . ' - ' . $cat_wrapper->body->value->raw();
       $lists[] = l($cat_label, 'application/' . $app_id . '/category/' . $cat_wrapper-> getIdentifier() . '/edit');
     };
 
@@ -53,7 +53,7 @@ function pgh_application_edit_form($app_id, $cat_id) {
     );
 
     // render category form
-    $out['forms'] = drupal_get_form('pgh_application_form', $cat_id);
+    $out['forms'] = drupal_get_form('pgh_application_form', $app_id, $cat_id);
 
     return drupal_render($out);
 
@@ -65,32 +65,19 @@ function pgh_application_edit_form($app_id, $cat_id) {
 /**
  * Application form
  */
-function pgh_application_form($form, &$form_state, $cat_id = NULL) {  
+function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {  
+  $form = array();
+
+  if (empty($app_id) || empty($cat_id)) return $form;
   // $form['name'] = array(
   //   '#type' => 'item',
   //   '#title' => t('Notes'),
   //   '#markup' => 'This is for demonstration purpose :) It lists all questions for PFC <b>application type</b> and Leadership <b>category</b>. '
   // );
 
-  // this is the dynamic page generation part
-  // for this demo, i'd like to first pull the PFC Application
-  // find out category Leadership's all sections and questions
-
-  // I guess we don't need to load apptype node
-  // $app = node_load_multiple(array(), array('title' => 'partner_for_change'));
-
   // load cateogry by name, can be id as well
-  if ($cat_id) 
-    $cat = node_load($cat_id);
-  else 
-    return $form;  
-
-  // $cats = node_load_multiple(array(), array('title' => 'pfc_leadership'));
-
-  // if (!empty($cats)) 
-  //   $cat = reset($cats);
-  // else 
-  //   return $form;
+  $cat = node_load($cat_id);
+  $questions = array();
 
   if (!empty($cat->field_category_sections['und'])) {
     foreach ($cat->field_category_sections['und'] as $sec_id) {
@@ -109,40 +96,82 @@ function pgh_application_form($form, &$form_state, $cat_id = NULL) {
         );
 
         // add all question inside this section
+        $form[$fieldset] = array();
         foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
 
           $major = 'question_' . $q_wrapper->label();
-          $form[$fieldset][$major] = pgh_gen_form_question($q_wrapper->value());
+          $question = pgh_gen_form_question($q_wrapper->value(), $app_id);
+          foreach ($question as $key => $value) {
+            $questions[] = $key;
+            $form[$fieldset][$major] = $question;
+          }
 
           // support one level of layout here
-          $layout = array('pghq_pfc_l1i1', 'pghq_pfc_l1i2');
-          foreach ($layout as $row) {
-            $children = node_load_multiple(array(), array('title' => $row));
-            if (!empty($children)) {
-              $child = reset($children);
+          // $layout = array('pghq_pfc_l1i1', 'pghq_pfc_l1i2');
+          // foreach ($layout as $row) {
+          //   $children = node_load_multiple(array(), array('title' => $row));
+          //   if (!empty($children)) {
+          //     $child = reset($children);
 
-              $minor = 'question_' . $child->title;
-              $form[$fieldset][$minor] = pgh_gen_form_question($child);
-            }
-          }
+          //     $questions[] = $child->nid;
+          //     $minor = 'question_' . $child->title;
+          //     $form[$fieldset][$minor] = pgh_gen_form_question($child, $app_id);
+          //   }
+          // }
         }
       }
     }
   }
 
+  $form['submit'] = array(
+    '#type' => 'submit', 
+    '#value' => 'Submit',
+  );
+
+  $form['application'] = array(
+    '#type' => 'hidden',
+    '#value' => $app_id
+  );
+  $form['questions'] = array(
+    '#type' => 'hidden',
+    '#value' => $questions
+  );
+
   return $form;
+}
+
+/**
+ * Application form submit 
+ */
+function pgh_application_form_submit($form, &$form_state) {
+  // dsm($form_state['values']);
+
+  // since preparation have all response ready, we just need to save one by one
+
+  $app_id = $form_state['values']['application'];
+
+  foreach ($form_state['values']['questions'] as $qid) {
+    $value = $form_state['values'][$qid];
+    pgh_set_response($app_id, $qid, $value);
+  }
 }
 
 /**
  * Return form element based on question settings
  */
-function pgh_gen_form_question($question) {
+function pgh_gen_form_question($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
   $type = $wrapper->field_question_type->value();
   $prompt = $wrapper->field_question_prompt->value();
 
+  // prepare answer
+  $answer = '';
+  $rid = pgh_get_response($app_id, $wrapper->getIdentifier(), $answer);
+  if (!$rid) pgh_set_response($app_id, $wrapper->getIdentifier());
+
   $form = array();
-  $form['#title'] = t($prompt);
+  $form['#title'] = t($wrapper->getIdentifier() . ' - ' . $prompt);
+  $form['#default_value'] = $answer;
 
   // based on different question type
   switch ($type) {
@@ -152,7 +181,6 @@ function pgh_gen_form_question($question) {
     case 'selection':
       $options = $wrapper->field_question_options->value();
       $form['#type'] = 'radios';
-      $form['#default_value'] = 0;
       $form['#options'] = $options;
       break;
     
@@ -161,7 +189,7 @@ function pgh_gen_form_question($question) {
       break;
   }
 
-  return $form;
+  return array($wrapper->getIdentifier() => $form);
 
   // return array(
   //   '#description' => '',
@@ -191,22 +219,39 @@ function pgh_find_response_id($app_id, $qid) {
  * return FALSE if no response is found
  */
 function pgh_get_response($app_id, $qid, &$value) {
-  $rid = $pgh_find_response_id($app_id, $qid);
+  $rid = pgh_find_response_id($app_id, $qid);
   if ($rid) {
     $response = node_load($rid); 
+    $wrapper = entity_metadata_wrapper('node', $response);
 
-
-    return TRUE;
+    $value = $wrapper->body->value->raw();
+    return $wrapper->getIdentifier();
   }
 
-  return FALSE;
+  return 0;
 }
 
 /**
  * Set question response
  */
-function pgh_set_response($app_id, $qid, $value) {
-
+function pgh_set_response($app_id, $qid, $value = '') {
+  $rid = pgh_find_response_id($app_id, $qid);
+  if ($rid) {
+    $response = node_load($rid);
+    $wrapper = entity_metadata_wrapper('node', $response);
+  } else {
+    // create a new response
+    $response = entity_create('node', array('type' => 'response'));
+    $wrapper = entity_metadata_wrapper('node', $response);
+    $wrapper->field_response_application->set($app_id);
+    $wrapper->field_response_question->set($qid);
+  }
+  $wrapper->body = array(
+    'value' => $value
+  );
+  $wrapper->save();
+  node_save($response);
+  return $response->nid;
 }
 
 /**
