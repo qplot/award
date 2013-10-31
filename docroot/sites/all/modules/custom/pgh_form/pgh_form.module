@@ -35,21 +35,20 @@ function pgh_application_edit_form($app_id, $cat_id) {
     $type_wrapper = entity_metadata_wrapper('node', $apptype);
 
     // set the page title
-    $body = $type_wrapper->body->value();
-    $title = $body['value'];
+    $title = $type_wrapper->body->value->raw();
     drupal_set_title('Application: ' . $title);
 
     // list all categories of the app
     $lists = array();
     foreach ($type_wrapper->field_apptype_categories->getIterator() as $cat_wrapper) {
-      $cat_body = $cat_wrapper->body->value();
-      $lists[] = l($cat_body['value'], 'application/' . $app_id . '/category/' . $cat_wrapper-> getIdentifier() . '/edit');
+      $cat_label = $cat_wrapper->body->value->raw();
+      $lists[] = l($cat_label, 'application/' . $app_id . '/category/' . $cat_wrapper-> getIdentifier() . '/edit');
     };
 
     $out['categories'] = array(
       '#theme' => 'item_list',
       '#items' => $lists,
-      '#title' => t('Categories'),
+      '#title' => t(''),
       // '#attributes' => array('class' => array('my-links')),
     );
 
@@ -98,8 +97,7 @@ function pgh_application_form($form, &$form_state, $cat_id = NULL) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
 
-        $body = $sec_wrapper->body->value();
-        $caption = $body['value'];
+        $caption = $sec_wrapper->body->value->raw();
 
         // add a fieldset to hold section info
         $fieldset = 'fieldset_' . $sec_wrapper->title->value();
@@ -169,6 +167,45 @@ function pgh_gen_form_question($question) {
   //   '#description' => '',
   //   '#access'
   // );
+
+}
+
+/**
+ * Find response by application and question id
+ */
+function pgh_find_response_id($app_id, $qid) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'response')
+                  ->fieldCondition('field_response_application', 'target_id', $app_id)
+                  ->fieldCondition('field_response_question', 'target_id', $qid)
+                  ->execute();
+  if (!empty($result['node'])) 
+    return array_keys($result['node'])[0];
+  else
+    return 0;
+}
+
+/**
+ * Load question answer,
+ * return FALSE if no response is found
+ */
+function pgh_get_response($app_id, $qid, &$value) {
+  $rid = $pgh_find_response_id($app_id, $qid);
+  if ($rid) {
+    $response = node_load($rid); 
+
+
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+/**
+ * Set question response
+ */
+function pgh_set_response($app_id, $qid, $value) {
 
 }
 
