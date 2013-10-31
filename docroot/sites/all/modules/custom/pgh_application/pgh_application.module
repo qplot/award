@@ -16,10 +16,42 @@ function pgh_application_menu() {
 
 }
 
+function metadata_body_value($wrapper) {
+  $body = $wrapper->body->value();
+  return $body['value'];
+}
+
 /**
  * Return a page listing all applications
  */
 function pgh_application_list_page() {
 
-  return '123';
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'application')
+                  ->execute();
+
+  $lists = array();
+  foreach ($result['node'] as $nid => &$value) {
+    
+    $app = node_load($nid);
+    $app_wrapper = entity_metadata_wrapper('node', $app);
+
+
+    $type = $app_wrapper->field_application_type->value();
+    $type_wrapper = entity_metadata_wrapper('node', $type);
+
+    $type_caption = metadata_body_value($type_wrapper);
+
+    $lists[] = l($nid . ' - ' . $type_caption, 'application/' . $nid . '/category//edit');
+  }
+
+  $out = array(
+    '#theme' => 'item_list',
+    '#items' => $lists,
+    '#title' => t(''),
+    // '#attributes' => array('class' => array('my-links')),
+  );
+
+  return drupal_render($out);
 }
