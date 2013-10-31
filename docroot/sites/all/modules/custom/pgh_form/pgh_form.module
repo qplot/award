@@ -246,6 +246,7 @@ function pgh_set_response($app_id, $qid, $value = '') {
     $wrapper->field_response_application->set($app_id);
     $wrapper->field_response_question->set($qid);
   }
+  $wrapper->title = 'app_' . $app_id . '_q_' . $qid; 
   $wrapper->body = array(
     'value' => $value
   );
