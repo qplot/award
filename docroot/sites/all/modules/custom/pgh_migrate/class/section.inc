@@ -40,5 +40,3 @@ class MigratePGHSectionMigration extends Migration {
     // $this->addFieldMapping('field_question_parent_value', 'pvalue');
   }
 }
-
-?>

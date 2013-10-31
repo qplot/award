@@ -40,5 +40,3 @@ class MigratePGHResponseMigration extends Migration {
     $this->addFieldMapping('body', 'answer');
   }
 }
-
-?>

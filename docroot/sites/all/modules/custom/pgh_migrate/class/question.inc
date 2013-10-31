@@ -59,5 +59,3 @@ class MigratePGHQuestionMigration extends Migration {
     $this->addFieldMapping('field_question_formula', 'dformula');
   }
 }
-
-?>
