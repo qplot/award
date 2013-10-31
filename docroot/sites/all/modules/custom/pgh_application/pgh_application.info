@@ -1,0 +1,8 @@
+name = Application
+description = Application functionalities for PGH Awards
+package = Practice Greenhealth
+version = 7.x-0.1
+core = 7.x
+project = pgh_application
+
+dependencies[] = pgh_application_ctype

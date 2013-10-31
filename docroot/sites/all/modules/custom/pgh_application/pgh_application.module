@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * hook menu
+ */
+function pgh_application_menu() {
+  $items['applications'] = array(
+    'title' => 'All applications',
+    'description' => 'List all applications',
+    'page callback' => 'pgh_application_list_page',
+    'page arguments' => array(),
+    'access callback' => TRUE,
+  );
+
+  return $items;
+
+}
+
+/**
+ * Return a page listing all applications
+ */
+function pgh_application_list_page() {
+
+  return '123';
+}
