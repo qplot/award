@@ -208,8 +208,10 @@ function pgh_find_response_id($app_id, $qid) {
                   ->fieldCondition('field_response_application', 'target_id', $app_id)
                   ->fieldCondition('field_response_question', 'target_id', $qid)
                   ->execute();
-  if (!empty($result['node'])) 
-    return array_keys($result['node'])[0];
+  if (!empty($result['node'])) {
+    $keys = array_keys($result['node']);
+    return $keys[0];
+  }
   else
     return 0;
 }
