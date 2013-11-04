@@ -165,13 +165,14 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $prompt = $wrapper->field_question_prompt->value();
 
   // prepare answer
-  $answer = '';
+  $answer = array('value' => '', 'point' => 0);
   $rid = pgh_get_response($app_id, $wrapper->getIdentifier(), $answer);
   if (!$rid) pgh_set_response($app_id, $wrapper->getIdentifier());
 
   $form = array();
-  $form['#title'] = t($wrapper->getIdentifier() . ' - ' . $prompt);
-  $form['#default_value'] = $answer;
+  $form['#title'] = t($wrapper->getIdentifier() . ' - ' . $prompt .
+                    'p(' . intval($answer['point']) . ')');
+  $form['#default_value'] = $answer['value'];
 
   // based on different question type
   switch ($type) {
@@ -220,13 +221,16 @@ function pgh_find_response_id($app_id, $qid) {
  * Load question answer,
  * return FALSE if no response is found
  */
-function pgh_get_response($app_id, $qid, &$value) {
+function pgh_get_response($app_id, $qid, &$response) {
   $rid = pgh_find_response_id($app_id, $qid);
   if ($rid) {
     $response = node_load($rid); 
     $wrapper = entity_metadata_wrapper('node', $response);
 
-    $value = $wrapper->body->value->raw();
+    $response = array(
+      'value' => $wrapper->body->value->raw(),
+      'point' => $wrapper->field_response_point->value(),
+    );
     return $wrapper->getIdentifier();
   }
 
