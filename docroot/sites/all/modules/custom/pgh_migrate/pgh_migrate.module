@@ -1,3 +1,50 @@
 <?php
 
-define('PGH_MIGRATE_DATA_DIR', variable_get('pgh_migrate_data_dir', drupal_get_path('module', 'pgh_migrate') . '/sample/'));
+define('PGH_MIGRATE_DATA_DIR', variable_get('pgh_migrate_data_dir', drupal_get_path('module', 'pgh_migrate') . '/sample'));
+
+/**
+ * Represents an empty list of items to migrate. This is used by classes which normally have MIgrateCSVSources but
+ * in some cases the CSV files don't exists. In order to prevent warnings form being displayed we first check to see
+ * if the CSV file exists and, if not, we use this empty list as the source instead.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+class PGHMigrateEmptyList extends MigrateList {
+  public function __toString() {
+    return 'Empty source';
+  }
+
+  public function getIdList() {
+    return array();
+  }
+
+  public function computeCount() {
+    return 0;
+  }
+
+  public function count() {
+    return 0;
+  }
+
+  public function rewind() {
+    // Noop
+  }
+
+  public function valid() {
+    return TRUE;
+  }
+  public function current() {
+    return 1;
+  }
+}
+
+/**
+ * Represents a non-existent item.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+class PGHMigrateEmptyItem extends MigrateItem {
+  public function getItem($id) {
+    return NULL;
+  }
+}

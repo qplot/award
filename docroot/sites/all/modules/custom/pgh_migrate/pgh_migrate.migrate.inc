@@ -9,6 +9,10 @@ function pgh_migrate_migrate_api() {
       ),
     ),
     'migrations' => array(
+      'PreprocessCSV' => array(
+        'class_name' => 'MigratePGHPreprocessCSVMigration',
+        'group_name' => 'PGH',
+      ),
       'Question' => array(
         'class_name' => 'MigratePGHQuestionMigration',
         'group_name' => 'PGH',

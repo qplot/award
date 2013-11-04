@@ -4,6 +4,8 @@ class MigratePGHSectionMigration extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
 
+    $this->dependencies = array('PreprocessCSV');
+
     // create CSV source
     $columns = array(
       0 => array('id', 'id'),
@@ -11,11 +13,16 @@ class MigratePGHSectionMigration extends Migration {
       2 => array('questions', 'questions'),
     );
 
-    $this->source = new MigrateSourceCSV(
-      PGH_MIGRATE_DATA_DIR . 'section.csv',
-      $columns,
-      array('header_rows' => 1)
-    );
+    // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
+    if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/section.csv')) {
+      $this->source = new MigrateSourceCSV(
+        PGH_MIGRATE_DATA_DIR . '/compiled/section.csv',
+        $columns,
+        array('header_rows' => 1)
+      );
+    } else {
+      $this->source = new MigrateSourceList(new PGHMigrateEmptyList(), new PGHMigrateEmptyItem());
+    }
 
     // create Node destination
     $this->destination = new MigrateDestinationNode('section');
