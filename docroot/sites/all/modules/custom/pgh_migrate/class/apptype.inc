@@ -14,9 +14,9 @@ class MigratePGHAppTypeMigration extends Migration {
     );
 
     // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
-    if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/apptype.csv')) {
+    if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/apptypes.csv')) {
       $this->source = new MigrateSourceCSV(
-        PGH_MIGRATE_DATA_DIR . '/compiled/apptype.csv',
+        PGH_MIGRATE_DATA_DIR . '/compiled/apptypes.csv',
         $columns,
         array('header_rows' => 1)
       );

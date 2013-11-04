@@ -23,30 +23,38 @@
  *
  * Rolling back this migration will delete the CSV files in the compiled directory.
  *
- * @author  Jay Roberts <jay@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
  */
 class MigratePGHPreprocessCSVMigration extends MigrationBase {
-  public function __construct($arguments) {
-    parent::__construct($arguments);
 
-  }
-
+  /**
+   * This migration is considered complete if the /compiled directory is not empty.
+   *
+   * @return boolean
+   * @author Jay Roberts <jay@designhammer.com>
+   */
   public function isComplete() {
     $directory = new DirectoryIterator(PGH_MIGRATE_DATA_DIR . '/compiled');
     return count($directory) > 0;
   }
 
+  /**
+   * Performs preprocessing step, combining separate CSV files into a single file for each migration.
+   *
+   * @return MigrationBase::RESULT
+   * @author Jay Roberts <jay@designhammer.com>
+   */
   public function import() {
-    // Ensure compiled folder exists
-    if (!is_dir(PGH_MIGRATE_DATA_DIR . 'compiled')) {
-      mkdir(PGH_MIGRATE_DATA_DIR . 'compiled', 755);
+    // Ensure 'compiled' folder exists
+    if (!is_dir(PGH_MIGRATE_DATA_DIR . '/compiled')) {
+      $result = @mkdir(PGH_MIGRATE_DATA_DIR . '/compiled');
     }
-    if (!is_dir(PGH_MIGRATE_DATA_DIR . 'compiled')) {
-      $self->displayMessage('Compiled CSV directory doesn\'t exist and could not be created.');
+    if ($result === FALSE) {
+      self::displayMessage('Compiled CSV directory does not exist and could not be created.');
       return MigrationBase::RESULT_FAILED;
     }
 
-    // Perform compilation
+    // Compile the CSV files in each of these folders into a single file for each folder.
     $dirs = array(
       'applications',
       'apptypes',
@@ -55,21 +63,53 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
       'responses',
       'sections',
     );
+
     foreach ($dirs as $dir) {
-      // TEMP: Just copy the contents over to compiled for now
       if (is_dir(PGH_MIGRATE_DATA_DIR . '/' . $dir)) {
+        $csv_header = array(); // The CSV header
+        $csv_data = array(); // The combined row data
+
         $directory = new DirectoryIterator(PGH_MIGRATE_DATA_DIR . '/' . $dir);
         foreach ($directory as $fileinfo) {
           if (preg_match('/\.csv$/', $fileinfo->getFilename())) {
-            $oldpath = PGH_MIGRATE_DATA_DIR . '/' . $dir . '/' . $fileinfo->getFilename();
-            $newpath = PGH_MIGRATE_DATA_DIR . '/compiled/' . $fileinfo->getFilename();
-            $result = copy($oldpath, $newpath);
-            if ($result === FALSE) {
-              $self->displayMessage('Couldn\'t copy file to complied CSV folder. ' . $oldpath);
+            $csv_handle = @fopen($fileinfo->getPathname(), 'r');
+
+            if ($csv_handle === FALSE) {
+              self::displayMessage('Couldn\'t open CSV file for reading. ' . $fileinfo->getFilename());
               return MigrationBase::RESULT_FAILED;
+            }
+
+            // Build up the array of all rows in $csv_data. Skip the first line of each file.
+            // Each file should have identical header rows. In any case, the header of the last
+            // file read will be used as the header in the compiled file.
+            $count = 0;
+            while ($row = fgetcsv($csv_handle)) {
+              if ($count == 0) {
+                $csv_header = $row;
+              } else {
+                $csv_data[] = $row;
+              }
+              $count++;
             }
           }
         }
+
+        // Put the header at the top
+        array_unshift($csv_data, $csv_header);
+
+        // Write the data to the compiled folder
+        $output_handle = @fopen(PGH_MIGRATE_DATA_DIR . '/compiled/' . $dir . '.csv', 'w');
+        if ($output_handle === FALSE) {
+          self::displayMessage('Couldn\'t open CSV file for writing. ' . PGH_MIGRATE_DATA_DIR . '/compiled/' . $dir . '.csv');
+          return MigrationBase::RESULT_FAILED;
+        }
+
+        foreach ($csv_data as $row) {
+          fputcsv($output_handle, $row);
+        }
+
+        fclose($csv_handle);
+        fclose($output_handle);
       }
     }
 
@@ -77,8 +117,21 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
   }
 
   /**
+   * Returns an array of rows from the CSV file at $filepath.
+   *
+   * @param  string $file Full path to a CSV file.
+   * @return Array An array of CSV rows.
+   * @author Jay Roberts <jay@designhammer.com>
+   */
+  private function _getCSVRows($filepath) {
+    return array();
+  }
+
+  /**
    * Delete the products of the compilation process.
+   *
    * @return MigrationBase::RESULT
+   * @author Jay Roberts <jay@designhammer.com>
    */
   public function rollback() {
     if (!is_dir(PGH_MIGRATE_DATA_DIR . '/compiled')) {
@@ -90,7 +143,7 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
       if (!$fileinfo->isDot()) {
         $result = unlink($fileinfo->getPathname());
         if ($result === FALSE) {
-          $self->displayMessage('COuldn\'t delete compiled CSV file. ' . $fileinfo->getPathname());
+          self::displayMessage('Couldn\'t delete compiled CSV file. ' . $fileinfo->getPathname());
           return MigrationBase::RESULT_FAILED;
         }
       }

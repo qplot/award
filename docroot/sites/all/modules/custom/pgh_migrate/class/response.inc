@@ -15,9 +15,9 @@ class MigratePGHResponseMigration extends Migration {
     );
 
     // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
-    if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/response.csv')) {
+    if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/responses.csv')) {
       $this->source = new MigrateSourceCSV(
-        PGH_MIGRATE_DATA_DIR . '/compiled/response.csv',
+        PGH_MIGRATE_DATA_DIR . '/compiled/responses.csv',
         $columns,
         array('header_rows' => 1)
       );

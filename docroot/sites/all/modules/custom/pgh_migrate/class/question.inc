@@ -24,9 +24,9 @@ class MigratePGHQuestionMigration extends Migration {
     );
 
     // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
-    if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/question.csv')) {
+    if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/questions.csv')) {
       $this->source = new MigrateSourceCSV(
-        PGH_MIGRATE_DATA_DIR . '/compiled/question.csv',
+        PGH_MIGRATE_DATA_DIR . '/compiled/questions.csv',
         $columns,
         array('header_rows' => 1)
       );
