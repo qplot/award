@@ -22,7 +22,7 @@ class MigratePGHQuestionMigration extends Migration {
     );
 
     $this->source = new MigrateSourceCSV(
-      drupal_get_path('module', 'pgh_migrate') . '/sample/question.csv',
+      PGH_MIGRATE_DATA_DIR . 'question.csv',
       $columns,
       array('header_rows' => 1)
     );

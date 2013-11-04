@@ -11,7 +11,7 @@ class MigratePGHApplicationMigration extends Migration {
     );
 
     $this->source = new MigrateSourceCSV(
-      drupal_get_path('module', 'pgh_migrate') . '/sample/application.csv',
+      PGH_MIGRATE_DATA_DIR . 'application.csv',
       $columns,
       array('header_rows' => 1)
     );

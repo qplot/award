@@ -12,7 +12,7 @@ class MigratePGHSectionMigration extends Migration {
     );
 
     $this->source = new MigrateSourceCSV(
-      drupal_get_path('module', 'pgh_migrate') . '/sample/section.csv',
+      PGH_MIGRATE_DATA_DIR . 'section.csv',
       $columns,
       array('header_rows' => 1)
     );

@@ -1,1 +1,3 @@
 <?php
+
+define('PGH_MIGRATE_DATA_DIR', variable_get('pgh_migrate_data_dir', drupal_get_path('module', 'pgh_migrate') . '/sample/'));

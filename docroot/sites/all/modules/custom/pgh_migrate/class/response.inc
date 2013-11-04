@@ -13,7 +13,7 @@ class MigratePGHResponseMigration extends Migration {
     );
 
     $this->source = new MigrateSourceCSV(
-      drupal_get_path('module', 'pgh_migrate') . '/sample/response.csv',
+      PGH_MIGRATE_DATA_DIR . 'response.csv',
       $columns,
       array('header_rows' => 1)
     );
