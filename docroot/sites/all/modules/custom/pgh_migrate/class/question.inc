@@ -14,10 +14,11 @@ class MigratePGHQuestionMigration extends Migration {
       5 => array('layout', 'layout'),
       6 => array('prompt', 'prompt'),
       7 => array('options', 'options'),
-      8 => array('validation', 'validation'),
-      9 => array('dformula', 'default value from question'),
-      10 => array('dvalue', 'default value'),
-      11 => array('pprompt', 'post prompt')
+      11 => array('validation', 'validation'),
+      12 => array('dformula', 'default value from question'),
+      13 => array('dvalue', 'default value'),
+      14 => array('pprompt', 'post prompt'),
+      8 => array('points', 'points')
     );
 
     $this->source = new MigrateSourceCSV(
@@ -57,5 +58,7 @@ class MigratePGHQuestionMigration extends Migration {
     $this->addFieldMapping('field_question_validation', 'validation');
     $this->addFieldMapping('field_question_default', 'dvalue');
     $this->addFieldMapping('field_question_formula', 'dformula');
+    $this->addFieldMapping('field_question_points', 'points')
+         ->separator(',');
   }
 }

@@ -295,6 +295,46 @@ function pgh_question_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-question-field_question_points'
+  $field_instances['node-question-field_question_points'] = array(
+    'bundle' => 'question',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_question_points',
+    'label' => 'Points',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 13,
+    ),
+  );
+
   // Exported field_instance: 'node-question-field_question_post_prompt'
   $field_instances['node-question-field_question_post_prompt'] = array(
     'bundle' => 'question',
@@ -504,6 +544,7 @@ function pgh_question_ctype_field_default_field_instances() {
   t('Options');
   t('Parent ID');
   t('Parent Required Value');
+  t('Points');
   t('Post Prompt');
   t('Prompt');
   t('Style');
