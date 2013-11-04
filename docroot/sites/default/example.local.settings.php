@@ -24,4 +24,6 @@ $databases = array (
 );
 
 $base_url = 'http://pghawards.localhost';
-2
+
+// Path to migrate csv files including trailing slash
+// $conf['pgh_migrate_data_dir'] = '/path/to/migration/data/';
