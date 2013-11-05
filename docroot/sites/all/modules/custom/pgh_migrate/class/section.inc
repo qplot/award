@@ -42,7 +42,7 @@ class MigratePGHSectionMigration extends Migration {
     $this->addFieldMapping('title', 'id');
     $this->addFieldMapping('body', 'name');
     $this->addFieldMapping('field_section_questions', 'questions')
-         ->separator(', ')
+         ->separator(',')
          ->sourceMigration('Question');
     // $this->addFieldMapping('field_question_parent_value', 'pvalue');
   }

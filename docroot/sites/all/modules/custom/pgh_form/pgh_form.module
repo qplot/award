@@ -213,7 +213,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
     
     default:
-      # code...
+      $form['#type'] = 'textfield';
+      $form['#prefix'] = '<b><em>Not Implemented Type - '. $type . '</em></b>';
       break;
   }
 
