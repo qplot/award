@@ -147,12 +147,39 @@ function pgh_application_form_submit($form, &$form_state) {
   // dsm($form_state['values']);
 
   // since preparation have all response ready, we just need to save one by one
-
   $app_id = $form_state['values']['application'];
 
   foreach ($form_state['values']['questions'] as $qid) {
+    // assign question value 
     $value = $form_state['values'][$qid];
-    pgh_set_response($app_id, $qid, $value);
+
+    // assign point
+    $question = node_load($qid);    // could save this in form
+    $wrapper = entity_metadata_wrapper('node', $question);
+    $type = $wrapper->field_question_type->value();
+    $points = $wrapper->field_question_points->value();
+
+    $point = 0;
+    switch ($type) {
+      case 'text':
+        if (!empty($value) && !empty($points))
+          $point = $points;
+        break;
+      case 'selection':
+        if (is_numeric($value) && is_array($points) && !empty($points[$value]))
+          $point = $points[$value];
+        break;
+      
+      default:
+        # code...
+        break;
+    }
+
+    $answer = array(
+      'value' => $value,
+      'point' => $point,
+    );
+    pgh_set_response($app_id, $qid, $answer);
   }
 }
 
@@ -179,7 +206,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     case 'text':
       $form['#type'] = 'textfield';
       break;
-    case 'select':
+    case 'selection':
       $options = $wrapper->field_question_options->value();
       $form['#type'] = 'radios';
       $form['#options'] = $options;
@@ -240,7 +267,15 @@ function pgh_get_response($app_id, $qid, &$response) {
 /**
  * Set question response
  */
-function pgh_set_response($app_id, $qid, $value = '') {
+function pgh_set_response($app_id, $qid, $answer = array()) {
+  // set default answer
+  $default = array(
+    'value' => '',
+    'point' => 0,
+  );
+  $answer = array_merge($default, $answer);
+
+  // find response
   $rid = pgh_find_response_id($app_id, $qid);
   if ($rid) {
     $response = node_load($rid);
@@ -253,9 +288,12 @@ function pgh_set_response($app_id, $qid, $value = '') {
     $wrapper->field_response_question->set($qid);
   }
   $wrapper->title = 'app_' . $app_id . '_q_' . $qid; 
-  $wrapper->body = array(
-    'value' => $value
-  );
+  if ($answer) {
+    $wrapper->body = array(
+      'value' => $answer['value']
+    );
+    $wrapper->field_response_point->set($answer['point']);
+  }
   $wrapper->save();
   node_save($response);
   return $response->nid;
