@@ -61,7 +61,7 @@ class MigratePGHQuestionMigration extends Migration {
     $this->addFieldMapping('field_question_prompt', 'prompt');
     $this->addFieldMapping('field_question_post_prompt', 'pprompt');
     $this->addFieldMapping('field_question_options', 'options')
-         ->separator(',');
+         ->separator('|');
     $this->addFieldMapping('field_question_validation', 'validation');
     $this->addFieldMapping('field_question_default', 'dvalue');
     $this->addFieldMapping('field_question_formula', 'dformula');
