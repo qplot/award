@@ -179,7 +179,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     case 'text':
       $form['#type'] = 'textfield';
       break;
-    case 'selection':
+    case 'select':
       $options = $wrapper->field_question_options->value();
       $form['#type'] = 'radios';
       $form['#options'] = $options;
