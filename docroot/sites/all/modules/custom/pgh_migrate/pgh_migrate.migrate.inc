@@ -16,6 +16,7 @@ function pgh_migrate_migrate_api() {
       'Question' => array(
         'class_name' => 'MigratePGHQuestionMigration',
         'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV')
       ),
       'Section' => array(
         'class_name' => 'MigratePGHSectionMigration',

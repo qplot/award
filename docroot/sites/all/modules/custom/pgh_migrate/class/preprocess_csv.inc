@@ -48,10 +48,10 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
     // Ensure 'compiled' folder exists
     if (!is_dir(PGH_MIGRATE_DATA_DIR . '/compiled')) {
       $result = @mkdir(PGH_MIGRATE_DATA_DIR . '/compiled');
-    }
-    if ($result === FALSE) {
-      self::displayMessage('Compiled CSV directory does not exist and could not be created.');
-      return MigrationBase::RESULT_FAILED;
+      if ($result === FALSE) {
+        self::displayMessage('Compiled CSV directory does not exist and could not be created.');
+        return MigrationBase::RESULT_FAILED;
+      }
     }
 
     // Compile the CSV files in each of these folders into a single file for each folder.
