@@ -1,5 +1,8 @@
 # PGH Awards Question Specification
 
+Last Updated: 11/6/2013
+By: Jay Roberts
+
 This document includes formatting guidelines for question data which will be imported into the new Awards system. This specification will be updated over the course of the project to reflect changes and updates to the process.
 
 ## Overview
@@ -87,23 +90,23 @@ File uploads will be handled by Drupal's upload functionality.
 
 `file` fields support only the `default` style.
 
-#### select
-The `select` question type allows a user to choose one or more options from a set of options. These can include Yes/No questions, selecting a Month from a list of months or checking all items that apply in a list of checkboxes. 
+#### selection
+The `selection` question type allows a user to choose one or more options from a set of options. These can include Yes/No questions, selecting a Month from a list of months or checking all items that apply in a list of checkboxes. 
 
-All `select` question must also include the `options` field.
+All `selection` question must also include the `options` field.
 
-All `select` questions will have no value selected by default. If a question should have a "Not available" or "Decline to respond" option, it must be explicitly included as an option for the question.
+All `selection` questions will have no value selected by default. If a question should have a "Not available" or "Decline to respond" option, it must be explicitly included as an option for the question.
 
 Options will be rendered in the order they are specified in the options field.
 
-There are three valid styles for `select` questions:
+There are three valid styles for `selection` questions:
 
 - `dropdown` (This is also the default) The options will be displayed in a standard dropdown. Only one choice may be selected.
 - `radios` The options will be displayed as a vertically arranged list of radio buttons with labels to the right. Only one choice may be selected.
 - `checkboxes` The options will be displayed as a vertically arranged list of checkboxes with labels to the right. Multiple choices may be selected.
 
 #### container
-This `container` question type's primary purpose is to arrange the layout of other questions. Containers are used typically for groups of questions which have a table layout but are made up of multiple individual questions with their own Question IDs. Containers do not display their own form field and any response for this question will be blank and may be ignored.
+The `container` question type's primary purpose is to arrange the layout of other questions. Containers are used typically for groups of questions which have a table layout but are made up of multiple individual questions with their own Question IDs. Containers do not display their own form field and any response for this question will be blank and may be ignored.
 
 The container type allows a natural specification of the placement of each question as well as including additional labels which would not be possible otherwise.
 
@@ -134,7 +137,22 @@ These strings will be stored as responses and used in reporting.
 - `1|2|3|4|5|6|7|8|9|10`
 
 ### layout
-The specific format for the `layout` field will be determined at a later date.
+The `layout` field is used to specify more complex question positioning when the default vertical ordering is not desired.
+
+Primarily this field is used for defining table layouts in  `container` questions. At this point in time DesignHammer expects to handle generating the layout field. **PGH Admins should not enter content into this field.**
+
+The format for the layout field is a text-based grid containing text or question ids.
+
+Columns are separated by commas, rows are separated by semicolons. Line breaks after semicolons are not required but may be useful for presentation. Whitespace around text labels will be trimmed.
+
+#### layout example
+
+    Fruit,  Color,             Taste,              Notes;
+    Apple,  pghq_color_apple,  pghq_taste_apple,   pghq_notes_apple;
+    Pear,   pghq_color_pear,   pghq_taste_pear,    pghq_notes_pear;
+    Banana, pghq_color_banana, pghq_taste_banana,  pghq_notes_banana;
+
+
 
 ### validation
 Validation rules for responses to a given question is determined by entries in the `validation` field. By default, no validation is performed on responses to questions.
@@ -153,3 +171,43 @@ These validation rules are applied on a per-question basis. A rule which states 
 - `nonnegative` The provided value must be a non-negative number.
 - `nonzero` The provided value must not be a non-zero number.
 - `percentage` The provided value must be an integer between 0 and 100.
+
+### score
+
+Some questions may provide scoring information so that automatic scoring can be applied. This is most applicable for `selection` question types. The `score` field records the point value for each possible answer of a question. Point values are integers greater than or equal to zero.
+
+`text` fields must have a single value specified. This value will be awarded if the question is completed. If a response to the question is omitted, no points will be awarded.
+
+`selection` questions must have a comma-separated list of values specified, one for each option in the `options` field. 
+
+`html`, `file`, and `container` types do not participate in automatic scoring so the `score` field can be omitted for these.
+
+#### score example
+
+For a `selection` question with the following options: `Yes|No|Not Applicable` the score field would be `1,0,0`. Choosing "Yes" is the only way that points will be awarded for this question.
+
+
+### kpi
+
+Similar to the score field, the `kpi` field records the point value for each possible answer. Guidelines for specifying points are the same as for the `score` field.
+
+
+### points
+
+The `points` field records the total possible points for each option of a given question. This enables scenarios where an applicant can select an option which does not award points but is not penalized.
+
+`text` fields must have a single value specified. This value will be awarded if the question is completed. If a response to the question is omitted, no points will be awarded.
+
+`selection` questions must have a comma-separated list of values specified, one for each option in the `options` field. 
+
+`html`, `file`, and `container` types do not participate in automatic scoring so the `score` field can be omitted for these.
+
+#### points example
+
+For a `selection` question with the following options: `Yes|No|Not Applicable` the `points` field would be `1,1,0`.
+
+Combined with this `score` list: `1,0,0` for the options `Yes|No|Not Applicable` the resulting scoring would be:
+
+- Yes: applicant is awarded 1 point out of a possible 1 point
+- No: applicant is awarded 0 points out of a possible 1 point
+- Not Applicable: applicant is awarded 0 points out of a possible 0 points
