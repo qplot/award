@@ -9,8 +9,9 @@ class MigratePGHSectionMigration extends Migration {
     // create CSV source
     $columns = array(
       0 => array('id', 'id'),
-      1 => array('name', 'name'),
+      1 => array('label', 'label'),
       2 => array('questions', 'questions'),
+      3 => array('html', 'html'),
     );
 
     // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
@@ -40,10 +41,13 @@ class MigratePGHSectionMigration extends Migration {
     );
 
     $this->addFieldMapping('title', 'id');
-    $this->addFieldMapping('body', 'name');
+    $this->addFieldMapping('field_section_label', 'label')
+         ->defaultValue('empty');
     $this->addFieldMapping('field_section_questions', 'questions')
          ->separator(',')
          ->sourceMigration('Question');
-    // $this->addFieldMapping('field_question_parent_value', 'pvalue');
+    $this->addFieldMapping('body', 'html');
+    $this->addFieldMapping('body:format')
+         ->defaultValue('full_html');
   }
 }

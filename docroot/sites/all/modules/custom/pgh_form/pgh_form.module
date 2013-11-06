@@ -84,7 +84,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
 
-        $caption = $sec_wrapper->body->value->raw();
+        $caption = $sec_wrapper->field_section_label->value();
 
         // add a fieldset to hold section info
         $fieldset = 'fieldset_' . $sec_wrapper->title->value();
@@ -96,7 +96,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
         );
 
         // add all question inside this section
-        $form[$fieldset] = array();
+        // $form[$fieldset] = array();
         foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
 
           $major = 'question_' . $q_wrapper->label();
