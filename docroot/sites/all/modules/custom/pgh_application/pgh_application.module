@@ -25,6 +25,7 @@ function pgh_application_list_page() {
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'application')
                   ->execute();
+  if (empty($result['node'])) return '';
 
   $lists = array();
   foreach ($result['node'] as $nid => &$value) {

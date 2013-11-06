@@ -8,19 +8,20 @@ class MigratePGHQuestionMigration extends Migration {
 
     // create CSV source
     $columns = array(
-      0 => array('id', 'id'),
-      1 => array('pid', 'parent id'),
-      2 => array('pvalue', 'parent required value'),
-      3 => array('type', 'type'),
-      4 => array('style', 'style'),
-      5 => array('layout', 'layout'),
-      6 => array('prompt', 'prompt'),
-      7 => array('options', 'options'),
-      11 => array('validation', 'validation'),
-      12 => array('dformula', 'default value from question'),
-      13 => array('dvalue', 'default value'),
-      14 => array('pprompt', 'post prompt'),
-      8 => array('points', 'points')
+      0 => array('raw_id', 'raw id'),
+      1 => array('id', 'id'),
+      2 => array('pid', 'parent id'),
+      3 => array('pvalue', 'parent required value'),
+      4 => array('type', 'type'),
+      5 => array('style', 'style'),
+      6 => array('layout', 'layout'),
+      7 => array('prompt', 'prompt'),
+      8 => array('options', 'options'),
+      12 => array('validation', 'validation'),
+      13 => array('dformula', 'default value from question'),
+      14 => array('dvalue', 'default value'),
+      15 => array('pprompt', 'post prompt'),
+      9 => array('points', 'points')
     );
 
     // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
@@ -66,6 +67,6 @@ class MigratePGHQuestionMigration extends Migration {
     $this->addFieldMapping('field_question_default', 'dvalue');
     $this->addFieldMapping('field_question_formula', 'dformula');
     $this->addFieldMapping('field_question_points', 'points')
-         ->separator(',');
+         ->separator('|');
   }
 }

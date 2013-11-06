@@ -198,7 +198,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 
   $form = array();
   $form['#title'] = t($wrapper->getIdentifier() . ' - ' . $prompt .
-                    'p(' . intval($answer['point']) . ')');
+                    ' p(' . intval($answer['point']) . ')');
   $form['#default_value'] = $answer['value'];
 
   // based on different question type
