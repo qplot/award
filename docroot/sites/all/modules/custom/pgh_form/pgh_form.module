@@ -151,16 +151,16 @@ function pgh_application_form_submit($form, &$form_state) {
 
   foreach ($form_state['values']['questions'] as $qid) {
 
+    $question = node_load($qid);
+    $wrapper = entity_metadata_wrapper('node', $question);
+    $type = $wrapper->field_question_type->value();
+
     // save response if the question expects a response
     if (!in_array($type, array('html', 'container'))) {
       // assign question value 
       $value = $form_state['values'][$qid];
 
       // assign point
-      $question = node_load($qid);    // could save this in form
-      $wrapper = entity_metadata_wrapper('node', $question);
-      $type = $wrapper->field_question_type->value();
-
       $points = $wrapper->field_question_points->value();
 
       $point = 0;
@@ -195,6 +195,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
   $type = $wrapper->field_question_type->value();
   $prompt = $wrapper->field_question_prompt->value();
+  $style = $wrapper->field_question_style->value();
 
   // prepare response for question expecting a response
   $answer = array('value' => '', 'point' => 0);
@@ -204,8 +205,9 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   }
 
   $form = array();
-  $form['#title'] = t($wrapper->getIdentifier() . ' - ' . $prompt .
-                    ' p(' . intval($answer['point']) . ')');
+  $edit = l('[Edit]', 'node/' . $wrapper->getIdentifier() . '/edit');
+  $form['#title'] = $edit . ' ' . $prompt .
+                    ' p(' . intval($answer['point']) . ')';
   $form['#default_value'] = $answer['value'];
 
   // based on different question type
@@ -221,13 +223,32 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
     case 'selection':
       $options = $wrapper->field_question_options->value();
-      $form['#type'] = 'radios';
-      $form['#options'] = $options;
+
+      switch ($style) {
+        case 'dropdown':
+          $form['#type'] = 'select';
+          $form['#options'] = $options;
+          break;
+        case 'default':
+        case 'radios':
+          $form['#type'] = 'radios';
+          $form['#options'] = $options;
+          break;
+        case 'checkboxes':
+          $form['#type'] = 'checkboxes';
+          $form['#options'] = drupal_map_assoc($options);
+          if (empty($answer['value']))
+            unset($form['#default_value']);
+          break;
+        default:
+          $form['#markup'] = '<b><em>Not Implemented Style - '. $style . '</em></b>';
+          break;
+      }
+
       break;
     
     default:
-      $form['#type'] = 'textfield';
-      $form['#prefix'] = '<b><em>Not Implemented Type - '. $type . '</em></b>';
+      $form['#markup'] = '<b><em>Not Implemented Type - '. $type . '</em></b>';
       break;
   }
 
