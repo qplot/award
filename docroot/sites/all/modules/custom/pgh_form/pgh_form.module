@@ -80,6 +80,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
   $questions = array();
 
   if (!empty($cat->field_category_sections['und'])) {
+    // for debugging purpose add a counter
+    $debug = 0; $total = 1;
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
@@ -105,7 +107,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
             $questions[] = $key;
             $form[$fieldset][$major] = $question;
           }
-
+          $debug = $debug + 1;
+          if ($debug == $total) break;
           // support one level of layout here
           // $layout = array('pghq_pfc_l1i1', 'pghq_pfc_l1i2');
           // foreach ($layout as $row) {
@@ -119,6 +122,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
           //   }
           // }
         }
+        if ($debug == $total) break;
       }
     }
   }
@@ -199,15 +203,22 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 
   // prepare response for question expecting a response
   $answer = array('value' => '', 'point' => 0);
+  $response_edit = '';
+  $point_edit = '';
   if (!in_array($type, array('html', 'container'))) {
     $rid = pgh_get_response($app_id, $wrapper->getIdentifier(), $answer);
     if (!$rid) pgh_set_response($app_id, $wrapper->getIdentifier());
+    $response_edit = '<small>' . l('[R]', 'node/' . $rid . '/edit') . '</small>';
+    $point_edit = ' <small>[P' . intval($answer['point']) . ']</small> ';
   }
 
   $form = array();
-  $edit = l('[Edit]', 'node/' . $wrapper->getIdentifier() . '/edit');
-  $form['#title'] = $edit . ' ' . $prompt .
-                    ' p(' . intval($answer['point']) . ')';
+  $question_edit = '<small>' . l('[Q]', 'node/' . $wrapper->getIdentifier() . '/edit') . '</small>';
+  $form['#title'] = $prompt . ' ' .
+                    $question_edit . ' ' . 
+                    $response_edit . ' ' . 
+                    $point_edit;
+
   $form['#default_value'] = $answer['value'];
 
   // based on different question type
