@@ -150,36 +150,41 @@ function pgh_application_form_submit($form, &$form_state) {
   $app_id = $form_state['values']['application'];
 
   foreach ($form_state['values']['questions'] as $qid) {
-    // assign question value 
-    $value = $form_state['values'][$qid];
 
-    // assign point
-    $question = node_load($qid);    // could save this in form
-    $wrapper = entity_metadata_wrapper('node', $question);
-    $type = $wrapper->field_question_type->value();
-    $points = $wrapper->field_question_points->value();
+    // save response if the question expects a response
+    if (!in_array($type, array('html', 'container'))) {
+      // assign question value 
+      $value = $form_state['values'][$qid];
 
-    $point = 0;
-    switch ($type) {
-      case 'text':
-        if (!empty($value) && !empty($points))
-          $point = $points;
-        break;
-      case 'selection':
-        if (is_numeric($value) && is_array($points) && !empty($points[$value]))
-          $point = $points[$value];
-        break;
-      
-      default:
-        # code...
-        break;
+      // assign point
+      $question = node_load($qid);    // could save this in form
+      $wrapper = entity_metadata_wrapper('node', $question);
+      $type = $wrapper->field_question_type->value();
+
+      $points = $wrapper->field_question_points->value();
+
+      $point = 0;
+      switch ($type) {
+        case 'text':
+          if (!empty($value) && !empty($points))
+            $point = $points;
+          break;
+        case 'selection':
+          if (is_numeric($value) && is_array($points) && !empty($points[$value]))
+            $point = $points[$value];
+          break;
+        
+        default:
+          # code...
+          break;
+      }
+
+      $answer = array(
+        'value' => $value,
+        'point' => $point,
+      );
+      pgh_set_response($app_id, $qid, $answer);
     }
-
-    $answer = array(
-      'value' => $value,
-      'point' => $point,
-    );
-    pgh_set_response($app_id, $qid, $answer);
   }
 }
 
@@ -191,10 +196,12 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $type = $wrapper->field_question_type->value();
   $prompt = $wrapper->field_question_prompt->value();
 
-  // prepare answer
+  // prepare response for question expecting a response
   $answer = array('value' => '', 'point' => 0);
-  $rid = pgh_get_response($app_id, $wrapper->getIdentifier(), $answer);
-  if (!$rid) pgh_set_response($app_id, $wrapper->getIdentifier());
+  if (!in_array($type, array('html', 'container'))) {
+    $rid = pgh_get_response($app_id, $wrapper->getIdentifier(), $answer);
+    if (!$rid) pgh_set_response($app_id, $wrapper->getIdentifier());
+  }
 
   $form = array();
   $form['#title'] = t($wrapper->getIdentifier() . ' - ' . $prompt .
@@ -203,6 +210,12 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 
   // based on different question type
   switch ($type) {
+    case 'html':
+      $form['#markup'] = $form['#title'];
+      unset($form['#title']);
+      break;
+    case 'container':
+      break;
     case 'text':
       $form['#type'] = 'textfield';
       break;
