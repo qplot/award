@@ -148,7 +148,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * Application form submit 
  */
 function pgh_application_form_submit($form, &$form_state) {
-  // dsm($form_state['values']);
+  dsm($form_state['values']);
 
   // since preparation have all response ready, we just need to save one by one
   $app_id = $form_state['values']['application'];
@@ -158,6 +158,7 @@ function pgh_application_form_submit($form, &$form_state) {
     $question = node_load($qid);
     $wrapper = entity_metadata_wrapper('node', $question);
     $type = $wrapper->field_question_type->value();
+    $style = $wrapper->field_question_style->value();
 
     // save response if the question expects a response
     if (!in_array($type, array('html', 'container'))) {
@@ -174,6 +175,15 @@ function pgh_application_form_submit($form, &$form_state) {
             $point = $points[0];
           break;
         case 'selection':
+          switch ($style) {
+            case 'checkboxes':
+              $value = serialize($value);
+              break;
+            
+            default:
+              # code...
+              break;
+          }
           if (is_numeric($value) && is_array($points) && !empty($points[$value]))
             $point = $points[$value];
           break;
@@ -248,6 +258,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
         case 'checkboxes':
           $form['#type'] = 'checkboxes';
           $form['#options'] = drupal_map_assoc($options);
+          $form['#default_value'] = unserialize($form['#default_value']);
           if (empty($answer['value']))
             unset($form['#default_value']);
           break;
