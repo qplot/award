@@ -148,7 +148,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * Application form submit 
  */
 function pgh_application_form_submit($form, &$form_state) {
-  dsm($form_state['values']);
+  // dsm($form_state['values']);
 
   // since preparation have all response ready, we just need to save one by one
   $app_id = $form_state['values']['application'];
@@ -177,15 +177,21 @@ function pgh_application_form_submit($form, &$form_state) {
         case 'selection':
           switch ($style) {
             case 'checkboxes':
+              $options = $wrapper->field_question_options->value();
+              $i = 0;
+              foreach ($options as $option) {
+                if (!empty($value[$option]))
+                  $point += $points[$i];
+                $i = $i + 1;
+              }
               $value = serialize($value);
               break;
             
             default:
-              # code...
+              if (is_numeric($value) && is_array($points) && !empty($points[$value]))
+                $point = $points[$value];
               break;
           }
-          if (is_numeric($value) && is_array($points) && !empty($points[$value]))
-            $point = $points[$value];
           break;
         
         default:
