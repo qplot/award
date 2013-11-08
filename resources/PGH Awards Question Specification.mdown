@@ -1,7 +1,7 @@
 # PGH Awards Question Specification
 
-Last Updated: 11/6/2013
-By: Jay Roberts
+Last Updated: 11/8/2013
+By: Stephen Pashby
 
 This document includes formatting guidelines for question data which will be imported into the new Awards system. This specification will be updated over the course of the project to reflect changes and updates to the process.
 
@@ -21,20 +21,20 @@ Question IDs must be no more than 255 characters.
 
 Question IDs can be any unique valid string however it is useful to have a consistent pattern when creating new ids. The following format can be used:
 
-`pghq_APP_S_Q_SQ`
+`pghq_APP_C_S_Q_SQ`
 
-- APP = Application (for example PFC = Partner for Change)
+- APP = Application (e.g. "PFC" = Partner for Change)
+- C = Category (e.g. "waste")
 - S = Section #
 - Q = Question #
 - SQ = Sub-question #
-
+- t = Table (e.g. "tA" = table A)
 
 ##### Some valid examples are:
 
-- `pghq_pfc_l28i1`
-- `pghq_pfc_l28i2`
-- `pghq_pfc_l28i3`
-- `pghq_pfc_l28i4`
+- `pghq_PFC_waste_1_2`
+- `pghq_PFC_waste_3_tA_2`
+- `pghq_pfc_leadership_5_14`
 
 ### prompt
 The prompt is text which will be displayed to the user. Typically this is the text which directs the user how to answer the question. Prompt text is displayed before the form field for questions which have form fields.
@@ -72,7 +72,7 @@ Content for questions of this type can is specified in the prompt field.
 Valid styles are:
 
 - `default` Standard display, the questions will have automatic numbers.
-- `nonnumbered` Markup appears the same. Will NOT have automatic numbers.
+- `non-numbered` Markup appears the same. Will NOT have automatic numbers.
 
 #### text
 The `text` question type stores text responses. This may be a single line text field or a multiline textarea.
@@ -181,13 +181,13 @@ Some questions may provide scoring information so that automatic scoring can be 
 
 `text` fields must have a single value specified. This value will be awarded if the question is completed. If a response to the question is omitted, no points will be awarded.
 
-`selection` questions must have a comma-separated list of values specified, one for each option in the `options` field. 
+`selection` questions must have a pipe-separated list of values specified, one for each option in the `options` field. 
 
 `html`, `file`, and `container` types do not participate in automatic scoring so the `score` field can be omitted for these.
 
 #### score example
 
-For a `selection` question with the following options: `Yes|No|Not Applicable` the score field would be `1,0,0`. Choosing "Yes" is the only way that points will be awarded for this question.
+For a `selection` question with the following options: `Yes|No|Not Applicable` the score field would be `1|0|0`. Choosing "Yes" is the only way that points will be awarded for this question.
 
 
 ### kpi
@@ -201,15 +201,15 @@ The `points` field records the total possible points for each option of a given 
 
 `text` fields must have a single value specified. This value will be awarded if the question is completed. If a response to the question is omitted, no points will be awarded.
 
-`selection` questions must have a comma-separated list of values specified, one for each option in the `options` field. 
+`selection` questions must have a pipe-separated list of values specified, one for each option in the `options` field. 
 
 `html`, `file`, and `container` types do not participate in automatic scoring so the `score` field can be omitted for these.
 
 #### points example
 
-For a `selection` question with the following options: `Yes|No|Not Applicable` the `points` field would be `1,1,0`.
+For a `selection` question with the following options: `Yes|No|Not Applicable` the `points` field would be `1|1|0`.
 
-Combined with this `score` list: `1,0,0` for the options `Yes|No|Not Applicable` the resulting scoring would be:
+Combined with this `score` list: `1|0|0` for the options `Yes|No|Not Applicable` the resulting scoring would be:
 
 - Yes: applicant is awarded 1 point out of a possible 1 point
 - No: applicant is awarded 0 points out of a possible 1 point
