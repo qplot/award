@@ -69,7 +69,10 @@ Content may include image tags and anchors. All other tags will be stripped out.
 
 Content for questions of this type can is specified in the prompt field.
 
-`html` fields support only the `default` style.
+Valid styles are:
+
+- `default` Standard display, the questions will have automatic numbers.
+- `nonnumbered` Markup appears the same. Will NOT have automatic numbers.
 
 #### text
 The `text` question type stores text responses. This may be a single line text field or a multiline textarea.
