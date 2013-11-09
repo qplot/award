@@ -81,7 +81,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
   if (!empty($cat->field_category_sections['und'])) {
     // for debugging purpose add a counter
-    $debug = 0; $total = 14;
+    $debug = 0; $total = 140;
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
@@ -102,13 +102,17 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
         foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
 
           $major = 'question_' . $q_wrapper->label();
-          $question = pgh_gen_form_question($q_wrapper->value(), $app_id);
-          foreach ($question as $key => $value) {
-            $questions[] = $key;
-            $form[$fieldset][$major] = $question;
-          }
+          // $question = 
+          $form[$fieldset][$major][$q_wrapper->getIdentifier()] =
+            // pgh_gen_form_question($q_wrapper->value(), $app_id);
+            pgh_gen_form_question_layout($q_wrapper->value(), $app_id);
+          // foreach ($question as $key => $value) {
+          //   $questions[] = $key;
+          //   $form[$fieldset][$major] = $question;
+          // }
           $debug = $debug + 1;
           if ($debug == $total) break;
+
           // support one level of layout here
           // $layout = array('pghq_pfc_l1i1', 'pghq_pfc_l1i2');
           // foreach ($layout as $row) {
@@ -148,7 +152,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * Application form submit 
  */
 function pgh_application_form_submit($form, &$form_state) {
-  // dsm($form_state['values']);
+  dsm($form_state['values']);
 
   // since preparation have all response ready, we just need to save one by one
   $app_id = $form_state['values']['application'];
@@ -244,6 +248,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       unset($form['#title']);
       break;
     case 'container':
+      $form['#markup'] = $form['#title'];
+      unset($form['#title']);
       break;
     case 'text':
       $form['#type'] = 'textfield';
@@ -280,13 +286,80 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
   }
 
-  return array($wrapper->getIdentifier() => $form);
+  return $form;
+}
 
-  // return array(
-  //   '#description' => '',
-  //   '#access'
-  // );
+/**
+ * Generate form questions with layout
+ */
+function pgh_gen_form_question_layout($question, $app_id = NULL) {
+  $wrapper = entity_metadata_wrapper('node', $question);
+  $type = $wrapper->field_question_type->value();
+  $layout = $wrapper->field_question_layout->value();
 
+  $result = pgh_gen_form_question($question, $app_id);
+
+  if (!empty($layout) && ($type == 'container')) {
+    $parse = pgh_parse_layout($layout);
+
+    // prepare to theme a table
+    $rows = array();
+    $i = 0;
+    foreach ($parse as $row) {
+      // first row is header
+      if ($i == 0) {
+        $header = $row;
+      }
+      else {
+        $data = array();
+        foreach ($row as $cell) {
+          // check if cell is a question
+          $cell_data = $cell;
+          // dsm($cell);
+          if (substr($cell, 0, 5) == 'pghq_') {
+            // find the question 
+            if ($qid = pgh_find_question_id($cell)) {
+              $child = node_load($qid);
+              $child_form = pgh_gen_form_question($child, $app_id);
+              $cell_data = render($child_form);
+              // foreach ($forms as $key => $value) {
+              //   $ids[] = $key;
+              //   $cell_data = drupal_render($value);
+              // }
+            }
+          }
+          $data[] = array('data' => $cell_data);
+        }
+        $rows[] = $data;
+      }
+      $i = $i + 1;
+    }
+    $form = array(
+      '#markup' => theme('table', array(
+        'header' => $header,
+        'rows' => $rows,
+      )
+    ));
+    $result = $form; 
+  }
+  return $result;
+}
+
+/**
+ * Find question node id by question key id
+ */
+function pgh_find_question_id($key) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'question')
+                  ->propertyCondition('title', $key)
+                  ->execute();
+  if (!empty($result['node'])) {
+    $keys = array_keys($result['node']);
+    return $keys[0];
+  }
+  else
+    return 0;
 }
 
 /**
@@ -366,6 +439,11 @@ function pgh_set_response($app_id, $qid, $answer = array()) {
  * Parser layout string into array
  * Given a string with ; and , delimiter for rows and columns
  */
-function pgh_parser_layout($str) {  
-
+function pgh_parse_layout($str) {  
+  $rows = array_map('trim', explode(";", $str));
+  $result = array();
+  foreach ($rows as $row) {
+    $result[] = array_map('trim',explode(",",$row));
+  }
+  return $result;
 }
