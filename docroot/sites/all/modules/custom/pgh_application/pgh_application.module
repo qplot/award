@@ -11,9 +11,80 @@ function pgh_application_menu() {
     'page arguments' => array(),
     'access callback' => TRUE,
   );
+  // test for explorering form api
+  $items['testform'] = array(
+    'title' => 'Form example',
+    'description' => 'Test form features',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pgh_application_testform'),
+    'access callback' => TRUE,
+  );
 
   return $items;
 
+}
+
+/**
+ * hook theme
+ */
+function pgh_application_theme() {
+  return array(
+    'form_table' => array(
+      'render element' => 'element'
+    )
+  );
+}
+
+function theme_form_table($vars) {
+  $element = $vars['element'];
+
+  $header = array('c1', 'c2');
+  foreach (element_children($element) as $key) {
+    $rows[] = array(
+      array('data' => 'r1'),
+      array('data' => render($element[$key]))
+    );
+  }
+
+  return theme('table', array('header' => $header, 'rows' => $rows));
+}
+
+/**
+ * form test
+ */
+function pgh_application_testform($form, &$form_state) {
+  $form['abc'][3] = array(
+    '#type' => 'textfield',
+    '#title' => 'abc',
+  );
+
+  $form['abc']['def'] = array(
+    '#prefix' => '',
+    '#tree' => TRUE,
+    '#theme' => 'form_table'
+  );
+
+  $form['abc']['def'][4] = array(
+    '#type' => 'textfield',
+    '#title' => 'def',
+    '#tree' => FALSE,
+    // '#attributes' => array('id'=> 'edit-4', 'name' => '4'),
+  );
+
+  // $form['abc']['def'] = array(
+  //   '#markup' => render($form['abc']['def']),
+  // );
+
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'submit',
+  );
+  return $form;
+}
+
+function pgh_application_testform_submit($form, &$form_state) {
+  dsm($form_state['values']);
 }
 
 /**
