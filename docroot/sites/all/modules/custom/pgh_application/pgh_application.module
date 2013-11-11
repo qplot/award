@@ -19,6 +19,20 @@ function pgh_application_menu() {
     'page arguments' => array('pgh_application_testform'),
     'access callback' => TRUE,
   );
+  $items['testfile'] = array(
+    'title' => 'File example',
+    'description' => 'Test file upload',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pgh_application_fileform'),
+    'access callback' => TRUE,
+  );
+  $items['testmedia'] = array(
+    'title' => 'Media example',
+    'description' => 'Test media file upload',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pgh_application_mediaform'),
+    'access callback' => TRUE,
+  );
 
   return $items;
 
@@ -87,6 +101,57 @@ function pgh_application_testform_submit($form, &$form_state) {
   dsm($form_state['values']);
 }
 
+function pgh_application_fileform($form, &$form_state) {
+  $form['pgh'] = array(
+    '#type' => 'file',
+    '#title' => t('Upload video'),
+    '#size' => 48,
+    '#description' => t('Pick a video file to upload.'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'submit',
+  );
+  return $form;
+}
+
+function pgh_application_fileform_submit($form, &$form_state) {
+  dsm($_FILES);
+  $file = file_save_upload('pgh', array('file_validate_extensions' => array()), 'private://pgh');
+  $file->status = 1;
+  dsm($file);
+  file_save($file);
+}
+
+function pgh_application_mediaform($form, &$form_state) {
+  $form['pgh'] = array(
+    '#type' => 'media',
+    '#title' => t('Upload video'),
+    '#input' => TRUE,
+    '#media_options' => array(
+      'global' => array(
+        'types' => array('document'),
+        'schemes' => array('http'),
+      ),
+    ),
+    '#description' => t('Pick a video file to upload.'),
+    '#attached' => array(),
+    '#extended' => TRUE,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'submit',
+  );
+  return $form;
+}
+
+function pgh_application_mediaform_submit($form, &$form_state) {
+  dsm($form_state);
+  dsm($_FILES);
+}
+
 /**
  * Return a page listing all applications
  */
@@ -100,7 +165,7 @@ function pgh_application_list_page() {
 
   $lists = array();
   foreach ($result['node'] as $nid => &$value) {
-    
+
     $app = node_load($nid);
     $app_wrapper = entity_metadata_wrapper('node', $app);
 
