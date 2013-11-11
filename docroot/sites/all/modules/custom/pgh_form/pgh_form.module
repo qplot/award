@@ -286,6 +286,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
     case 'text':
       $form['#type'] = 'textfield';
+      $form['#size'] = NULL;
       break;
     case 'selection':
       $options = $wrapper->field_question_options->value();
@@ -337,7 +338,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
 
     // we should be able to add prompt to the prefix section
     $result = array(
-      '#prefix' => '',
+      '#prefix' => $prompt,
       // '#postfix' => '',
       '#tree' => TRUE,
       '#theme' => 'pgh_form_table',
