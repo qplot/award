@@ -52,9 +52,20 @@ function pgh_preprocess_html(&$variables, $hook) {
  * @param $hook
  *   The name of the template being rendered ("page" in this case.)
  */
-/* -- Delete this line if you want to use this function
 function pgh_preprocess_page(&$variables, $hook) {
-  $variables['sample_variable'] = t('Lorem ipsum.');
+  if ($variables['theme_hook_suggestions'][0] == 'page__dashboard') {
+    $work_groups = pgh_api_work_groups_for_user();
+
+    $variables['work_group'] =  $work_groups[0];
+
+    $work_group_wrapper = entity_metadata_wrapper('node', $work_groups[0]);
+
+    $variables['business_units'] = array();
+
+    foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit) {
+      $variables['business_units'][] = $business_unit->value();
+    }
+  }
 }
 // */
 

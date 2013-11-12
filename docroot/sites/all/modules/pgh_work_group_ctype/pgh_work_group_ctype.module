@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Work Group Content Type feature.
+ */
+
+include_once 'pgh_work_group_ctype.features.inc';

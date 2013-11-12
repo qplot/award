@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Business Unit Content Type feature.
+ */
+
+include_once 'pgh_business_unit_ctype.features.inc';
