@@ -138,6 +138,7 @@ function pgh_application_mediaform($form, &$form_state) {
     '#description' => t('Pick a video file to upload.'),
     '#attached' => array(),
     '#extended' => TRUE,
+    // '#value' => array('fid' => 22),
   );
 
   $form['submit'] = array(
@@ -148,6 +149,7 @@ function pgh_application_mediaform($form, &$form_state) {
 }
 
 function pgh_application_mediaform_submit($form, &$form_state) {
+  dsm($form);
   dsm($form_state);
   dsm($_FILES);
 }
