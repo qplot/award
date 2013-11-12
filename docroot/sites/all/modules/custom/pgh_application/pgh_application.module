@@ -1,9 +1,11 @@
 <?php
 
 /**
- * hook menu
+ * Implementation of hook_menu().
  */
 function pgh_application_menu() {
+  $items = array();
+
   $items['applications'] = array(
     'title' => 'All applications',
     'description' => 'List all applications',
@@ -11,7 +13,8 @@ function pgh_application_menu() {
     'page arguments' => array(),
     'access callback' => TRUE,
   );
-  // test for explorering form api
+
+  // Menu links for testing the Form API.
   $items['testform'] = array(
     'title' => 'Form example',
     'description' => 'Test form features',
@@ -39,7 +42,7 @@ function pgh_application_menu() {
 }
 
 /**
- * hook theme
+ * Implementation of hook_theme().
  */
 function pgh_application_theme() {
   return array(

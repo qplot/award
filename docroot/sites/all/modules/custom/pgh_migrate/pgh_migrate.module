@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * @file
+ * MIgrate module file.
+ *
+ * This file is normally empty. Here we include a define for PGH_MIGRATE_DATA_DIR and we also define a class which
+ * represents an empty migration.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+
+// The location of the CSV files containing the application, section, and question definitions.
+// This should be customized in local.settings.php.
 define('PGH_MIGRATE_DATA_DIR', variable_get('pgh_migrate_data_dir', drupal_get_path('module', 'pgh_migrate') . '/sample'));
 
 /**
@@ -10,29 +22,51 @@ define('PGH_MIGRATE_DATA_DIR', variable_get('pgh_migrate_data_dir', drupal_get_p
  * @author  Jay Roberts <jay@designhammer.com>
  */
 class PGHMigrateEmptyList extends MigrateList {
+  /**
+   * Default implementation.
+   */
   public function __toString() {
     return 'Empty source';
   }
 
+  /**
+   * Default implementation.
+   */
   public function getIdList() {
     return array();
   }
 
+  /**
+   * Default implementation.
+   */
   public function computeCount() {
     return 0;
   }
 
+  /**
+   * Default implementation.
+   */
   public function count() {
     return 0;
   }
 
+  /**
+   * Default implementation.
+   */
   public function rewind() {
-    // Noop
+    // Noop.
   }
 
+  /**
+   * Default implementation.
+   */
   public function valid() {
     return TRUE;
   }
+
+  /**
+   * Default implementation.
+   */
   public function current() {
     return 1;
   }
@@ -44,6 +78,9 @@ class PGHMigrateEmptyList extends MigrateList {
  * @author Jay Roberts <jay@designhammer.com>
  */
 class PGHMigrateEmptyItem extends MigrateItem {
+  /**
+   * Default implementation.
+   */
   public function getItem($id) {
     return NULL;
   }

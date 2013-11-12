@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * @file
+ * Define individual migrations for the PGH MIgrate module.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ * @author  Fang Jin <fang@designhammer.com>
+ */
+
+/**
+ * Migrate parameter definitions.
+ *
+ * Specifies which version of the Migrate API this module is designed for and specifies the names and file locations
+ * of individual migration classes.
+ *
+ * @return array
+ *   An array of MIgrate configuration parameters.
+ */
 function pgh_migrate_migrate_api() {
   $api = array(
     'api' => 2,
