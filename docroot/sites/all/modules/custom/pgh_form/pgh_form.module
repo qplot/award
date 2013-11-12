@@ -129,7 +129,24 @@ function pgh_application_edit_form($app_id, $cat_id) {
 }
 
 /**
- * Application form.
+ * Form callback for a specific application and category.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @param string $cat_id
+ *   The category id to display.
+ *
+ * @return array
+ *   A Drupal form array ready to be rendered.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {
   global $pgh_temp_section_questions;
@@ -138,11 +155,6 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
   if (empty($app_id) || empty($cat_id)) {
     return $form;
   }
-  // $form['name'] = array(
-  //   '#type' => 'item',
-  //   '#title' => t('Notes'),
-  //   '#markup' => 'This is for demonstration purpose :) It lists all questions for PFC <b>application type</b> and Leadership <b>category</b>. '
-  // );
 
   // Load category by name, can be id as well.
   $cat = node_load($cat_id);
@@ -201,19 +213,27 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     '#type' => 'hidden',
     '#value' => $app_id
   );
-  // $form['questions'] = array(
-  //   '#type' => 'hidden',
-  //   '#value' => $questions
-  // );
 
   return $form;
 }
 
 /**
- * Application form submit.
+ * Application form submit handler. Handles submission of the fields in a single category of the application.
+ *
+ * Determines the value to be stored and calculates the points for each question. Stores this information
+ * in the appropriate response node.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_submit($form, &$form_state) {
-  // dsm($form_state['values']);
+  // TODO: Calculate the points for a given question in a separate API function (
+  // i.e. pgh_api_score_for_question($app_id, $qid, $answer).
 
   // Since preparation have all response ready, we just need to save one by one.
   $app_id = $form_state['values']['application'];
@@ -223,14 +243,14 @@ function pgh_application_form_submit($form, &$form_state) {
     // Assume all question has number.
     if (is_numeric($qid)) {
       $question = node_load($qid);
-      $wrapper = entity_metadata_wrapper('node', $question);
-      $type = $wrapper->field_question_type->value();
-      $style = $wrapper->field_question_style->value();
+      $question_wrapper = entity_metadata_wrapper('node', $question);
+      $type = $question_wrapper->field_question_type->value();
+      $style = $question_wrapper->field_question_style->value();
 
       // Save response if the question expects a response.
       if (!in_array($type, array('html', 'container'))) {
         // Assign point.
-        $points = $wrapper->field_question_points->value();
+        $points = $question_wrapper->field_question_points->value();
 
         $point = 0;
         switch ($type) {
@@ -243,13 +263,13 @@ function pgh_application_form_submit($form, &$form_state) {
           case 'selection':
             switch ($style) {
               case 'checkboxes':
-                $options = $wrapper->field_question_options->value();
+                $options = $question_wrapper->field_question_options->value();
                 $i = 0;
                 foreach ($options as $option) {
                   if (!empty($value[$option])) {
                     $point += $points[$i];
                   }
-                  $i = $i + 1;
+                  $i++;
                 }
                 $value = serialize($value);
                 break;
@@ -282,7 +302,20 @@ function pgh_application_form_submit($form, &$form_state) {
 }
 
 /**
- * Return form element based on question settings.
+ * Builds a Drupal Form API element for a specific question in an application.
+ *
+ * Sets the default value to a provided answer in a response node if one is available.
+ *
+ * @param object $question
+ *   A fully-loaded question node.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @return array
+ *   A Drupal Form API element representing the supplied question.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_gen_form_question($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
@@ -394,6 +427,26 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 /**
  * Generate form questions with layout.
  */
+
+/**
+ * Builds a Drupal Form API element for a specific question and handle layout for 'container' type questions.
+ *
+ * If the question has a layout string specified, parse the layout and render it.
+ *
+ * This is not a recursive function. Questions with type 'container' may not contain other questions with
+ * type 'container'.
+ *
+ * @param object $question
+ *   A fully-loaded question node. If the question has a layout string, also render the layout.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @return array
+ *   A Drupal Form API element representing the supplied question.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
 function pgh_gen_form_question_layout($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
   $type = $wrapper->field_question_type->value();
@@ -435,9 +488,19 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
 }
 
 /**
- * Find question node id by question key id.
+ * Returns the NID for a question based on a supplied question id.
+ *
+ * @param string $key
+ *   A question ID.
+ *
+ * @return int
+ *   The NID for the supplied question id or 0 if not found.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_find_question_id($key) {
+  // TODO: This function accepts an ID and returns a NID. The naming makes it seem like it returns a question ID.
+  // Should be renamed to pgh_api_nid_for_question($qid)
   $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'question')
@@ -453,9 +516,23 @@ function pgh_find_question_id($key) {
 }
 
 /**
- * Find response by application and question id.
+ * Returns the NID for a response based on a supplied application NID and question NID.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @param int $qid
+ *   NID for a specific question instance.
+ *
+ * @return int
+ *   The NID for the supplied question id or 0 if not found.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_find_response_id($app_id, $qid) {
+  // TODO: This function accepts an app NID and a question NID and returns a response NID. The naming makes
+  // it seem like it returns a response ID (which is not a real thing in the system).
+  // Should be renamed to pgh_api_nid_for_response($app_nid, $question_nid)
   $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'response')
