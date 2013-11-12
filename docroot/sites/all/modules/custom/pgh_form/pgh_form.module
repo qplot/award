@@ -1,19 +1,22 @@
 <?php
 
-// define a temp variable to hold the temp questions
+/**
+ * @file
+ * Module file for PGH Form. Handles displaying a form for filling out an application.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+
+// Define a temp variable to hold the temp questions.
 $pgh_temp_section_questions = NULL;
 
 /**
- * hook menu
+ * Implementation of hook_menu().
  */
 function pgh_form_menu() {
-  // $items['app/forms'] = array(
-  //   'title' => 'Application Form Demo',
-  //   'description' => 'Demo the application page section logic',
-  //   'page callback' => 'drupal_get_form',
-  //   'page arguments' => array('pgh_application_form'),
-  //   'access callback' => TRUE,
-  // );
+  $items = array();
+
+  // This is the primary locaion for editing a form. Users edit a single page/category worth of questions at a time.
   $items['application/%/category/%/edit'] = array(
     'title' => 'Fill Application',
     'description' => 'Fill an application',
@@ -23,11 +26,10 @@ function pgh_form_menu() {
   );
 
   return $items;
-
 }
 
 /**
- * hook theme for form table
+ * Implementation of hook_theme().
  */
 function pgh_form_theme() {
   return array(
@@ -38,28 +40,30 @@ function pgh_form_theme() {
 }
 
 /**
- * theme hook implementation
+ * Theme function for PGH table-type questions.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function theme_pgh_form_table($vars) {
   $element = $vars['element'];
   $parse = &$element['#layout'];
 
-  // prepare to theme a table
+  // Prepare to theme a table.
   $rows = array();
   $i = 0;
   foreach ($parse as $row) {
-    // first row is header
+    // First row is header.
     if ($i == 0) {
       $header = $row;
     }
     else {
       $data = array();
       foreach ($row as $cell) {
-        // check if cell is a question
+        // Check if cell is a question.
         $cell_data = $cell;
         // dsm($cell);
         if (substr($cell, 0, 5) == 'pghq_') {
-          // find the question
+          // Find the question.
           if ($qid = pgh_find_question_id($cell)) {
             $cell_data = render($element[$qid]);
           }
@@ -75,25 +79,36 @@ function theme_pgh_form_table($vars) {
 }
 
 /**
- * Fill an application form
+ * Page callback to display an edit form for a specific application and category.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @param string $cat_id
+ *   The category id to display.
+ *
+ * @return string
+ *   Rendered HTML for the page contents.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_edit_form($app_id, $cat_id) {
-  // load the app by app_id
+  // Load the app by app_id.
   if ($app = node_load($app_id)) {
     $app_wrapper = entity_metadata_wrapper('node', $app);
     $apptype = $app_wrapper->field_application_type->value();
 
     $type_wrapper = entity_metadata_wrapper('node', $apptype);
 
-    // set the page title
+    // Set the page title.
     $title = $type_wrapper->body->value->raw();
     drupal_set_title($app_wrapper->getIdentifier() . ' - ' . 'Application: ' . $title);
 
-    // list all categories of the app
+    // List all categories of the app.
     $lists = array();
     foreach ($type_wrapper->field_apptype_categories->getIterator() as $cat_wrapper) {
       $cat_label = $cat_wrapper->getIdentifier() . ' - ' . $cat_wrapper->body->value->raw();
-      $lists[] = l($cat_label, 'application/' . $app_id . '/category/' . $cat_wrapper-> getIdentifier() . '/edit');
+      $lists[] = l($cat_label, 'application/' . $app_id . '/category/' . $cat_wrapper->getIdentifier() . '/edit');
     };
 
     $out['categories'] = array(
@@ -103,7 +118,7 @@ function pgh_application_edit_form($app_id, $cat_id) {
       // '#attributes' => array('class' => array('my-links')),
     );
 
-    // render category form
+    // Render category form.
     $out['forms'] = drupal_get_form('pgh_application_form', $app_id, $cat_id);
 
     return drupal_render($out);
@@ -114,25 +129,27 @@ function pgh_application_edit_form($app_id, $cat_id) {
 }
 
 /**
- * Application form
+ * Application form.
  */
 function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {
   global $pgh_temp_section_questions;
   $form = array();
 
-  if (empty($app_id) || empty($cat_id)) return $form;
+  if (empty($app_id) || empty($cat_id)) {
+    return $form;
+  }
   // $form['name'] = array(
   //   '#type' => 'item',
   //   '#title' => t('Notes'),
   //   '#markup' => 'This is for demonstration purpose :) It lists all questions for PFC <b>application type</b> and Leadership <b>category</b>. '
   // );
 
-  // load cateogry by name, can be id as well
+  // Load category by name, can be id as well.
   $cat = node_load($cat_id);
   $questions = array();
 
   if (!empty($cat->field_category_sections['und'])) {
-    // for debugging purpose add a counter
+    // For debugging purpose add a counter.
     $debug = 0; $total = 10;
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
@@ -140,7 +157,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
         $caption = $sec_wrapper->field_section_label->value();
 
-        // add a fieldset to hold section info
+        // Add a fieldset to hold section info.
         $fieldset = 'fieldset_' . $sec_wrapper->title->value();
         $form[$fieldset] = array(
           '#type' => 'fieldset',
@@ -149,24 +166,28 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
           '#collapsed' => FALSE,
         );
 
-        // add all question inside this section
-        $pgh_temp_section_questions =
-          drupal_map_assoc($sec_wrapper->field_section_questions->raw());
+        // Add all question inside this section.
+        $pgh_temp_section_questions = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
         // dsm($pgh_temp_section_questions);
         foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
 
-          if (!isset($pgh_temp_section_questions[$q_wrapper->getIdentifier()]))
+          if (!isset($pgh_temp_section_questions[$q_wrapper->getIdentifier()])) {
             continue;
+          }
 
           $major = 'question_' . $q_wrapper->label();
 
           $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_gen_form_question_layout($q_wrapper->value(), $app_id);
 
           $debug = $debug + 1;
-          if ($debug == $total) break;
+          if ($debug == $total) {
+            break;
+          }
 
         }
-        if ($debug == $total) break;
+        if ($debug == $total) {
+          break;
+        }
       }
     }
   }
@@ -189,58 +210,64 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 }
 
 /**
- * Application form submit
+ * Application form submit.
  */
 function pgh_application_form_submit($form, &$form_state) {
   // dsm($form_state['values']);
 
-  // since preparation have all response ready, we just need to save one by one
+  // Since preparation have all response ready, we just need to save one by one.
   $app_id = $form_state['values']['application'];
 
   foreach ($form_state['values'] as $qid => &$value) {
 
-    // assume all question has number
+    // Assume all question has number.
     if (is_numeric($qid)) {
       $question = node_load($qid);
       $wrapper = entity_metadata_wrapper('node', $question);
       $type = $wrapper->field_question_type->value();
       $style = $wrapper->field_question_style->value();
 
-      // save response if the question expects a response
+      // Save response if the question expects a response.
       if (!in_array($type, array('html', 'container'))) {
-        // assign point
+        // Assign point.
         $points = $wrapper->field_question_points->value();
 
         $point = 0;
         switch ($type) {
           case 'text':
-            if (!empty($value) && !empty($points[0]))
+            if (!empty($value) && !empty($points[0])) {
               $point = $points[0];
+            }
             break;
+
           case 'selection':
             switch ($style) {
               case 'checkboxes':
                 $options = $wrapper->field_question_options->value();
                 $i = 0;
                 foreach ($options as $option) {
-                  if (!empty($value[$option]))
+                  if (!empty($value[$option])) {
                     $point += $points[$i];
+                  }
                   $i = $i + 1;
                 }
                 $value = serialize($value);
                 break;
 
               default:
-                if (is_numeric($value) && is_array($points) && !empty($points[$value]))
+                if (is_numeric($value) && is_array($points) && !empty($points[$value])) {
                   $point = $points[$value];
+                }
                 break;
             }
             break;
+
           case 'file':
             $value = $form_state['input']['fid'];
             break;
+
           default:
-            # code...
+            // code...
             break;
         }
 
@@ -255,7 +282,7 @@ function pgh_application_form_submit($form, &$form_state) {
 }
 
 /**
- * Return form element based on question settings
+ * Return form element based on question settings.
  */
 function pgh_gen_form_question($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
@@ -263,42 +290,47 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $prompt = $wrapper->field_question_prompt->value();
   $style = $wrapper->field_question_style->value();
 
-  // prepare response for question expecting a response
+  // Prepare response for question expecting a response.
   $answer = array('value' => '', 'point' => 0);
   $response_edit = '';
   $point_edit = '';
   if (!in_array($type, array('html', 'container'))) {
     $rid = pgh_get_response($app_id, $wrapper->getIdentifier(), $answer);
-    if (!$rid) pgh_set_response($app_id, $wrapper->getIdentifier());
-    $response_edit = '<small>' . l('[R]', 'node/' . $rid . '/edit') . '</small>';
+    if (!$rid) {
+      pgh_set_response($app_id, $wrapper->getIdentifier());
+    }
+    $response_edit = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $point_edit = ' <small>[P' . intval($answer['point']) . ']</small> ';
   }
 
   $form = array();
-  $question_edit = '<small>' . l('[Q]', 'node/' . $wrapper->getIdentifier() . '/edit') . '</small>';
+  $question_edit = '<small>' . l(t('[Q]'), 'node/' . $wrapper->getIdentifier() . '/edit') . '</small>';
   $form['#title'] = $prompt . ' ' .
                     $question_edit . ' ' .
                     $response_edit . ' ' .
                     $point_edit;
 
   $form['#default_value'] = $answer['value'];
-  // make sure the flat return
-  $form['#tree'] = False;
+  // Make sure the flat return.
+  $form['#tree'] = FALSE;
 
-  // based on different question type
+  // Based on different question type.
   switch ($type) {
     case 'html':
       $form['#markup'] = $form['#title'];
       unset($form['#title']);
       break;
+
     case 'container':
       $form['#markup'] = $form['#title'];
       unset($form['#title']);
       break;
+
     case 'text':
       $form['#type'] = 'textfield';
       $form['#size'] = NULL;
       break;
+
     case 'selection':
       $options = $wrapper->field_question_options->value();
 
@@ -307,24 +339,29 @@ function pgh_gen_form_question($question, $app_id = NULL) {
           $form['#type'] = 'select';
           $form['#options'] = $options;
           break;
+
         case 'default':
         case 'radios':
           $form['#type'] = 'radios';
           $form['#options'] = $options;
           break;
+
         case 'checkboxes':
           $form['#type'] = 'checkboxes';
           $form['#options'] = drupal_map_assoc($options);
           $form['#default_value'] = unserialize($form['#default_value']);
-          if (empty($answer['value']))
+          if (empty($answer['value'])) {
             unset($form['#default_value']);
+          }
           break;
+
         default:
-          $form['#markup'] = '<b><em>Not Implemented Style - '. $style . '</em></b>';
+          $form['#markup'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
           break;
       }
 
       break;
+
     case 'file':
       $form = array(
         '#type' => 'media',
@@ -343,11 +380,11 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
 
     default:
-      $form['#markup'] = '<b><em>Not Implemented Type - '. $type . '</em></b>';
+      $form['#markup'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
       break;
   }
 
-  // mark this question has been proccessed
+  // Mark this question has been processed.
   global $pgh_temp_section_questions;
   unset($pgh_temp_section_questions[$wrapper->getIdentifier()]);
 
@@ -355,7 +392,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 }
 
 /**
- * Generate form questions with layout
+ * Generate form questions with layout.
  */
 function pgh_gen_form_question_layout($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
@@ -364,10 +401,10 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
   $prompt = $wrapper->field_question_prompt->value();
 
   if (!empty($layout) && ($type == 'container')) {
-    // print the container parent element
+    // Print the container parent element.
     $parse = pgh_parse_layout($layout);
 
-    // we should be able to add prompt to the prefix section
+    // We should be able to add prompt to the prefix section.
     $result = array(
       '#prefix' => $prompt,
       // '#postfix' => '',
@@ -376,11 +413,11 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
       '#layout' => $parse,
     );
 
-    // print child elements
+    // Print child elements.
     foreach ($parse as $row) {
       foreach ($row as $cell) {
         if (substr($cell, 0, 5) == 'pghq_') {
-          // find the question
+          // Find the question.
           if ($qid = pgh_find_question_id($cell)) {
             $child = node_load($qid);
             $result[$qid] = pgh_gen_form_question($child, $app_id);
@@ -388,8 +425,9 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
         }
       }
     }
-  } else {
-    // this is the original without layout handling
+  }
+  else {
+    // This is the original without layout handling.
     $result = pgh_gen_form_question($question, $app_id);
   }
 
@@ -397,7 +435,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
 }
 
 /**
- * Find question node id by question key id
+ * Find question node id by question key id.
  */
 function pgh_find_question_id($key) {
   $query = new EntityFieldQuery();
@@ -409,12 +447,13 @@ function pgh_find_question_id($key) {
     $keys = array_keys($result['node']);
     return $keys[0];
   }
-  else
+  else {
     return 0;
+  }
 }
 
 /**
- * Find response by application and question id
+ * Find response by application and question id.
  */
 function pgh_find_response_id($app_id, $qid) {
   $query = new EntityFieldQuery();
@@ -427,12 +466,13 @@ function pgh_find_response_id($app_id, $qid) {
     $keys = array_keys($result['node']);
     return $keys[0];
   }
-  else
+  else {
     return 0;
+  }
 }
 
 /**
- * Load question answer,
+ * Load question answer
  * return FALSE if no response is found
  */
 function pgh_get_response($app_id, $qid, &$response) {
