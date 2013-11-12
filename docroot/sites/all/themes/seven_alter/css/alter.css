@@ -1,0 +1,19 @@
+/* !------ admin menu ----- */
+
+body.admin-menu #admin-menu {
+  border-bottom: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+
+#block-menu-block-1 ul.menu {
+  float: left;
+}
+#block-menu-block-1 ul.menu li.leaf {
+  list-style: none;
+  padding-right: 15px;
+  float: left;
+}

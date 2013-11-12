@@ -1,0 +1,16 @@
+; The name, description and screenshot used for this theme on the Appearance
+; page at admin/appearance.
+
+name        = Seven Alter
+description = Sub-theme for Seven to allow the altering of some CSS.
+
+
+
+; This theme is compatible with Drupal 7 core.
+
+core        = 7.x
+base theme  = seven
+
+
+; Stylesheets.
+stylesheets[all][] = css/alter.css
