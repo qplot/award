@@ -1,5 +1,8 @@
 <?php
 
+// define a temp variable to hold the temp questions
+$pgh_temp_section_questions = NULL;
+
 /**
  * hook menu
  */
@@ -35,7 +38,7 @@ function pgh_form_theme() {
 }
 
 /**
- * theme hook implementation 
+ * theme hook implementation
  */
 function theme_pgh_form_table($vars) {
   $element = $vars['element'];
@@ -56,11 +59,11 @@ function theme_pgh_form_table($vars) {
         $cell_data = $cell;
         // dsm($cell);
         if (substr($cell, 0, 5) == 'pghq_') {
-          // find the question 
+          // find the question
           if ($qid = pgh_find_question_id($cell)) {
             $cell_data = render($element[$qid]);
           }
-        } 
+        }
         $data[] = array('data' => $cell_data);
       }
       $rows[] = $data;
@@ -113,7 +116,8 @@ function pgh_application_edit_form($app_id, $cat_id) {
 /**
  * Application form
  */
-function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {  
+function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {
+  global $pgh_temp_section_questions;
   $form = array();
 
   if (empty($app_id) || empty($cat_id)) return $form;
@@ -129,7 +133,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
   if (!empty($cat->field_category_sections['und'])) {
     // for debugging purpose add a counter
-    $debug = 0; $total = 5;
+    $debug = 0; $total = 10;
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
@@ -146,11 +150,16 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
         );
 
         // add all question inside this section
-        // $form[$fieldset] = array();
+        $pgh_temp_section_questions =
+          drupal_map_assoc($sec_wrapper->field_section_questions->raw());
+        // dsm($pgh_temp_section_questions);
         foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
 
+          if (!isset($pgh_temp_section_questions[$q_wrapper->getIdentifier()]))
+            continue;
+
           $major = 'question_' . $q_wrapper->label();
-          
+
           $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_gen_form_question_layout($q_wrapper->value(), $app_id);
 
           $debug = $debug + 1;
@@ -163,7 +172,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
   }
 
   $form['submit'] = array(
-    '#type' => 'submit', 
+    '#type' => 'submit',
     '#value' => 'Submit',
   );
 
@@ -180,7 +189,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 }
 
 /**
- * Application form submit 
+ * Application form submit
  */
 function pgh_application_form_submit($form, &$form_state) {
   // dsm($form_state['values']);
@@ -220,14 +229,16 @@ function pgh_application_form_submit($form, &$form_state) {
                 }
                 $value = serialize($value);
                 break;
-              
+
               default:
                 if (is_numeric($value) && is_array($points) && !empty($points[$value]))
                   $point = $points[$value];
                 break;
             }
             break;
-          
+          case 'file':
+            $value = $form_state['input']['fid'];
+            break;
           default:
             # code...
             break;
@@ -266,8 +277,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $form = array();
   $question_edit = '<small>' . l('[Q]', 'node/' . $wrapper->getIdentifier() . '/edit') . '</small>';
   $form['#title'] = $prompt . ' ' .
-                    $question_edit . ' ' . 
-                    $response_edit . ' ' . 
+                    $question_edit . ' ' .
+                    $response_edit . ' ' .
                     $point_edit;
 
   $form['#default_value'] = $answer['value'];
@@ -314,11 +325,31 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       }
 
       break;
-    
+    case 'file':
+      $form = array(
+        '#type' => 'media',
+        '#title' => t('Upload file'),
+        '#input' => TRUE,
+        '#media_options' => array(
+          'global' => array(
+            'types' => array('document'),
+            'schemes' => array('http'),
+          ),
+        ),
+        '#description' => t($prompt),
+        '#attached' => array(),
+        '#extended' => TRUE,
+      );
+      break;
+
     default:
       $form['#markup'] = '<b><em>Not Implemented Type - '. $type . '</em></b>';
       break;
   }
+
+  // mark this question has been proccessed
+  global $pgh_temp_section_questions;
+  unset($pgh_temp_section_questions[$wrapper->getIdentifier()]);
 
   return $form;
 }
@@ -349,7 +380,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
     foreach ($parse as $row) {
       foreach ($row as $cell) {
         if (substr($cell, 0, 5) == 'pghq_') {
-          // find the question 
+          // find the question
           if ($qid = pgh_find_question_id($cell)) {
             $child = node_load($qid);
             $result[$qid] = pgh_gen_form_question($child, $app_id);
@@ -407,7 +438,7 @@ function pgh_find_response_id($app_id, $qid) {
 function pgh_get_response($app_id, $qid, &$response) {
   $rid = pgh_find_response_id($app_id, $qid);
   if ($rid) {
-    $response = node_load($rid); 
+    $response = node_load($rid);
     $wrapper = entity_metadata_wrapper('node', $response);
 
     $response = array(
@@ -443,7 +474,7 @@ function pgh_set_response($app_id, $qid, $answer = array()) {
     $wrapper->field_response_application->set($app_id);
     $wrapper->field_response_question->set($qid);
   }
-  $wrapper->title = 'app_' . $app_id . '_q_' . $qid; 
+  $wrapper->title = 'app_' . $app_id . '_q_' . $qid;
   if ($answer) {
     $wrapper->body = array(
       'value' => $answer['value']
@@ -459,7 +490,7 @@ function pgh_set_response($app_id, $qid, $answer = array()) {
  * Parser layout string into array
  * Given a string with ; and , delimiter for rows and columns
  */
-function pgh_parse_layout($str) {  
+function pgh_parse_layout($str) {
   $rows = array_map('trim', explode(";", $str));
   $result = array();
   foreach ($rows as $row) {
