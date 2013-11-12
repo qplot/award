@@ -1,0 +1,16 @@
+name = Work Group Content Type
+description = PGH Work Group Content Type
+core = 7.x
+package = PGH Content Type
+version = 7.x-1.0
+project = pgh_work_group_ctype
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_business_units
+features[field_instance][] = node-work_group-body
+features[field_instance][] = node-work_group-field_business_units
+features[node][] = work_group
+features_exclude[dependencies][pgh_question_ctype] = pgh_question_ctype
+project path = sites/all/modules

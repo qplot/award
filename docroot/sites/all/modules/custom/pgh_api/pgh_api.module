@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Awards API module.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+
+/**
+ * Returns abn array of Work Group nodes for the current user.
+ *
+ * @return array
+ *   An array of Work Group nodes owned by the current user.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_work_groups_for_user() {
+  // TODO: Actually load the current user's work_group nodes.
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'work_group')
+                  ->execute();
+  $keys = array_keys($result['node']);
+  return array(node_load($keys[0]));
+}
