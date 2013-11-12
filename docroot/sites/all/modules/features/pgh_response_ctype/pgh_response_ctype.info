@@ -1,7 +1,7 @@
 name = Response Content Type
 description = PGH Response Content Type
 core = 7.x
-package = Practice Greenhealth
+package = PGH Content Type
 version = 7.x-1.0
 project = pgh_response_ctype
 dependencies[] = entityreference

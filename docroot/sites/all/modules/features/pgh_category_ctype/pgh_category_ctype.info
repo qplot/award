@@ -1,7 +1,7 @@
 name = Category Content Type
 description = PGH Category Content Type
 core = 7.x
-package = Practice Greenhealth
+package = PGH Content Type
 version = 7.x-1.0
 project = pgh_category_ctype
 dependencies[] = entityreference
