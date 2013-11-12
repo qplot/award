@@ -472,10 +472,25 @@ function pgh_find_response_id($app_id, $qid) {
 }
 
 /**
- * Load question answer
- * return FALSE if no response is found
+ * Load the nid of the response for a given question.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @param int $qid
+ *   NID for a specific question instance.
+ *
+ * @param array $response
+ *   A response array, passed by reference. This will be set to an array containing 'value' and 'points' elements.
+ *
+ * @return int
+ *   The NID for the response object matching the supplied question/application identifiers.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_get_response($app_id, $qid, &$response) {
+  // TODO: Functions MUST NOT alter data by reference.
+  // Refactor this to remove the $response setting behavior.
   $rid = pgh_find_response_id($app_id, $qid);
   if ($rid) {
     $response = node_load($rid);
@@ -494,21 +509,40 @@ function pgh_get_response($app_id, $qid, &$response) {
 /**
  * Set question response
  */
+
+/**
+ * Sets the stored value for the response to a specific application/question.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @param int $qid
+ *   NID for a specific question instance.
+ *
+ * @param array $answer
+ *   An array specifying the value to store in the response.
+ *
+ * @return int
+ *   The NID of the response which the answer was saved to.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
 function pgh_set_response($app_id, $qid, $answer = array()) {
-  // set default answer
+  // Set default answer.
   $default = array(
     'value' => '',
     'point' => 0,
   );
   $answer = array_merge($default, $answer);
 
-  // find response
+  // Find response.
   $rid = pgh_find_response_id($app_id, $qid);
   if ($rid) {
     $response = node_load($rid);
     $wrapper = entity_metadata_wrapper('node', $response);
-  } else {
-    // create a new response
+  }
+  else {
+    // Create a new response.
     $response = entity_create('node', array('type' => 'response'));
     $wrapper = entity_metadata_wrapper('node', $response);
     $wrapper->field_response_application->set($app_id);
@@ -527,14 +561,29 @@ function pgh_set_response($app_id, $qid, $answer = array()) {
 }
 
 /**
- * Parser layout string into array
- * Given a string with ; and , delimiter for rows and columns
+ * Parse a layout string into an array of labels and question ids.
+ *
+ * Layout strings represent 2-dimensional arrays with columns delimited by commas and
+ * rows delimited by semicolons. Whitespace and newlines around elements are removed.
+ *
+ * Example:
+ *
+ * Fruit,  Color,             Taste,              Notes;
+ * Apple,  pghq_color_apple,  pghq_taste_apple,   pghq_notes_apple;
+ * Pear,   pghq_color_pear,   pghq_taste_pear,    pghq_notes_pear;
+ * Banana, pghq_color_banana, pghq_taste_banana,  pghq_notes_banana;
+ *
+ * @param string $layout
+ *   The layout string to parse.
+ *
+ * @return array
+ *   A parsed array matching the structure inidicated by the layout string. Array values are strings.
  */
-function pgh_parse_layout($str) {
-  $rows = array_map('trim', explode(";", $str));
+function pgh_parse_layout($layout) {
+  $rows = array_map('trim', explode(';', $layout));
   $result = array();
   foreach ($rows as $row) {
-    $result[] = array_map('trim',explode(",",$row));
+    $result[] = array_map('trim', explode(',', $row));
   }
   return $result;
 }
