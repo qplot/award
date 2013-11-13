@@ -54,6 +54,9 @@ function pgh_preprocess_html(&$variables, $hook) {
  */
 function pgh_preprocess_page(&$variables, $hook) {
   if ($variables['theme_hook_suggestions'][0] == 'page__dashboard') {
+
+    drupal_set_title('Work Group Dashboard');
+
     $work_groups = pgh_api_work_groups_for_user();
 
     $variables['work_group'] =  $work_groups[0];
