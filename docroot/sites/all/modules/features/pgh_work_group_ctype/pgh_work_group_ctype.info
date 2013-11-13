@@ -13,4 +13,4 @@ features[field_instance][] = node-work_group-body
 features[field_instance][] = node-work_group-field_business_units
 features[node][] = work_group
 features_exclude[dependencies][pgh_question_ctype] = pgh_question_ctype
-project path = sites/all/modules
+project path = sites/all/modules/features
