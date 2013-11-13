@@ -10,4 +10,4 @@ features[features_api][] = api:2
 features[field_instance][] = node-business_unit-body
 features[node][] = business_unit
 features_exclude[dependencies][pgh_question_ctype] = pgh_question_ctype
-project path = sites/all/modules
+project path = sites/all/modules/features
