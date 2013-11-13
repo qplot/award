@@ -47,32 +47,6 @@
       </nav>
     <?php endif; ?>
 
-
-    <?php if ($logged_in): ?>
-    <div id="loggedin-user-block">
-    <?php $user = user_load($user->uid); ?>
-
-      <div class="user-picture-wrap"><div class="user-picture">
-      <?php if($user->picture) {
-        print theme('image_style',
-            array(
-              'style_name' => 'thumbnail',
-              'path' => $user->picture->uri,
-              'attributes' => array('class' => 'avatar')
-            )
-          );
-        }
-      ?>
-      </div></div>
-
-      <span class="edit-user"><a href="/user/<?php print $user->uid; ?>/edit">Edit</a></span>
-      <div class="users-name"><?php print $user->name; ?><br>
-      <span class="users-employer"><?php print $user->field_company['und'][0]['value']; ?></span></div>
-
-    </div>
-    <?php endif; ?>
-
-
     <?php print render($page['header']); ?>
 
     <?php print render($page['navigation']); ?>
@@ -84,7 +58,6 @@
     <?php print $breadcrumb; ?>
   </div></div>
 
-
   <div id="main-wrap"><div id="main-wrap-inner">
   <div id="main">
 
@@ -92,14 +65,11 @@
       <?php print render($page['highlighted']); ?>
 
       <a id="main-content"></a>
-
-      <!--
       <?php print render($title_prefix); ?>
       <?php if ($title): ?>
         <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
       <?php endif; ?>
       <?php print render($title_suffix); ?>
-      -->
 
       <?php print $messages; ?>
       <?php print render($tabs); ?>
@@ -108,25 +78,9 @@
         <ul class="action-links"><?php print render($action_links); ?></ul>
       <?php endif; ?>
 
-      <?php //print render($page['content']); ?>
+      <?php print render($page['content']); ?>
 
-
-      <?php /* --- WORK GROUP ----------------------------------------------------------- */ ?>
-
-      <?php //print all array keys in a template
-        //var_dump(get_defined_vars());
-      ?>
-
-      <p class="dashboard-label">Working Group</p>
-      <?php //if ($logged_in): ?>
-        <span class="edit-content"><a href="/node/<?php print $work_group->vid; ?>/edit">Edit</a></span>
-      <?php //endif; ?>
-      <h1 class="page__title title"><?php print $work_group->title; ?></h1>
-
-      <?php print render(field_view_field('node', $work_group, 'body', array('label' => 'hidden', ))); ?>
-
-      <?php /* --- end ------------------------------------------------------------------ */ ?>
-
+      <?php //print $feed_icons; ?>
     </div>
 
     <?php
@@ -144,38 +98,6 @@
 
   </div><!--- /#main --->
   </div></div>
-
-
-  <div id="business-unit-wrap"><div id="business-unit-wrap-inner">
-  <div id="business-unit">
-
-    <div id="business-unit-content" class="column">
-
-    <?php /* --- BUSINESS UNIT --------------------------------------------------------- */ ?>
-
-    <?php foreach ($business_units as $business_unit): ?>
-
-      <div class="business-unit-block">
-
-        <?php print render(field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden', ))); ?>
-        <?php //if ($logged_in): ?>
-          <span class="edit-content"><a href="/node/<?php print $business_unit->vid; ?>/edit">Edit</a></span>
-        <?php //endif; ?>
-        <h2><?php print $business_unit->title; ?></h2>
-
-        <?php print render(field_view_field('node', $business_unit, 'body', array('label' => 'hidden', ))); ?>
-
-      </div>
-
-    <?php endforeach; ?>
-
-    <?php /* --- end ------------------------------------------------------------------- */ ?>
-
-    </div>
-
-  </div><!--- /#business-unit --->
-  </div></div>
-
 
   <div id="footer-wrap"><div id="footer-wrap-inner">
     <p>&copy;<?php print date('Y'); ?> Practice Greenhealth Environmental Excellence Awards</p>

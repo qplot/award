@@ -34,7 +34,11 @@ $zen-auto-include-item-base: false;
  * If you want to make the page a fixed width and centered in the viewport,
  * this is the standards-compliant way to do that.
  */
-#page,
+#header-wrap-inner,
+#breadcrumb-wrap-inner,
+#main-wrap-inner,
+#business-unit-wrap-inner,
+#footer-wrap-inner,
 .region-bottom {
   margin-left: auto;
   margin-right: auto;
@@ -43,7 +47,9 @@ $zen-auto-include-item-base: false;
 
 /* Apply the shared properties of grid items in a single, efficient ruleset. */
 #header,
+#breadcrumb-wrap-inner,
 #content,
+#business-unit,
 #navigation,
 .region-sidebar-first,
 .region-sidebar-second,
@@ -55,6 +61,7 @@ $zen-auto-include-item-base: false;
 /* Containers for grid items and flow items. */
 #header,
 #main,
+#business-unit,
 #footer {
   @include zen-grid-container();
 }
@@ -62,7 +69,7 @@ $zen-auto-include-item-base: false;
 /* Navigation bar */
 #main {
   /* Move all the children of #main down to make room. */
-  padding-top: $nav-height;
+  //padding-top: $nav-height;
   position: relative;
 }
 #navigation {
