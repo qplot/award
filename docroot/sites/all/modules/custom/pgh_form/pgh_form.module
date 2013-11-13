@@ -165,7 +165,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
   if (!empty($cat->field_category_sections['und'])) {
     // For debugging purpose add a counter.
-    $debug = 0; $total = 10;
+    $debug = 0; $total = 70;
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
@@ -392,7 +392,10 @@ function pgh_gen_form_question($question, $app_id = NULL) {
           break;
 
         default:
-          $form['#markup'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
+          // $form['#markup'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
+          $form['#prefix'] = '<b><em>Not Implemented Style - '. $style . '</em></b>';
+          $form['#type'] = 'textfield';
+          $form['#size'] = NULL;
           break;
       }
 
@@ -416,7 +419,10 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
 
     default:
-      $form['#markup'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
+      // $form['#markup'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
+      $form['#type'] = 'textfield';
+      $form['#size'] = NULL;
+      $form['#prefix'] = '<b><em>Not Implemented Type - '. $type . '</em></b>';
       break;
   }
 
