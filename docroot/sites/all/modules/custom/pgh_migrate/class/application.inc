@@ -1,12 +1,26 @@
 <?php
 
+/**
+ * @file
+ * Application migration.
+ *
+ * @author  Fang Jin <fang@designhammer.com>
+ */
+
+/**
+ * Migrates applications from CSV data.
+ */
 class MigratePGHApplicationMigration extends Migration {
+
+  /**
+   * Prepare the migration.
+   */
   public function __construct($arguments) {
     parent::__construct($arguments);
 
     $this->dependencies = array('PreprocessCSV');
 
-    // create CSV source
+    // Create a CSV source.
     $columns = array(
       0 => array('id', 'id'),
       1 => array('apptype', 'application type'),
@@ -19,11 +33,12 @@ class MigratePGHApplicationMigration extends Migration {
         $columns,
         array('header_rows' => 1)
       );
-    } else {
+    }
+    else {
       $this->source = new MigrateSourceList(new PGHMigrateEmptyList(), new PGHMigrateEmptyItem());
     }
 
-    // create Node destination
+    // Create a Node destination.
     $this->destination = new MigrateDestinationNode('application');
 
     $this->map = new MigrateSQLMap($this->machineName,

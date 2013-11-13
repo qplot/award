@@ -1,12 +1,26 @@
 <?php
 
+/**
+ * @file
+ * Question migration.
+ *
+ * @author  Fang Jin <fang@designhammer.com>
+ */
+
+/**
+ * Migrates questions from CSV data.
+ */
 class MigratePGHQuestionMigration extends Migration {
+
+  /**
+   * Prepare the migration.
+   */
   public function __construct($arguments) {
     parent::__construct($arguments);
 
     $this->dependencies = array('PreprocessCSV');
 
-    // create CSV source
+    // Create a CSV source.
     $columns = array(
       0 => array('raw_id', 'raw id'),
       1 => array('id', 'id'),
@@ -31,15 +45,13 @@ class MigratePGHQuestionMigration extends Migration {
         $columns,
         array('header_rows' => 1)
       );
-    } else {
+    }
+    else {
       $this->source = new MigrateSourceList(new PGHMigrateEmptyList(), new PGHMigrateEmptyItem());
     }
 
-    // create Node destination
+    // Create a Node destination.
     $this->destination = new MigrateDestinationNode('question');
-
-    // create Entity destination
-    // $this->destination = new MigrateDestinationEntityAPI('question', 'text');
 
     $this->map = new MigrateSQLMap($this->machineName,
       array(
@@ -50,7 +62,6 @@ class MigratePGHQuestionMigration extends Migration {
         )
       ),
       MigrateDestinationNode::getKeySchema()
-      // $this->destination->getKeySchema()
     );
 
     $this->addFieldMapping('title', 'id');

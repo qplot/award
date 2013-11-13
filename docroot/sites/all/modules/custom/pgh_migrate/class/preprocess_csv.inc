@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ * Preprocesses CSV data so it can be imported by the Migration.
+ */
 
 /**
  * MigratePGHPreprocessCSVMigration
@@ -30,7 +34,8 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
   /**
    * This migration is considered complete if the /compiled directory is not empty.
    *
-   * @return boolean
+   * @return bool
+   *   TRUE if the migration is complete, FALSE otherwise.
    * @author Jay Roberts <jay@designhammer.com>
    */
   public function isComplete() {
@@ -42,10 +47,12 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
    * Performs preprocessing step, combining separate CSV files into a single file for each migration.
    *
    * @return MigrationBase::RESULT
+   *   A result specifier. Uses static constants defined in MIgrationBase.
+   *
    * @author Jay Roberts <jay@designhammer.com>
    */
   public function import() {
-    // Ensure 'compiled' folder exists
+    // Ensure 'compiled' folder exists.
     if (!is_dir(PGH_MIGRATE_DATA_DIR . '/compiled')) {
       $result = @mkdir(PGH_MIGRATE_DATA_DIR . '/compiled');
       if ($result === FALSE) {
@@ -66,8 +73,8 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
 
     foreach ($dirs as $dir) {
       if (is_dir(PGH_MIGRATE_DATA_DIR . '/' . $dir)) {
-        $csv_header = array(); // The CSV header
-        $csv_data = array(); // The combined row data
+        $csv_header = array();
+        $csv_data = array();
 
         $directory = new DirectoryIterator(PGH_MIGRATE_DATA_DIR . '/' . $dir);
         foreach ($directory as $fileinfo) {
@@ -86,7 +93,8 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
             while ($row = fgetcsv($csv_handle)) {
               if ($count == 0) {
                 $csv_header = $row;
-              } else {
+              }
+              else {
                 $csv_data[] = $row;
               }
               $count++;
@@ -94,10 +102,10 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
           }
         }
 
-        // Put the header at the top
+        // Put the header at the top.
         array_unshift($csv_data, $csv_header);
 
-        // Write the data to the compiled folder
+        // Write the data to the compiled folder.
         $output_handle = @fopen(PGH_MIGRATE_DATA_DIR . '/compiled/' . $dir . '.csv', 'w');
         if ($output_handle === FALSE) {
           self::displayMessage('Couldn\'t open CSV file for writing. ' . PGH_MIGRATE_DATA_DIR . '/compiled/' . $dir . '.csv');
@@ -117,20 +125,11 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
   }
 
   /**
-   * Returns an array of rows from the CSV file at $filepath.
-   *
-   * @param  string $file Full path to a CSV file.
-   * @return Array An array of CSV rows.
-   * @author Jay Roberts <jay@designhammer.com>
-   */
-  private function _getCSVRows($filepath) {
-    return array();
-  }
-
-  /**
    * Delete the products of the compilation process.
    *
    * @return MigrationBase::RESULT
+   *   A result specifier. Uses static constants defined in MIgrationBase.
+   *
    * @author Jay Roberts <jay@designhammer.com>
    */
   public function rollback() {
@@ -149,5 +148,4 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
       }
     }
   }
-
 }
