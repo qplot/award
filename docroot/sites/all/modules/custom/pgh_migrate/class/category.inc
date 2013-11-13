@@ -56,7 +56,7 @@ class MigratePGHCategoryMigration extends Migration {
     $this->addFieldMapping('title', 'id');
     $this->addFieldMapping('body', 'name');
     $this->addFieldMapping('field_category_sections', 'sections')
-         ->separator(', ')
+         ->separator(',')
          ->sourceMigration('Section');
   }
 }
