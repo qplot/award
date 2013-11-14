@@ -123,8 +123,6 @@ function pgh_form_category_page($app_id, $cat_id) {
 
     return $out;
 
-    return drupal_get_form('pgh_application_form', $app_id, $cat_id);
-
   }
   else {
     drupal_not_found();
