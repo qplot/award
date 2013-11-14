@@ -174,13 +174,20 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
         $caption = $sec_wrapper->field_section_label->value();
 
         // Add a fieldset to hold section info.
-        $fieldset = 'fieldset_' . $sec_wrapper->title->value();
-        $form[$fieldset] = array(
-          '#type' => 'fieldset',
-          '#title' => t(' ' . $caption),
-          '#collapsible' => TRUE,
-          '#collapsed' => FALSE,
-        );
+        if (!empty($caption)) {
+          $fieldset = 'fieldset_' . $sec_wrapper->title->value();
+          $form[$fieldset] = array(
+            '#type' => 'fieldset',
+            '#title' => t($caption),
+            '#collapsible' => TRUE,
+            '#collapsed' => FALSE,
+          );
+        } else {
+          $fieldset = 'container_' . $sec_wrapper->title->value();
+          $form[$fieldset] = array(
+            '#type' => 'container',
+          );
+        }
 
         // Add all question inside this section.
         $pgh_temp_section_questions = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
