@@ -166,7 +166,9 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
   if (!empty($cat->field_category_sections['und'])) {
     // For debugging purpose add a counter.
-    $debug = 0; $total = 1;
+    $debug = 0;
+    $total = variable_get('pgh_form_max_questions', 1000000000);
+
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);

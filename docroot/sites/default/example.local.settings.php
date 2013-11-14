@@ -27,3 +27,6 @@ $base_url = 'http://pghawards.localhost';
 
 // Path to migrate csv files. NO trailing slash
 // $conf['pgh_migrate_data_dir'] = '/path/to/migration/data';
+
+// Maximum number of questions to render, set to lower values for faster debugging, otherwise, ignore
+// $conf['pgh_form_max_questions'] = 1;
