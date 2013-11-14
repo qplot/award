@@ -54,7 +54,7 @@
 
     <?php $shipping_city = field_get_items('node', $node, 'field_shipping_city'); ?>
     <?php if ($shipping_city): ?>
-      <?php print render($content['field_shipping_city']); ?>,
+      <?php print render($content['field_shipping_city']); ?>
     <?php endif; ?>
 
     <?php $shipping_state = field_get_items('node', $node, 'field_shipping_state'); ?>
