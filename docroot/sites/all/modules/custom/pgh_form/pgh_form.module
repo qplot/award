@@ -246,15 +246,47 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_element_validate($element, &$form_state) {
-  dsm($element);
+  // dsm($form_state['values']);
   // grab question id, this might not be always the case, need FIX
   $qid = $element['#parents'][0];
+  // dsm($qid); dsm($form_state['values']);
+  // make sure this question requires an answer
+  if (empty($form_state['values'][$qid])) return;
+  $value = $form_state['values'][$qid];
 
-  if ($validation = $element['#question_validation']) {
-
+  if (!empty($element['#question_validate'])) {
+    // depending on the validation tag, we can fire for different validaiton
+    switch ($element['#question_validate']) {
+      case 'nonnegative':
+        if (!is_numeric($value)) {
+          form_set_error($qid, 'The item value needs to be number');
+        } else {
+          if ($value < 0) {
+            form_set_error($qid, 'The item value can not be negative');
+          }
+        }
+        break;
+      case 'integer':
+        if (!is_int($value)) {
+          form_set_error($qid, 'The item value needs to be integer');
+        }
+      case 'nonzero':
+        if (!is_numerc($value)) {
+          form_set_error($qid, 'The item value needs to be number');
+        } else {
+          if ($value != 0) {
+            form_set_error($qid, 'The item value can not be zero');
+          }
+        }
+        break;
+      case 'percentage':
+        // no clue
+        break;
+      default:
+        # code...
+        break;
+    }
   }
-  // grab value submitted,
-  // dsm($form_state);
 }
 
 /**
