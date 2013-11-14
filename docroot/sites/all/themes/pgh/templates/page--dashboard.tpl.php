@@ -47,7 +47,6 @@
       </nav>
     <?php endif; ?>
 
-
     <?php if ($logged_in): ?>
     <div id="loggedin-user-block">
     <?php $user = user_load($user->uid); ?>
@@ -93,13 +92,13 @@
 
       <a id="main-content"></a>
 
-      <!--
+      <?php /*
       <?php print render($title_prefix); ?>
       <?php if ($title): ?>
         <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
       <?php endif; ?>
       <?php print render($title_suffix); ?>
-      -->
+      */ ?>
 
       <?php print $messages; ?>
       <?php print render($tabs); ?>
@@ -118,12 +117,12 @@
       ?>
 
       <p class="dashboard-label">Working Group</p>
-      <?php //if ($logged_in): ?>
+      <?php if ($logged_in): ?>
         <span class="edit-content"><a href="/node/<?php print $work_group->vid; ?>/edit">Edit</a></span>
-      <?php //endif; ?>
+      <?php endif; ?>
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
 
-      <?php print render(field_view_field('node', $work_group, 'body', array('label' => 'hidden', ))); ?>
+      <?php print render(field_view_field('node', $work_group, 'body', array('label' => 'hidden'))); ?>
 
       <?php /* --- end ------------------------------------------------------------------ */ ?>
 
@@ -157,13 +156,48 @@
 
       <div class="business-unit-block">
 
-        <?php print render(field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden', ))); ?>
-        <?php //if ($logged_in): ?>
+        <?php print render(field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden'))); ?>
+        <?php if ($logged_in): ?>
           <span class="edit-content"><a href="/node/<?php print $business_unit->vid; ?>/edit">Edit</a></span>
-        <?php //endif; ?>
+        <?php endif; ?>
         <h2><?php print $business_unit->title; ?></h2>
 
-        <?php print render(field_view_field('node', $business_unit, 'body', array('label' => 'hidden', ))); ?>
+        <?php print render(field_view_field('node', $business_unit, 'body', array(
+                                                                              'label' => 'hidden',
+                                                                              'type' => 'text_summary_or_trimmed',
+                                                                              'settings' => array('trim_length' => 225)
+                                                                            ))); ?>
+
+        <div class="info-block">
+          <?php print render(field_view_field('node', $business_unit, 'field_shipping_city', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_shipping_state', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_number_beds')); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_facility_users')); ?>
+        </div>
+
+        <div class="billing-address">
+          <p class="label">Billing Address</p>
+          <?php print render(field_view_field('node', $business_unit, 'field_billing_address_1', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_billing_address_2', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_billing_city', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_billing_state', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_billing_zipcode', array('label' => 'hidden'))); ?>
+        </div>
+
+        <div class="shipping-address">
+          <p class="label">Shipping Address</p>
+          <?php print render(field_view_field('node', $business_unit, 'field_shipping_address_1', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_shipping_address_2', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_shipping_city', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_shipping_state', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_shipping_zipcode', array('label' => 'hidden'))); ?>
+        </div>
+
+        <div class="other-info">
+          <p class="label">&nbsp;</p>
+          <?php print render(field_view_field('node', $business_unit, 'field_website_url', array('label' => 'hidden'))); ?>
+          <?php print render(field_view_field('node', $business_unit, 'field_phone', array('label' => 'hidden'))); ?>
+        </div>
 
       </div>
 
