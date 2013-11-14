@@ -1,0 +1,12 @@
+name = User Profile
+description = Additional fields added to the user profile
+core = 7.x
+package = PGH User Profile
+version = 7.x-1.0
+project = pgh_user_profile
+dependencies[] = features
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_company
+features[field_instance][] = user-user-field_company
+project path = sites/all/modules/features
