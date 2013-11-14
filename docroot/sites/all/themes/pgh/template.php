@@ -47,19 +47,25 @@ function pgh_preprocess_html(&$variables, $hook) {
 /**
  * Override or insert variables into the page templates.
  *
- * @param $variables
+ * @param array $variables
  *   An array of variables to pass to the theme template.
- * @param $hook
+ *
+ * @param string $hook
  *   The name of the template being rendered ("page" in this case.)
  */
 function pgh_preprocess_page(&$variables, $hook) {
+  // Use category page template for application categories.
+  if (arg(0) == 'application' && arg(2) == 'category') {
+    $variables['theme_hook_suggestions'][] = 'page__category';
+  }
+
   if ($variables['theme_hook_suggestions'][0] == 'page__dashboard') {
 
     drupal_set_title('Work Group Dashboard');
 
     $work_groups = pgh_api_work_groups_for_user();
 
-    $variables['work_group'] =  $work_groups[0];
+    $variables['work_group'] = $work_groups[0];
 
     $work_group_wrapper = entity_metadata_wrapper('node', $work_groups[0]);
 

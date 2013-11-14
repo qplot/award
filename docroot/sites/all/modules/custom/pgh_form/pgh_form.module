@@ -20,7 +20,7 @@ function pgh_form_menu() {
   $items['application/%/category/%/edit'] = array(
     'title' => 'Fill Application',
     'description' => 'Fill an application',
-    'page callback' => 'pgh_application_edit_form',
+    'page callback' => 'pgh_form_category_page',
     'page arguments' => array(1, 3),
     'access callback' => TRUE,
   );
@@ -92,7 +92,7 @@ function theme_pgh_form_table($vars) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_application_edit_form($app_id, $cat_id) {
+function pgh_form_category_page($app_id, $cat_id) {
   // Load the app by app_id.
   if ($app = node_load($app_id)) {
     $app_wrapper = entity_metadata_wrapper('node', $app);
@@ -121,11 +121,15 @@ function pgh_application_edit_form($app_id, $cat_id) {
     // Render category form.
     $out['forms'] = drupal_get_form('pgh_application_form', $app_id, $cat_id);
 
-    return drupal_render($out);
+    return drupal_get_form('pgh_application_form', $app_id, $cat_id);
 
+    // return drupal_render($out);
+  }
+  else {
+    drupal_not_found();
   }
 
-  return '123';
+
 }
 
 /**
@@ -184,7 +188,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
             '#collapsible' => TRUE,
             '#collapsed' => FALSE,
           );
-        } else {
+        }
+        else {
           $fieldset = 'container_' . $sec_wrapper->title->value();
           $form[$fieldset] = array(
             '#type' => 'container',
@@ -460,7 +465,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       // $form['#markup'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
       $form['#type'] = 'textfield';
       $form['#size'] = NULL;
-      $form['#prefix'] = '<b><em>Not Implemented Type - '. $type . '</em></b>';
+      $form['#prefix'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
       break;
   }
 
