@@ -92,6 +92,28 @@ h3 {
   }
 }
 
+.node-type-application {
+
+  #breadcrumb-wrap {
+    background-color: $white;
+    border-top: 1px solid #ededed;
+
+    ol {
+      color: #c3c3c3;
+      text-shadow: none;
+
+      li {
+
+        a {
+          color: #acacac;
+          background-image: url(../images/global/crumb-arrow-app.png);
+        }
+      }
+    }
+  }
+}
+
+
 // !---------------------------- */
 // !--- Main ------------------- */
 // !---------------------------- */
@@ -103,7 +125,7 @@ h3 {
 }
 
 #main {
-  padding: 1em 0;
+  padding: 2em 0 3em;
 }
 
 
@@ -116,34 +138,11 @@ h3 {
 #main-content {}
 
 
-// !---------------------------- */
-// !--- Work Group ------------- */
-// !---------------------------- */
+// !------------------------------ */
+// !--- Work Group - dashboard --- */
+// !------------------------------ */
 
 .page-dashboard {
-
-  #loggedin-user-block {
-
-    .user-picture-wrap {
-      border-right: 1px solid #247c67;
-      padding-right: 10px;
-    }
-
-    .users-name {
-      color: $white;
-    }
-
-    .edit-user a {
-      color: $white;
-      border-color: $white;
-
-      &:hover {
-        color: $green;
-        background-color: $white;
-        border-color: $white;
-      }
-    }
-  }
 
   h1 {
     line-height: 1em;
@@ -182,9 +181,9 @@ h3 {
   #main {}
 }
 
-// !---------------------------- */
-// !--- Business unit ---------- */
-// !---------------------------- */
+// !--------------------------------- */
+// !--- Business unit - dashboard --- */
+// !--------------------------------- */
 
 #business-unit-wrap {
   background-color: $grayLight;
@@ -200,7 +199,49 @@ h3 {
     @include border-radius(2px);
     @include box-shadow(0 0 4px rgba(0,0,0,0.05));
     margin: 30px 0;
-    padding: 5px 20px;
+    padding: 5px 20px 5px 42px;
+    @include clearfix;
+    overflow: hidden;
+    @include transition(max-height 0.5s ease-out);
+    position: relative;
+    z-index: 1;
+
+    .toggle {
+      text-indent: -1000000px;
+      background: transparent url(../images/global/icon-toggle.png) no-repeat;
+      display: block;
+      padding: 28px 0;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      left: 20px;
+    }
+
+    &.bu-closed {
+      max-height: 170px;
+
+      .toggle {
+        background-position: 0 35px;
+
+        &:hover {
+          background-position: -48px 35px;
+        }
+      }
+    }
+
+    &.bu-opened {
+      max-height: 60em;
+
+      .toggle {
+        background-position: -24px 35px;
+
+        &:hover {
+          background-position: -72px 35px;
+        }
+      }
+    }
   }
 
   .field-name-field-business-unit-type {
@@ -210,6 +251,173 @@ h3 {
     margin-top: 1em;
     margin-bottom: 0;
   }
+
+  .field-name-body {
+    width: 740px;
+  }
+}
+
+// !---------------------------- */
+// !--- Work Group - ctype ----- */
+// !---------------------------- */
+
+.node-type-work-group {
+
+}
+
+
+// !---------------------------- */
+// !--- Business unit ---------- */
+// !--- Content type & dashboard -- */
+// !---------------------------- */
+
+#business-unit,
+.node-type-business-unit {
+
+  .info-block {
+    font-size: 0.8em;
+    font-weight: bold;
+
+    div {
+      display: inline;
+    }
+
+    .field-label {
+      float: none;
+    }
+
+    .clearfix:after { //override
+      clear: none;
+      content: none;
+      display: inline;
+      height: auto;
+      visibility: inherit;
+    }
+
+    .field-name-field-business-unit-type {
+      border-right: 1px solid #d4d4d4;
+      margin-right: 8px;
+      padding-right: 10px;
+    }
+
+    .field-name-field-shipping-city {
+
+      &:after {
+        content: ",";
+      }
+    }
+
+    .field-name-field-shipping-state {}
+
+    .field-name-field-number-beds {
+      border-left: 1px solid #d4d4d4;
+      margin-left: 8px;
+      padding-left: 10px;
+    }
+
+    .field-name-field-facility-users {
+      border-left: 1px solid #d4d4d4;
+      margin-left: 8px;
+      padding-left: 10px;
+    }
+  }
+
+  .billing-address,
+  .shipping-address,
+  .other-info {
+    font-size: 0.9em;
+    padding: 1em 0;
+    width: 200px;
+    float: left;
+
+    p.label {
+      color: $blue;
+      font-size: 0.8em;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+  }
+
+  .billing-address {
+
+    .field-name-field-billing-city,
+    .field-name-field-billing-state,
+    .field-name-field-billing-zipcode {
+      display: inline;
+
+      div {
+        display: inline;
+      }
+    }
+
+    .field-name-field-billing-city {
+
+      &:after {
+        content: ",";
+      }
+    }
+  }
+
+  .shipping-address {
+
+    .field-name-field-shipping-city,
+    .field-name-field-shipping-state,
+    .field-name-field-shipping-zipcode {
+      display: inline;
+
+      div {
+        display: inline;
+      }
+    }
+
+    .field-name-field-shipping-city {
+
+      &:after {
+        content: ",";
+      }
+    }
+  }
+}
+
+
+// !---------------------------- */
+// !--- Appication ------------- */
+// !---------------------------- */
+
+.node-type-application {
+
+  #header-wrap {
+    background-color: $white;
+  }
+
+  #header {
+
+    a#logo {
+      background-image: url(../images/award-logos/practice-for-change.png);
+    }
+  }
+
+  #loggedin-user-block {
+
+    .user-picture-wrap {
+      border: none;
+    }
+
+    .users-name {
+      color: $green;
+    }
+
+    .edit-user a {
+      color: $green;
+      border-color: #67a697;
+
+      &:hover {
+        color: $white;
+        background-color: $green;
+        border-color: $green;
+      }
+    }
+  }
 }
 
 
@@ -218,6 +426,7 @@ h3 {
 // !---------------------------- */
 
 #footer-wrap {
+  padding: 1em 0 6em;
 
   #footer-wrap-inner {}
 
@@ -245,6 +454,8 @@ h3 {
   float: right;
 
   .user-picture-wrap {
+    border-right: 1px solid #247c67;
+    padding-right: 10px;
     float: left;
   }
 
@@ -257,7 +468,7 @@ h3 {
   }
 
   .edit-user a {
-    color: $green;
+    color: $white;
     font-size: 11px;
     line-height: 14px;
     text-transform: uppercase;
@@ -269,17 +480,16 @@ h3 {
     float: right;
 
     &:hover {
-      color: $white;
-      background-color: $green;
-      border-color: $green;
+      color: $green;
+      background-color: $white;
+      border-color: $white;
     }
   }
 
   .users-name {
-    color: $green;
+    color: $white;
     font-size: 17px;
     line-height: 18px;
-    font-weight: $white;
     margin: 16px 94px 0;
   }
 

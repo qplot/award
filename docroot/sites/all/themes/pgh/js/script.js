@@ -17,7 +17,24 @@
 Drupal.behaviors.my_custom_behavior = {
   attach: function(context, settings) {
 
-    // Place your code here.
+
+      // Show / hide business units on the dashboard
+    	// ======================================================================
+
+      // set toggle arrow
+    	$('.business-unit-block').addClass('bu-closed').prepend('<a href="#" class="toggle">Toggle</a>');
+
+    	// toggle show/hide class
+    	$('.business-unit-block a.toggle').click(function() {
+        if ($(this).parent().hasClass('bu-closed')) {
+            $(this).parent().removeClass('bu-closed');
+            $(this).parent().addClass('bu-opened');
+        } else {
+            $(this).parent().removeClass('bu-opened');
+            $(this).parent().addClass('bu-closed');
+        }
+        return false;
+      });
 
   }
 };
