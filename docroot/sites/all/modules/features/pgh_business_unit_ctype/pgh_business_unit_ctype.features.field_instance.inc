@@ -90,7 +90,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -130,7 +130,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -170,7 +170,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -210,7 +210,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -250,7 +250,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -327,7 +327,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 15,
     ),
   );
 
@@ -367,7 +367,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 14,
     ),
   );
 
@@ -407,7 +407,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 18,
+      'weight' => 17,
     ),
   );
 
@@ -447,7 +447,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 10,
+      'weight' => 6,
     ),
   );
 
@@ -487,7 +487,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 11,
+      'weight' => 7,
     ),
   );
 
@@ -527,7 +527,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 8,
     ),
   );
 
@@ -567,7 +567,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 9,
     ),
   );
 
@@ -607,7 +607,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 14,
+      'weight' => 10,
     ),
   );
 
@@ -661,7 +661,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 17,
+      'weight' => 16,
     ),
   );
 
