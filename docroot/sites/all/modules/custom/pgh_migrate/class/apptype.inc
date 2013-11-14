@@ -56,7 +56,7 @@ class MigratePGHAppTypeMigration extends Migration {
     $this->addFieldMapping('title', 'id');
     $this->addFieldMapping('body', 'name');
     $this->addFieldMapping('field_apptype_categories', 'categories')
-         ->separator(', ')
+         ->separator(',')
          ->sourceMigration('Category');
   }
 }
