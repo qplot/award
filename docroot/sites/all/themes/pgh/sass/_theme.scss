@@ -282,7 +282,8 @@ h3 {
       display: inline;
     }
 
-    .field-label {
+    .field-label,
+    .field-items {
       float: none;
     }
 
@@ -316,6 +317,7 @@ h3 {
     }
 
     .field-name-field-facility-users {
+      text-transform: capitalize;
       border-left: 1px solid #d4d4d4;
       margin-left: 8px;
       padding-left: 10px;

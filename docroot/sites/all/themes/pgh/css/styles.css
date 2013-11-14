@@ -1915,12 +1915,14 @@ h3 {
 .node-type-business-unit .info-block div {
   display: inline;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003285}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003286}}
 #business-unit .info-block .field-label,
-.node-type-business-unit .info-block .field-label {
+#business-unit .info-block .field-items,
+.node-type-business-unit .info-block .field-label,
+.node-type-business-unit .info-block .field-items {
   float: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003289}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003290}}
 #business-unit .info-block .clearfix:after,
 .node-type-business-unit .info-block .clearfix:after {
   clear: none;
@@ -1929,33 +1931,34 @@ h3 {
   height: auto;
   visibility: inherit;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003297}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003298}}
 #business-unit .info-block .field-name-field-business-unit-type,
 .node-type-business-unit .info-block .field-name-field-business-unit-type {
   border-right: 1px solid #d4d4d4;
   margin-right: 8px;
   padding-right: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003305}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003306}}
 #business-unit .info-block .field-name-field-shipping-city:after,
 .node-type-business-unit .info-block .field-name-field-shipping-city:after {
   content: ",";
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003312}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003313}}
 #business-unit .info-block .field-name-field-number-beds,
 .node-type-business-unit .info-block .field-name-field-number-beds {
   border-left: 1px solid #d4d4d4;
   margin-left: 8px;
   padding-left: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003318}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003319}}
 #business-unit .info-block .field-name-field-facility-users,
 .node-type-business-unit .info-block .field-name-field-facility-users {
+  text-transform: capitalize;
   border-left: 1px solid #d4d4d4;
   margin-left: 8px;
   padding-left: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003327}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003329}}
 #business-unit .billing-address,
 #business-unit .shipping-address,
 #business-unit .other-info,
@@ -1967,7 +1970,7 @@ h3 {
   width: 200px;
   float: left;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003333}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003335}}
 #business-unit .billing-address p.label,
 #business-unit .shipping-address p.label,
 #business-unit .other-info p.label,
@@ -1979,7 +1982,7 @@ h3 {
   text-transform: uppercase;
   margin-bottom: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003345}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003347}}
 #business-unit .billing-address .field-name-field-billing-city,
 #business-unit .billing-address .field-name-field-billing-state,
 #business-unit .billing-address .field-name-field-billing-zipcode,
@@ -1988,7 +1991,7 @@ h3 {
 .node-type-business-unit .billing-address .field-name-field-billing-zipcode {
   display: inline;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003348}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003350}}
 #business-unit .billing-address .field-name-field-billing-city div,
 #business-unit .billing-address .field-name-field-billing-state div,
 #business-unit .billing-address .field-name-field-billing-zipcode div,
@@ -1997,12 +2000,12 @@ h3 {
 .node-type-business-unit .billing-address .field-name-field-billing-zipcode div {
   display: inline;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003355}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003357}}
 #business-unit .billing-address .field-name-field-billing-city:after,
 .node-type-business-unit .billing-address .field-name-field-billing-city:after {
   content: ",";
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003365}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003367}}
 #business-unit .shipping-address .field-name-field-shipping-city,
 #business-unit .shipping-address .field-name-field-shipping-state,
 #business-unit .shipping-address .field-name-field-shipping-zipcode,
@@ -2011,7 +2014,7 @@ h3 {
 .node-type-business-unit .shipping-address .field-name-field-shipping-zipcode {
   display: inline;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003368}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003370}}
 #business-unit .shipping-address .field-name-field-shipping-city div,
 #business-unit .shipping-address .field-name-field-shipping-state div,
 #business-unit .shipping-address .field-name-field-shipping-zipcode div,
@@ -2020,68 +2023,68 @@ h3 {
 .node-type-business-unit .shipping-address .field-name-field-shipping-zipcode div {
   display: inline;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003375}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003377}}
 #business-unit .shipping-address .field-name-field-shipping-city:after,
 .node-type-business-unit .shipping-address .field-name-field-shipping-city:after {
   content: ",";
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003389}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003391}}
 .node-type-application #header-wrap {
   background-color: white;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003395}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003397}}
 .node-type-application #header a#logo {
   background-image: url(../images/award-logos/practice-for-change.png);
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003402}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003404}}
 .node-type-application #loggedin-user-block .user-picture-wrap {
   border: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003406}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003408}}
 .node-type-application #loggedin-user-block .users-name {
   color: #00674e;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003410}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003412}}
 .node-type-application #loggedin-user-block .edit-user a {
   color: #00674e;
   border-color: #67a697;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003414}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003416}}
 .node-type-application #loggedin-user-block .edit-user a:hover {
   color: white;
   background-color: #00674e;
   border-color: #00674e;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003428}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003430}}
 #footer-wrap {
   padding: 1em 0 6em;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003433}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003435}}
 #footer-wrap p {
   color: #8abdb1;
   text-align: center;
   font-size: 0.7em;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003447}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003449}}
 .profile h3 {
   border: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003452}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003454}}
 #loggedin-user-block {
   padding: 15px 10px 0 0;
   float: right;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003456}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003458}}
 #loggedin-user-block .user-picture-wrap {
   border-right: 1px solid #247c67;
   padding-right: 10px;
   float: left;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003462}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003464}}
 #loggedin-user-block .user-picture {
   background: transparent url(../images/global/user-picture-bg.png) no-repeat center center;
   -webkit-border-radius: 50%;
@@ -2093,7 +2096,7 @@ h3 {
   height: 72px;
   overflow: hidden;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003470}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003472}}
 #loggedin-user-block .edit-user a {
   color: white;
   font-size: 11px;
@@ -2110,26 +2113,26 @@ h3 {
   padding: 5px 14px 3px;
   float: right;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003482}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003484}}
 #loggedin-user-block .edit-user a:hover {
   color: #00674e;
   background-color: white;
   border-color: white;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003489}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003491}}
 #loggedin-user-block .users-name {
   color: white;
   font-size: 17px;
   line-height: 18px;
   margin: 16px 94px 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003496}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003498}}
 #loggedin-user-block .users-employer {
   font-size: 12px;
   text-transform: uppercase;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003507}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003509}}
 body.admin-menu #admin-menu {
   border-bottom: none;
   -webkit-box-shadow: 0 0 0 transparent;
