@@ -7,8 +7,11 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-// Define a temp variable to hold the temp questions.
+// Define a temp variable to hold the questions.
 $pgh_temp_section_questions = NULL;
+
+// Define a temp variable to hold the validation erros.
+$pgh_temp_validation_errors = NULL;
 
 /**
  * Implementation of hook_menu().
@@ -235,6 +238,29 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 }
 
 /**
+ * Set validation error
+ * Similar to form_set_error
+ *
+ * @param array $qid
+ *   Form element.
+ *
+ * @param array $form_state
+ *   Form state array.
+ */
+function pgh_form_set_error($qid, $msg) {
+  global $pgh_temp_validation_errors;
+
+  $pgh_temp_validation_errors[] = array(
+    'qid' => $qid,
+    'message' => $msg
+  );
+}
+
+// function pgh_application_form_validate($form, &$form_state) {
+//   dsm($form);
+// }
+
+/**
  * Application form element validation handler.
  *
  * @param array $element
@@ -246,7 +272,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_element_validate($element, &$form_state) {
-  // dsm($form_state['values']);
+  // dsm($element);
   // grab question id, this might not be always the case, need FIX
   $qid = $element['#parents'][0];
   // dsm($qid); dsm($form_state['values']);
@@ -259,23 +285,23 @@ function pgh_application_form_element_validate($element, &$form_state) {
     switch ($element['#question_validate']) {
       case 'nonnegative':
         if (!is_numeric($value)) {
-          form_set_error($qid, 'The item value needs to be number');
+          pgh_form_set_error($qid, 'The item value needs to be number');
         } else {
           if ($value < 0) {
-            form_set_error($qid, 'The item value can not be negative');
+            pgh_form_set_error($qid, 'The item value can not be negative');
           }
         }
         break;
       case 'integer':
         if (!is_int($value)) {
-          form_set_error($qid, 'The item value needs to be integer');
+          pgh_form_set_error($qid, 'The item value needs to be integer');
         }
       case 'nonzero':
         if (!is_numerc($value)) {
-          form_set_error($qid, 'The item value needs to be number');
+          pgh_form_set_error($qid, 'The item value needs to be number');
         } else {
           if ($value != 0) {
-            form_set_error($qid, 'The item value can not be zero');
+            pgh_form_set_error($qid, 'The item value can not be zero');
           }
         }
         break;
@@ -287,6 +313,10 @@ function pgh_application_form_element_validate($element, &$form_state) {
         break;
     }
   }
+
+  global $pgh_temp_validation_errors;
+  if (!empty($pgh_temp_validation_errors))
+    $form_state['values']['errors'] = $pgh_temp_validation_errors;
 }
 
 /**
@@ -304,6 +334,7 @@ function pgh_application_form_element_validate($element, &$form_state) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_submit($form, &$form_state) {
+  // dsm($form_state['values']);
   // TODO: Calculate the points for a given question in a separate API function (
   // i.e. pgh_api_score_for_question($app_id, $qid, $answer).
 
@@ -370,6 +401,15 @@ function pgh_application_form_submit($form, &$form_state) {
         pgh_set_response($app_id, $qid, $answer);
       }
     }
+  }
+
+  // handle the error
+  if (!empty($form_state['values']['errors'])) {
+    $lines = array();
+    foreach ($form_state['values']['errors'] as $error) {
+      $lines[] = $error['qid'] . ' - ' . $error['message'];
+    }
+    drupal_set_message(implode('\n', $lines));
   }
 }
 
