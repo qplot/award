@@ -505,6 +505,10 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $form['#question_id'] = $wrapper->getIdentifier();
   $form['#question_validate'] = $wrapper->field_question_validation->value();
   $form['#element_validate'] = array('pgh_application_form_element_validate');
+  // Dependency display
+  if ($parent_qid = $wrapper->field_question_parent_qid->value()) {
+    $form['#states'] = pgh_form_question_states($question);
+  }
 
   // Based on different question type.
   switch ($type) {
@@ -649,6 +653,63 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
     // This is the original without layout handling.
     $result = pgh_gen_form_question($question, $app_id);
   }
+
+  return $result;
+}
+
+/**
+ * Return the visibility state array based on question
+ *
+ *
+ * @param object $question
+ *   The question node object.
+ *
+ * @return array
+ *   The visibility state array supported by Drupal form
+ */
+function pgh_form_question_states($question) {
+  $wrapper = entity_metadata_wrapper('node', $question);
+
+  // load parent question
+  $parent_qid = $wrapper->field_question_parent_qid->value();
+  $parent = pgh_find_question_id($parent_qid);
+  $parent_question = node_load($parent);
+  $pwrapper = entity_metadata_wrapper('node', $parent_question);
+  $parent_type = $pwrapper->field_question_type->value();
+  $parent_style = $pwrapper->field_question_style->value();
+
+  $name = $pwrapper->getIdentifier();
+  $value = $wrapper->field_question_parent_value->value();
+  $input = '';
+  switch ($parent_type) {
+    case 'selection':
+      switch ($parent_style) {
+        // multiple choices
+        case 'checkboxes':
+          $name = $pwrapper->getIdentifier() . '[' . $value . ']';
+          $input = array('checked' => TRUE);
+          break;
+
+        // single choices, ex. radios
+        default:
+          $options = $pwrapper->field_question_options->value();
+          $value = array_search($value, $options);
+          break;
+      }
+      # code...
+      break;
+
+    default:
+      break;
+  }
+  if (empty($input)) {
+    $input = array('value' => $value);
+  }
+  $result = array(
+    'visible' => array(
+      ':input[name="' . $name . '"]' => $input
+    ),
+  );
 
   return $result;
 }

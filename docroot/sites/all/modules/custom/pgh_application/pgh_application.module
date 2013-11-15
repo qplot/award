@@ -88,6 +88,23 @@ function pgh_application_testform($form, &$form_state) {
     // '#attributes' => array('id'=> 'edit-4', 'name' => '4'),
   );
 
+  $form['option'] = array(
+    '#type' => 'radios',
+    '#title' => 'select the following',
+    '#options' => array(0 => t('Closed'), 1 => t('Active')),
+    '#default_value' => 0
+  );
+
+  $form['display'] = array(
+    '#type' => 'textfield',
+    '#title' => 'display me',
+    '#states' => array(
+      'visible' => array(
+        ':input[name="option"]' => array('value' => 1)
+      ),
+    ),
+  );
+
   // $form['abc']['def'] = array(
   //   '#markup' => render($form['abc']['def']),
   // );
