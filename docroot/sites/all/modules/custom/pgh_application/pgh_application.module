@@ -59,7 +59,6 @@ function pgh_application_block_info() {
  * Implementation of hook_block_view().
  */
 function pgh_application_block_view($delta = '') {
-
   $block = array();
 
   switch ($delta) {
@@ -259,8 +258,16 @@ function pgh_application_category_links($application_nid) {
 
   $items = array();
   foreach ($app_type_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {
-    $label = $category_wrapper->getIdentifier() . ' - ' . $category_wrapper->body->value->raw();
-    $items[] = l($label, 'application/' . $application_nid . '/category/' . $category_wrapper->getIdentifier() . '/edit');
+    $label = $category_wrapper->getIdentifier() . ' (' . $category_wrapper->title->value() . ') ' . $category_wrapper->body->value->raw();
+    $options = array(
+      'attributes' => array(
+        'class' => array(
+          'category-link',
+          str_replace('_', '-', $category_wrapper->title->value()),
+        ),
+      )
+    );
+    $items[] = l($label, 'application/' . $application_nid . '/category/' . $category_wrapper->getIdentifier() . '/edit', $options);
   }
 
   return $items;
