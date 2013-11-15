@@ -11,33 +11,35 @@
 // - https://drupal.org/node/1446420
 // - http://www.adequatelygood.com/2010/3/JavaScript-Module-Pattern-In-Depth
 (function ($, Drupal, window, document, undefined) {
+  'use strict';
+
+  // To understand behaviors, see https://drupal.org/node/756722#behaviors
+  Drupal.behaviors.my_custom_behavior = {
+    attach: function(context, settings) {
 
 
-// To understand behaviors, see https://drupal.org/node/756722#behaviors
-Drupal.behaviors.my_custom_behavior = {
-  attach: function(context, settings) {
+        // Show / hide business units on the dashboard
+      	// ======================================================================
 
+        // set toggle arrow
+      	$('.business-unit-block').addClass('bu-closed').prepend('<a href="#" class="toggle">Toggle</a>');
 
-      // Show / hide business units on the dashboard
-    	// ======================================================================
+      	// toggle show/hide class
+      	$('.business-unit-block a.toggle').click(function() {
+      	  var $bu_container = $(this).parent();
 
-      // set toggle arrow
-    	$('.business-unit-block').addClass('bu-closed').prepend('<a href="#" class="toggle">Toggle</a>');
+          if ($bu_container.hasClass('bu-closed')) {
+              $bu_container.removeClass('bu-closed')
+                              .addClass('bu-opened');
+          } else {
+              $bu_container.removeClass('bu-opened')
+                              .addClass('bu-closed');
+          }
+          return false;
+        });
 
-    	// toggle show/hide class
-    	$('.business-unit-block a.toggle').click(function() {
-        if ($(this).parent().hasClass('bu-closed')) {
-            $(this).parent().removeClass('bu-closed');
-            $(this).parent().addClass('bu-opened');
-        } else {
-            $(this).parent().removeClass('bu-opened');
-            $(this).parent().addClass('bu-closed');
-        }
-        return false;
-      });
-
-  }
-};
+    }
+  };
 
 
 })(jQuery, Drupal, this, this.document);
