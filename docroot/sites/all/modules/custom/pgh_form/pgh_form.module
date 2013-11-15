@@ -7,8 +7,11 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-// Define a temp variable to hold the temp questions.
+// Define a temp variable to hold the questions.
 $pgh_temp_section_questions = NULL;
+
+// Define a temp variable to hold the validation erros.
+$pgh_temp_validation_errors = NULL;
 
 /**
  * Implementation of hook_menu().
@@ -24,8 +27,47 @@ function pgh_form_menu() {
     'page arguments' => array(1, 3),
     'access callback' => TRUE,
   );
+  $items['settings'] = array(
+    'title' => 'Form Settings',
+    'description' => 'Use application form to set settings for applications',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pgh_form_settings'),
+    'access callback' => TRUE,
+  );
 
   return $items;
+}
+
+/**
+ * Add application form settings
+ */
+function pgh_form_settings($form, &$form_state) {
+  $form['pgh_form_max_questions'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Max question per applications',
+    '#default_value' => variable_get('pgh_form_max_questions', 100000),
+  );
+
+  $form['pgh_form_drupal_validate'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Use drupal validate upon submission',
+    '#default_value' => variable_get('pgh_form_drupal_validate', FALSE),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'submit'
+  );
+
+  return $form;
+}
+
+/**
+ * Save application form settings
+ */
+function pgh_form_settings_submit($form, &$form_state) {
+  variable_set('pgh_form_max_questions', $form_state['values']['pgh_form_max_questions']);
+  variable_set('pgh_form_drupal_validate', $form_state['values']['pgh_form_drupal_validate']);
 }
 
 /**
@@ -235,6 +277,33 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 }
 
 /**
+ * Set validation error
+ * Similar to form_set_error
+ *
+ * @param array $qid
+ *   Form element.
+ *
+ * @param array $form_state
+ *   Form state array.
+ */
+function pgh_form_set_error($qid, $msg) {
+  if (variable_get('pgh_form_drupal_validate', FALSE)) {
+    form_set_error($qid, $msg);
+  }
+
+  global $pgh_temp_validation_errors;
+
+  $pgh_temp_validation_errors[] = array(
+    'qid' => $qid,
+    'message' => $msg
+  );
+}
+
+// function pgh_application_form_validate($form, &$form_state) {
+//   dsm($form);
+// }
+
+/**
  * Application form element validation handler.
  *
  * @param array $element
@@ -246,15 +315,51 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_element_validate($element, &$form_state) {
-  dsm($element);
+  // dsm($element);
   // grab question id, this might not be always the case, need FIX
   $qid = $element['#parents'][0];
+  // dsm($qid); dsm($form_state['values']);
+  // make sure this question requires an answer
+  if (empty($form_state['values'][$qid])) return;
+  $value = $form_state['values'][$qid];
 
-  if ($validation = $element['#question_validation']) {
-
+  if (!empty($element['#question_validate'])) {
+    // depending on the validation tag, we can fire for different validaiton
+    switch ($element['#question_validate']) {
+      case 'nonnegative':
+        if (!is_numeric($value)) {
+          pgh_form_set_error($qid, 'The item value needs to be number');
+        } else {
+          if ($value < 0) {
+            pgh_form_set_error($qid, 'The item value can not be negative');
+          }
+        }
+        break;
+      case 'integer':
+        if (!is_int($value)) {
+          pgh_form_set_error($qid, 'The item value needs to be integer');
+        }
+      case 'nonzero':
+        if (!is_numerc($value)) {
+          pgh_form_set_error($qid, 'The item value needs to be number');
+        } else {
+          if ($value != 0) {
+            pgh_form_set_error($qid, 'The item value can not be zero');
+          }
+        }
+        break;
+      case 'percentage':
+        // no clue
+        break;
+      default:
+        # code...
+        break;
+    }
   }
-  // grab value submitted,
-  // dsm($form_state);
+
+  global $pgh_temp_validation_errors;
+  if (!empty($pgh_temp_validation_errors))
+    $form_state['values']['errors'] = $pgh_temp_validation_errors;
 }
 
 /**
@@ -272,6 +377,7 @@ function pgh_application_form_element_validate($element, &$form_state) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_submit($form, &$form_state) {
+  // dsm($form_state['values']);
   // TODO: Calculate the points for a given question in a separate API function (
   // i.e. pgh_api_score_for_question($app_id, $qid, $answer).
 
@@ -338,6 +444,15 @@ function pgh_application_form_submit($form, &$form_state) {
         pgh_set_response($app_id, $qid, $answer);
       }
     }
+  }
+
+  // handle the error
+  if (!empty($form_state['values']['errors'])) {
+    $lines = array();
+    foreach ($form_state['values']['errors'] as $error) {
+      $lines[] = $error['qid'] . ' - ' . $error['message'];
+    }
+    drupal_set_message(implode('\n', $lines));
   }
 }
 
