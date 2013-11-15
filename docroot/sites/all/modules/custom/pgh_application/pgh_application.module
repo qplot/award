@@ -42,6 +42,51 @@ function pgh_application_menu() {
 }
 
 /**
+ * Implementation of hook_block_info().
+ */
+function pgh_application_block_info() {
+  $blocks = array();
+
+  $blocks['application_category_menu'] = array(
+    'info' => t('Application Category Menu'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function pgh_application_block_view($delta = '') {
+
+  $block = array();
+
+  switch ($delta) {
+    case 'application_category_menu':
+      $block['subject'] = t('Application Category Menu');
+      $application_nid = pgh_application_current_application_nid();
+      $category_links = pgh_application_category_links($application_nid);
+
+      if ($category_links) {
+        $block['content'] = array(
+          'list' => array(
+            '#theme' => 'item_list',
+            '#type' => 'ul',
+            '#attributes' => array('class' => 'category-menu'),
+            '#items' => $category_links,
+          ),
+        );
+      }
+      else {
+        $block['content'] = 'No category items';
+      }
+      break;
+  }
+  return $block;
+}
+
+/**
  * Implementation of hook_theme().
  */
 function pgh_application_theme() {
@@ -166,6 +211,59 @@ function pgh_application_mediaform($form, &$form_state) {
     '#value' => 'submit',
   );
   return $form;
+}
+
+/**
+ * Returns the nid of the currently displayed application or FALSE if th current page is not a valid application.
+ *
+ * @return int
+ *   The nid of the currently displayed application or boolean FALSE.
+ */
+function pgh_application_current_application_nid() {
+  if (arg(0) == 'application' && is_numeric(arg(1))) {
+    $application_node = node_load(arg(1));
+    if ($application_node->type == 'application') {
+      return $application_node->nid;
+    }
+    else {
+      // Supplied nid is invalid.
+      return FALSE;
+    }
+  }
+  else {
+    // This is not an application page.
+    return FALSE;
+  }
+}
+
+/**
+ * Returns an array of links to category pages for the specified application. Can be passed to theme_item_list().
+ *
+ * @param int $application_nid
+ *   The nid of the application to generate category links for.
+ *
+ * @return array
+ *   An array of links or an empty array if none are found or #application_nid is invalid.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_category_links($application_nid) {
+  $application_node = node_load($application_nid);
+  if (!$application_node) {
+    return array();
+  }
+
+  $application_wrapper = entity_metadata_wrapper('node', $application_node);
+  $app_type_node = $application_wrapper->field_application_type->value();
+  $app_type_wrapper = entity_metadata_wrapper('node', $app_type_node);
+
+  $items = array();
+  foreach ($app_type_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {
+    $label = $category_wrapper->getIdentifier() . ' - ' . $category_wrapper->body->value->raw();
+    $items[] = l($label, 'application/' . $application_nid . '/category/' . $category_wrapper->getIdentifier() . '/edit');
+  }
+
+  return $items;
 }
 
 function pgh_application_mediaform_submit($form, &$form_state) {
