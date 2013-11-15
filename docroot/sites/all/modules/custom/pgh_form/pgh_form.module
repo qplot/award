@@ -321,7 +321,10 @@ function pgh_application_form_element_validate($element, &$form_state) {
         break;
 
       case 'integer':
-        if (!is_int($value)) {
+        // Check if $value is an integer or string representation of an integer.
+        // is_int() will fail on the string values presented by the Form API.
+        $is_int = ((string) (int) $value) == $value;
+        if (!$is_int) {
           pgh_form_set_error($qid, 'The item value needs to be integer');
         }
         break;
