@@ -341,7 +341,10 @@ function pgh_application_form_element_validate($element, &$form_state) {
         break;
 
       case 'percentage':
-        dsm('Note: percentage validation is not yet implemented.');
+        $is_int = ((string) (int) $value) == $value;
+        if (!$is_int || $value < 0 || $value > 100) {
+          pgh_form_set_error($qid, 'The item value needs to be integer in the range 0 - 100');
+        }
         break;
 
       default:
