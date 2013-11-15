@@ -247,6 +247,10 @@ function pgh_application_current_application_nid() {
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_application_category_links($application_nid) {
+  if (!$application_nid) {
+    return array();
+  }
+
   $application_node = node_load($application_nid);
   if (!$application_node) {
     return array();
