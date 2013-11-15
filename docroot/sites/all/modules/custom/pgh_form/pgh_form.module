@@ -206,7 +206,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
           $form[$fieldset] = array(
             '#type' => 'fieldset',
             '#title' => t($caption),
-            '#collapsible' => TRUE,
+            '#collapsible' => FALSE,
             '#collapsed' => FALSE,
           );
         }

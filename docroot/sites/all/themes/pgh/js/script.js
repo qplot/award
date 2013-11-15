@@ -38,6 +38,20 @@
           return false;
         });
 
+
+
+        // Wrap application drop-down in active section UL parent for theming
+        // ======================================================================
+        //var $app_drop_menu = '#block-pgh-application-application-category-menu';
+        $('#block-pgh-application-application-category-menu ul.category-menu li a.active').clone().prependTo('#block-pgh-application-application-category-menu .item-list').wrap('<ul class="selected-item"><li />');
+        $('#block-pgh-application-application-category-menu ul.category-menu').appendTo('#block-pgh-application-application-category-menu .item-list ul.selected-item li');
+
+
+
+        // Replace the fieldset legend with an H3 so it's easier to style
+      	// ======================================================================
+      	$('legend').replaceWith( '<h3 class="legend">' + $('legend').html() + '</h3>' );
+
     }
   };
 
