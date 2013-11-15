@@ -265,10 +265,10 @@ h3 {
 }
 
 
-// !---------------------------- */
-// !--- Business unit ---------- */
-// !--- Content type & dashboard -- */
-// !---------------------------- */
+// !-------------------------------- */
+// !--- Business unit -------------- */
+// !--- Content type & dashboard --- */
+// !-------------------------------- */
 
 #business-unit,
 .node-type-business-unit {
@@ -416,6 +416,133 @@ h3 {
         color: $white;
         background-color: $green;
         border-color: $green;
+      }
+    }
+  }
+}
+
+.page-application { //app menu
+
+  #app-menu-wrap {
+
+    #app-menu-wrap-inner {}
+  }
+
+  #app-menu { //drop-down
+
+    #block-pgh-application-application-category-menu.block {
+      margin-bottom: 0;
+      padding: 15px 0;
+
+      h2.block__title {
+        @include element-invisible;
+      }
+
+      ul.selected-item,
+      ul.category-menu {
+        color: $white;
+        font-size: 24px;
+        line-height: 60px;
+        font-family: $cabin;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      ul.selected-item {
+        border: 1px solid #1c7d66;
+        @include border-radius(2px);
+        margin: 0 auto;
+        width: 640px;
+        height: 60px;
+        @include box-shadow(0 1px 0 rgba(0,0,0,0.1));
+        overflow: hidden;
+      }
+
+      li {
+        text-align: center;
+
+        a {
+          color: $white;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  #cat-menu-wrap {
+    background: #2c2c2c url(../images/menu-app/cat-menu-bg.png) repeat center top;
+    border-bottom: 1px solid $black;
+
+    #cat-menu-wrap-inner {}
+  }
+
+  #cat-menu { //category icons
+
+    #block-pgh-application-application-category-menu--2.block {
+      margin-bottom: 0;
+
+      h2.block__title {
+        @include element-invisible;
+      }
+
+      ul.category-menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        @include clearfix;
+
+        li {
+          display: inline;
+
+          a {
+            text-indent: -1000000px;
+            background: transparent url(../images/menu-app/cat-menu-icons.png) no-repeat 0px 0px;
+            width: 77px;
+            height: 70px;
+            float: left;
+
+            &.pfc-leadership { background-position: 0 -70px;
+              &:hover, &.active { background-position: 0 0; }
+            }
+
+            &.pfc-waste { background-position: -77px -70px;
+              &:hover, &.active { background-position: -77px 0; }
+            }
+
+            &.pfc-chemicals { background-position: -153px -70px;
+              &:hover, &.active { background-position: -153px 0; }
+            }
+
+            &.pfc-gor { background-position: -230px -70px;
+              &:hover, &.active { background-position: -230px 0; }
+            }
+
+            &.pfc-food { background-position: -305px -70px;
+              &:hover, &.active { background-position: -305px 0; }
+            }
+
+            &.pfc-epp { background-position: -381px -70px;
+              &:hover, &.active { background-position: -381px 0; }
+            }
+
+            &.pfc-energy { background-position: -457px -70px;
+              &:hover, &.active { background-position: -457px 0; }
+            }
+
+            &.pfc-water { background-position: -534px -70px;
+              &:hover, &.active { background-position: -534px 0; }
+            }
+
+            &.pfc-climate { background-position: -610px -70px;
+              &:hover, &.active { background-position: -610px 0; }
+            }
+
+            &.pfc-green-building { background-position: -686px -70px;
+              &:hover, &.active { background-position: -686px 0; }
+            }
+          }
+        }
       }
     }
   }
