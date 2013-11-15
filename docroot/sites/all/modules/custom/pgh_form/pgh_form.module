@@ -602,7 +602,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
  */
 
 /**
- * Builds a Drupal Form API element for a specific question and handle layout for 'container' type questions.
+ * Builds a Drupal Form API element for a specific question and handles layout for 'container' type questions.
  *
  * If the question has a layout string specified, parse the layout and render it.
  *
@@ -661,19 +661,20 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
 }
 
 /**
- * Return the visibility state array based on question
+ * Return the visibility state array based on the supplied question node.
  *
+ * This is the code that provides support for the "Dependant Question" feature.
  *
  * @param object $question
  *   The question node object.
  *
  * @return array
- *   The visibility state array supported by Drupal form
+ *   The visibility state array supported by the Drupal form API.
  */
 function pgh_form_question_states($question) {
   $wrapper = entity_metadata_wrapper('node', $question);
 
-  // load parent question
+  // Load parent question.
   $parent_qid = $wrapper->field_question_parent_qid->value();
   $parent = pgh_find_question_id($parent_qid);
   $parent_question = node_load($parent);
@@ -687,22 +688,22 @@ function pgh_form_question_states($question) {
   switch ($parent_type) {
     case 'selection':
       switch ($parent_style) {
-        // multiple choices
+        // Multiple choices.
         case 'checkboxes':
           $name = $pwrapper->getIdentifier() . '[' . $value . ']';
           $input = array('checked' => TRUE);
           break;
 
-        // single choices, ex. radios
+        // Single choice, ex. radios.
         default:
           $options = $pwrapper->field_question_options->value();
           $value = array_search($value, $options);
           break;
       }
-      # code...
       break;
 
     default:
+      // Noop. Dependant question display is currently only supported for the 'selection' question type.
       break;
   }
   if (empty($input)) {
