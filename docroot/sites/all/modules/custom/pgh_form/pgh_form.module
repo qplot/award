@@ -295,51 +295,71 @@ function pgh_form_set_error($qid, $msg) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_element_validate($element, &$form_state) {
-  // dsm($element);
-  // grab question id, this might not be always the case, need FIX
+  // Grab the question id, this might not always be the case, need FIX.
   $qid = $element['#parents'][0];
-  // dsm($qid); dsm($form_state['values']);
-  // make sure this question requires an answer
-  if (empty($form_state['values'][$qid])) return;
+
+  // Make sure this question requires an answer.
+  if (empty($form_state['values'][$qid])) {
+    return;
+  }
+
   $value = $form_state['values'][$qid];
 
+  // TODO: Admins may specify multiple validation rules. Ensure this code processes each rule.
+  // Currently it incorrectly assumes that #question_validate will be a single rule.
   if (!empty($element['#question_validate'])) {
-    // depending on the validation tag, we can fire for different validaiton
     switch ($element['#question_validate']) {
       case 'nonnegative':
         if (!is_numeric($value)) {
           pgh_form_set_error($qid, 'The item value needs to be number');
-        } else {
+        }
+        else {
           if ($value < 0) {
             pgh_form_set_error($qid, 'The item value can not be negative');
           }
         }
         break;
+
       case 'integer':
-        if (!is_int($value)) {
+        // Check if $value is an integer or string representation of an integer.
+        // is_int() will fail on the string values presented by the Form API.
+        $is_int = ((string) (int) $value) == $value;
+        if (!$is_int) {
           pgh_form_set_error($qid, 'The item value needs to be integer');
         }
+        break;
+
       case 'nonzero':
-        if (!is_numerc($value)) {
+        if (!is_numeric($value)) {
           pgh_form_set_error($qid, 'The item value needs to be number');
-        } else {
+        }
+        else {
           if ($value != 0) {
             pgh_form_set_error($qid, 'The item value can not be zero');
           }
         }
         break;
+
       case 'percentage':
-        // no clue
+        $is_int = ((string) (int) $value) == $value;
+        if (!$is_int || $value < 0 || $value > 100) {
+          pgh_form_set_error($qid, 'The item value needs to be integer in the range 0 - 100');
+        }
         break;
+
       default:
-        # code...
+        dsm('Unsuported validation rule: ' . $element['#question_validate'] . ' for question id: ' . $qid);
         break;
     }
   }
 
+  // TODO: Stop using globals!
   global $pgh_temp_validation_errors;
-  if (!empty($pgh_temp_validation_errors))
+  // TODO: Stop using globals!
+
+  if (!empty($pgh_temp_validation_errors)) {
     $form_state['values']['errors'] = $pgh_temp_validation_errors;
+  }
 }
 
 /**
@@ -409,7 +429,10 @@ function pgh_application_form_submit($form, &$form_state) {
             break;
 
           case 'file':
-            $value = $form_state['input']['fid'];
+            $value = '';
+            if (isset($form_state['input']['fid'])) {
+              $value = $form_state['input']['fid'];
+            }
             break;
 
           default:
@@ -579,7 +602,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
  */
 
 /**
- * Builds a Drupal Form API element for a specific question and handle layout for 'container' type questions.
+ * Builds a Drupal Form API element for a specific question and handles layout for 'container' type questions.
  *
  * If the question has a layout string specified, parse the layout and render it.
  *
@@ -638,19 +661,20 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
 }
 
 /**
- * Return the visibility state array based on question
+ * Return the visibility state array based on the supplied question node.
  *
+ * This is the code that provides support for the "Dependant Question" feature.
  *
  * @param object $question
  *   The question node object.
  *
  * @return array
- *   The visibility state array supported by Drupal form
+ *   The visibility state array supported by the Drupal form API.
  */
 function pgh_form_question_states($question) {
   $wrapper = entity_metadata_wrapper('node', $question);
 
-  // load parent question
+  // Load parent question.
   $parent_qid = $wrapper->field_question_parent_qid->value();
   $parent = pgh_find_question_id($parent_qid);
   $parent_question = node_load($parent);
@@ -664,22 +688,22 @@ function pgh_form_question_states($question) {
   switch ($parent_type) {
     case 'selection':
       switch ($parent_style) {
-        // multiple choices
+        // Multiple choices.
         case 'checkboxes':
           $name = $pwrapper->getIdentifier() . '[' . $value . ']';
           $input = array('checked' => TRUE);
           break;
 
-        // single choices, ex. radios
+        // Single choice, ex. radios.
         default:
           $options = $pwrapper->field_question_options->value();
           $value = array_search($value, $options);
           break;
       }
-      # code...
       break;
 
     default:
+      // Noop. Dependant question display is currently only supported for the 'selection' question type.
       break;
   }
   if (empty($input)) {
