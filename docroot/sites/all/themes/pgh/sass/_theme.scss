@@ -441,30 +441,114 @@ h3 {
       ul.selected-item,
       ul.category-menu {
         color: $white;
-        font-size: 24px;
-        line-height: 60px;
-        font-family: $cabin;
         list-style: none;
         margin: 0;
         padding: 0;
       }
 
       ul.selected-item {
+        font-size: 24px;
+        line-height: 60px;
+        font-family: $cabin;
         border: 1px solid #1c7d66;
         @include border-radius(2px);
         margin: 0 auto;
         width: 640px;
         height: 60px;
         @include box-shadow(0 1px 0 rgba(0,0,0,0.1));
-        overflow: hidden;
+
+        li {
+          text-align: center;
+          position: relative;
+          z-index: 2;
+
+          a {
+            color: $white;
+            text-decoration: none;
+            background: transparent url(../images/menu-app/app-menu-ddarrow.png) no-repeat right center;
+            display: block;
+          }
+
+          &:hover ul.category-menu {
+            top: -1px;
+          }
+        }
       }
 
-      li {
-        text-align: center;
+      ul.category-menu { //drop-down
+        font-size: 16px;
+        line-height: 37px;
+        font-family: $arial;
+        @include border-radius(3px);
+        @include box-shadow(0 1px 7px rgba(0,0,0,0.3));
+        position: absolute;
+        top: -999px;
+        left: -1px;
+        z-index: 1;
 
-        a {
-          color: $white;
-          text-decoration: none;
+        li {
+          text-align: left;
+
+          &.first a {
+            border-top: 1px solid #e0e0e0;
+            @include border-radius(3px 3px 0 0);
+          }
+
+          &.last a {
+            border-bottom: 1px solid #e0e0e0;
+            @include border-radius(0 0 3px 3px);
+          }
+
+          a {
+            color: $green;
+            text-decoration: none;
+            background-color: $white;
+            background-image: none;
+            border-right: 1px solid #e0e0e0;
+            border-left: 1px solid #e0e0e0;
+            display: block;
+            padding: 0 20px;
+            width: 600px;
+
+            &:hover {
+              color: $white;
+              background-color: darken($green, 5%);
+              border-color: darken($green, 5%);
+            }
+
+            &.active {
+              color: $white;
+              background-color: lighten($green, 10%);
+              border-color: lighten($green, 10%);
+            }
+          }
+        }
+      }
+
+      .prev a,
+      .next a {
+        text-indent: -1000000px;
+        background: transparent url(../images/menu-app/app-menu-prev-next.png) no-repeat;
+        margin-top: 3px;
+        width: 70px;
+        height: 60px;
+      }
+
+      .prev a {
+        background-position: 0 0;
+        float: left;
+
+        &:hover {
+          background-position: 0 -60px;
+        }
+      }
+
+      .next a {
+        background-position: -17px 0;
+        float: right;
+
+        &:hover {
+          background-position: -17px -60px;
         }
       }
     }
@@ -497,7 +581,7 @@ h3 {
 
           a {
             text-indent: -1000000px;
-            background: transparent url(../images/menu-app/cat-menu-icons.png) no-repeat 0px 0px;
+            background: transparent url(../images/menu-app/cat-menu-icons.png) no-repeat 0 0;
             width: 77px;
             height: 70px;
             float: left;
@@ -544,6 +628,74 @@ h3 {
           }
         }
       }
+    }
+  }
+
+  h1.title {
+    padding: 10px 0;
+    padding-left: 60px;
+    position: relative;
+    z-index: 1;
+
+    span {
+      background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat;
+      display: block;
+      width: 48px;
+      height: 47px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    &.pfc-leadership {
+      color: #9159a5;
+      span { background-position: 0 0; }
+    }
+
+    &.pfc-waste {
+      color: #046c9c;
+      span { background-position: -76px 0; }
+    }
+
+    &.pfc-chemicals {
+      color: #8b9237;
+      span { background-position: -152px 0; }
+    }
+
+    &.pfc-gor {
+      color: #0f674e;
+      span { background-position: -228px 0; }
+    }
+
+    &.pfc-food {
+      color: #f47a21;
+      span { background-position: -304px 0; }
+    }
+
+    &.pfc-epp {
+      color: #7f5725;
+      span { background-position: -380px 0; }
+    }
+
+    &.pfc-energy {
+      color: #ea4539;
+      span { background-position: -456px 0; }
+    }
+
+    &.pfc-water {
+      color: #28a8e0;
+      span { background-position: -532px 0; }
+    }
+
+    &.pfc-climate {
+      color: #febb14;
+      span { background-position: -609px 0; }
+    }
+
+    &.pfc-green-building {
+      color: #8bc63f;
+      span { background-position: -685px 0; }
     }
   }
 }

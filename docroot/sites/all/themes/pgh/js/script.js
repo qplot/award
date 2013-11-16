@@ -30,21 +30,39 @@
 
           if ($bu_container.hasClass('bu-closed')) {
               $bu_container.removeClass('bu-closed')
-                              .addClass('bu-opened');
+                           .addClass('bu-opened');
           } else {
               $bu_container.removeClass('bu-opened')
-                              .addClass('bu-closed');
+                           .addClass('bu-closed');
           }
           return false;
         });
 
 
 
-        // Wrap application drop-down in active section UL parent for theming
+        // Application menu
         // ======================================================================
-        //var $app_drop_menu = '#block-pgh-application-application-category-menu';
-        $('#block-pgh-application-application-category-menu ul.category-menu li a.active').clone().prependTo('#block-pgh-application-application-category-menu .item-list').wrap('<ul class="selected-item"><li />');
-        $('#block-pgh-application-application-category-menu ul.category-menu').appendTo('#block-pgh-application-application-category-menu .item-list ul.selected-item li');
+
+        // Wrap application drop-down in active section UL parent for theming
+        var $app_menu = '#block-pgh-application-application-category-menu';
+        $($app_menu + ' ul.category-menu li a.active').clone().prependTo($app_menu + ' .item-list').wrap('<ul class="selected-item"><li />');
+        $($app_menu + ' ul.category-menu').appendTo($app_menu + ' .item-list ul.selected-item li');
+
+        // add back and next arrows
+        var $app_menu_arrows = $('#block-pgh-application-application-category-menu ul.category-menu li a.active').parent('li');
+        if ($app_menu_arrows.next('li')) {
+            $app_menu_arrows.next().children('a').clone().prependTo($app_menu + ' .item-list').wrap('<span class="next" />');
+        }
+        if ($app_menu_arrows.prev('li')) {
+            $app_menu_arrows.prev().children('a').clone().prependTo($app_menu + ' .item-list').wrap('<span class="prev" />');
+        }
+
+        // add active class to h1
+        var $cat_classes = $('#block-pgh-application-application-category-menu ul.category-menu li a.active');
+        $('h1.title').attr('class', ($($cat_classes, $(this)).attr('class')))
+                     .removeClass('category-link active')
+                     .addClass('page__title title')
+                     .prepend('<span />');
 
 
 

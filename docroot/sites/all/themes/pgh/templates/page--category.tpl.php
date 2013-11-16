@@ -86,30 +86,30 @@
   <div id="app-menu-wrap"><div id="app-menu-wrap-inner">
   <div id="app-menu">
     <?php
-/*
       $block_menu = block_load('pgh_application', 'application_category_menu');
       $output_menu = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block_menu))));
       print $output_menu;
-*/
     ?>
 
-<div class="block block-pgh-application first odd" id="block-pgh-application-application-category-menu">
-	<h2 class="block__title block-title">Application Category Menu</h2>
-	<div class="item-list">
-		<ul class="category-menu">
-			<li class="first"><a class="category-link pfc-leadership" href="/application/1765/category/1758/edit">Leadership</a></li>
-			<li><a class="category-link pfc-waste active" href="/application/1765/category/1759/edit">Waste</a></li>
-			<li><a class="category-link pfc-chemicals" href="/application/1765/category/1760/edit">Chemicals</a></li>
-      <li><a class="category-link pfc-gor" href="/application/1765/category/1761/edit">Greening the OR</a></li>
-      <li><a class="category-link pfc-food" href="/application/1765/category/edit">Food</a></li>
-      <li><a class="category-link pfc-epp" href="/application/1765/category/edit">Environmentally Preferable Purchasing</a></li>
-      <li><a class="category-link pfc-energy" href="/application/1765/category/edit">Energy</a></li>
-      <li><a class="category-link pfc-water" href="/application/1765/category/edit">Water</a></li>
-      <li><a class="category-link pfc-climate" href="/application/1765/category/edit">Climate</a></li>
-      <li class="last"><a class="category-link pfc-green-building" href="/application/1765/category/edit">Green Building</a></li>
-		</ul>
-	</div>
-</div>
+    <?php /*
+    <div class="block block-pgh-application first odd" id="block-pgh-application-application-category-menu">
+    	<h2 class="block__title block-title">Application Category Menu</h2>
+    	<div class="item-list">
+    		<ul class="category-menu">
+    			<li class="first"><a class="category-link pfc-leadership active" href="/application/1765/category/1758/edit">Leadership</a></li>
+    			<li><a class="category-link pfc-waste" href="/application/1765/category/1759/edit">Waste</a></li>
+    			<li><a class="category-link pfc-chemicals" href="/application/1765/category/1760/edit">Chemicals</a></li>
+          <li><a class="category-link pfc-gor" href="/application/1765/category/1761/edit">Greening the OR</a></li>
+          <li><a class="category-link pfc-food" href="/application/1765/category/edit">Food</a></li>
+          <li><a class="category-link pfc-epp" href="/application/1765/category/edit">Environmentally Preferable Purchasing</a></li>
+          <li><a class="category-link pfc-energy" href="/application/1765/category/edit">Energy</a></li>
+          <li><a class="category-link pfc-water" href="/application/1765/category/edit">Water</a></li>
+          <li><a class="category-link pfc-climate" href="/application/1765/category/edit">Climate</a></li>
+          <li class="last"><a class="category-link pfc-green-building" href="/application/1765/category/edit">Green Building</a></li>
+    		</ul>
+    	</div>
+    </div>
+    */ ?>
 
   </div>
   </div></div>
@@ -117,30 +117,30 @@
   <div id="cat-menu-wrap"><div id="cat-menu-wrap-inner">
   <div id="cat-menu">
     <?php
-/*
       $block_categories = block_load('pgh_application', 'application_category_menu');
       $output_categories = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block_categories))));
       print $output_categories;
-*/
     ?>
 
-<div class="block block-pgh-application first odd" id="block-pgh-application-application-category-menu--2">
-	<h2 class="block__title block-title">Application Category Menu</h2>
-	<div class="item-list">
-		<ul class="category-menu">
-			<li class="first"><a class="category-link pfc-leadership active" href="/application/1765/category/1758/edit">Leadership</a></li>
-			<li><a class="category-link pfc-waste" href="/application/1765/category/1759/edit">Waste</a></li>
-			<li><a class="category-link pfc-chemicals" href="/application/1765/category/1760/edit">Chemicals</a></li>
-      <li><a class="category-link pfc-gor" href="/application/1765/category/1761/edit">Greening the OR</a></li>
-      <li><a class="category-link pfc-food" href="/application/1765/category/edit">Food</a></li>
-      <li><a class="category-link pfc-epp" href="/application/1765/category/edit">Environmentally Preferable Purchasing</a></li>
-      <li><a class="category-link pfc-energy" href="/application/1765/category/edit">Energy</a></li>
-      <li><a class="category-link pfc-water" href="/application/1765/category/edit">Water</a></li>
-      <li><a class="category-link pfc-climate" href="/application/1765/category/edit">Climate</a></li>
-      <li class="last"><a class="category-link pfc-green-building" href="/application/1765/category/edit">Green Building</a></li>
-		</ul>
-	</div>
-</div>
+  <?php /*
+  <div class="block block-pgh-application first odd" id="block-pgh-application-application-category-menu--2">
+  	<h2 class="block__title block-title">Application Category Menu</h2>
+  	<div class="item-list">
+  		<ul class="category-menu">
+  			<li class="first"><a class="category-link pfc-leadership active" href="/application/1765/category/1758/edit">Leadership</a></li>
+  			<li><a class="category-link pfc-waste" href="/application/1765/category/1759/edit">Waste</a></li>
+  			<li><a class="category-link pfc-chemicals" href="/application/1765/category/1760/edit">Chemicals</a></li>
+        <li><a class="category-link pfc-gor" href="/application/1765/category/1761/edit">Greening the OR</a></li>
+        <li><a class="category-link pfc-food" href="/application/1765/category/edit">Food</a></li>
+        <li><a class="category-link pfc-epp" href="/application/1765/category/edit">Environmentally Preferable Purchasing</a></li>
+        <li><a class="category-link pfc-energy" href="/application/1765/category/edit">Energy</a></li>
+        <li><a class="category-link pfc-water" href="/application/1765/category/edit">Water</a></li>
+        <li><a class="category-link pfc-climate" href="/application/1765/category/edit">Climate</a></li>
+        <li class="last"><a class="category-link pfc-green-building" href="/application/1765/category/edit">Green Building</a></li>
+  		</ul>
+  	</div>
+  </div>
+  */ ?>
 
   </div>
   </div></div>
