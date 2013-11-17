@@ -68,8 +68,8 @@
           // add active class to h1
           var $cat_classes = $('#block-pgh-application-application-category-menu ul.category-menu li a.active');
           $('h1.title').attr('class', ($($cat_classes, $(this)).attr('class')))
-                       .removeClass('category-link active')
-                       .addClass('page__title title')
+                       //.removeClass('category-link active')
+                       //.addClass('page__title title')
                        .prepend('<span />');
 
         }

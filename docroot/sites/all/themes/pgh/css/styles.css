@@ -2342,14 +2342,14 @@ h3 {
   background-position: -686px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003658}}
-.page-application h1.title {
+.page-application h1#page-title {
   padding: 10px 0;
   padding-left: 60px;
   position: relative;
   z-index: 1;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003664}}
-.page-application h1.title span {
+.page-application h1#page-title span {
   background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat;
   display: block;
   width: 48px;
@@ -2360,83 +2360,83 @@ h3 {
   z-index: 1;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003675}}
-.page-application h1.title.pfc-leadership {
+.page-application h1#page-title.pfc-leadership {
   color: #9159a5;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003677}}
-.page-application h1.title.pfc-leadership span {
+.page-application h1#page-title.pfc-leadership span {
   background-position: 0 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003680}}
-.page-application h1.title.pfc-waste {
+.page-application h1#page-title.pfc-waste {
   color: #046c9c;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003682}}
-.page-application h1.title.pfc-waste span {
+.page-application h1#page-title.pfc-waste span {
   background-position: -76px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003685}}
-.page-application h1.title.pfc-chemicals {
+.page-application h1#page-title.pfc-chemicals {
   color: #8b9237;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003687}}
-.page-application h1.title.pfc-chemicals span {
+.page-application h1#page-title.pfc-chemicals span {
   background-position: -152px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003690}}
-.page-application h1.title.pfc-gor {
+.page-application h1#page-title.pfc-gor {
   color: #0f674e;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003692}}
-.page-application h1.title.pfc-gor span {
+.page-application h1#page-title.pfc-gor span {
   background-position: -228px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003695}}
-.page-application h1.title.pfc-food {
+.page-application h1#page-title.pfc-food {
   color: #f47a21;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003697}}
-.page-application h1.title.pfc-food span {
+.page-application h1#page-title.pfc-food span {
   background-position: -304px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003700}}
-.page-application h1.title.pfc-epp {
+.page-application h1#page-title.pfc-epp {
   color: #7f5725;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003702}}
-.page-application h1.title.pfc-epp span {
+.page-application h1#page-title.pfc-epp span {
   background-position: -380px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003705}}
-.page-application h1.title.pfc-energy {
+.page-application h1#page-title.pfc-energy {
   color: #ea4539;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003707}}
-.page-application h1.title.pfc-energy span {
+.page-application h1#page-title.pfc-energy span {
   background-position: -456px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003710}}
-.page-application h1.title.pfc-water {
+.page-application h1#page-title.pfc-water {
   color: #28a8e0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003712}}
-.page-application h1.title.pfc-water span {
+.page-application h1#page-title.pfc-water span {
   background-position: -532px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003715}}
-.page-application h1.title.pfc-climate {
+.page-application h1#page-title.pfc-climate {
   color: #febb14;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003717}}
-.page-application h1.title.pfc-climate span {
+.page-application h1#page-title.pfc-climate span {
   background-position: -609px 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003720}}
-.page-application h1.title.pfc-green-building {
+.page-application h1#page-title.pfc-green-building {
   color: #8bc63f;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\00003722}}
-.page-application h1.title.pfc-green-building span {
+.page-application h1#page-title.pfc-green-building span {
   background-position: -685px 0;
 }
 
