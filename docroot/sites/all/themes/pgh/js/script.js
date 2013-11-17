@@ -51,26 +51,36 @@
         var $app_menu = '#block-pgh-application-application-category-menu';
 
         // check is app menu block exist
-        if ($($app_menu).hasClass('block')) {
+        if ($($app_menu).length) {
 
-          $($app_menu + ' ul.category-menu li a.active').clone().prependTo($app_menu + ' .item-list').wrap('<ul class="selected-item"><li />');
-          $($app_menu + ' ul.category-menu').appendTo($app_menu + ' .item-list ul.selected-item li');
+          if($($app_menu + ' ul.category-menu li a').hasClass('active')) {
+            $($app_menu + ' ul.category-menu li a.active').clone().prependTo($app_menu + ' .item-list').wrap('<ul class="selected-item"><li />');
+            $($app_menu + ' ul.category-menu').appendTo($app_menu + ' .item-list ul.selected-item li');
 
-          // add back and next arrows
-          var $app_menu_arrows = $('#block-pgh-application-application-category-menu ul.category-menu li a.active').parent('li');
-          if ($app_menu_arrows.next('li')) {
-              $app_menu_arrows.next().children('a').clone().prependTo($app_menu + ' .item-list').wrap('<span class="next" />');
+            // add back and next arrows
+            var $app_menu_arrows = $('#block-pgh-application-application-category-menu ul.category-menu li a.active').parent('li');
+            if ($app_menu_arrows.prev('li')) {
+                $app_menu_arrows.prev().children('a').clone().prependTo($app_menu + ' .item-list').wrap('<span class="prev" />');
+            }
+            if ($app_menu_arrows.next('li')) {
+                $app_menu_arrows.next().children('a').clone().prependTo($app_menu + ' .item-list').wrap('<span class="next" />');
+            }
+
+            // add active class to h1
+            var $cat_classes = '#block-pgh-application-application-category-menu ul.category-menu li a.active';
+
+            $('h1#page-title').attr('class', $($cat_classes).attr('class'))
+                              .removeClass('category-link active')
+                              .addClass('page__title title')
+                              .prepend('<span />');
+
+          } else {
+            $($app_menu + ' ul.category-menu').wrap('<ul class="selected-item"><li />').parent().prepend('<a href="#">Select a section</a>');
+            $($app_menu + ' ul.category-menu li.first a').clone()
+                                                         .prependTo($app_menu + ' .item-list')
+                                                         .wrap('<span class="next" />');
+            $('h1#page-title').addClass('no-category');
           }
-          if ($app_menu_arrows.prev('li')) {
-              $app_menu_arrows.prev().children('a').clone().prependTo($app_menu + ' .item-list').wrap('<span class="prev" />');
-          }
-
-          // add active class to h1
-          var $cat_classes = $('#block-pgh-application-application-category-menu ul.category-menu li a.active');
-          $('h1#page-title').attr('class', ($($cat_classes, $(this)).attr('class')))
-                       //.removeClass('category-link active')
-                       //.addClass('page__title title')
-                       .prepend('<span />');
 
         }
 

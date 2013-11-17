@@ -661,6 +661,10 @@ h3 {
     position: relative;
     z-index: 1;
 
+    &.no-category {
+      padding-left: 0;
+    }
+
     span {
       background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat;
       display: block;
