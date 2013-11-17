@@ -202,42 +202,65 @@ h3 {
     padding: 5px 20px 5px 42px;
     @include clearfix;
     overflow: hidden;
-    @include transition(max-height 0.3s ease-out 0.1s);
+    @include transition(height 0.3s ease-out);
     position: relative;
     z-index: 1;
 
+    .edit-content {
+      opacity: 1;
+      @include transition(opacity 0.3s ease-out);
+    }
+
     .toggle {
-      text-indent: -1000000px;
-      background: transparent url(../images/global/icon-toggle.png) no-repeat;
       display: block;
-      padding: 28px 0;
-      width: 24px;
-      height: 24px;
       cursor: pointer;
       position: absolute;
-      top: 5px;
-      left: 20px;
+      top: 0;
+      left: 0;
+
+      span {
+        text-indent: -1000000px;
+        background: transparent url(../images/global/icon-toggle.png) no-repeat;
+        margin: 32px 0 0 20px;
+        width: 24px;
+        height: 24px;
+        float: left;
+      }
     }
 
     &.bu-closed {
-      max-height: 11em;
+      height: 170px !important;
 
       .toggle {
-        background-position: 0 35px;
+        width: 960px;
+        height: 170px;
 
-        &:hover {
-          background-position: -48px 35px;
+        span {
+          background-position: 0 8px;
         }
+
+        &:hover span {
+          background-position: -48px 8px;
+        }
+      }
+
+      .edit-content {
+        opacity: 0;
       }
     }
 
     &.bu-opened {
-      max-height: 60em;
-      .toggle {
-        background-position: -24px 35px;
 
-        &:hover {
-          background-position: -72px 35px;
+      .toggle {
+        width: 740px;
+        height: 65px;
+
+        span {
+          background-position: -24px 8px;
+        }
+
+        &:hover span {
+          background-position: -72px 8px;
         }
       }
     }
@@ -469,7 +492,8 @@ h3 {
             display: block;
           }
 
-          &:hover ul.category-menu {
+          //&:hover ul.category-menu,
+          &.hihover ul.category-menu {
             top: -1px;
           }
         }
