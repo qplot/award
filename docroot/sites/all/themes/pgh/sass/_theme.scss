@@ -949,6 +949,104 @@ h3 {
   }
 }
 
+// !---------------------------- */
+// !--- Node edit -------------- */
+// !---------------------------- */
+
+form.node-form {
+
+  fieldset,
+  fieldset.filter-wrapper {
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  #edit-field-business-unit-type {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  input.form-text {
+    border: 1px solid #d3d3d3;
+    @include border-radius(2px);
+    @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+    padding: 7px;
+  }
+
+  input.form-text.form-autocomplete {
+    padding: 3px 7px;
+  }
+
+  textarea {
+    border: 1px solid #d3d3d3;
+    @include border-radius(2px 2px 0 0);
+    @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+    padding: 5px;
+  }
+
+  .filter-guidelines {
+    font-size: 0.9em;
+  }
+
+  .form-actions {
+    padding-top: 1em;
+  }
+
+  input.form-submit {
+    color: $white;
+    font-size: 1em;
+    font-family: $arial;
+    font-weight: normal;
+    text-align: center;
+    background-color: $green;
+    border: 1px solid $green;
+    @include border-radius(3px);
+    //@include box-shadow(0 1px 3px rgba(0,0,0,0.3));
+    margin-right: 10px;
+    padding: 7px 21px;
+    width: auto;
+
+    &#edit-delete {
+      background-color: #ea4539;
+      border-color: #ea4539;
+    }
+
+    &:hover,
+    &#edit-delete:hover {
+      background-color: $orange;
+      border-color: $orange;
+      @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+    }
+  }
+
+  select {
+    font-size: 90%;
+  }
+
+  .field-multiple-table {
+    width: 100%;
+
+    tr, th, tbody, td {
+      border: none;
+    }
+
+    tbody {
+      border-top: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr.odd td {
+      background-color: #f7f7f7;
+    }
+
+    td {
+      padding: 7px;
+    }
+  }
+}
+
 
 // !---------------------------- */
 // !--- Admin Menu ------------- */
