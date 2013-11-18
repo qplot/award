@@ -206,8 +206,8 @@ h3 {
     position: relative;
     z-index: 1;
 
-    .edit-content {
-      opacity: 1;
+    .edit-content a {
+      @include opacity(1);
       @include transition(opacity 0.3s ease-out);
     }
 
@@ -244,8 +244,8 @@ h3 {
         }
       }
 
-      .edit-content {
-        opacity: 0;
+      .edit-content a {
+        @include opacity(0);
       }
     }
 
@@ -728,7 +728,8 @@ h3 {
   }
 }
 
-.page-application { //form
+// ! form
+.page-application {
 
   form {
 
@@ -781,6 +782,86 @@ h3 {
         background-color: $orange;
         border-color: $orange;
         @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+      }
+    }
+
+    .content-incorrect {
+      color: #bc9906;
+      text-shadow: 0 1px #fdfbee;
+      font-size: 0.9em;
+      line-height: 1.1em;
+      background: #faf3d0 url(../images/global/icon-warning-content.png) no-repeat 9px 45%;
+      border: 1px solid #f5e9ac;
+      @include border-radius(3px);
+      margin-bottom: 1em;
+      padding: 9px 9px 9px 32px;
+    }
+
+    td .content-incorrect {
+      background-position: 7px 45%;
+      padding: 5px 5px 5px 30px;
+      margin: -5px 0 5px;
+    }
+
+    input.input-incorrect {
+      color: #bc9906;
+      font-weight: bold;
+      text-shadow: 0 1px #fdfbee;
+      background-color: #faf3d0;
+      border-color: #ebc610;
+    }
+
+    table {
+      border-top: 1px solid #a2d6c9;
+      border-left: 1px solid #a2d6c9;
+      border-collapse: separate !important;
+      @include border-radius(3px);
+
+      .form-item {
+        border: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      tr {
+        background-color: transparent;
+        border: none;
+      }
+
+      th, td {
+        font-size: 0.9em;
+        font-family: $arial;
+        font-weight: normal;
+        border-right: 1px solid #a2d6c9;
+        border-bottom: 1px solid #a2d6c9;
+        padding: 5px 10px;
+        vertical-align: bottom;
+      }
+
+      th {
+        @include gradient($white, #f8f8f8);
+
+        &:first-child {
+          @include border-radius(3px 0 0 0);
+        }
+
+        &:last-child {
+          @include border-radius(0 3px 0 0);
+        }
+      }
+
+      tr:last-child td {
+
+        &:first-child {
+          @include border-radius(0 0 0 3px);
+        }
+
+        &:last-child {
+          @include border-radius(0 0 3px 0);
+        }
+      }
+
+      td {
       }
     }
   }
