@@ -1,0 +1,172 @@
+<?php
+
+/**
+ * @file
+ * User permissions module.
+ *
+ * Provides functions for determining if a given user can access a piece of awards content.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * Determine if we care about specifying permissions for this node and call a type-specific function to handle
+ * the actual permissions checking.
+ *
+ * @param object $node
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access($node, $op, $account) {
+  $type = is_string($node) ? $node : $node->type;
+
+  // Only determine permissions if this is a node with one of the PGH specific node types.
+  if (!in_array($type, array('work_group', 'business_unit', 'application'))) {
+    return NODE_ACCESS_IGNORE;
+  }
+
+  // Call type-specific permission hook, see below.
+  $function = __FUNCTION__ . '_' . $type;
+  return $function($node, $op, $account);
+}
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * @param object $work_group
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access_work_group($work_group, $op, $account) {
+  // create
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // delete
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // update
+  //
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+
+  // - If user is in $node->administrators, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // view
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+
+  // - If user is in $node->administrators, return NODE_ACCESS_ALLOW
+  // - If user is in one of $node->business_units->users, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  return NODE_ACCESS_IGNORE;
+}
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * @param object $business_unit
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access_business_unit($business_unit, $op, $account) {
+  // create
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - If user is in $work_group->administrators for this business unit's work group, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // delete
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // update
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+
+  // - If user is in $node->users, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // view
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
+  // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  return NODE_ACCESS_IGNORE;
+}
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * @param object $node
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access_business_application($node, $op, $account) {
+  // TODO: Check spec for specific on this.
+
+  // create
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - If user is in $work_group->administrators for this work group, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // delete
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // update
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+
+  // - If user is in $node->users, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // view
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
+  // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  return NODE_ACCESS_IGNORE;
+}
