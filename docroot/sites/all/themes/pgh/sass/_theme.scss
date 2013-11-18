@@ -221,7 +221,8 @@ h3 {
       span {
         text-indent: -1000000px;
         background: transparent url(../images/global/icon-toggle.png) no-repeat;
-        margin: 32px 0 0 20px;
+        @include border-radius(2px);
+        margin: 34px 0 0 10px;
         width: 24px;
         height: 24px;
         float: left;
@@ -236,11 +237,12 @@ h3 {
         height: 170px;
 
         span {
-          background-position: 0 8px;
+          background-position: 8px 7px;
         }
 
         &:hover span {
-          background-position: -48px 8px;
+          background-color: $orange;
+          background-position: -89px 7px;
         }
       }
 
@@ -256,11 +258,12 @@ h3 {
         height: 65px;
 
         span {
-          background-position: -24px 8px;
+          background-position: -16px 7px;
         }
 
         &:hover span {
-          background-position: -72px 8px;
+          background-color: $orange;
+          background-position: -114px 7px;
         }
       }
     }
