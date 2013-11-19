@@ -4,7 +4,8 @@
  * @file
  * User permissions module.
  *
- * Provides functions for determining if a given user can access a piece of awards content.
+ * Provides functions for determining if a given user can access a piece of awards content. This is currently
+ * handled primarily through hook_node_access().
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
@@ -156,10 +157,10 @@ function pgh_permissions_node_access_business_unit($business_unit, $op, $account
       if (user_access('administer awards system', $account)) {
         return NODE_ACCESS_ALLOW;
       }
-      // TODO: If user has Client Admin role, they can create new Business Units.
-      // if () {
-      //   return NODE_ACCESS_ALLOW;
-      // }
+      // The permission 'create business_unit content' should be explicitly granted to the CLiant Admin role.
+      if (user_access('create business_unit content', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
       return NODE_ACCESS_DENY;
 
     case 'delete':
@@ -217,19 +218,6 @@ function pgh_permissions_node_access_business_unit($business_unit, $op, $account
       }
       break;
   }
-
-  // update
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
-
-  // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
-  // - If user is in $node->users, return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
-
-  // view
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
-  // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
-  // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
 
   return NODE_ACCESS_DENY;
 }
