@@ -39,6 +39,7 @@ $zen-auto-include-item-base: false;
 #main-wrap-inner,
 #app-menu-wrap-inner,
 #cat-menu-wrap-inner,
+#workgroup-wrap-inner,
 #business-unit-wrap-inner,
 #footer-wrap-inner,
 .region-bottom {
@@ -53,6 +54,7 @@ $zen-auto-include-item-base: false;
 #content,
 #app-menu,
 #cat-menu,
+#workgroup,
 #business-unit,
 #navigation,
 .region-sidebar-first,
@@ -65,6 +67,7 @@ $zen-auto-include-item-base: false;
 /* Containers for grid items and flow items. */
 #header,
 #main,
+#workgroup,
 #business-unit,
 #footer {
   @include zen-grid-container();

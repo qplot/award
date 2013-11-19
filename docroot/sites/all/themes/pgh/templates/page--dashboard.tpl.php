@@ -84,37 +84,20 @@
   </div></div>
 
 
-  <div id="main-wrap"><div id="main-wrap-inner">
-  <div id="main">
 
-    <div id="content" class="column" role="main">
-      <?php print render($page['highlighted']); ?>
+  <?php // Check if user is part of a work group.
+    if ($work_group):
+  ?>
 
-      <a id="main-content"></a>
+  <div id="workgroup-wrap"><div id="workgroup-wrap-inner">
+  <div id="workgroup">
 
-      <?php /*
-      <?php print render($title_prefix); ?>
-      <?php if ($title): ?>
-        <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
-      <?php endif; ?>
-      <?php print render($title_suffix); ?>
-      */ ?>
+    <div id="workgroup-content" class="column">
 
-      <?php print $messages; ?>
-      <?php print render($tabs); ?>
-      <?php print render($page['help']); ?>
-      <?php if ($action_links): ?>
-        <ul class="action-links"><?php print render($action_links); ?></ul>
-      <?php endif; ?>
+    <?php //print all array keys in a template
+      //var_dump(get_defined_vars());
+    ?>
 
-      <?php //print render($page['content']); ?>
-
-
-      <?php /* --- WORK GROUP ----------------------------------------------------------- */ ?>
-
-      <?php //print all array keys in a template
-        //var_dump(get_defined_vars());
-      ?>
 
       <p class="dashboard-label">Working Group</p>
       <?php if ($logged_in): ?>
@@ -124,33 +107,20 @@
 
       <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
 
-      <?php /* --- end ------------------------------------------------------------------ */ ?>
-
     </div>
 
-    <?php
-      // Render the sidebars to see if there's anything in them.
-      $sidebar_first  = render($page['sidebar_first']);
-      $sidebar_second = render($page['sidebar_second']);
-    ?>
 
-    <?php if ($sidebar_first || $sidebar_second): ?>
-      <aside class="sidebars">
-        <?php print $sidebar_first; ?>
-        <?php print $sidebar_second; ?>
-      </aside>
-    <?php endif; ?>
-
-  </div><!--- /#main --->
+  </div><!--- /#workgroup --->
   </div></div>
-
 
   <div id="business-unit-wrap"><div id="business-unit-wrap-inner">
   <div id="business-unit">
 
-    <div id="business-unit-content" class="column">
+  <?php // Check if user is part of a business unit.
+    if ($business_units):
+  ?>
 
-    <?php /* --- BUSINESS UNIT --------------------------------------------------------- */ ?>
+    <div id="business-unit-content" class="column">
 
     <?php foreach ($business_units as $business_unit): ?>
 
@@ -201,13 +171,57 @@
 
     <?php endforeach; ?>
 
-    <?php /* --- end ------------------------------------------------------------------- */ ?>
-
     </div>
+
+    <?php else: ?>
+
+      <article class="node node-business-unit clearfix">
+
+        <p>This Work Group doesn't have any <strong>Business Units</strong>.</p>
+        <p class="add-content"><a href="#">Add one now</a></p>
+
+      </article>
+
+    <?php  // End check if user is part of a business unit.
+      endif;
+    ?>
 
   </div><!--- /#business-unit --->
   </div></div>
 
+  <?php else: ?>
+
+  <div id="main-wrap"><div id="main-wrap-inner">
+  <div id="main">
+
+    <div id="content" class="column" role="main">
+      <?php print render($page['highlighted']); ?>
+
+      <a id="main-content"></a>
+      <h1 class="page__title title" id="page-title">No Work Group Access</h1>
+
+      <?php print $messages; ?>
+      <?php print render($tabs); ?>
+      <?php print render($page['help']); ?>
+      <?php if ($action_links): ?>
+        <ul class="action-links"><?php print render($action_links); ?></ul>
+      <?php endif; ?>
+
+      <article class="node clearfix">
+
+        <p>You are currently not an admin of any Work Group or Business Unit.<br>
+        Please contact a Practive Greenhealth administrator for help.</p>
+
+      </article>
+
+    </div>
+
+  </div><!--- /#main --->
+  </div></div>
+
+  <?php  // End check if user is part of a work group.
+    endif;
+  ?>
 
   <div id="footer-wrap"><div id="footer-wrap-inner">
     <p>&copy;<?php print date('Y'); ?> Practice Greenhealth Environmental Excellence Awards</p>

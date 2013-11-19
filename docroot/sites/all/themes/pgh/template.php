@@ -63,17 +63,20 @@ function pgh_preprocess_page(&$variables, $hook) {
 
     drupal_set_title('Work Group Dashboard');
 
-    $work_groups = pgh_api_work_groups_for_user();
-
-    $variables['work_group'] = $work_groups[0];
-
-    $work_group_wrapper = entity_metadata_wrapper('node', $work_groups[0]);
-
+    $variables['work_group'] = FALSE;
     $variables['business_units'] = array();
 
-    foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit) {
-      if (entity_access('view', 'node', $business_unit->value())) {
-        $variables['business_units'][] = $business_unit->value();
+    $work_groups = pgh_api_work_groups_for_user();
+
+    if ($work_groups) {
+      $variables['work_group'] = $work_groups[0];
+      $work_group_wrapper = entity_metadata_wrapper('node', $work_groups[0]);
+
+      $variables['business_units'] = array();
+      foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit) {
+        if (entity_access('view', 'node', $business_unit->value())) {
+          $variables['business_units'][] = $business_unit->value();
+        }
       }
     }
   }

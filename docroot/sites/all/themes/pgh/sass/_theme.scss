@@ -139,7 +139,7 @@ h3 {
 
 
 // !------------------------------ */
-// !--- Work Group - dashboard --- */
+// !--- Dashboard ---------------- */
 // !------------------------------ */
 
 .page-dashboard {
@@ -178,7 +178,27 @@ h3 {
     }
   }
 
-  #main {}
+  #main {
+    min-height: 270px;
+  }
+}
+
+
+// !------------------------------ */
+// !--- Work Group - dashboard --- */
+// !------------------------------ */
+
+#workgroup-wrap {
+  background-color: $white;
+
+  #workgroup-wrap-inner {}
+}
+
+#workgroup {
+
+  #workgroup-content {
+    min-height: 170px;
+  }
 }
 
 // !--------------------------------- */
@@ -279,6 +299,27 @@ h3 {
 
   .field-name-body {
     width: 740px;
+  }
+
+  .node-business-unit {
+    padding: 2em 0;
+
+    .add-content a {
+      color: $green;
+      font-size: 11px;
+      line-height: 14px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid #67a697;
+      @include border-radius(2px);
+      padding: 5px 14px 3px;
+
+      &:hover {
+        color: $white;
+        background-color: $green;
+        border-color: $green;
+      }
+    }
   }
 }
 
