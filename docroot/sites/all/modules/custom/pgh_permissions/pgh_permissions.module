@@ -151,18 +151,77 @@ function pgh_permissions_node_access_work_group($work_group, $op, $account) {
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_permissions_node_access_business_unit($business_unit, $op, $account) {
-  // create
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
-  // - If user is in $work_group->administrators for this business unit's work group, return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
+  switch ($op) {
+    case 'create':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      // TODO: If user has Client Admin role, they can create new Business Units.
+      // if () {
+      //   return NODE_ACCESS_ALLOW;
+      // }
+      return NODE_ACCESS_DENY;
 
-  // delete
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
+    case 'delete':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      else {
+        return NODE_ACCESS_DENY;
+      }
+      break;
+
+    case 'update':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+
+      // Work Group administrators can update.
+      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
+      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+        if ($administrator->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+
+      // Business Unit users can update.
+      $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+      foreach ($business_unit_wrapper->field_users->getIterator() as $business_unit_user) {
+        if ($business_unit_user->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+      break;
+
+    case 'view':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+
+      // Work Group administrators can view.
+      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
+      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+        if ($administrator->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+
+      // Business Unit users can view.
+      $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+      foreach ($business_unit_wrapper->field_users->getIterator() as $business_unit_user) {
+        if ($business_unit_user->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+      break;
+  }
 
   // update
   // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
 
+  // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
   // - If user is in $node->users, return NODE_ACCESS_ALLOW
   // - Else, return NODE_ACCESS_DENY
 
@@ -216,5 +275,5 @@ function pgh_permissions_node_access_application($node, $op, $account) {
   // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
   // - Else, return NODE_ACCESS_DENY
 
-  return NODE_ACCESS_DENY;
+  return NODE_ACCESS_IGNORE;
 }

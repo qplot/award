@@ -8,7 +8,7 @@
  */
 
 /**
- * Returns abn array of Work Group nodes for the current user.
+ * Returns an array of Work Group nodes for the current user.
  *
  * @return array
  *   An array of Work Group nodes owned by the current user.
@@ -23,4 +23,29 @@ function pgh_api_work_groups_for_user() {
                   ->execute();
   $keys = array_keys($result['node']);
   return array(node_load($keys[0]));
+}
+
+
+/**
+ * Returns the Work Group node which owns the specified Business Unit node.
+ *
+ * @param int $business_unit_nid
+ *   This nid of the Business Unit to find a Work Group for.
+ *
+ * @return object
+ *   A fully loaded Work Group node whihc is the owner of the specified Business Unit, or FALSE if not found.
+ */
+function pgh_api_work_group_for_business_unit($business_unit_nid) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'work_group')
+                  ->fieldCondition('field_business_units', 'target_id', $business_unit_nid)
+                  ->execute();
+
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    return node_load($nids[0]);
+  }
+
+  return FALSE;
 }
