@@ -144,7 +144,7 @@ function pgh_permissions_node_access_business_unit($business_unit, $op, $account
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
-function pgh_permissions_node_access_business_application($node, $op, $account) {
+function pgh_permissions_node_access_application($node, $op, $account) {
   // TODO: Check spec for specific on this.
 
   // create
