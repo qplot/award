@@ -1,0 +1,267 @@
+<?php
+
+/**
+ * @file
+ * User permissions module.
+ *
+ * Provides functions for determining if a given user can access a piece of awards content. This is currently
+ * handled primarily through hook_node_access().
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+
+/**
+ * Implementation of hook_permission().
+ */
+function pgh_permissions_permission() {
+  return array(
+    'administer awards system' => array(
+      'title' => t('Administer awards system'),
+      'description' => t('View and modify all PGH awards system content and settings.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * Determine if we care about specifying permissions for this node and call a type-specific function to handle
+ * the actual permissions checking.
+ *
+ * @param object $node
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access($node, $op, $account) {
+  $type = is_string($node) ? $node : $node->type;
+
+  // Only determine permissions if this is a node with one of the PGH specific node types.
+  if (!in_array($type, array('work_group', 'business_unit', 'application'))) {
+    return NODE_ACCESS_IGNORE;
+  }
+
+  // Call type-specific permission hook, see below.
+  $function = __FUNCTION__ . '_' . $type;
+  return $function($node, $op, $account);
+}
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * @param object $work_group
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access_work_group($work_group, $op, $account) {
+  switch ($op) {
+    case 'create':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      else {
+        return NODE_ACCESS_DENY;
+      }
+      break;
+
+    case 'delete':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      else {
+        return NODE_ACCESS_DENY;
+      }
+      break;
+
+    case 'update':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+
+      // Work Group administrators can make changes.
+      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+        if ($administrator->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+      return NODE_ACCESS_DENY;
+
+    case 'view':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+
+      // Work Group administrators can view.
+      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+        if ($administrator->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+
+      // Business Unit users under this Work Group can view.
+      foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit) {
+        foreach ($business_unit->field_users->getIterator() as $business_unit_user) {
+          if ($business_unit_user->uid->value() == $account->uid) {
+            return NODE_ACCESS_ALLOW;
+          }
+        }
+      }
+      return NODE_ACCESS_DENY;
+  }
+
+  return NODE_ACCESS_DENY;
+}
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * @param object $business_unit
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access_business_unit($business_unit, $op, $account) {
+  switch ($op) {
+    case 'create':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      // The permission 'create business_unit content' should be explicitly granted to the CLiant Admin role.
+      if (user_access('create business_unit content', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      return NODE_ACCESS_DENY;
+
+    case 'delete':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      else {
+        return NODE_ACCESS_DENY;
+      }
+      break;
+
+    case 'update':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+
+      // Work Group administrators can update.
+      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
+      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+        if ($administrator->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+
+      // Business Unit users can update.
+      $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+      foreach ($business_unit_wrapper->field_users->getIterator() as $business_unit_user) {
+        if ($business_unit_user->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+      break;
+
+    case 'view':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+
+      // Work Group administrators can view.
+      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
+      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+        if ($administrator->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+
+      // Business Unit users can view.
+      $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+      foreach ($business_unit_wrapper->field_users->getIterator() as $business_unit_user) {
+        if ($business_unit_user->uid->value() == $account->uid) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+      break;
+  }
+
+  return NODE_ACCESS_DENY;
+}
+
+/**
+ * Implementation of hook_node_access().
+ *
+ * @param object $node
+ *   Either a node object or the machine name of the content type on which to perform the access check.
+ *
+ * @param string $op
+ *   The operation to be performed. Possible values: create, delete, update, view.
+ *
+ * @param object $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return int
+ *   One of NODE_ACCESS_ALLOW, NODE_ACCESS_DENY, NODE_ACCESS_IGNORE.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_access_application($node, $op, $account) {
+  // TODO: Check spec for specific on this.
+
+  // create
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - If user is in $work_group->administrators for this work group, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // delete
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // update
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+
+  // - If user is in $node->users, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  // view
+  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+  // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
+  // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
+  // - Else, return NODE_ACCESS_DENY
+
+  return NODE_ACCESS_IGNORE;
+}
