@@ -18,17 +18,39 @@
 function pgh_api_work_groups_for_user() {
   global $user;
 
+  $nids = array();
+
+  // Find Work Groups that the user is an administrator of.
   $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'work_group')
                   ->fieldCondition('field_administrators', 'target_id', $user->uid)
                   ->execute();
 
-  if (!isset($result['node'])) {
-    return array();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
   }
 
-  $nids = array_keys($result['node']);
+  // Find Work Groups where the user is a Business Unit User.
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                ->propertyCondition('type', 'business_unit')
+                ->fieldCondition('field_users', 'target_id', $user->uid)
+                ->execute();
+
+  if (isset($result['node'])) {
+    $business_unit_nids = array_keys($result['node']);
+    foreach ($business_unit_nids as $business_unit_nid) {
+      $work_group = pgh_api_work_group_for_business_unit($business_unit_nid);
+      if ($work_group) {
+        $nids[] = $work_group->nid;
+      }
+    }
+  }
+
+  // Load all of the nids as full nodes.
+  $nids = array_unique($nids);
+
   $work_groups = array();
   foreach ($nids as $nid) {
     $work_groups[] = node_load($nid);
@@ -45,7 +67,7 @@ function pgh_api_work_groups_for_user() {
  *   This nid of the Business Unit to find a Work Group for.
  *
  * @return object
- *   A fully loaded Work Group node whihc is the owner of the specified Business Unit, or FALSE if not found.
+ *   A fully loaded Work Group node which is the owner of the specified Business Unit, or FALSE if not found.
  */
 function pgh_api_work_group_for_business_unit($business_unit_nid) {
   $query = new EntityFieldQuery();
