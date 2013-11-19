@@ -150,3 +150,7 @@ function pgh_preprocess_block(&$variables, $hook) {
   //}
 }
 // */
+
+function pgh_js_alter(&$js) {
+  unset($js['misc/tableheader.js']);
+}

@@ -122,7 +122,7 @@
       <?php endif; ?>
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
 
-      <?php print render(field_view_field('node', $work_group, 'body', array('label' => 'hidden'))); ?>
+      <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
 
       <?php /* --- end ------------------------------------------------------------------ */ ?>
 
@@ -162,41 +162,39 @@
         <?php endif; ?>
         <h2><?php print $business_unit->title; ?></h2>
 
-        <?php print render(field_view_field('node', $business_unit, 'body', array(
-                                                                              'label' => 'hidden',
-                                                                              'type' => 'text_summary_or_trimmed',
-                                                                              'settings' => array('trim_length' => 225)
-                                                                            ))); ?>
+        <?php $field_bu_body = field_view_field('node', $business_unit, 'body', array('label' => 'hidden', 'type' => 'text_summary_or_trimmed', 'settings' => array('trim_length' => 225)));
+          print render($field_bu_body);
+        ?>
 
         <div class="info-block">
-          <?php print render(field_view_field('node', $business_unit, 'field_shipping_city', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_shipping_state', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_number_beds')); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_facility_users')); ?>
+          <?php $shipping_city = field_view_field('node', $business_unit, 'field_shipping_city', array('label' => 'hidden')); print render($shipping_city); ?>
+          <?php $shipping_state = field_view_field('node', $business_unit, 'field_shipping_state', array('label' => 'hidden')); print render($shipping_state); ?>
+          <?php $number_beds = field_view_field('node', $business_unit, 'field_number_beds'); print render($number_beds); ?>
+          <?php $facility_users = field_view_field('node', $business_unit, 'field_facility_users'); print render($facility_users); ?>
         </div>
 
         <div class="billing-address">
           <p class="label">Billing Address</p>
-          <?php print render(field_view_field('node', $business_unit, 'field_billing_address_1', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_billing_address_2', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_billing_city', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_billing_state', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_billing_zipcode', array('label' => 'hidden'))); ?>
+          <?php $billing_address_1 = field_view_field('node', $business_unit, 'field_billing_address_1', array('label' => 'hidden')); print render($billing_address_1); ?>
+          <?php $billing_address_2 = field_view_field('node', $business_unit, 'field_billing_address_2', array('label' => 'hidden')); print render($billing_address_2); ?>
+          <?php $billing_city = field_view_field('node', $business_unit, 'field_billing_city', array('label' => 'hidden')); print render($billing_city); ?>
+          <?php $billing_state = field_view_field('node', $business_unit, 'field_billing_state', array('label' => 'hidden')); print render($billing_state); ?>
+          <?php $billing_zipcode = field_view_field('node', $business_unit, 'field_billing_zipcode', array('label' => 'hidden')); print render($billing_zipcode); ?>
         </div>
 
         <div class="shipping-address">
           <p class="label">Shipping Address</p>
-          <?php print render(field_view_field('node', $business_unit, 'field_shipping_address_1', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_shipping_address_2', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_shipping_city', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_shipping_state', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_shipping_zipcode', array('label' => 'hidden'))); ?>
+          <?php $shipping_address_1 = field_view_field('node', $business_unit, 'field_shipping_address_1', array('label' => 'hidden')); print render($shipping_address_1); ?>
+          <?php $shipping_address_2 = field_view_field('node', $business_unit, 'field_shipping_address_2', array('label' => 'hidden')); print render($shipping_address_2); ?>
+          <?php $shipping_city = field_view_field('node', $business_unit, 'field_shipping_city', array('label' => 'hidden')); print render($shipping_city); ?>
+          <?php $shipping_state = field_view_field('node', $business_unit, 'field_shipping_state', array('label' => 'hidden')); print render($shipping_state); ?>
+          <?php $shipping_zipcode = field_view_field('node', $business_unit, 'field_shipping_zipcode', array('label' => 'hidden')); print render($shipping_zipcode); ?>
         </div>
 
         <div class="other-info">
           <p class="label">&nbsp;</p>
-          <?php print render(field_view_field('node', $business_unit, 'field_website_url', array('label' => 'hidden'))); ?>
-          <?php print render(field_view_field('node', $business_unit, 'field_phone', array('label' => 'hidden'))); ?>
+          <?php $website_url = field_view_field('node', $business_unit, 'field_website_url', array('label' => 'hidden')); print render($website_url); ?>
+          <?php $phone_bu = field_view_field('node', $business_unit, 'field_phone', array('label' => 'hidden')); print render($phone_bu); ?>
         </div>
 
       </div>
