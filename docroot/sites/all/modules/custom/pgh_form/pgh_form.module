@@ -194,6 +194,12 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     $debug = 0;
     $total = variable_get('pgh_form_max_questions', 1000000000);
 
+    $form['ajax_div'] = array(
+      '#markup' => '',
+      '#prefix' => '<div id="pgh_form_ajax_div">',
+      '#suffix' => '</div><br /><br />',
+    );
+
     foreach ($cat->field_category_sections['und'] as $sec_id) {
       if ($sec = node_load($sec_id['target_id'])) {
         $sec_wrapper = entity_metadata_wrapper('node', $sec);
@@ -367,6 +373,18 @@ function pgh_application_form_element_validate($element, &$form_state) {
 }
 
 /**
+ * Application form ajax callback
+ */
+function pgh_application_form_element_callback($form, &$form_state) {
+  // Submit the form
+  pgh_application_form_submit($form, $form_state);
+  // based on the triggering element, we then save the question
+  // $app_id = $form_state['values']['application'];
+  // $qid = $form_state['triggering_element']['#question_id'];
+  // return '<div id="pgh_form_ajax_div">' . serialize($form_state['triggering_element']['#question_id']) . '</div>';
+}
+
+/**
  * Application form submit handler. Handles submission of the fields in a single category of the application.
  *
  * Determines the value to be stored and calculates the points for each question. Stores this information
@@ -382,6 +400,13 @@ function pgh_application_form_element_validate($element, &$form_state) {
  */
 function pgh_application_form_submit($form, &$form_state) {
   // dsm($form_state['values']);
+
+  // Find out submission pathway
+  $triggering_qid = 0;
+  if (!empty($form_state['triggering_element']['#question_id'])) {
+    $triggering_qid = $form_state['triggering_element']['#question_id'];
+  }
+
   // TODO: Calculate the points for a given question in a separate API function (
   // i.e. pgh_api_score_for_question($app_id, $qid, $answer).
 
@@ -389,6 +414,8 @@ function pgh_application_form_submit($form, &$form_state) {
   $app_id = $form_state['values']['application'];
 
   foreach ($form_state['values'] as $qid => &$value) {
+    // For ajax case, we don't want to submit all questions
+    if ($triggering_qid && ($qid != $triggering_qid)) continue;
 
     // Assume all question has number.
     if (is_numeric($qid)) {
@@ -453,6 +480,9 @@ function pgh_application_form_submit($form, &$form_state) {
     }
   }
 
+  // lets not worry about error for ajax case
+  if ($triggering_qid) return;
+
   // handle the error
   if (!empty($form_state['values']['errors'])) {
     $lines = array();
@@ -516,6 +546,11 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   if ($parent_qid = $wrapper->field_question_parent_qid->value()) {
     $form['#states'] = pgh_form_question_states($question);
   }
+  // Ajax processing
+  $form['#ajax'] = array(
+    'callback' => 'pgh_application_form_element_callback',
+    'wrapper' => 'pgh_form_ajax_div',
+  );
 
   // Based on different question type.
   switch ($type) {
