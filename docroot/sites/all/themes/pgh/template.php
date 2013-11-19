@@ -72,7 +72,9 @@ function pgh_preprocess_page(&$variables, $hook) {
     $variables['business_units'] = array();
 
     foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit) {
-      $variables['business_units'][] = $business_unit->value();
+      if (entity_access('view', 'node', $business_unit->value())) {
+        $variables['business_units'][] = $business_unit->value();
+      }
     }
   }
 }
