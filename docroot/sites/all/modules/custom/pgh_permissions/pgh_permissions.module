@@ -10,6 +10,19 @@
  */
 
 /**
+ * Implementation of hook_permission().
+ */
+function pgh_permissions_permission() {
+  return array(
+    'administer awards system' => array(
+      'title' => t('Administer awards system'),
+      'description' => t('View and modify all PGH awards system content and settings.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
  * Implementation of hook_node_access().
  *
  * Determine if we care about specifying permissions for this node and call a type-specific function to handle
