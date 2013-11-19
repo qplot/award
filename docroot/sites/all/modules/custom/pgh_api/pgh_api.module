@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Awards API module.
+ * Awards API module. Provides functions for getting information about objects in the awards system.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
@@ -11,18 +11,30 @@
  * Returns an array of Work Group nodes for the current user.
  *
  * @return array
- *   An array of Work Group nodes owned by the current user.
+ *   An array of Work Group nodes owned by the current user or an empty array if none found.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_work_groups_for_user() {
-  // TODO: Actually load the current user's work_group nodes.
+  global $user;
+
   $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'work_group')
+                  ->fieldCondition('field_administrators', 'target_id', $user->uid)
                   ->execute();
-  $keys = array_keys($result['node']);
-  return array(node_load($keys[0]));
+
+  if (!isset($result['node'])) {
+    return array();
+  }
+
+  $nids = array_keys($result['node']);
+  $work_groups = array();
+  foreach ($nids as $nid) {
+    $work_groups[] = node_load($nid);
+  }
+
+  return $work_groups;
 }
 
 
