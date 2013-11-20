@@ -87,8 +87,9 @@
   <div id="app-menu">
     <?php
       $block_menu = block_load('pgh_application', 'application_category_menu');
-      $output_menu = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block_menu))));
-      print $output_menu;
+      $block_menu_render = _block_render_blocks(array($block_menu));
+      $block_menu_array = _block_get_renderable_array($block_menu_render);
+      print drupal_render($block_menu_array);
     ?>
 
     <?php /*
@@ -118,7 +119,9 @@
   <div id="cat-menu">
     <?php
       $block_categories = block_load('pgh_application', 'application_category_menu');
-      $output_categories = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block_categories))));
+      $block_categories_render = _block_render_blocks(array($block_categories));
+      $block_categories_array = _block_get_renderable_array($block_categories_render);
+      $output_categories = drupal_render($block_categories_array);
       print $output_categories;
     ?>
 
