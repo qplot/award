@@ -316,13 +316,10 @@ function pgh_application_form_element_validate($element, &$form_state) {
 
   $value = $form_state['values'][$qid];
 
-  // TODO: Admins may specify multiple validation rules. Ensure this code processes each rule.
-  // Currently it incorrectly assumes that #question_validate will be a single rule.
   if (!empty($element['#question_validate'])) {
-    // split validation string here
     $validates = explode(',', $element['#question_validate']);
     foreach ($validates as $validate) {
-      switch ($validate) {
+      switch (trim($validate)) {
         case 'nonnegative':
           if (!is_numeric($value)) {
             pgh_form_set_error($qid, 'The item value needs to be number');
