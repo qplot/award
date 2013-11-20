@@ -98,9 +98,11 @@
       });
 
 
-      // Replace the fieldset legend with an H3 so it's easier to style
+      // Replace the fieldset legends with H3s so they are easier to style
     	// ======================================================================
-    	$('legend').replaceWith( '<h3 class="legend">' + $('legend').html() + '</h3>' );
+    	$('legend').each(function() {
+        $(this).replaceWith('<h3 class="legend">' + $(this).html() + '</h3>');
+      });
 
   });
 
