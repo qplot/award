@@ -165,7 +165,7 @@ function pgh_api_validate_question_value($validations, $value) {
           $errors[] = 'The item value needs to be number';
         }
         else {
-          if ($value != 0) {
+          if ($value == 0) {
             $errors[] = 'The item value can not be zero';
           }
         }

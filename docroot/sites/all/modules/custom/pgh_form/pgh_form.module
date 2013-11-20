@@ -277,18 +277,18 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * @param array $form_state
  *   Form state array.
  */
-function pgh_form_set_error($qid, $msg) {
-  if (variable_get('pgh_form_drupal_validate', FALSE)) {
-    form_set_error($qid, $msg);
-  }
+// function pgh_form_set_error($qid, $msg) {
+//   if (variable_get('pgh_form_drupal_validate', FALSE)) {
+//     form_set_error($qid, $msg);
+//   }
 
-  global $pgh_temp_validation_errors;
+//   global $pgh_temp_validation_errors;
 
-  $pgh_temp_validation_errors[] = array(
-    'qid' => $qid,
-    'message' => $msg
-  );
-}
+//   $pgh_temp_validation_errors[] = array(
+//     'qid' => $qid,
+//     'message' => $msg
+//   );
+// }
 
 // function pgh_application_form_validate($form, &$form_state) {
 //   dsm($form);
@@ -317,60 +317,8 @@ function pgh_application_form_element_validate($element, &$form_state) {
   $value = $form_state['values'][$qid];
 
   if (!empty($element['#question_validate'])) {
-    $validates = explode(',', $element['#question_validate']);
-    foreach ($validates as $validate) {
-      switch (trim($validate)) {
-        case 'nonnegative':
-          if (!is_numeric($value)) {
-            pgh_form_set_error($qid, 'The item value needs to be number');
-          }
-          else {
-            if ($value < 0) {
-              pgh_form_set_error($qid, 'The item value can not be negative');
-            }
-          }
-          break;
-
-        case 'integer':
-          // Check if $value is an integer or string representation of an integer.
-          // is_int() will fail on the string values presented by the Form API.
-          $is_int = ((string) (int) $value) == $value;
-          if (!$is_int) {
-            pgh_form_set_error($qid, 'The item value needs to be integer');
-          }
-          break;
-
-        case 'nonzero':
-          if (!is_numeric($value)) {
-            pgh_form_set_error($qid, 'The item value needs to be number');
-          }
-          else {
-            if ($value != 0) {
-              pgh_form_set_error($qid, 'The item value can not be zero');
-            }
-          }
-          break;
-
-        case 'percentage':
-          $is_int = ((string) (int) $value) == $value;
-          if (!$is_int || $value < 0 || $value > 100) {
-            pgh_form_set_error($qid, 'The item value needs to be integer in the range 0 - 100');
-          }
-          break;
-
-        default:
-          dsm('Unsupported validation rule: ' . $element['#question_validate'] . ' for question id: ' . $qid);
-          break;
-      }
-    }
-  }
-
-  // TODO: Stop using globals!
-  global $pgh_temp_validation_errors;
-  // TODO: Stop using globals!
-
-  if (!empty($pgh_temp_validation_errors)) {
-    $form_state['values']['errors'] = $pgh_temp_validation_errors;
+    $errors = pgh_api_validate_question_value($element['#question_validate'], $value);
+    $form_state['values']['errors'][$qid] = $errors;
   }
 }
 
@@ -541,9 +489,9 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   // Make sure the flat return.
   $form['#tree'] = FALSE;
   // Validation
-  $form['#question_id'] = $wrapper->getIdentifier();
-  $form['#question_validate'] = $wrapper->field_question_validation->value();
-  $form['#element_validate'] = array('pgh_application_form_element_validate');
+  // $form['#question_id'] = $wrapper->getIdentifier();
+  // $form['#question_validate'] = $wrapper->field_question_validation->value();
+  // $form['#element_validate'] = array('pgh_application_form_element_validate');
   // Dependency display
   if ($parent_qid = $wrapper->field_question_parent_qid->value()) {
     $form['#states'] = pgh_form_question_states($question);
@@ -630,6 +578,17 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       $form['#prefix'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
       break;
   }
+
+  // Validate now
+
+  // Add a post fix html to hold error
+  $error_msg = '';
+  if ($validations = $wrapper->field_question_validation->value()) {
+    $errors = pgh_api_validate_question_value($validations, $answer['value']);
+    if ($errors)
+      $error_msg = $errors[0];
+  }
+  $form['#description'] = '<div class="question-error" style="color: red;">' . $error_msg . '</b></div>';
 
   // Mark this question has been processed.
   global $pgh_temp_section_questions;
