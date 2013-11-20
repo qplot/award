@@ -146,6 +146,11 @@ function pgh_form_category_page($app_id, $cat_id) {
     $title = $type_wrapper->body->value->raw();
     drupal_set_title($app_wrapper->getIdentifier() . ' - ' . 'Application: ' . $title);
 
+    // Find cat_id if key is provided
+    if (!is_numeric($cat_id)) {
+      $cat_id = pgh_api_find_nid($cat_id, 'category');
+    }
+
     return drupal_get_form('pgh_application_form', $app_id, $cat_id);;
   }
   else {

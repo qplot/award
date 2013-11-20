@@ -83,3 +83,29 @@ function pgh_api_work_group_for_business_unit($business_unit_nid) {
 
   return FALSE;
 }
+
+/**
+ * Returns the NID based on a supplied pgh item key id.
+ *
+ * @param string $key
+ *   A category key.
+ *
+ * @return int
+ *   The NID for the supplied id or 0 if not found.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_api_find_nid($key, $type) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', $type)
+                  ->propertyCondition('title', $key)
+                  ->execute();
+  if (!empty($result['node'])) {
+    $keys = array_keys($result['node']);
+    return $keys[0];
+  }
+  else {
+    return 0;
+  }
+}
