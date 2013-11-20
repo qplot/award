@@ -369,64 +369,7 @@ function pgh_application_form_submit($form, &$form_state) {
 
     // Assume all question has number.
     if (is_numeric($qid)) {
-      $question = node_load($qid);
-      $question_wrapper = entity_metadata_wrapper('node', $question);
-      $type = $question_wrapper->field_question_type->value();
-      $style = $question_wrapper->field_question_style->value();
-
-      // Save response if the question expects a response.
-      if (!in_array($type, array('html', 'container'))) {
-        // Assign point.
-        $points = $question_wrapper->field_question_points->value();
-
-        $point = 0;
-        switch ($type) {
-          case 'text':
-            if (!empty($value) && !empty($points[0])) {
-              $point = $points[0];
-            }
-            break;
-
-          case 'selection':
-            switch ($style) {
-              case 'checkboxes':
-                $options = $question_wrapper->field_question_options->value();
-                $i = 0;
-                foreach ($options as $option) {
-                  if (!empty($value[$option])) {
-                    $point += $points[$i];
-                  }
-                  $i++;
-                }
-                $value = serialize($value);
-                break;
-
-              default:
-                if (is_numeric($value) && is_array($points) && !empty($points[$value])) {
-                  $point = $points[$value];
-                }
-                break;
-            }
-            break;
-
-          case 'file':
-            $value = '';
-            if (isset($form_state['input']['fid'])) {
-              $value = $form_state['input']['fid'];
-            }
-            break;
-
-          default:
-            // code...
-            break;
-        }
-
-        $answer = array(
-          'value' => $value,
-          'point' => $point,
-        );
-        pgh_api_set_response($app_id, $qid, $answer);
-      }
+      pgh_api_save_response($app_id, $qid, $value);
     }
   }
 
