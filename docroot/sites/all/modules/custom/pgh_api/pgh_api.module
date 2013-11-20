@@ -121,3 +121,68 @@ function pgh_api_find_nid($key, $type, $all = FALSE) {
   }
 }
 
+/**
+ * Validate question based on validation rules and value
+ *
+ * @param array $validations
+ *   Validation rules string delimited by comma
+ *
+ * @param array $value
+ *   Value needs to be validated
+ *
+ * @return array
+ *   Array of string of error messages
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_api_validate_question_value($validations, $value) {
+  $errors = array();
+  $validates = explode(',', $validations);
+  foreach ($validates as $validate) {
+    switch (trim($validate)) {
+      case 'nonnegative':
+        if (!is_numeric($value)) {
+          $errors[] = 'The item value needs to be number';
+        }
+        else {
+          if ($value < 0) {
+            $errors[] = 'The item value neds to be positive';
+          }
+        }
+        break;
+
+      case 'integer':
+        // Check if $value is an integer or string representation of an integer.
+        // is_int() will fail on the string values presented by the Form API.
+        $is_int = ((string) (int) $value) == $value;
+        if (!$is_int) {
+          $errors[] = 'The item value needs to be integer';
+        }
+        break;
+
+      case 'nonzero':
+        if (!is_numeric($value)) {
+          $errors[] = 'The item value needs to be number';
+        }
+        else {
+          if ($value != 0) {
+            $errors[] = 'The item value can not be zero';
+          }
+        }
+        break;
+
+      case 'percentage':
+        $is_int = ((string) (int) $value) == $value;
+        if (!$is_int || $value < 0 || $value > 100) {
+          $errors[] ='The item value needs to be integer in the range 0 - 100';
+        }
+        break;
+
+      default:
+        $errors[] = 'Unsupported validation rule: ' . $validate;
+        break;
+    }
+  }
+
+  return $errors;
+}
