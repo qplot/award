@@ -614,7 +614,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
             'schemes' => array('http'),
           ),
         ),
-        '#description' => t('Pick a video file to upload.'),
+        '#description' => t(''),
         '#attached' => array(),
         '#extended' => TRUE,
         // '#value' => !empty($answer['value'])?array('fid' => $answer['value']):'',
