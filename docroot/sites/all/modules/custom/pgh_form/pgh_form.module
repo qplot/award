@@ -326,12 +326,27 @@ function pgh_application_form_element_validate($element, &$form_state) {
  * Application form ajax callback
  */
 function pgh_application_form_element_callback($form, &$form_state) {
-  // Submit the form
-  pgh_application_form_submit($form, $form_state);
-  // based on the triggering element, we then save the question
-  // $app_id = $form_state['values']['application'];
-  // $qid = $form_state['triggering_element']['#question_id'];
-  // return '<div id="pgh_form_ajax_div">' . serialize($form_state['triggering_element']['#question_id']) . '</div>';
+  if (empty($form_state['triggering_element']['#name'])) return;
+
+  // find the question
+  $qid = $form_state['triggering_element']['#name'];
+  $question = node_load($qid);
+  $wrapper = entity_metadata_wrapper('node', $question);
+
+  // save value
+  $app_id = $form_state['values']['application'];
+  $value = $form_state['values'][$qid];
+  pgh_api_save_response($app_id, $qid, $value);
+
+  // validate
+  $error_div_id = $wrapper->title->value() . '-error';
+  if ($validations = $wrapper->field_question_validation->value()) {
+    $errors = pgh_api_validate_question_value($validations, $value);
+    if ($errors)
+      $error_msg = $errors[0];
+  }
+
+  return '<div id="'. $error_div_id . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
 }
 
 /**
@@ -351,12 +366,6 @@ function pgh_application_form_element_callback($form, &$form_state) {
 function pgh_application_form_submit($form, &$form_state) {
   // dsm($form_state['values']);
 
-  // Find out submission pathway
-  $triggering_qid = 0;
-  if (!empty($form_state['triggering_element']['#question_id'])) {
-    $triggering_qid = $form_state['triggering_element']['#question_id'];
-  }
-
   // TODO: Calculate the points for a given question in a separate API function (
   // i.e. pgh_api_score_for_question($app_id, $qid, $answer).
 
@@ -364,9 +373,6 @@ function pgh_application_form_submit($form, &$form_state) {
   $app_id = $form_state['values']['application'];
 
   foreach ($form_state['values'] as $qid => &$value) {
-    // For ajax case, we don't want to submit all questions
-    if ($triggering_qid && ($qid != $triggering_qid)) continue;
-
     // Assume all question has number.
     if (is_numeric($qid)) {
       pgh_api_save_response($app_id, $qid, $value);
