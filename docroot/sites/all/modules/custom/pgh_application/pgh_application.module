@@ -309,7 +309,7 @@ function pgh_application_category_links($application_nid) {
       'attributes' => array(
         'class' => array(
           'category-link',
-          str_replace('_', '-', $category_wrapper->title->value()),
+          strtolower(str_replace('_', '-', $category_wrapper->title->value())),
         ),
       )
     );
