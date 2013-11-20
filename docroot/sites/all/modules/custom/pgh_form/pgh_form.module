@@ -425,7 +425,7 @@ function pgh_application_form_submit($form, &$form_state) {
           'value' => $value,
           'point' => $point,
         );
-        pgh_set_response($app_id, $qid, $answer);
+        pgh_api_set_response($app_id, $qid, $answer);
       }
     }
   }
@@ -473,9 +473,9 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   // Prepare response for question expecting a response.
   $answer = array('value' => '', 'point' => 0);
   if (!in_array($type, array('html', 'container'))) {
-    $rid = pgh_get_response($app_id, $wrapper->getIdentifier(), $answer);
+    $rid = pgh_api_get_response($app_id, $wrapper->getIdentifier(), $answer);
     if (!$rid) {
-      pgh_set_response($app_id, $wrapper->getIdentifier());
+      pgh_api_set_response($app_id, $wrapper->getIdentifier());
     }
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
@@ -501,9 +501,10 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $form['#states'] = pgh_form_question_states($question);
   }
   // Ajax processing
+  $error_div_id = $wrapper->title->value() . '-error';
   $form['#ajax'] = array(
     'callback' => 'pgh_application_form_element_callback',
-    'wrapper' => 'pgh_form_ajax_div',
+    'wrapper' => $error_div_id,
   );
 
   // Based on different question type.
@@ -592,7 +593,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     if ($errors)
       $error_msg = $errors[0];
   }
-  $form['#description'] = '<div class="question-error" style="color: red;">' . $error_msg . '</b></div>';
+  $form['#description'] = '<div id="'. $error_div_id . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
 
   // Mark this question has been processed.
   global $pgh_temp_section_questions;
@@ -781,95 +782,6 @@ function pgh_find_response_id($app_id, $qid) {
   else {
     return 0;
   }
-}
-
-/**
- * Load the nid of the response for a given question.
- *
- * @param int $app_id
- *   NID for a specific application instance.
- *
- * @param int $qid
- *   NID for a specific question instance.
- *
- * @param array $response
- *   A response array, passed by reference. This will be set to an array containing 'value' and 'points' elements.
- *
- * @return int
- *   The NID for the response object matching the supplied question/application identifiers.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_get_response($app_id, $qid, &$response) {
-  // TODO: Functions MUST NOT alter data by reference.
-  // Refactor this to remove the $response setting behavior.
-  $rid = pgh_find_response_id($app_id, $qid);
-  if ($rid) {
-    $response = node_load($rid);
-    $wrapper = entity_metadata_wrapper('node', $response);
-
-    $response = array(
-      'value' => $wrapper->body->value->raw(),
-      'point' => $wrapper->field_response_point->value(),
-    );
-    return $wrapper->getIdentifier();
-  }
-
-  return 0;
-}
-
-/**
- * Set question response
- */
-
-/**
- * Sets the stored value for the response to a specific application/question.
- *
- * @param int $app_id
- *   NID for a specific application instance.
- *
- * @param int $qid
- *   NID for a specific question instance.
- *
- * @param array $answer
- *   An array specifying the value to store in the response.
- *
- * @return int
- *   The NID of the response which the answer was saved to.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_set_response($app_id, $qid, $answer = array()) {
-  // Set default answer.
-  $default = array(
-    'value' => '',
-    'point' => 0,
-  );
-  $answer = array_merge($default, $answer);
-
-  // Find response.
-  $rid = pgh_find_response_id($app_id, $qid);
-  if ($rid) {
-    $response = node_load($rid);
-    $wrapper = entity_metadata_wrapper('node', $response);
-  }
-  else {
-    // Create a new response.
-    $response = entity_create('node', array('type' => 'response'));
-    $wrapper = entity_metadata_wrapper('node', $response);
-    $wrapper->field_response_application->set($app_id);
-    $wrapper->field_response_question->set($qid);
-  }
-  $wrapper->title = 'app_' . $app_id . '_q_' . $qid;
-  if ($answer) {
-    $wrapper->body = array(
-      'value' => $answer['value']
-    );
-    $wrapper->field_response_point->set($answer['point']);
-  }
-  $wrapper->save();
-  node_save($response);
-  return $response->nid;
 }
 
 /**
