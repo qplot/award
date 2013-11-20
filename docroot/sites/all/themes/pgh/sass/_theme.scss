@@ -507,7 +507,6 @@ h3 {
 
       ul.selected-item,
       ul.category-menu {
-        color: $white;
         list-style: none;
         margin: 0;
         padding: 0;
@@ -525,20 +524,41 @@ h3 {
         @include box-shadow(0 1px 0 rgba(0,0,0,0.1));
 
         li {
+          color: $white;
           text-align: center;
+          background: transparent url(../images/menu-app/app-menu-ddarrow.png) no-repeat;
+          cursor: pointer;
           position: relative;
           z-index: 2;
 
-          a {
-            color: $white;
-            text-decoration: none;
-            background: transparent url(../images/menu-app/app-menu-ddarrow.png) no-repeat right center;
-            display: block;
+          // a {
+          //   color: $white;
+          //   text-decoration: none;
+          //   display: block;
+          // }
+
+          &.cat-menu-closed {
+            background-position: right 1px;
+
+            &:hover {
+              background-position: right -118px;
+            }
+
+            ul.category-menu {
+              top: -999px;
+            }
           }
 
-          //&:hover ul.category-menu,
-          &.hihover ul.category-menu {
-            top: -1px;
+          &.cat-menu-opened {
+            background-position: right -59px;
+
+            &:hover {
+              background-position: right -178px;
+            }
+
+            ul.category-menu {
+              top: -10px;
+            }
           }
         }
       }
@@ -550,8 +570,8 @@ h3 {
         @include border-radius(3px);
         @include box-shadow(0 1px 7px rgba(0,0,0,0.3));
         position: absolute;
-        top: -999px;
-        left: -1px;
+        //top: -999px;
+        left: 12px;
         z-index: 1;
 
         li {
@@ -576,7 +596,7 @@ h3 {
             border-left: 1px solid #e0e0e0;
             display: block;
             padding: 0 20px;
-            width: 600px;
+            width: 530px;
 
             &:hover {
               color: $white;
@@ -654,7 +674,7 @@ h3 {
             height: 70px;
             float: left;
 
-            // prefix
+            // prefix award type
             @each $awardTypeMenu in pfc, pr {
 
               &.#{$awardTypeMenu}-leadership { background-position: 0 -70px;
@@ -725,7 +745,7 @@ h3 {
       z-index: 1;
     }
 
-    // prefix
+    // prefix award type
     @each $awardTypeh1 in pfc, pr {
 
       &.#{$awardTypeh1}-leadership {

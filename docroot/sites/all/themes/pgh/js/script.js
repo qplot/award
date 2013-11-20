@@ -24,8 +24,27 @@
 
         // Wrap application drop-down in active section UL parent for theming.
         if ($(app_menu_id + ' ul.category-menu li a').hasClass('active')) {
-          $(app_menu_id + ' ul.category-menu li a.active').clone().prependTo(app_menu_id + ' .item-list').wrap('<ul class="selected-item"><li />');
+          $(app_menu_id + ' ul.category-menu li a.active').contents().clone().prependTo(app_menu_id + ' .item-list').wrap('<ul class="selected-item"><li class="cat-menu-closed" />');
           $(app_menu_id + ' ul.category-menu').appendTo(app_menu_id + ' .item-list ul.selected-item li');
+
+
+          // Add click event to drop-down menu.
+          $('.selected-item li').click(function() {
+            if ($(this).hasClass('cat-menu-closed')) {
+              $(this).removeClass('cat-menu-closed').addClass('cat-menu-opened');
+            } else {
+              $(this).removeClass('cat-menu-opened').addClass('cat-menu-closed');
+            }
+          });
+
+          // Close menu on outside click.
+          $(document).click(function(e) {
+            if (($('.selected-item li').hasClass('cat-menu-opened')) && ($(e.target).closest('.selected-item li').length === 0)) {
+              $('.selected-item li').removeClass('cat-menu-opened');
+              $('.selected-item li').addClass('cat-menu-closed');
+            }
+          });
+
 
           // Add back and next arrows.
           var $app_menu_arrows = $('#block-pgh-application-application-category-menu ul.category-menu li a.active').parent('li');
@@ -35,6 +54,7 @@
           if ($app_menu_arrows.next('li')) {
             $app_menu_arrows.next().children('a').clone().prependTo(app_menu_id + ' .item-list').wrap('<span class="next" />');
           }
+
 
           // Add the active category class to h1 by first grabbing the classes needed.
           var active_classes = $('#block-pgh-application-application-category-menu ul.category-menu li a.active').attr('class');
@@ -53,24 +73,6 @@
           $('h1#page-title').addClass('no-category');
         }
 
-      }
-
-
-      // App menu - hover intent
-      $(app_menu_id + ' ul.selected-item > li').hoverIntent({
-        sensitivity: 7, // number = sensitivity threshold (must be 1 or higher)
-        interval: 100, // number = milliseconds for onMouseOver polling interval
-        timeout: 140, // number = milliseconds delay before onMouseOut
-        over: showNav,  // function = onMouseOver callback (required)
-        out: hideNav    // function = onMouseOut callback (required)
-      });
-
-      function showNav() {
-        $(this).addClass('hihover');
-      }
-
-      function hideNav() {
-        $(this).removeClass('hihover');
       }
 
 
