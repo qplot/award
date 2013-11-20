@@ -27,9 +27,9 @@ function pgh_form_menu() {
     'page arguments' => array(1, 3),
     'access callback' => TRUE,
   );
-  $items['settings'] = array(
-    'title' => 'Form Settings',
-    'description' => 'Use application form to set settings for applications',
+  $items['admin/config/development/pgh'] = array(
+    'title' => 'PGH settings',
+    'description' => 'Development settings for pgh award applicaitons',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pgh_form_settings'),
     'access callback' => TRUE,
