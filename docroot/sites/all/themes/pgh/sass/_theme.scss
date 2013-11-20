@@ -649,49 +649,53 @@ h3 {
 
           a {
             text-indent: -1000000px;
-            background: transparent url(../images/menu-app/cat-menu-icons.png) no-repeat 0 0;
+            background: transparent url(../images/menu-app/cat-menu-icons.png) no-repeat -763px -70px;
             width: 77px;
             height: 70px;
             float: left;
 
-            &.pfc-leadership { background-position: 0 -70px;
-              &:hover, &.active { background-position: 0 0; }
-            }
+            // prefix
+            @each $awardTypeMenu in pfc, pr {
 
-            &.pfc-waste { background-position: -77px -70px;
-              &:hover, &.active { background-position: -77px 0; }
-            }
+              &.#{$awardTypeMenu}-leadership { background-position: 0 -70px;
+                &:hover, &.active { background-position: 0 0; }
+              }
 
-            &.pfc-chemicals { background-position: -153px -70px;
-              &:hover, &.active { background-position: -153px 0; }
-            }
+              &.#{$awardTypeMenu}-waste { background-position: -77px -70px;
+                &:hover, &.active { background-position: -77px 0; }
+              }
 
-            &.pfc-gor { background-position: -230px -70px;
-              &:hover, &.active { background-position: -230px 0; }
-            }
+              &.#{$awardTypeMenu}-chemicals { background-position: -153px -70px;
+                &:hover, &.active { background-position: -153px 0; }
+              }
 
-            &.pfc-food { background-position: -305px -70px;
-              &:hover, &.active { background-position: -305px 0; }
-            }
+              &.#{$awardTypeMenu}-gor { background-position: -230px -70px;
+                &:hover, &.active { background-position: -230px 0; }
+              }
 
-            &.pfc-epp { background-position: -381px -70px;
-              &:hover, &.active { background-position: -381px 0; }
-            }
+              &.#{$awardTypeMenu}-food { background-position: -305px -70px;
+                &:hover, &.active { background-position: -305px 0; }
+              }
 
-            &.pfc-energy { background-position: -457px -70px;
-              &:hover, &.active { background-position: -457px 0; }
-            }
+              &.#{$awardTypeMenu}-epp { background-position: -381px -70px;
+                &:hover, &.active { background-position: -381px 0; }
+              }
 
-            &.pfc-water { background-position: -534px -70px;
-              &:hover, &.active { background-position: -534px 0; }
-            }
+              &.#{$awardTypeMenu}-energy { background-position: -457px -70px;
+                &:hover, &.active { background-position: -457px 0; }
+              }
 
-            &.pfc-climate { background-position: -610px -70px;
-              &:hover, &.active { background-position: -610px 0; }
-            }
+              &.#{$awardTypeMenu}-water { background-position: -534px -70px;
+                &:hover, &.active { background-position: -534px 0; }
+              }
 
-            &.pfc-green-building { background-position: -686px -70px;
-              &:hover, &.active { background-position: -686px 0; }
+              &.#{$awardTypeMenu}-climate { background-position: -610px -70px;
+                &:hover, &.active { background-position: -610px 0; }
+              }
+
+              &.#{$awardTypeMenu}-greenbuilding { background-position: -686px -70px;
+                &:hover, &.active { background-position: -686px 0; }
+              }
             }
           }
         }
@@ -710,7 +714,8 @@ h3 {
     }
 
     span {
-      background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat;
+      color: #666666;
+      background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat -761px 0;
       display: block;
       width: 48px;
       height: 47px;
@@ -720,54 +725,58 @@ h3 {
       z-index: 1;
     }
 
-    &.pfc-leadership {
-      color: #9159a5;
-      span { background-position: 0 0; }
-    }
+    // prefix
+    @each $awardTypeh1 in pfc, pr {
 
-    &.pfc-waste {
-      color: #046c9c;
-      span { background-position: -76px 0; }
-    }
+      &.#{$awardTypeh1}-leadership {
+        color: #9159a5;
+        span { background-position: 0 0; }
+      }
 
-    &.pfc-chemicals {
-      color: #8b9237;
-      span { background-position: -152px 0; }
-    }
+      &.#{$awardTypeh1}-waste {
+        color: #046c9c;
+        span { background-position: -76px 0; }
+      }
 
-    &.pfc-gor {
-      color: #0f674e;
-      span { background-position: -228px 0; }
-    }
+      &.#{$awardTypeh1}-chemicals {
+        color: #8b9237;
+        span { background-position: -152px 0; }
+      }
 
-    &.pfc-food {
-      color: #f47a21;
-      span { background-position: -304px 0; }
-    }
+      &.#{$awardTypeh1}-gor {
+        color: #0f674e;
+        span { background-position: -228px 0; }
+      }
 
-    &.pfc-epp {
-      color: #7f5725;
-      span { background-position: -380px 0; }
-    }
+      &.#{$awardTypeh1}-food {
+        color: #f47a21;
+        span { background-position: -304px 0; }
+      }
 
-    &.pfc-energy {
-      color: #ea4539;
-      span { background-position: -456px 0; }
-    }
+      &.#{$awardTypeh1}-epp {
+        color: #7f5725;
+        span { background-position: -380px 0; }
+      }
 
-    &.pfc-water {
-      color: #28a8e0;
-      span { background-position: -532px 0; }
-    }
+      &.#{$awardTypeh1}-energy {
+        color: #ea4539;
+        span { background-position: -456px 0; }
+      }
 
-    &.pfc-climate {
-      color: #febb14;
-      span { background-position: -609px 0; }
-    }
+      &.#{$awardTypeh1}-water {
+        color: #28a8e0;
+        span { background-position: -532px 0; }
+      }
 
-    &.pfc-green-building {
-      color: #8bc63f;
-      span { background-position: -685px 0; }
+      &.#{$awardTypeh1}-climate {
+        color: #febb14;
+        span { background-position: -609px 0; }
+      }
+
+      &.#{$awardTypeh1}-greenbuilding {
+        color: #8bc63f;
+        span { background-position: -685px 0; }
+      }
     }
   }
 }
