@@ -126,7 +126,7 @@
       </aside>
     <?php endif; ?>
 
-  </div><!--- /#main -->
+  </div><!-- /#main -->
   </div></div>
 
 
@@ -138,6 +138,6 @@
     <?php print render($page['footer']); ?>
   </div></div>
 
-</div><!--- /#page -->
+</div><!-- /#page -->
 
 <?php print render($page['bottom']); ?>

@@ -58,9 +58,7 @@
 
     <?php endif; ?>
 
-
     <?php print render($page['header']); ?>
-
     <?php print render($page['navigation']); ?>
 
   </header>
@@ -69,8 +67,6 @@
   <div id="breadcrumb-wrap"><div id="breadcrumb-wrap-inner">
     <?php print $breadcrumb; ?>
   </div></div>
-
-
 
   <?php
     // Check if user is part of a work group.
@@ -90,8 +86,7 @@
       <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
     </div>
 
-
-  </div><!--- /#workgroup -->
+  </div><!-- /#workgroup -->
   </div></div>
 
   <div id="business-unit-wrap"><div id="business-unit-wrap-inner">
@@ -199,11 +194,11 @@
 
       </article>
 
-    <?php  // End check if user is part of a business unit.
+    <?php // End check if user is part of a business unit.
       endif;
     ?>
 
-  </div><!--- /#business-unit -->
+  </div><!-- /#business-unit -->
   </div></div>
 
   <?php else: ?>
@@ -233,10 +228,10 @@
 
     </div>
 
-  </div><!--- /#main -->
+  </div><!-- /#main -->
   </div></div>
 
-  <?php  // End check if user is part of a work group.
+  <?php // End check if user is part of a work group.
     endif;
   ?>
 
@@ -245,6 +240,6 @@
     <?php print render($page['footer']); ?>
   </div></div>
 
-</div><!--- /#page -->
+</div><!-- /#page -->
 
 <?php print render($page['bottom']); ?>
