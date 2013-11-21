@@ -11,7 +11,7 @@
 $pgh_temp_section_questions = NULL;
 
 // Define a temp variable to hold the validation erros.
-$pgh_temp_validation_errors = NULL;
+// $pgh_temp_validation_errors = NULL;
 
 /**
  * Implementation of hook_menu().
@@ -305,22 +305,22 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_application_form_element_validate($element, &$form_state) {
-  // Grab the question id, this might not always be the case, need FIX.
-  $qid = $element['#parents'][0];
+// function pgh_application_form_element_validate($element, &$form_state) {
+//   // Grab the question id, this might not always be the case, need FIX.
+//   $qid = $element['#parents'][0];
 
-  // Make sure this question requires an answer.
-  if (empty($form_state['values'][$qid])) {
-    return;
-  }
+//   // Make sure this question requires an answer.
+//   if (empty($form_state['values'][$qid])) {
+//     return;
+//   }
 
-  $value = $form_state['values'][$qid];
+//   $value = $form_state['values'][$qid];
 
-  if (!empty($element['#question_validate'])) {
-    $errors = pgh_api_validate_question_value($element['#question_validate'], $value);
-    $form_state['values']['errors'][$qid] = $errors;
-  }
-}
+//   if (!empty($element['#question_validate'])) {
+//     $errors = pgh_api_validate_question_value($element['#question_validate'], $value);
+//     $form_state['values']['errors'][$qid] = $errors;
+//   }
+// }
 
 /**
  * Application form ajax callback
@@ -339,14 +339,13 @@ function pgh_application_form_element_callback($form, &$form_state) {
   pgh_api_save_response($app_id, $qid, $value);
 
   // validate
-  $error_div_id = $wrapper->title->value() . '-error';
   if ($validations = $wrapper->field_question_validation->value()) {
     $errors = pgh_api_validate_question_value($validations, $value);
     if ($errors)
       $error_msg = $errors[0];
   }
 
-  return '<div id="'. $error_div_id . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
+  return '<div id="error-'. $wrapper->title->value() . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
 }
 
 /**
@@ -366,9 +365,6 @@ function pgh_application_form_element_callback($form, &$form_state) {
 function pgh_application_form_submit($form, &$form_state) {
   // dsm($form_state['values']);
 
-  // TODO: Calculate the points for a given question in a separate API function (
-  // i.e. pgh_api_score_for_question($app_id, $qid, $answer).
-
   // Since preparation have all response ready, we just need to save one by one.
   $app_id = $form_state['values']['application'];
 
@@ -377,18 +373,6 @@ function pgh_application_form_submit($form, &$form_state) {
     if (is_numeric($qid)) {
       pgh_api_save_response($app_id, $qid, $value);
     }
-  }
-
-  // lets not worry about error for ajax case
-  if ($triggering_qid) return;
-
-  // handle the error
-  if (!empty($form_state['values']['errors'])) {
-    $lines = array();
-    foreach ($form_state['values']['errors'] as $error) {
-      $lines[] = $error['qid'] . ' - ' . $error['message'];
-    }
-    drupal_set_message(implode('\n', $lines));
   }
 }
 
@@ -450,10 +434,9 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $form['#states'] = pgh_form_question_states($question);
   }
   // Ajax processing
-  $error_div_id = $wrapper->title->value() . '-error';
   $form['#ajax'] = array(
     'callback' => 'pgh_application_form_element_callback',
-    'wrapper' => $error_div_id,
+    'wrapper' => 'error-' . $wrapper->title->value(),
   );
 
   // Based on different question type.
@@ -533,16 +516,18 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
   }
 
-  // Validate now
-
-  // Add a post fix html to hold error
+  // Add error validation to description
   $error_msg = '';
   if ($validations = $wrapper->field_question_validation->value()) {
     $errors = pgh_api_validate_question_value($validations, $answer['value']);
     if ($errors)
       $error_msg = $errors[0];
   }
-  $form['#description'] = '<div id="'. $error_div_id . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
+  $form['#description'] = '<div id="error-'. $wrapper->title->value() . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
+
+  // Add identifier for theming
+  $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="question">';
+  $form['#suffix'] = '</div>';
 
   // Mark this question has been processed.
   global $pgh_temp_section_questions;
