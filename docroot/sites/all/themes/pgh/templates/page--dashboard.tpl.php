@@ -200,8 +200,8 @@
 
       <article class="node clearfix">
 
-        <p>You are currently not an admin of any Work Group or Business Unit.<br>
-        Please contact a Practive Greenhealth administrator for help.</p>
+        <p>You are currently not an administrator of any Work Group or Business Unit.<br>
+        Please contact a Practice Greenhealth administrator for help.</p>
 
       </article>
 
