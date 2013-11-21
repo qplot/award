@@ -81,20 +81,13 @@
   <div id="workgroup">
 
     <div id="workgroup-content" class="column">
-
-    <?php //print all array keys in a template
-      //var_dump(get_defined_vars());
-    ?>
-
-
       <p class="dashboard-label">Working Group</p>
-      <?php if ($logged_in): ?>
+      <?php if (entity_access('update', 'node', $work_group)): ?>
         <span class="edit-content"><a href="/node/<?php print $work_group->vid; ?>/edit">Edit</a></span>
       <?php endif; ?>
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
 
       <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
-
     </div>
 
 
@@ -104,9 +97,7 @@
   <div id="business-unit-wrap"><div id="business-unit-wrap-inner">
   <div id="business-unit">
 
-  <?php // Check if user is part of a business unit.
-    if ($business_units):
-  ?>
+  <?php if ($business_units): ?>
 
     <div id="business-unit-content" class="column">
 
@@ -118,12 +109,18 @@
         $business_unit_type = field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden'));
         print render($business_unit_type);
         ?>
-        <?php if ($logged_in): ?>
+        <?php if (entity_access('update', 'node', $business_unit)): ?>
           <span class="edit-content"><a href="/node/<?php print $business_unit->vid; ?>/edit">Edit</a></span>
         <?php endif; ?>
         <h2><?php print $business_unit->title; ?></h2>
 
-        <?php $field_bu_body = field_view_field('node', $business_unit, 'body', array('label' => 'hidden', 'type' => 'text_summary_or_trimmed', 'settings' => array('trim_length' => 225)));
+        <?php
+          $options = array(
+            'label' => 'hidden',
+            'type' => 'text_summary_or_trimmed',
+            'settings' => array('trim_length' => 225),
+          );
+          $field_bu_body = field_view_field('node', $business_unit, 'body', $options);
           print render($field_bu_body);
         ?>
 
