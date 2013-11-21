@@ -48,27 +48,14 @@
     <?php endif; ?>
 
     <?php if ($logged_in): ?>
-    <div id="loggedin-user-block">
-    <?php $user = user_load($user->uid); ?>
 
-      <div class="user-picture-wrap"><div class="user-picture">
-      <?php if($user->picture) {
-        print theme('image_style',
-            array(
-              'style_name' => 'thumbnail',
-              'path' => $user->picture->uri,
-              'attributes' => array('class' => 'avatar')
-            )
-          );
-        }
-      ?>
-      </div></div>
+    <?php
+      $block_user_info = block_load('pgh_user_info', 'pgh_user_info');
+      $block_user_info_render = _block_render_blocks(array($block_user_info));
+      $block_user_info_array = _block_get_renderable_array($block_user_info_render);
+      print drupal_render($block_user_info_array);
+    ?>
 
-      <span class="edit-user"><a href="/user/<?php print $user->uid; ?>/edit">Edit</a></span>
-      <div class="users-name"><?php print $user->name; ?><br>
-      <span class="users-employer"><?php print $user->field_company['und'][0]['value']; ?></span></div>
-
-    </div>
     <?php endif; ?>
 
 
@@ -85,7 +72,8 @@
 
 
 
-  <?php // Check if user is part of a work group.
+  <?php
+    // Check if user is part of a work group.
     if ($work_group):
   ?>
 
