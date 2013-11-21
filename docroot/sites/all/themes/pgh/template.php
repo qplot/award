@@ -60,7 +60,6 @@ function pgh_preprocess_page(&$variables, $hook) {
   }
 
   if ($variables['theme_hook_suggestions'][0] == 'page__dashboard') {
-
     drupal_set_title('Work Group Dashboard');
 
     $variables['work_group'] = FALSE;
@@ -156,6 +155,9 @@ function pgh_preprocess_block(&$variables, $hook) {
 }
 // */
 
+/**
+ * Implementation of hook_js_alter().
+ */
 function pgh_js_alter(&$js) {
   unset($js['misc/tableheader.js']);
 }
