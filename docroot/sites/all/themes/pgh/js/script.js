@@ -52,7 +52,7 @@
                             .prepend('<span />'); // Add an empty SPAN to put the category icon into.
 
         } else {
-          $(app_menu_id + ' ul.category-menu').wrap('<ul class="selected-item"><li class="cat-menu-closed" />').parent().prepend('<span>Select a section</span>');
+          $(app_menu_id + ' ul.category-menu').wrap('<ul class="selected-item"><li class="cat-menu-closed" />').parent().prepend('<span>Select a category</span>');
           $(app_menu_id + ' ul.category-menu li.first a').clone()
                                                          .prependTo(app_menu_id + ' .item-list')
                                                          .wrap('<span class="next" />');
