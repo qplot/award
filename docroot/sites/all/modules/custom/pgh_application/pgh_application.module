@@ -304,7 +304,12 @@ function pgh_application_category_links($application_nid) {
 
   $items = array();
   foreach ($app_type_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {
-    $label = $category_wrapper->getIdentifier() . ' (' . $category_wrapper->title->value() . ') ' . $category_wrapper->body->value->raw();
+
+    $title = $category_wrapper->title->value() . ' (no name provided)';
+    if ($category_wrapper->body->value()) {
+      $title = $category_wrapper->body->value->raw();
+    }
+
     $options = array(
       'attributes' => array(
         'class' => array(
@@ -313,7 +318,7 @@ function pgh_application_category_links($application_nid) {
         ),
       )
     );
-    $items[] = l($label, 'application/' . $application_nid . '/category/' . $category_wrapper->getIdentifier() . '/edit', $options);
+    $items[] = l($title, 'application/' . $application_nid . '/category/' . $category_wrapper->getIdentifier() . '/edit', $options);
   }
 
   return $items;
