@@ -66,10 +66,6 @@
   </header>
   </div></div>
 
-      <?php //print all array keys in a template
-        // die(print_r(get_defined_vars()));
-      ?>
-
   <div id="app-menu-wrap"><div id="app-menu-wrap-inner">
   <div id="app-menu">
     <?php
@@ -78,27 +74,6 @@
       $block_menu_array = _block_get_renderable_array($block_menu_render);
       print drupal_render($block_menu_array);
     ?>
-
-    <?php /*
-    <div class="block block-pgh-application first odd" id="block-pgh-application-application-category-menu">
-    	<h2 class="block__title block-title">Application Category Menu</h2>
-    	<div class="item-list">
-    		<ul class="category-menu">
-    			<li class="first"><a class="category-link pfc-leadership active" href="/application/1765/category/1758/edit">Leadership</a></li>
-    			<li><a class="category-link pfc-waste" href="/application/1765/category/1759/edit">Waste</a></li>
-    			<li><a class="category-link pfc-chemicals" href="/application/1765/category/1760/edit">Chemicals</a></li>
-          <li><a class="category-link pfc-gor" href="/application/1765/category/1761/edit">Greening the OR</a></li>
-          <li><a class="category-link pfc-food" href="/application/1765/category/edit">Food</a></li>
-          <li><a class="category-link pfc-epp" href="/application/1765/category/edit">Environmentally Preferable Purchasing</a></li>
-          <li><a class="category-link pfc-energy" href="/application/1765/category/edit">Energy</a></li>
-          <li><a class="category-link pfc-water" href="/application/1765/category/edit">Water</a></li>
-          <li><a class="category-link pfc-climate" href="/application/1765/category/edit">Climate</a></li>
-          <li class="last"><a class="category-link pfc-green-building" href="/application/1765/category/edit">Green Building</a></li>
-    		</ul>
-    	</div>
-    </div>
-    */ ?>
-
   </div>
   </div></div>
 
@@ -111,27 +86,6 @@
       $output_categories = drupal_render($block_categories_array);
       print $output_categories;
     ?>
-
-  <?php /*
-  <div class="block block-pgh-application first odd" id="block-pgh-application-application-category-menu--2">
-  	<h2 class="block__title block-title">Application Category Menu</h2>
-  	<div class="item-list">
-  		<ul class="category-menu">
-  			<li class="first"><a class="category-link pfc-leadership active" href="/application/1765/category/1758/edit">Leadership</a></li>
-  			<li><a class="category-link pfc-waste" href="/application/1765/category/1759/edit">Waste</a></li>
-  			<li><a class="category-link pfc-chemicals" href="/application/1765/category/1760/edit">Chemicals</a></li>
-        <li><a class="category-link pfc-gor" href="/application/1765/category/1761/edit">Greening the OR</a></li>
-        <li><a class="category-link pfc-food" href="/application/1765/category/edit">Food</a></li>
-        <li><a class="category-link pfc-epp" href="/application/1765/category/edit">Environmentally Preferable Purchasing</a></li>
-        <li><a class="category-link pfc-energy" href="/application/1765/category/edit">Energy</a></li>
-        <li><a class="category-link pfc-water" href="/application/1765/category/edit">Water</a></li>
-        <li><a class="category-link pfc-climate" href="/application/1765/category/edit">Climate</a></li>
-        <li class="last"><a class="category-link pfc-green-building" href="/application/1765/category/edit">Green Building</a></li>
-  		</ul>
-  	</div>
-  </div>
-  */ ?>
-
   </div>
   </div></div>
 
@@ -184,6 +138,6 @@
     <?php print render($page['footer']); ?>
   </div></div>
 
-</div><!--- /#page --->
+</div><!--- /#page -->
 
 <?php print render($page['bottom']); ?>
