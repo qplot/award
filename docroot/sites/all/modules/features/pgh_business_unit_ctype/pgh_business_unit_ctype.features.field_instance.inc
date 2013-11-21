@@ -54,6 +54,49 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-business_unit-field_applications'
+  $field_instances['node-business_unit-field_applications'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 18,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_applications',
+    'label' => 'Applications',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 4,
+    ),
+  );
+
   // Exported field_instance: 'node-business_unit-field_billing_address_1'
   $field_instances['node-business_unit-field_billing_address_1'] = array(
     'bundle' => 'business_unit',
@@ -710,6 +753,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Applications');
   t('Beds');
   t('Billing address 1');
   t('Billing address 2');

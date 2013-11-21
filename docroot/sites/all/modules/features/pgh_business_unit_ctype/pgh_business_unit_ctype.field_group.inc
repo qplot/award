@@ -21,7 +21,7 @@ function pgh_business_unit_ctype_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Billing address',
-    'weight' => '5',
+    'weight' => '6',
     'children' => array(
       0 => 'field_billing_address_1',
       1 => 'field_billing_address_2',
@@ -53,7 +53,7 @@ function pgh_business_unit_ctype_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Shipping address',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_shipping_address_1',
       1 => 'field_shipping_address_2',
@@ -85,7 +85,7 @@ function pgh_business_unit_ctype_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Unit info',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'field_facility_users',
       1 => 'field_number_beds',
