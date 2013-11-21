@@ -24,9 +24,11 @@
 
         // Wrap application drop-down in active section UL parent for theming.
         if ($(app_menu_id + ' ul.category-menu li a').hasClass('active')) {
-          $(app_menu_id + ' ul.category-menu li a.active').contents().clone().prependTo(app_menu_id + ' .item-list').wrap('<ul class="selected-item"><li class="cat-menu-closed" />');
-          $(app_menu_id + ' ul.category-menu').appendTo(app_menu_id + ' .item-list ul.selected-item li');
+          var activeTitle = $(app_menu_id + ' ul.category-menu li a.active').text();
 
+          $('<ul class="selected-item"><li class="cat-menu-closed"><span>' + activeTitle + '</span></li></ul>').prependTo(app_menu_id + ' .item-list');
+
+          $(app_menu_id + ' ul.category-menu').appendTo(app_menu_id + ' .item-list ul.selected-item li');
 
           // Add click event to drop-down menu.
           $('.selected-item li').click(function() {
@@ -66,7 +68,7 @@
                             .prepend('<span />'); // Add an empty SPAN to put the category icon into.
 
         } else {
-          $(app_menu_id + ' ul.category-menu').wrap('<ul class="selected-item"><li />').parent().prepend('<a href="#">Select a section</a>');
+          $(app_menu_id + ' ul.category-menu').wrap('<ul class="selected-item"><li />').parent().prepend('<span>Select a section</span>');
           $(app_menu_id + ' ul.category-menu li.first a').clone()
                                                        .prependTo(app_menu_id + ' .item-list')
                                                        .wrap('<span class="next" />');
