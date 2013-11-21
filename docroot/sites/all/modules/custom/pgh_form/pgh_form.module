@@ -416,7 +416,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 
   $form = array();
 
-  $form['#title'] = $wrapper->field_question_prompt->value();
+  $form['#title'] = '<div class="question-desc">' . $wrapper->field_question_prompt->value() . '</div>';
 
   if (user_access('administer awards system')) {
     $form['#title'] .= ' ' . implode(' ', $admin_info);
