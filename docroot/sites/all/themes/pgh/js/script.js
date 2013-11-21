@@ -14,6 +14,7 @@
   'use strict';
 
   $(document).ready(function () {
+
       // Application menu.
       // ======================================================================
 
@@ -76,6 +77,23 @@
         });
 
       } // end if app_menu_id
+
+
+
+      // Category icons
+      // ======================================================================
+
+      var cat_menu_id = '#block-pgh-application-application-category-menu--2';
+
+      // Check is app menu block exist.
+      if ($(cat_menu_id).length) {
+
+        // Copy anchor text to a title attribute.
+        $(cat_menu_id + ' ul.category-menu li a').each(function() {
+          var titleAttrText = $(this).text();
+          $(this).attr('title', titleAttrText);
+        });
+      }
 
 
       // Show / hide business units on the dashboard.
