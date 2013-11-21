@@ -30,23 +30,6 @@
 
           $(app_menu_id + ' ul.category-menu').appendTo(app_menu_id + ' .item-list ul.selected-item li');
 
-          // Add click event to drop-down menu.
-          $('.selected-item li').click(function() {
-            if ($(this).hasClass('cat-menu-closed')) {
-              $(this).removeClass('cat-menu-closed').addClass('cat-menu-opened');
-            } else {
-              $(this).removeClass('cat-menu-opened').addClass('cat-menu-closed');
-            }
-          });
-
-          // Close menu on outside click.
-          $(document).click(function(e) {
-            if (($('.selected-item li').hasClass('cat-menu-opened')) && ($(e.target).closest('.selected-item li').length === 0)) {
-              $('.selected-item li').removeClass('cat-menu-opened');
-              $('.selected-item li').addClass('cat-menu-closed');
-            }
-          });
-
 
           // Add back and next arrows.
           var $app_menu_arrows = $('#block-pgh-application-application-category-menu ul.category-menu li a.active').parent('li');
@@ -68,14 +51,31 @@
                             .prepend('<span />'); // Add an empty SPAN to put the category icon into.
 
         } else {
-          $(app_menu_id + ' ul.category-menu').wrap('<ul class="selected-item"><li />').parent().prepend('<span>Select a section</span>');
+          $(app_menu_id + ' ul.category-menu').wrap('<ul class="selected-item"><li class="cat-menu-closed" />').parent().prepend('<span>Select a section</span>');
           $(app_menu_id + ' ul.category-menu li.first a').clone()
-                                                       .prependTo(app_menu_id + ' .item-list')
-                                                       .wrap('<span class="next" />');
+                                                         .prependTo(app_menu_id + ' .item-list')
+                                                         .wrap('<span class="next" />');
           $('h1#page-title').addClass('no-category');
         }
 
-      }
+        // Add click event to drop-down menu.
+        $('.selected-item li').click(function() {
+          if ($(this).hasClass('cat-menu-closed')) {
+            $(this).removeClass('cat-menu-closed').addClass('cat-menu-opened');
+          } else {
+            $(this).removeClass('cat-menu-opened').addClass('cat-menu-closed');
+          }
+        });
+
+        // Close menu on outside click.
+        $(document).click(function(e) {
+          if (($('.selected-item li').hasClass('cat-menu-opened')) && ($(e.target).closest('.selected-item li').length === 0)) {
+            $('.selected-item li').removeClass('cat-menu-opened');
+            $('.selected-item li').addClass('cat-menu-closed');
+          }
+        });
+
+      } // end if app_menu_id
 
 
       // Show / hide business units on the dashboard.
