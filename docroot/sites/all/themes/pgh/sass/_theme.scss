@@ -178,6 +178,13 @@ h3 {
     }
   }
 
+  #block-pgh-user-info-pgh-user-info {
+
+    .user-links .dashboard-user {
+      display: none;
+    }
+  }
+
   #main {
     min-height: 270px;
   }
@@ -465,7 +472,7 @@ h3 {
     }
   }
 
-  #loggedin-user-block {
+  #block-pgh-user-info-pgh-user-info {
 
     .user-picture-wrap {
       border: none;
@@ -475,14 +482,19 @@ h3 {
       color: $green;
     }
 
-    .edit-user a {
-      color: $green;
+    .user-links {
       border-color: #67a697;
 
-      &:hover {
-        color: $white;
-        background-color: $green;
-        border-color: $green;
+      a {
+        color: $green;
+
+        &:hover {
+          color: $white;
+          background-color: #67a697;
+        }
+      }
+
+      .dashboard-user a {
       }
     }
   }
@@ -969,9 +981,13 @@ h3 {
   }
 }
 
-#loggedin-user-block {
+#block-pgh-user-info-pgh-user-info {
   padding: 15px 10px 0 0;
   float: right;
+
+  h2.block-title {
+    @include element-invisible;
+  }
 
   .user-picture-wrap {
     border-right: 1px solid #247c67;
@@ -987,35 +1003,49 @@ h3 {
     overflow: hidden;
   }
 
-  .edit-user a {
-    color: $white;
-    font-size: 11px;
-    line-height: 14px;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid #67a697;
-    @include border-radius(2px);
-    margin-top: 23px;
-    padding: 5px 14px 3px;
-    float: right;
-
-    &:hover {
-      color: $green;
-      background-color: $white;
-      border-color: $white;
-    }
-  }
-
   .users-name {
     color: $white;
     font-size: 17px;
     line-height: 18px;
-    margin: 16px 94px 0;
+    margin: 5px 0 0 94px;
   }
 
   .users-employer {
     font-size: 12px;
     text-transform: uppercase;
+  }
+
+
+  .user-links {
+    border: 1px solid #67a697;
+    @include border-radius(2px);
+    margin-top: 5px;
+    height: 20px;
+    float: left;
+
+    a {
+      color: $white;
+      font-size: 11px;
+      line-height: 14px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 4px 7px 3px;
+      float: left;
+
+      &:hover {
+        background-color: #67a697;
+      }
+    }
+
+    .edit-user a {}
+
+    .logout-user a {
+      border-left: 1px solid #67a697;
+    }
+
+    .dashboard-user a {
+      border-left: 1px solid #67a697;
+    }
   }
 }
 
