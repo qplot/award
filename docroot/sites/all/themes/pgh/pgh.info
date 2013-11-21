@@ -66,6 +66,8 @@ stylesheets[all][] = css/styles.css
 
 ; Optionally add some JavaScripts to your theme.
 ; scripts[] = js/hoverintent.js
+scripts[] = js/waypoints.min.js
+scripts[] = js/waypoints-sticky.min.js
 scripts[] = js/script.js
 
 

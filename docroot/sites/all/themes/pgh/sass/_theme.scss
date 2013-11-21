@@ -493,16 +493,52 @@ h3 {
           background-color: #67a697;
         }
       }
-
-      .dashboard-user a {
-      }
     }
+  }
+}
+
+.page-application { //sponsor
+
+  #sponsor-wrap {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #e4e4e4;
+
+    #sponsor-wrap-inner {
+      padding: 36px 0;
+    }
+  }
+
+  #sponsor {
+    color: #999;
+    font-size: 13px;
+    line-height: 17px;
   }
 }
 
 .page-application { //app menu
 
+  #application-menu-container.stuck {
+    width: 100%;
+    @include box-shadow(0 1px 7px rgba(0,0,0,0.3));
+    position: fixed;
+    top: 0;
+    z-index: 100;
+  }
+
+  &.admin-menu #application-menu-container.stuck {
+    top: 28px;
+  }
+
+  #application-menu-container.stuck,
+  &.admin-menu #application-menu-container.stuck {
+
+    #block-pgh-application-application-category-menu.block ul.selected-item li.cat-menu-opened ul.category-menu {
+      top: -3px;
+    }
+  }
+
   #app-menu-wrap {
+    background-color: $green;
 
     #app-menu-wrap-inner {}
   }
@@ -511,7 +547,7 @@ h3 {
 
     #block-pgh-application-application-category-menu.block {
       margin-bottom: 0;
-      padding: 15px 0;
+      padding: 12px 0;
 
       h2.block__title {
         @include element-invisible;
@@ -526,13 +562,13 @@ h3 {
 
       ul.selected-item {
         font-size: 24px;
-        line-height: 60px;
+        line-height: 54px;
         font-family: $cabin;
         border: 1px solid #1c7d66;
         @include border-radius(2px);
         margin: 0 auto;
         width: 640px;
-        height: 60px;
+        //height: 60px;
         @include box-shadow(0 1px 0 rgba(0,0,0,0.1));
 
         li {
@@ -543,33 +579,27 @@ h3 {
           position: relative;
           z-index: 2;
 
-          // a {
-          //   color: $white;
-          //   text-decoration: none;
-          //   display: block;
-          // }
-
           &.cat-menu-closed {
-            background-position: right 1px;
+            background-position: right -3px;
 
             &:hover {
-              background-position: right -118px;
+              background-position: right -122px;
             }
 
             ul.category-menu {
-              top: -999px;
+              //top: -999px;
             }
           }
 
           &.cat-menu-opened {
-            background-position: right -59px;
+            background-position: right -63px;
 
             &:hover {
-              background-position: right -178px;
+              background-position: right -182px;
             }
 
             ul.category-menu {
-              top: -10px;
+              top: -7px;
             }
           }
         }
@@ -582,7 +612,7 @@ h3 {
         @include border-radius(3px);
         @include box-shadow(0 1px 7px rgba(0,0,0,0.3));
         position: absolute;
-        //top: -999px;
+        top: -999px;
         left: 12px;
         z-index: 1;
 
@@ -629,9 +659,8 @@ h3 {
       .next a {
         text-indent: -1000000px;
         background: transparent url(../images/menu-app/app-menu-prev-next.png) no-repeat;
-        margin-top: 3px;
         width: 70px;
-        height: 60px;
+        height: 54px;
       }
 
       .prev a {

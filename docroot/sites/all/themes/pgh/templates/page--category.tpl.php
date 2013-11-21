@@ -66,6 +66,8 @@
   </header>
   </div></div>
 
+  <div id="application-menu-container">
+
   <div id="app-menu-wrap"><div id="app-menu-wrap-inner">
   <div id="app-menu">
     <?php
@@ -86,6 +88,16 @@
       $output_categories = drupal_render($block_categories_array);
       print $output_categories;
     ?>
+  </div>
+  </div></div>
+
+  </div><!-- /#application-menu-container -->
+
+  <div id="sponsor-wrap"><div id="sponsor-wrap-inner">
+  <div id="sponsor">
+
+    <div>Sponsor Block Goes Here.</div>
+
   </div>
   </div></div>
 

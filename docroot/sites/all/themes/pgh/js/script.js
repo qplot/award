@@ -23,6 +23,9 @@
       // Check is app menu block exist.
       if ($(app_menu_id).length) {
 
+        // Don't show drop-down menu untill the jQuery loads.
+        //$(app_menu_id + ' ul.category-menu').css('display', 'block');
+
         // Wrap application drop-down in active section UL parent for theming.
         if ($(app_menu_id + ' ul.category-menu li a').hasClass('active')) {
           var activeTitle = $(app_menu_id + ' ul.category-menu li a.active').text();
@@ -94,6 +97,12 @@
           $(this).attr('title', titleAttrText);
         });
       }
+
+
+      // Add waypoints functionailty to app menu.
+      // http://imakewebthings.com/jquery-waypoints
+    	// ======================================================================
+      $('#application-menu-container').waypoint('sticky');
 
 
       // Show / hide business units on the dashboard.
