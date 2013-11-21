@@ -1,0 +1,6 @@
+name = PGH User Info
+description = Provides a block for displaying a user's details at the top of the page.
+package = PGH
+version = 7.x-0.1
+core = 7.x
+project = pgh

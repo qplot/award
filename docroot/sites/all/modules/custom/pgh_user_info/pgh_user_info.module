@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Provides a block for displaying a user's details at the top of the page.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function pgh_user_info_theme() {
+  return array(
+    // User info block content.
+    'pgh_user_info_panel' => array(
+      'variables' => array('user' => NULL),
+      'template' => 'templates/user-info',
+    ),
+  );
+}
+
+
+/**
+ * Implementation of hook_block_info().
+ */
+function pgh_user_info_block_info() {
+  $blocks = array();
+
+  $blocks['pgh_user_info'] = array(
+    'info' => t('PGH User Info'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function pgh_user_info_block_view($delta = '') {
+  global $user;
+
+  $block = array();
+
+  switch ($delta) {
+    case 'pgh_user_info':
+      $block['subject'] = t('User Info');
+
+      $block['content'] = theme('pgh_user_info_panel', array('user' => user_load($user->uid)));
+      break;
+  }
+  return $block;
+}
