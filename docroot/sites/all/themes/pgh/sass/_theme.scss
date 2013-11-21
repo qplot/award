@@ -675,7 +675,7 @@ h3 {
             float: left;
 
             // prefix award type
-            @each $awardTypeMenu in pfc, pr {
+            @each $awardTypeMenu in pfc, pr, ltc, chcpfc, chcpr {
 
               &.#{$awardTypeMenu}-leadership { background-position: 0 -70px;
                 &:hover, &.active { background-position: 0 0; }
@@ -746,7 +746,7 @@ h3 {
     }
 
     // prefix award type
-    @each $awardTypeh1 in pfc, pr {
+    @each $awardTypeh1 in pfc, pr, ltc, chcpfc, chcpr {
 
       &.#{$awardTypeh1}-leadership {
         color: #9159a5;
