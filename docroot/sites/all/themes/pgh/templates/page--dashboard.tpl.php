@@ -98,7 +98,7 @@
     </div>
 
 
-  </div><!--- /#workgroup --->
+  </div><!--- /#workgroup -->
   </div></div>
 
   <div id="business-unit-wrap"><div id="business-unit-wrap-inner">
@@ -114,7 +114,10 @@
 
       <div class="business-unit-block">
 
-        <?php print render(field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden'))); ?>
+        <?php
+        $business_unit_type = field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden'));
+        print render($business_unit_type);
+        ?>
         <?php if ($logged_in): ?>
           <span class="edit-content"><a href="/node/<?php print $business_unit->vid; ?>/edit">Edit</a></span>
         <?php endif; ?>
@@ -174,7 +177,7 @@
       endif;
     ?>
 
-  </div><!--- /#business-unit --->
+  </div><!--- /#business-unit -->
   </div></div>
 
   <?php else: ?>
@@ -204,7 +207,7 @@
 
     </div>
 
-  </div><!--- /#main --->
+  </div><!--- /#main -->
   </div></div>
 
   <?php  // End check if user is part of a work group.
@@ -216,6 +219,6 @@
     <?php print render($page['footer']); ?>
   </div></div>
 
-</div><!--- /#page --->
+</div><!--- /#page -->
 
 <?php print render($page['bottom']); ?>
