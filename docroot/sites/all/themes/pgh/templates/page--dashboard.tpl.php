@@ -150,6 +150,35 @@
           <?php $phone_bu = field_view_field('node', $business_unit, 'field_phone', array('label' => 'hidden')); print render($phone_bu); ?>
         </div>
 
+        <div class="applications">
+          <h3>Applications</h3>
+          <a class="application-archive">View application archive</a>
+          <?php
+            // @codingStandardsIgnoreStart
+            // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
+            $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+
+            if ($business_unit_wrapper->field_applications->count()) {
+              $table_params = array(
+                'header' => array('Application', 'Progress', 'Status'),
+                'rows' => array(),
+              );
+
+              foreach ($business_unit_wrapper->field_applications->getIterator() as $application) {
+                $table_params['rows'][] = array(
+                  l($application->title->value(), 'application/' . $application->nid->value()),
+                  '50%',
+                  'In Progress',
+                );
+              }
+
+              print theme('table', $table_params);
+            } else {
+              print 'No current applications. ' . l('Start a new application', 'node/add/application');
+            }
+            // @codingStandardsIgnoreEnd
+          ?>
+        </div>
       </div>
 
     <?php endforeach; ?>
