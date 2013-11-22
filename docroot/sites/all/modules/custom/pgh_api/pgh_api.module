@@ -334,12 +334,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
         }
         break;
 
-      // TODO: need to fix form_state dependency later !!
       case 'file':
-        $value = '';
-        if (isset($form_state['input']['fid'])) {
-          $value = $form_state['input']['fid'];
-        }
         break;
 
       default:

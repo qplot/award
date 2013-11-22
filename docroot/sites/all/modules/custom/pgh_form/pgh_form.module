@@ -367,13 +367,23 @@ function pgh_application_form_submit($form, &$form_state) {
 
   // Since preparation have all response ready, we just need to save one by one.
   $app_id = $form_state['values']['application'];
-
+dsm($form_state);
   foreach ($form_state['values'] as $qid => &$value) {
     // Assume all question has number.
     if (is_numeric($qid)) {
+
+      // Media selector bug, need to access from input
+      if (isset($value['fid'])) {
+        $value = $form_state['input'][$qid]['fid'];
+      }
+
       pgh_api_save_response($app_id, $qid, $value);
     }
   }
+  // Handle file submission separately, since Drupal doesn't capture file in value instead in input
+  // if (!empty($form_state['input']['fid'])) {
+  //   pgh_api_save_response($app_id, $qid, $form_state['input']['fid']);
+  // }
 }
 
 /**
@@ -504,7 +514,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
         '#description' => t(''),
         '#attached' => array(),
         '#extended' => TRUE,
-        // '#value' => !empty($answer['value'])?array('fid' => $answer['value']):'',
+        '#tree' => TRUE,
+        '#value' => !empty($answer['value'])?array('fid' => $answer['value']):'',
       );
       break;
 
