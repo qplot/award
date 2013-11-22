@@ -173,8 +173,19 @@
               }
 
               print theme('table', $table_params);
+              $options = array(
+                'query' => array(
+                  'bid' => $business_unit->nid,
+                ),
+              );
+              print l('Start a new application', 'node/add/application', $options);
             } else {
-              print 'No current applications. ' . l('Start a new application', 'node/add/application');
+              $options = array(
+                'query' => array(
+                  'bid' => $business_unit->nid,
+                ),
+              );
+              print 'No current applications. ' . l('Start a new application', 'node/add/application', $options);
             }
             // @codingStandardsIgnoreEnd
           ?>

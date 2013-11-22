@@ -49,6 +49,94 @@ function pgh_application_menu() {
 }
 
 /**
+ * Implementation of hook_form_node_form_alter().
+ *
+ * Allows a user to specify a Business Unit nid in the query string when adding a new application node. This
+ * value will be included in the node add form. This will then be used in hook_node_insert() to update the
+ * Business Unit's field_applications with the newly created Application nid.
+ *
+ * @param array $form
+ *   Nested array of form elements that comprise the form.
+ *
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ *
+ * @param string $form_id
+ *   String representing the name of the form itself.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['type']['#value'] == 'application') {
+    $form['business_unit'] = array(
+      '#type' => 'hidden',
+      '#value' => isset($_GET['bid']) ? $_GET['bid'] : '',
+    );
+  }
+}
+
+/**
+ * Ensure the Application has valid parent Business Unit which the user has permission to update.
+ *
+ * @param object $node
+ *   The node being validated.
+ *
+ * @param array $form
+ *   Nested array of form elements that comprise the form.
+ *
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_node_validate($node, $form, &$form_state) {
+  if ($node->type !== 'application') {
+    return;
+  }
+
+  if (!isset($node->business_unit)) {
+    form_set_error('business_unit', 'Business unit is required');
+    return;
+  }
+
+  if (!is_numeric($node->business_unit)) {
+    form_set_error('business_unit', 'Invalid Business unit');
+    return;
+  }
+
+  $business_unit = node_load($node->business_unit);
+
+  if (!$business_unit) {
+    form_set_error('business_unit', 'Invalid Business unit');
+    return;
+  }
+
+  if (!entity_access('update', 'node', $business_unit)) {
+    form_set_error('business_unit', 'You do not have permission to modify this Business Unit.');
+    return;
+  }
+}
+
+/**
+ * Updates a Business Unit with an entity reference to a newly saved Application node.
+ *
+ * @param object $node
+ *   The inserted node.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_node_insert($node) {
+  if ($node->type != 'application') {
+    return;
+  }
+
+  $business_unit = node_load($node->business_unit);
+  $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+  $business_unit_wrapper->field_applications[] = intval($node->nid);
+  $business_unit_wrapper->save();
+}
+
+/**
  * Implementation of hook_block_info().
  */
 function pgh_application_block_info() {
