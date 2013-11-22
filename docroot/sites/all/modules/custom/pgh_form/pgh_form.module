@@ -91,14 +91,16 @@ function theme_pgh_form_table($vars) {
   $parse = &$element['#layout'];
 
   // Prepare to theme a table.
+  $header = array();
   $rows = array();
   $i = 0;
   foreach ($parse as $row) {
+    // treating every row to be same, no header row
     // First row is header.
-    if ($i == 0) {
-      $header = $row;
-    }
-    else {
+    // if ($i == 0) {
+    //   $header = $row;
+    // }
+    // else {
       $data = array();
       foreach ($row as $cell) {
         // Check if cell is a question.
@@ -113,8 +115,8 @@ function theme_pgh_form_table($vars) {
         $data[] = array('data' => $cell_data);
       }
       $rows[] = $data;
-    }
-    $i = $i + 1;
+    // }
+    // $i = $i + 1;
   }
 
   return theme('table', array('header' => $header, 'rows' => $rows));
