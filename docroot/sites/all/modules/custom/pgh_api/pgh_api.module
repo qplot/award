@@ -211,6 +211,39 @@ function pgh_api_validate_question_value($validations, $value) {
 }
 
 /**
+ * Returns the NID for a response based on a supplied application NID and question NID.
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @param int $qid
+ *   NID for a specific question instance.
+ *
+ * @return int
+ *   The NID for the supplied question id or 0 if not found.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_api_find_response_id($app_id, $qid) {
+  // TODO: This function accepts an app NID and a question NID and returns a response NID. The naming makes
+  // it seem like it returns a response ID (which is not a real thing in the system).
+  // Should be renamed to pgh_api_nid_for_response($app_nid, $question_nid)
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'response')
+                  ->fieldCondition('field_response_application', 'target_id', $app_id)
+                  ->fieldCondition('field_response_question', 'target_id', $qid)
+                  ->execute();
+  if (!empty($result['node'])) {
+    $keys = array_keys($result['node']);
+    return $keys[0];
+  }
+  else {
+    return 0;
+  }
+}
+
+/**
  * Load the nid of the response for a given question.
  *
  * @param int $app_id
@@ -219,18 +252,14 @@ function pgh_api_validate_question_value($validations, $value) {
  * @param int $qid
  *   NID for a specific question instance.
  *
- * @param array $response
+ * @return
  *   A response array, passed by reference. This will be set to an array containing 'value' and 'points' elements.
- *
- * @return int
- *   The NID for the response object matching the supplied question/application identifiers.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_api_get_response($app_id, $qid, &$response) {
-  // TODO: Functions MUST NOT alter data by reference.
-  // Refactor this to remove the $response setting behavior.
-  $rid = pgh_find_response_id($app_id, $qid);
+function pgh_api_get_response($app_id, $qid) {
+  $rid = pgh_api_find_response_id($app_id, $qid);
+  $response = array();
   if ($rid) {
     $response = node_load($rid);
     $wrapper = entity_metadata_wrapper('node', $response);
@@ -238,11 +267,11 @@ function pgh_api_get_response($app_id, $qid, &$response) {
     $response = array(
       'value' => $wrapper->body->value->raw(),
       'point' => $wrapper->field_response_point->value(),
+      'updated' => $wrapper->field_response_updated->value(),
     );
-    return $wrapper->getIdentifier();
   }
 
-  return 0;
+  return $response;
 }
 
 /**
@@ -275,7 +304,7 @@ function pgh_api_set_response($app_id, $qid, $answer = array()) {
   $answer = array_merge($default, $answer);
 
   // Find response.
-  $rid = pgh_find_response_id($app_id, $qid);
+  $rid = pgh_api_find_response_id($app_id, $qid);
   if ($rid) {
     $response = node_load($rid);
     $wrapper = entity_metadata_wrapper('node', $response);
@@ -293,6 +322,10 @@ function pgh_api_set_response($app_id, $qid, $answer = array()) {
       'value' => $answer['value']
     );
     $wrapper->field_response_point->set($answer['point']);
+  }
+  // update the answer if touched
+  if (isset($answer)) {
+    $wrapper->field_response_updated->set(1);
   }
   $wrapper->save();
   node_save($response);

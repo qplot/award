@@ -406,6 +406,8 @@ dsm($form_state);
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_gen_form_question($question, $app_id = NULL) {
+  $form = array();
+
   $wrapper = entity_metadata_wrapper('node', $question);
   $type = $wrapper->field_question_type->value();
   $style = $wrapper->field_question_style->value();
@@ -417,17 +419,19 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $wrapper->getIdentifier() . '/edit') . '</small>';
 
   // Prepare response for question expecting a response.
-  $answer = array('value' => '', 'point' => 0);
   if (!in_array($type, array('html', 'container'))) {
-    $rid = pgh_api_get_response($app_id, $wrapper->getIdentifier(), $answer);
+    $rid = pgh_api_find_response_id($app_id, $wrapper->getIdentifier());
     if (!$rid) {
-      pgh_api_set_response($app_id, $wrapper->getIdentifier());
+      $rid = pgh_api_set_response($app_id, $wrapper->getIdentifier());
     }
+
+    $answer = pgh_api_get_response($app_id, $wrapper->getIdentifier());
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
-  }
 
-  $form = array();
+    // Set default value
+    $form['#default_value'] = $answer['value'];
+  }
 
   $form['#title'] = '<div class="question-desc">' . $wrapper->field_question_prompt->value() . '</div>';
 
@@ -435,7 +439,6 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $form['#title'] .= ' ' . implode(' ', $admin_info);
   }
 
-  $form['#default_value'] = $answer['value'];
   // Make sure the flat return.
   $form['#tree'] = FALSE;
   // Validation
@@ -538,9 +541,9 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
   }
 
-  // Add error validation to description
+  // Add error validation to descriptio
   $error_msg = '';
-  if ($validations = $wrapper->field_question_validation->value()) {
+  if ( (!empty($answer['updated'])) && ($validations = $wrapper->field_question_validation->value())) {
     $errors = pgh_api_validate_question_value($validations, $answer['value']);
     if ($errors)
       $error_msg = $errors[0];
@@ -697,39 +700,6 @@ function pgh_find_question_id($key) {
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'question')
                   ->propertyCondition('title', $key)
-                  ->execute();
-  if (!empty($result['node'])) {
-    $keys = array_keys($result['node']);
-    return $keys[0];
-  }
-  else {
-    return 0;
-  }
-}
-
-/**
- * Returns the NID for a response based on a supplied application NID and question NID.
- *
- * @param int $app_id
- *   NID for a specific application instance.
- *
- * @param int $qid
- *   NID for a specific question instance.
- *
- * @return int
- *   The NID for the supplied question id or 0 if not found.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_find_response_id($app_id, $qid) {
-  // TODO: This function accepts an app NID and a question NID and returns a response NID. The naming makes
-  // it seem like it returns a response ID (which is not a real thing in the system).
-  // Should be renamed to pgh_api_nid_for_response($app_nid, $question_nid)
-  $query = new EntityFieldQuery();
-  $result = $query->entityCondition('entity_type', 'node')
-                  ->propertyCondition('type', 'response')
-                  ->fieldCondition('field_response_application', 'target_id', $app_id)
-                  ->fieldCondition('field_response_question', 'target_id', $qid)
                   ->execute();
   if (!empty($result['node'])) {
     $keys = array_keys($result['node']);
