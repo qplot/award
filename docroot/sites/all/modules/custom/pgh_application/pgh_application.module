@@ -67,10 +67,20 @@ function pgh_application_menu() {
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
+  $bid = '';
+
+  if (isset($_GET['bid'])) {
+    $bid = $_GET['bid'];
+  }
+  elseif (isset($form_state['node'])) {
+    $business_unit = pgh_api_business_unit_for_application($form_state['node']->nid);
+    $bid = $business_unit->nid;
+  }
+
   if ($form['type']['#value'] == 'application') {
     $form['business_unit'] = array(
       '#type' => 'hidden',
-      '#value' => isset($_GET['bid']) ? $_GET['bid'] : '',
+      '#value' => $bid,
     );
 
     // Redirect to dashboard after saving node.

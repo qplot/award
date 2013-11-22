@@ -304,9 +304,19 @@ function pgh_permissions_node_access_application($node, $op, $account) {
  */
 function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
   if ($form['type']['#value'] == 'business_unit') {
+    $wgid = '';
+
+    if (isset($_GET['wgid'])) {
+      $wgid = $_GET['wgid'];
+    }
+    elseif (isset($form_state['node'])) {
+      $work_group = pgh_api_work_group_for_business_unit($form_state['node']->nid);
+      $wgid = $work_group->nid;
+    }
+
     $form['work_group'] = array(
       '#type' => 'hidden',
-      '#value' => isset($_GET['wgid']) ? $_GET['wgid'] : '',
+      '#value' => $wgid,
     );
 
     // Redirect to dashboard after saving node.
@@ -342,7 +352,7 @@ function pgh_permissions_node_validate($node, $form, &$form_state) {
   }
 
   if (!is_numeric($node->work_group)) {
-    form_set_error('work_group', 'Invalid Work Gorup');
+    form_set_error('work_group', 'Invalid Work Group');
     return;
   }
 
