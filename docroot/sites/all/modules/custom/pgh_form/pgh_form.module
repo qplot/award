@@ -463,8 +463,17 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
 
     case 'text':
-      $form['#type'] = 'textfield';
-      $form['#size'] = NULL;
+      switch ($style) {
+        case 'textarea':
+          $form['#type'] = 'textarea';
+          $form['#size'] = 3;
+          break;
+
+        default:
+          $form['#type'] = 'textfield';
+          $form['#size'] = NULL;
+          break;
+      }
       break;
 
     case 'selection':
