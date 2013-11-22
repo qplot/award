@@ -311,7 +311,9 @@ function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
     }
     elseif (isset($form_state['node'])) {
       $work_group = pgh_api_work_group_for_business_unit($form_state['node']->nid);
-      $wgid = $work_group->nid;
+      if ($work_group) {
+        $wgid = $work_group->nid;
+      }
     }
 
     $form['work_group'] = array(

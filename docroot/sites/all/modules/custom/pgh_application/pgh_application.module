@@ -74,7 +74,9 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
   }
   elseif (isset($form_state['node'])) {
     $business_unit = pgh_api_business_unit_for_application($form_state['node']->nid);
-    $bid = $business_unit->nid;
+    if ($business_unit) {
+      $bid = $business_unit->nid;
+    }
   }
 
   if ($form['type']['#value'] == 'application') {
