@@ -84,6 +84,16 @@
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
 
       <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
+
+
+      <?php
+        $options = array(
+          'query' => array(
+            'wgid' => $work_group->nid,
+          ),
+        );
+        print l(t('Add a new Business Unit'), 'node/add/business-unit', $options);
+      ?>
     </div>
 
   </div><!-- /#workgroup -->
@@ -178,14 +188,14 @@
                   'bid' => $business_unit->nid,
                 ),
               );
-              print l('Start a new application', 'node/add/application', $options);
+              print l(t('Start a new application'), 'node/add/application', $options);
             } else {
               $options = array(
                 'query' => array(
                   'bid' => $business_unit->nid,
                 ),
               );
-              print 'No current applications. ' . l('Start a new application', 'node/add/application', $options);
+              print 'No current applications. ' . l(t('Start a new application'), 'node/add/application', $options);
             }
             // @codingStandardsIgnoreEnd
           ?>

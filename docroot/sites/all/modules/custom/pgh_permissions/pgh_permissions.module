@@ -240,28 +240,184 @@ function pgh_permissions_node_access_business_unit($business_unit, $op, $account
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_permissions_node_access_application($node, $op, $account) {
-  // TODO: Check spec for specific on this.
+  switch ($op) {
+    case 'create':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
 
-  // create
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
-  // - If user is in $work_group->administrators for this work group, return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
+      if (user_access('create application content', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      return NODE_ACCESS_DENY;
 
-  // delete
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
+    case 'delete':
+      if (user_access('administer awards system', $account)) {
+        return NODE_ACCESS_ALLOW;
+      }
+      else {
+        return NODE_ACCESS_DENY;
+      }
+      break;
 
-  // update
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+    case 'update':
+      // TODO: Enforce permissions.
 
-  // - If user is in $node->users, return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
+      // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+      // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
+      // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
+      // - Else, return NODE_ACCESS_DENY
 
-  // view
-  // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
-  // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
-  // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
-  // - Else, return NODE_ACCESS_DENY
+      return NODE_ACCESS_ALLOW;
+
+    case 'view':
+      // TODO: Enforce permissions.
+
+      // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
+      // - If user is in $work_group->administrators for this business unit, return NODE_ACCESS_ALLOW
+      // - If user is in $business_unit->users for this business unit, return NODE_ACCESS_ALLOW
+      // - Else, return NODE_ACCESS_DENY
+
+      return NODE_ACCESS_ALLOW;
+  }
 
   return NODE_ACCESS_IGNORE;
+}
+
+/**
+ * Implementation of hook_form_node_form_alter().
+ *
+ * Allows a user to specify a Work Group nid in the query string when adding a new Business Unit node. This
+ * value will be included in the node add form. This will then be used in hook_node_insert() to update the
+ * Work Group's field_business_units with the newly created Business Unit nid.
+ *
+ * @param array $form
+ *   Nested array of form elements that comprise the form.
+ *
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ *
+ * @param string $form_id
+ *   String representing the name of the form itself.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['type']['#value'] == 'business_unit') {
+    $form['work_group'] = array(
+      '#type' => 'hidden',
+      '#value' => isset($_GET['wgid']) ? $_GET['wgid'] : '',
+    );
+
+    // Redirect to dashboard after saving node.
+    $form['actions']['submit']['#submit'][] = 'pgh_permissions_form_node_form_submit';
+
+    // Don't validate on deletion.
+    $form['actions']['delete']['#limit_validation_errors'] = array();
+  }
+}
+
+/**
+ * Ensure the Business Unit has a valid parent Work Group which the user has permission to update.
+ *
+ * @param object $node
+ *   The node being validated.
+ *
+ * @param array $form
+ *   Nested array of form elements that comprise the form.
+ *
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_validate($node, $form, &$form_state) {
+  if ($node->type !== 'business_unit') {
+    return;
+  }
+
+  if (!isset($node->work_group)) {
+    form_set_error('work_group', 'Work Group is required');
+    return;
+  }
+
+  if (!is_numeric($node->work_group)) {
+    form_set_error('work_group', 'Invalid Work Gorup');
+    return;
+  }
+
+  $work_group = node_load($node->work_group);
+
+  if (!$work_group) {
+    form_set_error('work_group', 'Invalid Work Group');
+    return;
+  }
+
+  if (!entity_access('update', 'node', $work_group)) {
+    form_set_error('work_group', 'You do not have permission to modify this Work Group.');
+    return;
+  }
+}
+
+/**
+ * Updates a Work Group with an entity reference to a newly saved Business Unit node.
+ *
+ * @param object $node
+ *   The inserted node.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_insert($node) {
+  if ($node->type != 'business_unit') {
+    return;
+  }
+
+  $work_group = node_load($node->work_group);
+  $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+  $work_group_wrapper->field_business_units[] = intval($node->nid);
+  $work_group_wrapper->save();
+}
+
+/**
+ * Updates a Work Group to remove an entity reference to a deleted Business Unit node.
+ *
+ * @param object $node
+ *   The inserted node.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_node_delete($node) {
+  if ($node->type != 'business_unit') {
+    return;
+  }
+
+  // Get parent Work Group.
+  $work_group = pgh_api_work_group_for_business_unit($node->nid);
+  $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+
+  // Remove the deleted Business Unit from the parent Work Group.
+  for ($i = 0; $i < count($work_group_wrapper->field_business_units->value()); $i++) {
+    if ($work_group_wrapper->field_business_units[$i]->value()->nid == $node->nid) {
+      $work_group_wrapper->field_business_units[$i]->set(NULL);
+      $work_group_wrapper->save();
+      break;
+    }
+  }
+}
+
+/**
+ * Redirect to dashboard age after saving node.
+ *
+ * @param array $form
+ *   Nested array of form elements that comprise the form.
+ *
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_permissions_form_node_form_submit($form, &$form_state) {
+  if (!empty($form_state['nid'])) {
+    $form_state['redirect'] = 'dashboard';
+  }
 }

@@ -59,7 +59,6 @@ function pgh_api_work_groups_for_user() {
   return $work_groups;
 }
 
-
 /**
  * Returns the Work Group node which owns the specified Business Unit node.
  *
@@ -74,6 +73,30 @@ function pgh_api_work_group_for_business_unit($business_unit_nid) {
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'work_group')
                   ->fieldCondition('field_business_units', 'target_id', $business_unit_nid)
+                  ->execute();
+
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    return node_load($nids[0]);
+  }
+
+  return FALSE;
+}
+
+/**
+ * Returns the Business Unit node which owns the specified Application node.
+ *
+ * @param int $application_nid
+ *   This nid of the Application to find a Business Unit for.
+ *
+ * @return object
+ *   A fully loaded Business Unit node which is the owner of the specified Application, or FALSE if not found.
+ */
+function pgh_api_business_unit_for_application($application_nid) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'business_unit')
+                  ->fieldCondition('field_applications', 'target_id', $application_nid)
                   ->execute();
 
   if (isset($result['node'])) {

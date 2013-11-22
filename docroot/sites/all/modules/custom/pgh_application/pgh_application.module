@@ -72,6 +72,12 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
       '#type' => 'hidden',
       '#value' => isset($_GET['bid']) ? $_GET['bid'] : '',
     );
+
+    // Redirect to dashboard after saving node.
+    $form['actions']['submit']['#submit'][] = 'pgh_application_form_node_form_submit';
+
+    // Don't validate on deletion.
+    $form['actions']['delete']['#limit_validation_errors'] = array();
   }
 }
 
@@ -90,6 +96,11 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
  * @author  Jay Roberts <jay@designhammer.com>
  */
 function pgh_application_node_validate($node, $form, &$form_state) {
+  // Don't do additional validation when deleting.
+  if ($form_state['clicked_button']['#value'] == 'delete') {
+    return;
+  }
+
   if ($node->type !== 'application') {
     return;
   }
@@ -135,6 +146,51 @@ function pgh_application_node_insert($node) {
   $business_unit_wrapper->field_applications[] = intval($node->nid);
   $business_unit_wrapper->save();
 }
+
+/**
+ * Updates a Business Unit to remove an entity reference to a deleted Application node.
+ *
+ * @param object $node
+ *   The inserted node.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_node_delete($node) {
+  if ($node->type != 'application') {
+    return;
+  }
+
+  // Get parent Business Unit.
+  $business_unit = pgh_api_business_unit_for_application($node->nid);
+  $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+
+  // Remove the deleted Application from the parent Business Unit.
+  for ($i = 0; $i < count($business_unit_wrapper->field_applications->value()); $i++) {
+    if ($business_unit_wrapper->field_applications[$i]->value()->nid == $node->nid) {
+      $business_unit_wrapper->field_applications[$i]->set(NULL);
+      $business_unit_wrapper->save();
+      break;
+    }
+  }
+}
+
+/**
+ * Redirect to dashboard age after saving node.
+ *
+ * @param array $form
+ *   Nested array of form elements that comprise the form.
+ *
+ * @param array $form_state
+ *   A keyed array containing the current state of the form.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_form_node_form_submit($form, &$form_state) {
+  if (!empty($form_state['nid'])) {
+    $form_state['redirect'] = 'dashboard';
+  }
+}
+
 
 /**
  * Implementation of hook_block_info().
