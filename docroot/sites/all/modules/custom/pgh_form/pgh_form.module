@@ -501,9 +501,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
 
     case 'file':
-      $form = array(
+      $media = array(
         '#type' => 'media',
-        '#title' => t($wrapper->field_question_prompt->value()),
         '#input' => TRUE,
         '#media_options' => array(
           'global' => array(
@@ -511,12 +510,13 @@ function pgh_gen_form_question($question, $app_id = NULL) {
             'schemes' => array('http'),
           ),
         ),
-        '#description' => t(''),
+        // '#description' => t($form['#title']),
         '#attached' => array(),
         '#extended' => TRUE,
         '#tree' => TRUE,
         '#value' => !empty($answer['value'])?array('fid' => $answer['value']):'',
       );
+      $form = array_merge($form, $media);
       break;
 
     default:
