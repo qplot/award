@@ -154,9 +154,12 @@ function pgh_application_node_insert($node) {
   }
 
   $business_unit = node_load($node->business_unit);
-  $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
-  $business_unit_wrapper->field_applications[] = intval($node->nid);
-  $business_unit_wrapper->save();
+
+  if ($business_unit) {
+    $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+    $business_unit_wrapper->field_applications[] = intval($node->nid);
+    $business_unit_wrapper->save();
+  }
 }
 
 /**
