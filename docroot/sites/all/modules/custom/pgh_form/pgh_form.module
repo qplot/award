@@ -519,6 +519,9 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       $media = array(
         '#type' => 'media',
         '#input' => TRUE,
+        // use element_validate to do ajax handling
+        // however it doesn't fire after upload file selected
+        '#element_validate' => array('pgh_application_form_element_callback'),  // media_element_validate
         '#media_options' => array(
           'global' => array(
             'types' => array('document'),
