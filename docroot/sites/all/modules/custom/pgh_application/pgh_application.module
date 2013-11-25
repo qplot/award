@@ -495,7 +495,12 @@ function pgh_application_mediaform_submit($form, &$form_state) {
 }
 
 /**
- * Return a page listing all applications
+ * Return a page listing all applications.
+ *
+ * This is only for development purposes and should be removed or restricted before going live.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_application_list_page() {
 
@@ -503,7 +508,10 @@ function pgh_application_list_page() {
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'application')
                   ->execute();
-  if (empty($result['node'])) return '';
+
+  if (empty($result['node'])) {
+    return '';
+  }
 
   $lists = array();
   foreach ($result['node'] as $nid => &$value) {
@@ -511,20 +519,18 @@ function pgh_application_list_page() {
     $app = node_load($nid);
     $app_wrapper = entity_metadata_wrapper('node', $app);
 
-
     $type = $app_wrapper->field_application_type->value();
     $type_wrapper = entity_metadata_wrapper('node', $type);
 
     $type_caption = $type_wrapper->body->value->raw();
 
-    $lists[] = l($nid . ' - ' . $type_caption, 'application/' . $nid . '/category//edit');
+    $lists[] = l($nid . ' - ' . $type_caption, 'application/' . $nid);
   }
 
   $out = array(
     '#theme' => 'item_list',
     '#items' => $lists,
     '#title' => t(''),
-    // '#attributes' => array('class' => array('my-links')),
   );
 
   return drupal_render($out);
