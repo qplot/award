@@ -19,14 +19,24 @@ $pgh_temp_section_questions = NULL;
 function pgh_form_menu() {
   $items = array();
 
-  // This is the primary locaion for editing a form. Users edit a single page/category worth of questions at a time.
-  $items['application/%/category/%/edit'] = array(
-    'title' => 'Fill Application',
+  // TODO: Implement access callbacks.
+
+  $items['application/%'] = array(
+    'title' => 'View application',
     'description' => 'Fill an application',
+    'page callback' => 'pgh_form_application_page',
+    'page arguments' => array(1, 3),
+    'access callback' => TRUE,
+  );
+
+  $items['application/%/category/%'] = array(
+    'title' => 'Fill out application',
+    'description' => 'Fill out an application',
     'page callback' => 'pgh_form_category_page',
     'page arguments' => array(1, 3),
     'access callback' => TRUE,
   );
+
   $items['admin/config/development/pgh'] = array(
     'title' => 'PGH settings',
     'description' => 'Development settings for pgh award applicaitons',
@@ -120,6 +130,37 @@ function theme_pgh_form_table($vars) {
   }
 
   return theme('table', array('header' => $header, 'rows' => $rows));
+}
+
+/**
+ * Page callback to display an edit form for a specific application and category.
+ *
+ * @param int $application_nid
+ *   NID for a specific application instance.
+ *
+ * @return string
+ *   Rendered HTML for the page contents.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_form_application_page($application_nid) {
+  $application = node_load($application_nid);
+
+  if (!$application) {
+    return MENU_NOT_FOUND;
+  }
+
+  $application_wrapper = entity_metadata_wrapper('node', $application);
+  $application_type = $application_wrapper->field_application_type->value();
+  $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
+
+  $first_category = $application_type_wrapper->field_apptype_categories[0]->value();
+
+  if (!$first_category) {
+    return MENU_NOT_FOUND;
+  }
+
+  drupal_goto('application/' . $application_nid . '/category/' . $first_category->title);
 }
 
 /**

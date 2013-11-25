@@ -482,7 +482,7 @@ function pgh_application_category_links($application_nid) {
         ),
       )
     );
-    $items[] = l($title, 'application/' . $application_nid . '/category/' . $category_wrapper->getIdentifier() . '/edit', $options);
+    $items[] = l($title, 'application/' . $application_nid . '/category/' . $category_wrapper->title->value(), $options);
   }
 
   return $items;
