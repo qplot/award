@@ -348,7 +348,7 @@ function pgh_application_form_element_callback($form, &$form_state) {
       $error_msg = $errors[0];
   }
 
-  return '<div id="error-'. $wrapper->title->value() . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
+  return pgh_form_error_html($wrapper->title->value(), $error_msg);
 }
 
 /**
@@ -507,7 +507,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 
         default:
           // $form['#markup'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
-          $form['#prefix'] = '<b><em>Not Implemented Style - '. $style . '</em></b>';
+          $form['#prefix'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
           $form['#type'] = 'textfield';
           $form['#size'] = NULL;
           break;
@@ -519,9 +519,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       $media = array(
         '#type' => 'media',
         '#input' => TRUE,
-        // use element_validate to do ajax handling
-        // however it doesn't fire after upload file selected
-        '#element_validate' => array('pgh_application_form_element_callback'),  // media_element_validate
+        // Use element_validate to do ajax handling, however it doesn't fire after upload file selected.
+        '#element_validate' => array('pgh_application_form_element_callback'),
         '#media_options' => array(
           'global' => array(
             'types' => array('document'),
@@ -531,7 +530,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
         '#attached' => array(),
         '#extended' => TRUE,
         '#tree' => TRUE,
-        '#value' => !empty($answer['value'])?array('fid' => $answer['value']):'',
+        '#value' => !empty($answer['value']) ? array('fid' => $answer['value']) : '',
       );
       $form = array_merge($form, $media);
       break;
@@ -544,16 +543,17 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
   }
 
-  // Add error validation to descriptio
-  $error_msg = '';
-  if ( (!empty($answer['updated'])) && ($validations = $wrapper->field_question_validation->value())) {
-    $errors = pgh_api_validate_question_value($validations, $answer['value']);
-    if ($errors)
-      $error_msg = $errors[0];
-  }
-  $form['#description'] = '<div id="error-'. $wrapper->title->value() . '" class="question-error" style="color: red;">' . $error_msg . '</b></div>';
+  $form['#description'] = '';
 
-  // Add identifier for theming
+  // Add error validation to description.
+  if ((!empty($answer['updated'])) && ($validations = $wrapper->field_question_validation->value())) {
+    $errors = pgh_api_validate_question_value($validations, $answer['value']);
+    foreach ($errors as $error) {
+      $form['#description'] .= pgh_form_error_html($wrapper->title->value(), $error);
+    }
+  }
+
+  // Add identifier for theming.
   $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="question">';
   $form['#suffix'] = '</div>';
 
@@ -625,6 +625,30 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
   }
 
   return $result;
+}
+
+/**
+ * Returns markup for a div containing an error message for a specific question.
+ *
+ * @param string $question_id
+ *   A question identifier.
+ *
+ * @param string $message
+ *   A message to display to the end user.
+ *
+ * @return string
+ *   An html string with a properly formatted error message.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_form_error_html($question_id, $message) {
+  $question_error_counts = &drupal_static(__FUNCTION__);
+  if (!isset($question_error_counts[$question_id])) {
+    $question_error_counts[$question_id] = 0;
+  }
+  $question_error_counts[$question_id]++;
+
+  return '<div id="error-' . $question_id . '-' . $question_error_counts[$question_id] . '" class="content-incorrect">' . $message . '</b></div>';
 }
 
 /**
