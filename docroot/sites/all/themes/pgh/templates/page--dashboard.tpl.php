@@ -200,6 +200,25 @@
             // @codingStandardsIgnoreEnd
           ?>
         </div>
+
+        <div class="users">
+          <h3>Users</h3>
+          <?php print l(t('Invite users to this Business Unit'), '#', $options); ?>
+
+          <ul>
+            <?php
+              // @codingStandardsIgnoreStart
+              // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
+              foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
+                print $user->name->value();
+                print l('View', 'user/' . $user->uid->value());
+                print l('Edit', 'user/' . $user->uid->value() . '/edit');
+              }
+              // @codingStandardsIgnoreEnd
+            ?>
+          </ul>
+        </div>
+
       </div>
 
     <?php endforeach; ?>
@@ -215,7 +234,8 @@
 
       </article>
 
-    <?php // End check if user is part of a business unit.
+    <?php
+      // End check if user is part of a business unit.
       endif;
     ?>
 
@@ -242,7 +262,7 @@
 
       <article class="node clearfix">
 
-        <p>You are currently not an administrator of any Work Group or Business Unit.<br>
+        <p>You are currently not an administrator of any Work Group or Business Unit.<br />
         Please contact a Practice Greenhealth administrator for help.</p>
 
       </article>
@@ -252,7 +272,8 @@
   </div><!-- /#main -->
   </div></div>
 
-  <?php // End check if user is part of a work group.
+  <?php
+    // End check if user is part of a work group.
     endif;
   ?>
 
