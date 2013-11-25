@@ -328,27 +328,32 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * Application form ajax callback
  */
 function pgh_application_form_element_callback($form, &$form_state) {
-  if (empty($form_state['triggering_element']['#name'])) return;
+  if (empty($form_state['triggering_element']['#name'])) {
+    return;
+  }
   watchdog('pgh', $form_state['triggering_element']['#name']);
-  // find the question
+
+  // Find the question.
   $qid = $form_state['triggering_element']['#name'];
   $question = node_load($qid);
   $wrapper = entity_metadata_wrapper('node', $question);
 
-  // save value
+  // Save the response value.
   $app_id = $form_state['values']['application'];
   $value = $form_state['values'][$qid];
   pgh_api_save_response($app_id, $qid, $value);
 
-  // validate
-  $error_msg = '';
+  // Validate the response.
+  $error_msg = '<div id="error-container-'. $wrapper->title->value() . '">';
   if ($validations = $wrapper->field_question_validation->value()) {
     $errors = pgh_api_validate_question_value($validations, $value);
-    if ($errors)
-      $error_msg = $errors[0];
+    if ($errors) {
+      $error_msg .= pgh_form_error_html($wrapper->title->value(), $errors);
+    }
   }
+  $error_msg .= '</div>';
 
-  return pgh_form_error_html($wrapper->title->value(), $error_msg);
+  return $error_msg;
 }
 
 /**
@@ -452,7 +457,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   // Ajax processing
   $form['#ajax'] = array(
     'callback' => 'pgh_application_form_element_callback',
-    'wrapper' => 'error-' . $wrapper->title->value(),
+    'wrapper' => 'error-container-' . $wrapper->title->value(),
   );
 
   // Based on different question type.
@@ -543,15 +548,17 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       break;
   }
 
-  $form['#description'] = '';
+  $form['#description'] = '<div id="error-container-' . $wrapper->title->value() . '">';
 
   // Add error validation to description.
   if ((!empty($answer['updated'])) && ($validations = $wrapper->field_question_validation->value())) {
     $errors = pgh_api_validate_question_value($validations, $answer['value']);
-    foreach ($errors as $error) {
-      $form['#description'] .= pgh_form_error_html($wrapper->title->value(), $error);
+    if ($errors) {
+      $form['#description'] .= pgh_form_error_html($wrapper->title->value(), $errors);
     }
   }
+
+  $form['#description'] .= '</div>';
 
   // Add identifier for theming.
   $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="question">';
@@ -633,22 +640,21 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
  * @param string $question_id
  *   A question identifier.
  *
- * @param string $message
- *   A message to display to the end user.
+ * @param array $messages
+ *   An array of messages to display to the end user.
  *
  * @return string
  *   An html string with a properly formatted error message.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
-function pgh_form_error_html($question_id, $message) {
-  $question_error_counts = &drupal_static(__FUNCTION__);
-  if (!isset($question_error_counts[$question_id])) {
-    $question_error_counts[$question_id] = 0;
+function pgh_form_error_html($question_id, $messages) {
+  $output = '<div id="error-' . $question_id . '" class="content-incorrect">';
+  foreach ($messages as $message) {
+    $output .= '<span>' . $message . '</span>';
   }
-  $question_error_counts[$question_id]++;
-
-  return '<div id="error-' . $question_id . '-' . $question_error_counts[$question_id] . '" class="content-incorrect">' . $message . '</b></div>';
+  $output .= '</div>';
+  return $output;
 }
 
 /**

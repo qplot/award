@@ -165,13 +165,8 @@ function pgh_api_validate_question_value($validations, $value) {
   foreach ($validates as $validate) {
     switch (trim($validate)) {
       case 'nonnegative':
-        if (!is_numeric($value)) {
-          $errors[] = 'The item value needs to be number';
-        }
-        else {
-          if ($value < 0) {
-            $errors[] = 'The item value neds to be positive';
-          }
+        if (!is_numeric($value) || $value < 0) {
+          $errors[] = 'The item value needs to be a positive number.';
         }
         break;
 
@@ -180,25 +175,20 @@ function pgh_api_validate_question_value($validations, $value) {
         // is_int() will fail on the string values presented by the Form API.
         $is_int = ((string) (int) $value) == $value;
         if (!$is_int) {
-          $errors[] = 'The item value needs to be integer';
+          $errors[] = 'The item value needs to be an integer.';
         }
         break;
 
       case 'nonzero':
-        if (!is_numeric($value)) {
-          $errors[] = 'The item value needs to be number';
-        }
-        else {
-          if ($value == 0) {
-            $errors[] = 'The item value can not be zero';
-          }
+        if (!is_numeric($value) || $value == 0) {
+          $errors[] = 'The item value must be a non-zero number.';
         }
         break;
 
       case 'percentage':
         $is_int = ((string) (int) $value) == $value;
         if (!$is_int || $value < 0 || $value > 100) {
-          $errors[] ='The item value needs to be integer in the range 0 - 100';
+          $errors[] = 'The item value needs to be integer in the range 0 - 100';
         }
         break;
 
