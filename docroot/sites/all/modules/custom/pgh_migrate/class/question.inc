@@ -80,4 +80,21 @@ class MigratePGHQuestionMigration extends Migration {
     $this->addFieldMapping('field_question_points', 'points')
          ->separator('|');
   }
+
+  public function prepareRow($row) {
+    if (parent::prepareRow($row) === FALSE) {
+      return FALSE;
+    }
+
+    // skip for empty row
+    if (empty($row->id))
+      return FALSE;
+
+    // skip for commented row
+    if (substr($row->id, 0, 5) != 'pghq_')
+      return FALSE;
+
+    return TRUE;
+  }
+
 }
