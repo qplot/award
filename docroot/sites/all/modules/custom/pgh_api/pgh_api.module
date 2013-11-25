@@ -116,7 +116,7 @@ function pgh_api_business_unit_for_application($application_nid) {
  * @param string $type
  *   Type of the item
  *
- * @param boolean $all
+ * @param bool $all
  *   If all matching nid are returned, or just the first one, default FALSE
  *
  * @return int
@@ -135,7 +135,8 @@ function pgh_api_find_nid($key, $type, $all = FALSE) {
     $keys = array_keys($result['node']);
     if ($all) {
       return $keys;
-    } else {
+    }
+    else {
       return $keys[0];
     }
   }
@@ -145,7 +146,7 @@ function pgh_api_find_nid($key, $type, $all = FALSE) {
 }
 
 /**
- * Validate question based on validation rules and value
+ * Validate question based on validation rules and value.
  *
  * @param array $validations
  *   Validation rules string delimited by comma
