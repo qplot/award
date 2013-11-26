@@ -1,3 +1,12 @@
+//
+// pgh_form.js
+//
+// Provides front-end functionality for the application form. Display's save staus
+// messages and hides the default submit button.
+//
+// @author Jay Roberts <jay@designhammer.com>
+//
+
 (function($) {
   'use strict';
 
@@ -28,10 +37,7 @@
     }
   };
 
-  // Disable form
   Drupal.pghApplicationForm.beforeSend = function (first, second) {
-    console.log("Before Submit");
-
     $('.pgh-form-status').addClass('saving')
                          .text('Saving changes...');
 
@@ -41,8 +47,6 @@
   }
 
   Drupal.pghApplicationForm.success = function (response, status) {
-    console.log("On Success");
-
     $('.pgh-form-status').addClass('saving')
                          .text('All changes saved');
 
@@ -52,8 +56,6 @@
   }
 
   Drupal.pghApplicationForm.error = function (response, uri) {
-    console.log("Error");
-
     $('.pgh-form-status').removeClass('saving')
                          .text('Problem saving changes');
 
