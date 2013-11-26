@@ -49,7 +49,7 @@ function pgh_form_menu() {
 }
 
 /**
- * Add application form settings
+ * Add application form settings.
  */
 function pgh_form_settings($form, &$form_state) {
   $form['pgh_form_max_questions'] = array(
@@ -73,7 +73,7 @@ function pgh_form_settings($form, &$form_state) {
 }
 
 /**
- * Save application form settings
+ * Save application form settings.
  */
 function pgh_form_settings_submit($form, &$form_state) {
   variable_set('pgh_form_max_questions', $form_state['values']['pgh_form_max_questions']);
@@ -180,6 +180,8 @@ function pgh_form_application_page($application_nid) {
 function pgh_form_category_page($app_id, $cat_id) {
   // Load the app by app_id.
   if ($app = node_load($app_id)) {
+    drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form.js', array('weight' => 2, 'scope' => 'footer'));
+
     $app_wrapper = entity_metadata_wrapper('node', $app);
     $apptype = $app_wrapper->field_application_type->value();
 
@@ -189,7 +191,7 @@ function pgh_form_category_page($app_id, $cat_id) {
     $title = $type_wrapper->body->value->raw();
     drupal_set_title($app_wrapper->getIdentifier() . ' - ' . 'Application: ' . $title);
 
-    // Find cat_id if key is provided
+    // Find cat_id if key is provided.
     if (!is_numeric($cat_id)) {
       $cat_id = pgh_api_find_nid($cat_id, 'category');
     }
