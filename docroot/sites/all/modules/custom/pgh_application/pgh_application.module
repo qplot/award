@@ -143,6 +143,8 @@ function pgh_application_node_validate($node, $form, &$form_state) {
 /**
  * Updates a Business Unit with an entity reference to a newly saved Application node.
  *
+ * Pre-generates Response objects for each question in the Application's Application Type.
+ *
  * @param object $node
  *   The inserted node.
  *
@@ -159,6 +161,12 @@ function pgh_application_node_insert($node) {
     $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
     $business_unit_wrapper->field_applications[] = intval($node->nid);
     $business_unit_wrapper->save();
+  }
+
+  // Create child response objects for each question in this application's type.
+  $questions = pgh_api_questions_for_application($node->nid);
+  foreach ($questions as $question) {
+    pgh_api_set_response($node->nid, $question->nid, array(), TRUE);
   }
 }
 

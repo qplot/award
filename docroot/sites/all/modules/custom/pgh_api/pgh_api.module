@@ -266,11 +266,13 @@ function pgh_api_get_response($app_id, $qid) {
 }
 
 /**
- * Set question response
- */
-
-/**
  * Sets the stored value for the response to a specific application/question.
+ *
+ * If there is no response object this function will create one and set up the correct mappings.
+ *
+ * If this function is being used to create an empty response when a new Application is created
+ * pass TRUE for the $is_new parameter.This will ensure that field_response_updated stays false
+ * until an end user actually supplies a response.
  *
  * @param int $app_id
  *   NID for a specific application instance.
@@ -281,12 +283,16 @@ function pgh_api_get_response($app_id, $qid) {
  * @param array $answer
  *   An array specifying the value to store in the response.
  *
+ * @param bool $is_new
+ *   Boolean indicating whether or not this function is being called to generate a new response object.
+ *   Defaults to FALSE. If TRUE, field_response_updated will not be modified.
+ *
  * @return int
  *   The NID of the response which the answer was saved to.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_api_set_response($app_id, $qid, $answer = array()) {
+function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE) {
   // Set default answer.
   $default = array(
     'value' => '',
@@ -314,8 +320,7 @@ function pgh_api_set_response($app_id, $qid, $answer = array()) {
     );
     $wrapper->field_response_point->set($answer['point']);
   }
-  // update the answer if touched
-  if (isset($answer)) {
+  if (!$is_new) {
     $wrapper->field_response_updated->set(1);
   }
   $wrapper->save();
@@ -396,41 +401,104 @@ function pgh_api_save_response($app_id, $qid, $value) {
 }
 
 /**
- * Calculate progress information
- * Go through entire question set for that application and gather info
+ * Return an array of question nodes for a specified application nid.
  *
- * @param int $app_id
+ * @param int $application_nid
+ *   The NID of the application.
+ *
+ * @return array
+ *   An array of Question nodes.
+ */
+function pgh_api_questions_for_application($application_nid) {
+  $questions = array();
+  $application = node_load($application_nid);
+  $application_wrapper = entity_metadata_wrapper('node', $application);
+
+  $application_type = $application_wrapper->field_application_type->value();
+  $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
+
+  foreach ($application_type_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {
+    foreach ($category_wrapper->field_category_sections->getIterator() as $section_wrapper) {
+      foreach ($section_wrapper->field_section_questions->getIterator() as $question_wrapper) {
+        $questions[$question_wrapper->title->value()] = $question_wrapper->value();
+      }
+    }
+  }
+
+  return $questions;
+}
+
+/**
+ * Calculate progress information for a specific application.
+ *
+ * Iterates through entire Question and Response set for the application and combines the
+ * information into an array of data.
+ *
+ * @param int $application_nid
  *   NID for a specific application instance.
  *
- * @return
- *   Information array about this application
+ * @return array
+ *   An array containing information about the progress of an application.
+ *   Elements include:
+ *   'total' - The total number of responses counted.
+ *
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_api_update_progress($app_id) {
-  $query = new EntityFieldQuery();
-  $result = $query->entityCondition('entity_type', 'node')
-                  ->propertyCondition('type', 'response')
-                  ->fieldCondition('field_response_application', 'target_id', $app_id)
-                  ->execute();
-  $array = array();
-  if (!empty($result['node']))
-    $array = array_keys($result['node']);
+function pgh_api_progress_for_application($application_nid) {
+  $progress = &drupal_static(__FUNCTION__);
 
-  $out = array(
-    'total' => count($array),
-    // missing total available points count
-    'points' => 0,
-    'fills' => 0,
-  );
-  foreach ($array as $rid) {
-    $response = node_load($rid);
-    $wrapper = entity_metadata_wrapper('node', $response);
-
-    $out['points'] += $wrapper->field_response_point->value();
-    $value = $wrapper->body->value->raw();
-    $out['fills'] += (int)(!empty($value));
+  if (!isset($progress)) {
+    $cache = cache_get('pgh_api_application_progress');
+    $progress = $cache->data;
   }
 
-  return $out;
+  if (!is_array($progress)) {
+    $progress = array();
+    cache_set('pgh_api_application_progress', $progress, 'cache');
+  }
+
+  if (!isset($progress[$application_nid])) {
+    $query = new EntityFieldQuery();
+    $result = $query->entityCondition('entity_type', 'node')
+                    ->propertyCondition('type', 'response')
+                    ->fieldCondition('field_response_application', 'target_id', $application_nid)
+                    ->execute();
+
+    if (!isset($result['node'])) {
+      return 0;
+    }
+
+    $question_count = 0;
+    $response_count = 0;
+
+    $response_nids = array_keys($result['node']);
+
+    foreach ($response_nids as $response_nid) {
+      $response = node_load($response_nid);
+      $response_wrapper = entity_metadata_wrapper('node', $response);
+      $question = $response_wrapper->field_response_question->value();
+      $question_wrapper = entity_metadata_wrapper('node', $question);
+
+      $countable_question_types = array('text', 'file', 'selection');
+
+      if (in_array($question_wrapper->field_question_type->value(), $countable_question_types)) {
+        $question_count++;
+        if ($response_wrapper->field_response_updated->value()) {
+          $response_count++;
+        }
+      }
+    }
+
+    if ($question_count == 0) {
+      $progress[$application_nid] = 1;
+    }
+    else {
+      $progress[$application_nid] = $response_count / $question_count;
+    }
+
+    cache_set('pgh_api_application_progress', $progress, 'cache');
+  }
+
+  return $progress[$application_nid];
 }

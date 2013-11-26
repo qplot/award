@@ -174,10 +174,10 @@
                 'rows' => array(),
               );
 
-              foreach ($business_unit_wrapper->field_applications->getIterator() as $application) {
+              foreach ($business_unit_wrapper->field_applications->getIterator() as $application_wrapper) {
                 $table_params['rows'][] = array(
-                  l($application->title->value(), 'application/' . $application->nid->value()),
-                  '50%',
+                  l($application_wrapper->title->value(), 'application/' . $application_wrapper->nid->value()),
+                  sprintf('%.0f%%', pgh_api_progress_for_application($application_wrapper->nid->value()) * 100),
                   'In Progress',
                 );
               }
