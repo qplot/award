@@ -476,7 +476,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
     // Set default value
-    $form['#default_value'] = $answer['value'];
+    $form['#default_value'] = !empty($answer['value'])?$answer['value']:NULL;
   }
 
   $form['#title'] = '<div class="question-desc">' . $wrapper->field_question_prompt->value() . '</div>';
