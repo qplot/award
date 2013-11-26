@@ -308,7 +308,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     '#type' => 'hidden',
     '#value' => $app_id
   );
-
+// dsm($form);
   return $form;
 }
 
@@ -478,7 +478,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
     // Set default value
-    $form['#default_value'] = $answer['value'];
+    $form['#default_value'] = !empty($answer['value'])?$answer['value']:NULL;
   }
 
   $form['#title'] = '<div class="question-desc">' . $wrapper->field_question_prompt->value() . '</div>';
@@ -506,12 +506,9 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   // Based on different question type.
   switch ($type) {
     case 'html':
-      $form['#markup'] = $form['#title'];
-      unset($form['#title']);
-      break;
-
     case 'container':
-      $form['#markup'] = $form['#title'];
+      $form['#type'] = 'item';
+      $form['#markup'] = t($form['#title']);
       unset($form['#title']);
       break;
 
