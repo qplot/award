@@ -38,27 +38,32 @@ function pgh_migrate_migrate_api() {
       'Section' => array(
         'class_name' => 'MigratePGHSectionMigration',
         'group_name' => 'PGH',
-        'soft_dependencies' => array('Question')
+        'soft_dependencies' => array('PreprocessCSV', 'Question')
       ),
       'Category' => array(
         'class_name' => 'MigratePGHCategoryMigration',
         'group_name' => 'PGH',
-        'soft_dependencies' => array('Section')
+        'soft_dependencies' => array('PreprocessCSV', 'Section')
       ),
       'ApplicationType' => array(
         'class_name' => 'MigratePGHAppTypeMigration',
         'group_name' => 'PGH',
-        'soft_dependencies' => array('Category')
+        'soft_dependencies' => array('PreprocessCSV', 'Category')
       ),
       'Application' => array(
         'class_name' => 'MigratePGHApplicationMigration',
         'group_name' => 'PGH',
-        'soft_dependencies' => array('ApplicationType')
+        'soft_dependencies' => array('PreprocessCSV', 'ApplicationType')
       ),
       'Response' => array(
         'class_name' => 'MigratePGHResponseMigration',
         'group_name' => 'PGH',
-        'soft_dependencies' => array('Application', 'Question')
+        'soft_dependencies' => array('PreprocessCSV', 'Application', 'Question')
+      ),
+      'Container' => array(
+        'class_name' => 'MigratePGHContainerMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV', 'Question')
       ),
     ),
   );

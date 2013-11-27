@@ -803,10 +803,10 @@ function pgh_find_question_id($key) {
  *   A parsed array matching the structure inidicated by the layout string. Array values are strings.
  */
 function pgh_parse_layout($layout) {
-  $rows = array_map('trim', explode(';', $layout));
+  $rows = array_map('trim', explode('||', $layout));
   $result = array();
   foreach ($rows as $row) {
-    $result[] = array_map('trim', explode(',', $row));
+    $result[] = array_map('trim', explode('|', $row));
   }
   return $result;
 }

@@ -16,3 +16,4 @@ files[] = class/category.inc
 files[] = class/apptype.inc
 files[] = class/application.inc
 files[] = class/response.inc
+files[] = class/container.inc
