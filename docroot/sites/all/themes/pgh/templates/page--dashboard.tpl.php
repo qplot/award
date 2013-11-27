@@ -110,6 +110,8 @@
 
       <div class="business-unit-block">
 
+        <div class="bu-container-top">
+
         <?php
         $business_unit_type = field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden'));
         print render($business_unit_type);
@@ -160,9 +162,12 @@
           <?php $phone_bu = field_view_field('node', $business_unit, 'field_phone', array('label' => 'hidden')); print render($phone_bu); ?>
         </div>
 
+        </div><!-- /.bu-container-top -->
+        <div class="bu-container-bottom">
+
         <div class="applications">
+          <a class="application-archive" href="#">View application archive</a>
           <h3>Applications</h3>
-          <a class="application-archive">View application archive</a>
           <?php
             // @codingStandardsIgnoreStart
             // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
@@ -188,36 +193,40 @@
                   'bid' => $business_unit->nid,
                 ),
               );
-              print l(t('Start a new application'), 'node/add/application', $options);
+              print l(t('Start a new application'), 'node/add/application', array('attributes' => array('class' => 'start-application')), $options);
             } else {
               $options = array(
                 'query' => array(
                   'bid' => $business_unit->nid,
                 ),
               );
-              print 'No current applications. ' . l(t('Start a new application'), 'node/add/application', $options);
+              print '<p>No current applications.</p> ' . l(t('Start a new application'), 'node/add/application', array('attributes' => array('class' => 'start-application')), $options);
             }
             // @codingStandardsIgnoreEnd
           ?>
         </div>
 
         <div class="users">
+          <?php print l(t('Invite users to this Business Unit'), '#', array('attributes' => array('class' => 'invite-user')), $options); ?>
           <h3>Users</h3>
-          <?php print l(t('Invite users to this Business Unit'), '#', $options); ?>
 
           <ul>
             <?php
               // @codingStandardsIgnoreStart
               // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
               foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
-                print $user->name->value();
-                print l('View', 'user/' . $user->uid->value());
-                print l('Edit', 'user/' . $user->uid->value() . '/edit');
+                print '<li><span class="user-name">' . $user->name->value() . '</span>';
+                print '<span class="edit-user-info">';
+                print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
+                print '<span class="edit-user">' . l('Edit', 'user/' . $user->uid->value() . '/edit') . '</span>';
+                print '</span></li>';
               }
               // @codingStandardsIgnoreEnd
             ?>
           </ul>
         </div>
+
+        </div><!-- /.bu-container-bottom -->
 
       </div>
 

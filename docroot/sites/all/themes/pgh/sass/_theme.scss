@@ -1,5 +1,5 @@
 // !---------------------------- */
-// !--- Body ------------------- */
+// !-- Body -------------------- */
 // !---------------------------- */
 
 body {
@@ -8,7 +8,7 @@ body {
 }
 
 // !---------------------------- */
-// !--- Typography ------------- */
+// !-- Typography -------------- */
 // !---------------------------- */
 
 h1 {
@@ -30,7 +30,7 @@ h3 {
 }
 
 // !---------------------------- */
-// !--- Header ----------------- */
+// !-- Header ------------------ */
 // !---------------------------- */
 
 #header-wrap {
@@ -60,7 +60,7 @@ h3 {
 
 
 // !---------------------------- */
-// !--- Breadcrumbs ------------ */
+// !-- Breadcrumbs ------------- */
 // !---------------------------- */
 
 #breadcrumb-wrap {
@@ -115,7 +115,7 @@ h3 {
 
 
 // !---------------------------- */
-// !--- Main ------------------- */
+// !-- Main -------------------- */
 // !---------------------------- */
 
 #main-wrap {
@@ -130,7 +130,7 @@ h3 {
 
 
 // !---------------------------- */
-// !--- Content ---------------- */
+// !-- Content ----------------- */
 // !---------------------------- */
 
 #content {}
@@ -139,7 +139,7 @@ h3 {
 
 
 // !------------------------------ */
-// !--- Dashboard ---------------- */
+// !-- Dashboard ---------------- */
 // !------------------------------ */
 
 .page-dashboard {
@@ -191,9 +191,7 @@ h3 {
 }
 
 
-// !------------------------------ */
-// !--- Work Group - dashboard --- */
-// !------------------------------ */
+// !-- Work Group - dashboard
 
 #workgroup-wrap {
   background-color: $white;
@@ -208,9 +206,8 @@ h3 {
   }
 }
 
-// !--------------------------------- */
-// !--- Business unit - dashboard --- */
-// !--------------------------------- */
+
+// !-- Business unit - dashboard
 
 #business-unit-wrap {
   background-color: $grayLight;
@@ -219,7 +216,7 @@ h3 {
   #business-unit-wrap-inner {}
 }
 
-#business-unit {
+#business-unit { // block
 
   .business-unit-block {
     background-color: $white;
@@ -256,6 +253,10 @@ h3 {
       }
     }
 
+    .info-block {
+      @include transition(min-height 0.3s ease-out);
+    }
+
     &.bu-closed {
       height: 170px !important;
 
@@ -276,6 +277,10 @@ h3 {
       .edit-content a {
         @include opacity(0);
       }
+
+      .info-block {
+        min-height: 80px;
+      }
     }
 
     &.bu-opened {
@@ -293,8 +298,15 @@ h3 {
           background-position: -114px 7px;
         }
       }
+
+      .info-block {
+        min-height: inherit;
+      }
     }
   }
+}
+
+#business-unit { // content
 
   .field-name-field-business-unit-type {
     color: $orange;
@@ -328,10 +340,173 @@ h3 {
       }
     }
   }
+
+  .bu-container-top {
+    @include clearfix;
+    padding-bottom: 10px
+  }
+
+  .bu-container-bottom {
+    border-top: 4px solid #dedede;
+    padding-bottom: 20px;
+    @include clearfix;
+
+    h3 {
+      color: $blue;
+      font-size: 1.1em;
+      line-height: 1.2em;
+      margin: 1em 0;
+    }
+
+    a.application-archive,
+    a.invite-user {
+      color: $green;
+      font-size: 11px;
+      line-height: 14px;
+      margin-top: 1.7em;
+      float: right;
+
+      &:hover {
+        color: $orange;
+      }
+    }
+
+    a.start-application {
+      color: $green;
+      font-size: 11px;
+      line-height: 14px;
+      text-align: center;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid #67a697;
+      @include border-radius(2px);
+      display: block;
+      padding: 5px 0 3px;
+      width: 180px;
+
+      &:hover {
+        color: $white;
+        background-color: $green;
+        border-color: $green;
+      }
+    }
+  }
+
+  .applications {
+    border-right: 1px solid #dedede;
+    padding-right: 20px;
+    width: 607px;
+    float: left;
+
+    table {
+      border-collapse: separate !important;
+      @include border-radius(3px 3px 0 0);
+      width: 607px;
+
+      tr {
+        background-color: transparent;
+        border: none;
+      }
+
+      th, td {
+        font-size: 0.9em;
+        font-family: $arial;
+        font-weight: normal;
+        padding: 5px 14px;
+        vertical-align: bottom;
+      }
+
+      th {
+        color: $green;
+        font-size: 11px;
+        line-height: 13px;
+        text-transform: uppercase;
+        border: 1px solid #a2d6c9;
+        border-left: none;
+        padding: 12px;
+        @include gradient($white, #f8f8f8);
+
+        &:first-child {
+          border-left: 1px solid #a2d6c9;
+          @include border-radius(3px 0 0 3px);
+        }
+
+        &:last-child {
+          @include border-radius(0 3px 3px 0);
+        }
+      }
+
+      td {
+        font-size: 13px;
+        list-style: 17px;
+        border-right: 1px solid #ededed;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+  }
+
+  .users {
+    border-left: 1px solid #dedede;
+    margin-left: -1px;
+    padding-left: 20px;
+    width: 250px;
+    float: left;
+
+    ul {
+      padding: 0;
+
+      li {
+        list-style: none;
+        padding-top: 7px;
+        clear: left;
+      }
+
+      .user-name {
+        font-size: 13px;
+        list-style: 17px;
+        width: 151px;
+        float: left;
+      }
+
+      .edit-user-info {
+        border: 1px solid #67a697;
+        @include border-radius(2px);
+        width: 97px;
+        float: left;
+
+        a {
+          color: $green;
+          font-size: 11px;
+          line-height: 14px;
+          text-align: center;
+          text-transform: uppercase;
+          text-decoration: none;
+          width: 48px;
+          padding: 5px 0 3px;
+          float: left;
+
+          &:hover {
+            color: $white;
+            background-color: #67a697;
+          }
+        }
+
+        .view-user a {
+          border-right: 1px solid #67a697;
+        }
+
+        .edit-user {
+        }
+      }
+    }
+  }
 }
 
 // !---------------------------- */
-// !--- Work Group - ctype ----- */
+// !-- Work Group - ctype ------ */
 // !---------------------------- */
 
 .node-type-work-group {
@@ -340,8 +515,8 @@ h3 {
 
 
 // !-------------------------------- */
-// !--- Business unit -------------- */
-// !--- Content type & dashboard --- */
+// !-- Business unit --------------- */
+// !-- Content type & dashboard ---- */
 // !-------------------------------- */
 
 #business-unit,
@@ -456,7 +631,7 @@ h3 {
 
 
 // !---------------------------- */
-// !--- Appication ------------- */
+// !-- Appication -------------- */
 // !---------------------------- */
 
 .page-application { //node
@@ -983,7 +1158,7 @@ h3 {
 
 
 // !---------------------------- */
-// !--- Footer ----------------- */
+// !-- Footer ------------------ */
 // !---------------------------- */
 
 #footer-wrap {
@@ -1000,7 +1175,7 @@ h3 {
 
 
 // !---------------------------- */
-// !--- User profile ----------- */
+// !-- User profile ------------ */
 // !---------------------------- */
 
 .profile {
@@ -1079,7 +1254,7 @@ h3 {
 }
 
 // !---------------------------- */
-// !--- Node edit -------------- */
+// !-- Node edit --------------- */
 // !---------------------------- */
 
 form.node-form {
@@ -1178,7 +1353,7 @@ form.node-form {
 
 
 // !---------------------------- */
-// !--- Admin Menu ------------- */
+// !-- Admin Menu -------------- */
 // !---------------------------- */
 
 body.admin-menu #admin-menu {
