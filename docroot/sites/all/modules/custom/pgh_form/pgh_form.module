@@ -151,7 +151,7 @@ function pgh_form_application_page($application_nid) {
   }
 
   $application_wrapper = entity_metadata_wrapper('node', $application);
-  $application_type = $application_wrapper->field_application_type->value();
+  $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
   $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
 
   $first_category = NULL;
@@ -192,7 +192,7 @@ function pgh_form_category_page($app_id, $cat_id) {
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form.js', array('weight' => 2, 'scope' => 'footer'));
 
     $app_wrapper = entity_metadata_wrapper('node', $app);
-    $apptype = $app_wrapper->field_application_type->value();
+    $apptype = pgh_api_application_type_by_id($app_wrapper->field_application_type->value());
 
     $type_wrapper = entity_metadata_wrapper('node', $apptype);
 

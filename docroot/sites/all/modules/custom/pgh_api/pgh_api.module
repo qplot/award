@@ -107,6 +107,34 @@ function pgh_api_business_unit_for_application($application_nid) {
   return FALSE;
 }
 
+
+/**
+ * Returns an Application Type node based on the supplied id.
+ *
+ * @param string $application_type_id
+ *   A string identifier for the application type, NOT a node id.
+ *
+ * @return object
+ *   An Application Type node or FALSE if not found.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_application_type_by_id($application_type_id) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'apptype')
+                  ->propertyCondition('title', $application_type_id)
+                  ->execute();
+
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    return node_load($nids[0]);
+  }
+
+  return FALSE;
+}
+
+
 /**
  * Returns nid(s) based on a supplied pgh item key id.
  *
@@ -414,7 +442,7 @@ function pgh_api_questions_for_application($application_nid) {
   $application = node_load($application_nid);
   $application_wrapper = entity_metadata_wrapper('node', $application);
 
-  $application_type = $application_wrapper->field_application_type->value();
+  $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
   $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
 
   foreach ($application_type_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {

@@ -471,7 +471,7 @@ function pgh_application_category_links($application_nid) {
   }
 
   $application_wrapper = entity_metadata_wrapper('node', $application_node);
-  $app_type_node = $application_wrapper->field_application_type->value();
+  $app_type_node = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
   $app_type_wrapper = entity_metadata_wrapper('node', $app_type_node);
 
   $items = array();
@@ -527,7 +527,7 @@ function pgh_application_list_page() {
     $app = node_load($nid);
     $app_wrapper = entity_metadata_wrapper('node', $app);
 
-    $type = $app_wrapper->field_application_type->value();
+    $type = pgh_api_application_type_by_id($app_wrapper->field_application_type->value());
     $type_wrapper = entity_metadata_wrapper('node', $type);
 
     $type_caption = $type_wrapper->body->value->raw();
