@@ -30,7 +30,7 @@
   <br />
   <span class="users-employer">
     <?php
-    $user_company = field_view_field('user', $variables['user'], 'field_company', array('label' => 'hidden'));
+    $user_company = field_view_field('user', $variables['user'], 'field_user_company', array('label' => 'hidden'));
     print drupal_render($user_company); ?>
   </span>
   <div class="user-links">
