@@ -64,9 +64,9 @@ function pgh_application_ctype_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
+        'module' => 'list',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'list_default',
         'weight' => 1,
       ),
       'teaser' => array(
@@ -79,19 +79,16 @@ function pgh_application_ctype_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_application_type',
     'label' => 'Application Type',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
-      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 3,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 1,
     ),
   );
 

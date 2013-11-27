@@ -17,26 +17,28 @@ function pgh_application_ctype_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_application_type',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
+    'foreign keys' => array(),
     'indexes' => array(
-      'format' => array(
-        0 => 'format',
+      'value' => array(
+        0 => 'value',
       ),
     ),
     'locked' => 0,
-    'module' => 'text',
+    'module' => 'list',
     'settings' => array(
-      'max_length' => 255,
+      'allowed_values' => array(
+        'partner_for_change' => 'Partner for Change',
+        'partner_recognition' => 'Partner Recognition',
+        'long_term_care' => 'Long Term Care',
+        'champion_for_change_gpo' => 'Champion for Change (GPO)',
+        'champion_for_change_nongpo' => 'Champion for Change (Non-GPO)',
+        'greening_the_or' => 'Greening the OR',
+        'dehp_free' => ' DEHP Free',
+      ),
+      'allowed_values_function' => '',
     ),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'list_text',
   );
 
   return $field_bases;
