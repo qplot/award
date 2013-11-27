@@ -229,10 +229,8 @@
               // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
               foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
                 print '<li><span class="user-name">' . $user->name->value() . '</span>';
-                print '<span class="edit-user-info">';
                 print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
-                print '<span class="edit-user">' . l('Edit', 'user/' . $user->uid->value() . '/edit') . '</span>';
-                print '</span></li>';
+                print '</li>';
               }
               // @codingStandardsIgnoreEnd
             ?>

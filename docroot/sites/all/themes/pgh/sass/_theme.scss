@@ -139,6 +139,23 @@ h3 {
 #main-content {}
 
 
+// !---------------------------- */
+// !-- Footer ------------------ */
+// !---------------------------- */
+
+#footer-wrap {
+  padding: 1em 0 6em;
+
+  #footer-wrap-inner {}
+
+  p {
+    color: $greenLight;
+    text-align: center;
+    font-size: 0.7em;
+  }
+}
+
+
 // !------------------------------ */
 // !-- Dashboard ---------------- */
 // !------------------------------ */
@@ -181,8 +198,8 @@ h3 {
 
   #block-pgh-user-info-pgh-user-info {
 
-    .user-links .dashboard-user {
-      display: none;
+    .user-links .dashboard-user a {
+      background-color: #67a697;
     }
   }
 
@@ -468,38 +485,28 @@ h3 {
       .user-name {
         font-size: 13px;
         list-style: 17px;
-        width: 151px;
+        width: 200px;
         float: left;
       }
 
-      .edit-user-info {
+      .view-user a {
+        color: $green;
+        font-size: 11px;
+        line-height: 14px;
+        text-align: center;
+        text-transform: uppercase;
+        text-decoration: none;
         border: 1px solid #67a697;
         @include border-radius(2px);
-        width: 97px;
+        display: block;
+        padding: 5px 0 3px;
+        width: 48px;
         float: left;
 
-        a {
-          color: $green;
-          font-size: 11px;
-          line-height: 14px;
-          text-align: center;
-          text-transform: uppercase;
-          text-decoration: none;
-          width: 48px;
-          padding: 5px 0 3px;
-          float: left;
-
-          &:hover {
-            color: $white;
-            background-color: #67a697;
-          }
-        }
-
-        .view-user a {
-          border-right: 1px solid #67a697;
-        }
-
-        .edit-user {
+        &:hover {
+          color: $white;
+          background-color: $green;
+          border-color: $green;
         }
       }
     }
@@ -1159,23 +1166,6 @@ h3 {
 
 
 // !---------------------------- */
-// !-- Footer ------------------ */
-// !---------------------------- */
-
-#footer-wrap {
-  padding: 1em 0 6em;
-
-  #footer-wrap-inner {}
-
-  p {
-    color: $greenLight;
-    text-align: center;
-    font-size: 0.7em;
-  }
-}
-
-
-// !---------------------------- */
 // !-- User profile ------------ */
 // !---------------------------- */
 
@@ -1298,128 +1288,138 @@ h3 {
 
 // edit profile
 
-.page-user-edit #content {
+.page-user-edit {
 
-  form#user-profile-form {
+  #block-pgh-user-info-pgh-user-info {
 
-    label {
-      font-size: 0.8em;
+    .user-links .edit-user a {
+      background-color: #67a697;
     }
+  }
 
-    input.form-text {
-      border: 1px solid #d3d3d3;
-      @include border-radius(2px);
-      @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
-      padding: 7px;
-    }
+  #content {
 
-    textarea {
-      border: 1px solid #d3d3d3;
-      @include border-radius(2px 2px 0 0);
-      @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
-      padding: 5px;
-    }
+    form#user-profile-form {
 
-    .form-actions {
-      padding-top: 3em;
-      clear: left;
-    }
-
-    input.form-submit {
-      color: $white;
-      font-size: 1em;
-      font-family: $arial;
-      font-weight: normal;
-      text-align: center;
-      background-color: $green;
-      border: 1px solid $green;
-      @include border-radius(3px);
-      margin-right: 10px;
-      padding: 7px 21px;
-      width: auto;
-
-      &#edit-delete {
-        background-color: #ea4539;
-        border-color: #ea4539;
+      label {
+        font-size: 0.8em;
       }
 
-      &:hover,
-      &#edit-delete:hover {
-        background-color: $orange;
-        border-color: $orange;
-        @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+      input.form-text {
+        border: 1px solid #d3d3d3;
+        @include border-radius(2px);
+        @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+        padding: 7px;
       }
-    }
 
-    select {
-      font-size: 90%;
-    }
+      textarea {
+        border: 1px solid #d3d3d3;
+        @include border-radius(2px 2px 0 0);
+        @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+        padding: 5px;
+      }
 
-    .description {
-      font-size: 0.75em;
-      line-height: 1.15em;
-      width: 65%;
-      padding-top: 7px;
-    }
+      .form-actions {
+        padding-top: 3em;
+        clear: left;
+      }
 
-    .form-item-mail {
-      border-bottom: 1px solid #e0e0e0;
-      margin-bottom: 0;
-      padding-bottom: 1.4em;
-    }
+      input.form-submit {
+        color: $white;
+        font-size: 1em;
+        font-family: $arial;
+        font-weight: normal;
+        text-align: center;
+        background-color: $green;
+        border: 1px solid $green;
+        @include border-radius(3px);
+        margin-right: 10px;
+        padding: 7px 21px;
+        width: auto;
 
-    #user_user_form_group_user_account_info {
-      border-top: 4px solid #e0e0e0;
-      border-bottom: 1px solid #e0e0e0;
-      clear: left;
-
-      fieldset#edit-timezone {
-        border: none;
-        margin: 0;
-        padding: 0;
-
-        .form-item {
-          border-top: 1px solid #e0e0e0;
-          margin-top: 0;
-          padding-top: 1.4em;
+        &#edit-delete {
+          background-color: #ea4539;
+          border-color: #ea4539;
         }
 
-        h3 {
-          @include element-invisible;
+        &:hover,
+        &#edit-delete:hover {
+          background-color: $orange;
+          border-color: $orange;
+          @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
         }
       }
-    }
 
-    #user_user_form_group_user_personal_info {
-      border-right: 1px solid #e0e0e0;
-      padding-right: 30px;
-      padding-bottom: 30px;
-      width: 449px;
-      float: left;
+      select {
+        font-size: 90%;
+      }
 
-      fieldset#edit-picture {
-        border: none;
-        border-top: 1px solid #e0e0e0;
-        margin: 0;
-        padding: 1.4em 0 0;
+      .description {
+        font-size: 0.75em;
+        line-height: 1.15em;
+        width: 65%;
+        padding-top: 7px;
+      }
 
-        h3 {
-          @include element-invisible;
-        }
+      .form-item-mail {
+        border-bottom: 1px solid #e0e0e0;
+        margin-bottom: 0;
+        padding-bottom: 1.4em;
+      }
 
-        .form-item-files-picture-upload {
+      #user_user_form_group_user_account_info {
+        border-top: 4px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        clear: left;
+
+        fieldset#edit-timezone {
+          border: none;
           margin: 0;
+          padding: 0;
+
+          .form-item {
+            border-top: 1px solid #e0e0e0;
+            margin-top: 0;
+            padding-top: 1.4em;
+          }
+
+          h3 {
+            @include element-invisible;
+          }
         }
       }
-    }
 
-    #user_user_form_group_user_company_ino {
-      border-left: 1px solid #e0e0e0;
-      margin-left: -1px;
-      padding-left: 30px;
-      padding-bottom: 30px;
-      width: 450px;
-      float: left;
+      #user_user_form_group_user_personal_info {
+        border-right: 1px solid #e0e0e0;
+        padding-right: 30px;
+        padding-bottom: 30px;
+        width: 449px;
+        float: left;
+
+        fieldset#edit-picture {
+          border: none;
+          border-top: 1px solid #e0e0e0;
+          margin: 0;
+          padding: 1.4em 0 0;
+
+          h3 {
+            @include element-invisible;
+          }
+
+          .form-item-files-picture-upload {
+            margin: 0;
+          }
+        }
+      }
+
+      #user_user_form_group_user_company_ino {
+        border-left: 1px solid #e0e0e0;
+        margin-left: -1px;
+        padding-left: 30px;
+        padding-bottom: 30px;
+        width: 450px;
+        float: left;
+      }
     }
   }
 }
