@@ -164,6 +164,11 @@ function pgh_form_application_page($application_nid) {
     return MENU_NOT_FOUND;
   }
 
+  if (empty($first_category->title)) {
+    drupal_set_message('Missing title for category ' . $first_category->nid);
+    return MENU_NOT_FOUND;
+  }
+
   drupal_goto('application/' . $application_nid . '/category/' . $first_category->title);
 }
 
