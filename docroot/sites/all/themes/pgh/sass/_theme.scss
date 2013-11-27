@@ -26,6 +26,7 @@ h2 {
 }
 
 h3 {
+  font-size: 1.1em;
   font-weight: normal;
 }
 
@@ -1253,6 +1254,174 @@ h3 {
   }
 }
 
+// profile page
+
+.page-user #content {
+
+  .user-picture {
+    margin: 0;
+
+    img {
+      border: 5px solid $white;
+      @include box-shadow(0 1px 5px rgba(0,0,0,0.14));
+    }
+  }
+
+  .field-name-field-user-company,
+  .field-name-field-user-title,
+  .field-name-field-user-position-title,
+  .field-name-field-user-department,
+  .field-name-field-user-phone {
+    padding-bottom: 14px;
+    width: 40%;
+    float: left;
+
+    .field-label {
+      color: $green;
+      font-size: 12px;
+      font-weight: normal;
+      line-height: 15px;
+    }
+  }
+
+  h3 {
+    color: $green;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 15px;
+    margin-bottom: 0;
+  }
+}
+
+// edit profile
+
+.page-user-edit {
+
+  form#user-profile-form {
+
+    label {
+      font-size: 0.8em;
+    }
+
+    input.form-text {
+      border: 1px solid #d3d3d3;
+      @include border-radius(2px);
+      @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+      padding: 7px;
+    }
+
+    textarea {
+      border: 1px solid #d3d3d3;
+      @include border-radius(2px 2px 0 0);
+      @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+      padding: 5px;
+    }
+
+    .form-actions {
+      padding-top: 3em;
+      clear: left;
+    }
+
+    input.form-submit {
+      color: $white;
+      font-size: 1em;
+      font-family: $arial;
+      font-weight: normal;
+      text-align: center;
+      background-color: $green;
+      border: 1px solid $green;
+      @include border-radius(3px);
+      margin-right: 10px;
+      padding: 7px 21px;
+      width: auto;
+
+      &#edit-delete {
+        background-color: #ea4539;
+        border-color: #ea4539;
+      }
+
+      &:hover,
+      &#edit-delete:hover {
+        background-color: $orange;
+        border-color: $orange;
+        @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+      }
+    }
+
+    select {
+      font-size: 90%;
+    }
+
+    .description {
+      font-size: 0.75em;
+      line-height: 1.15em;
+      width: 65%;
+      padding-top: 7px;
+    }
+
+    .form-item-mail {
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 0;
+      padding-bottom: 1.4em;
+    }
+
+    #user_user_form_group_user_account_info {
+      border-top: 4px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+      clear: left;
+
+      fieldset#edit-timezone {
+        border: none;
+        margin: 0;
+        padding: 0;
+
+        .form-item {
+          border-top: 1px solid #e0e0e0;
+          margin-top: 0;
+          padding-top: 1.4em;
+        }
+
+        h3 {
+          @include element-invisible;
+        }
+      }
+    }
+
+    #user_user_form_group_user_personal_info {
+      border-right: 1px solid #e0e0e0;
+      padding-right: 30px;
+      padding-bottom: 30px;
+      width: 449px;
+      float: left;
+
+      fieldset#edit-picture {
+        border: none;
+        border-top: 1px solid #e0e0e0;
+        margin: 0;
+        padding: 1.4em 0 0;
+
+        h3 {
+          @include element-invisible;
+        }
+
+        .form-item-files-picture-upload {
+          margin: 0;
+        }
+      }
+    }
+
+    #user_user_form_group_user_company_ino {
+      border-left: 1px solid #e0e0e0;
+      margin-left: -1px;
+      padding-left: 30px;
+      padding-bottom: 30px;
+      width: 450px;
+      float: left;
+    }
+  }
+}
+
+
 // !---------------------------- */
 // !-- Node edit --------------- */
 // !---------------------------- */
@@ -1270,6 +1439,10 @@ form.node-form {
 
   #edit-field-business-unit-type {
     border-bottom: 1px solid #e0e0e0;
+  }
+
+  label {
+    font-size: 0.8em;
   }
 
   input.form-text {
@@ -1307,7 +1480,6 @@ form.node-form {
     background-color: $green;
     border: 1px solid $green;
     @include border-radius(3px);
-    //@include box-shadow(0 1px 3px rgba(0,0,0,0.3));
     margin-right: 10px;
     padding: 7px 21px;
     width: auto;
