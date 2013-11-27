@@ -431,19 +431,16 @@ function pgh_api_questions_for_application($application_nid) {
 /**
  * Calculate progress information for a specific application.
  *
- * Iterates through entire Question and Response set for the application and combines the
- * information into an array of data.
+ * Iterates through all Responses for the application and determines the total number of questions
+ * and the total number of responses given. Returns responses / questions.
  *
  * @param int $application_nid
  *   NID for a specific application instance.
  *
- * @return array
- *   An array containing information about the progress of an application.
- *   Elements include:
- *   'total' - The total number of responses counted.
+ * @return float
+ *   A float value from 0 to 1 indicating the total application progress.
  *
- *
- * @author Fang Jin <fang@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_progress_for_application($application_nid) {
   $progress = &drupal_static(__FUNCTION__);
@@ -482,7 +479,7 @@ function pgh_api_progress_for_application($application_nid) {
 
       $countable_question_types = array('text', 'file', 'selection');
 
-      if (in_array($question_wrapper->field_question_type->value(), $countable_question_types)) {
+      if (isset($question_wrapper->field_question_type) && in_array($question_wrapper->field_question_type->value(), $countable_question_types)) {
         $question_count++;
         if ($response_wrapper->field_response_updated->value()) {
           $response_count++;
