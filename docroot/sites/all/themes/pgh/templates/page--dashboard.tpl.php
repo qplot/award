@@ -192,22 +192,35 @@
                 'query' => array(
                   'bid' => $business_unit->nid,
                 ),
+                'attributes' => array(
+                  'class' => 'start-application',
+                ),
               );
-              print l(t('Start a new application'), 'node/add/application', array('attributes' => array('class' => 'start-application')), $options);
+              print l(t('Start a new application'), 'node/add/application', $options);
             } else {
               $options = array(
                 'query' => array(
                   'bid' => $business_unit->nid,
                 ),
+                'attributes' => array(
+                  'class' => 'start-application',
+                ),
               );
-              print '<p>No current applications.</p> ' . l(t('Start a new application'), 'node/add/application', array('attributes' => array('class' => 'start-application')), $options);
+              print '<p>No current applications.</p> ' . l(t('Start a new application'), 'node/add/application', $options);
             }
             // @codingStandardsIgnoreEnd
           ?>
         </div>
 
         <div class="users">
-          <?php print l(t('Invite users to this Business Unit'), '#', array('attributes' => array('class' => 'invite-user')), $options); ?>
+          <?php
+            $options = array(
+              'attributes' => array(
+                'class' => 'invite-user',
+              ),
+            );
+            print l(t('Invite users to this Business Unit'), '#', $options);
+          ?>
           <h3>Users</h3>
 
           <ul>
