@@ -157,7 +157,7 @@ function pgh_form_application_page($application_nid) {
   $first_category = NULL;
 
   if (isset($application_type_wrapper->field_apptype_categories)) {
-    $application_type_wrapper->field_apptype_categories[0]->value();
+    $first_category = $application_type_wrapper->field_apptype_categories[0]->value();
   }
 
   if (!$first_category) {
