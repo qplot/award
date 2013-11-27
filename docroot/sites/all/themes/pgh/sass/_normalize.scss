@@ -147,8 +147,8 @@ a:active {
 }
 
 /* Address `outline` inconsistency between Chrome and other browsers. */
-a:focus {
-  //outline: thin dotted;
+*:focus {
+  outline: 0;
 }
 
 /* Improve readability when focused and also mouse hovered in all browsers. */
@@ -354,6 +354,7 @@ img {
   /* Responsive images */
   max-width: 100%;
   height: auto;
+  vertical-align: bottom;
   @if $legacy-support-for-ie8 {
     /* Correct IE 8 not scaling image height when resized. */
     width: auto;

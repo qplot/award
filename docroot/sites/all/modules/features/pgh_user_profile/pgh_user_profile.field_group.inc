@@ -21,20 +21,26 @@ function pgh_user_profile_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Account Info',
-    'weight' => '0',
+    'weight' => '2',
     'children' => array(
       0 => 'account',
       1 => 'timezone',
       2 => 'overlay_control',
     ),
-    'format_type' => 'fieldset',
+    'format_type' => 'div',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'label' => 'Account Info',
       'instance_settings' => array(
-        'description' => '',
-        'classes' => 'group-user-account-info field-group-fieldset',
         'required_fields' => 1,
+        'id' => '',
+        'classes' => '',
+        'description' => '',
+        'show_label' => '1',
+        'label_element' => 'h2',
+        'effect' => 'none',
+        'speed' => 'none',
       ),
+      'formatter' => 'open',
     ),
   );
   $export['group_user_account_info|user|user|form'] = $field_group;
@@ -50,21 +56,27 @@ function pgh_user_profile_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Company Info',
-    'weight' => '3',
+    'weight' => '1',
     'children' => array(
       0 => 'field_user_company',
-      1 => 'field_user_position_title',
-      2 => 'field_user_department',
-      3 => 'field_user_phone',
+      1 => 'field_user_department',
+      2 => 'field_user_phone',
+      3 => 'field_user_position_title',
     ),
-    'format_type' => 'fieldset',
+    'format_type' => 'div',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'label' => 'Company Info',
       'instance_settings' => array(
-        'description' => '',
-        'classes' => 'group-user-company-ino field-group-fieldset',
         'required_fields' => 1,
+        'id' => '',
+        'classes' => '',
+        'description' => '',
+        'show_label' => '1',
+        'label_element' => 'h2',
+        'effect' => 'none',
+        'speed' => 'none',
       ),
+      'formatter' => 'open',
     ),
   );
   $export['group_user_company_ino|user|user|form'] = $field_group;
@@ -80,21 +92,27 @@ function pgh_user_profile_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Personal Info',
-    'weight' => '2',
+    'weight' => '0',
     'children' => array(
       0 => 'field_user_first_name',
       1 => 'field_user_last_name',
       2 => 'field_user_title',
       3 => 'picture',
     ),
-    'format_type' => 'fieldset',
+    'format_type' => 'div',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'label' => 'Personal Info',
       'instance_settings' => array(
-        'description' => '',
-        'classes' => 'group-user-personal-info field-group-fieldset',
         'required_fields' => 1,
+        'id' => '',
+        'classes' => '',
+        'description' => '',
+        'show_label' => '1',
+        'label_element' => 'h2',
+        'effect' => 'none',
+        'speed' => 'none',
       ),
+      'formatter' => 'open',
     ),
   );
   $export['group_user_personal_info|user|user|form'] = $field_group;

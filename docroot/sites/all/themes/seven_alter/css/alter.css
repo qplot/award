@@ -1,4 +1,3 @@
-/* !------ admin menu ----- */
 
 body.admin-menu #admin-menu {
   border-bottom: none;
@@ -16,4 +15,8 @@ body.admin-menu #admin-menu {
   list-style: none;
   padding-right: 15px;
   float: left;
+}
+
+*:focus {
+  outline: 0;
 }
