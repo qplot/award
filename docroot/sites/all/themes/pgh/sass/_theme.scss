@@ -1256,46 +1256,49 @@ h3 {
 
 // profile page
 
-.page-user #content {
+.page-user {
 
-  .user-picture {
-    margin: 0;
+  #content .profile {
 
-    img {
-      border: 5px solid $white;
-      @include box-shadow(0 1px 5px rgba(0,0,0,0.14));
+    .user-picture {
+      margin: 0;
+
+      img {
+        border: 5px solid $white;
+        @include box-shadow(0 1px 5px rgba(0,0,0,0.14));
+      }
     }
-  }
 
-  .field-name-field-user-company,
-  .field-name-field-user-title,
-  .field-name-field-user-position-title,
-  .field-name-field-user-department,
-  .field-name-field-user-phone {
-    padding-bottom: 14px;
-    width: 40%;
-    float: left;
+    .field-name-field-user-company,
+    .field-name-field-user-title,
+    .field-name-field-user-position-title,
+    .field-name-field-user-department,
+    .field-name-field-user-phone {
+      padding-bottom: 14px;
+      width: 40%;
+      float: left;
 
-    .field-label {
+      .field-label {
+        color: $green;
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 15px;
+      }
+    }
+
+    h3 {
       color: $green;
       font-size: 12px;
       font-weight: normal;
       line-height: 15px;
+      margin-bottom: 0;
     }
-  }
-
-  h3 {
-    color: $green;
-    font-size: 12px;
-    font-weight: normal;
-    line-height: 15px;
-    margin-bottom: 0;
   }
 }
 
 // edit profile
 
-.page-user-edit {
+.page-user-edit #content {
 
   form#user-profile-form {
 
