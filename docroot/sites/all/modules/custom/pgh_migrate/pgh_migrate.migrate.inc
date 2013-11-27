@@ -50,16 +50,6 @@ function pgh_migrate_migrate_api() {
         'group_name' => 'PGH',
         'soft_dependencies' => array('PreprocessCSV', 'Category')
       ),
-      'Application' => array(
-        'class_name' => 'MigratePGHApplicationMigration',
-        'group_name' => 'PGH',
-        'soft_dependencies' => array('PreprocessCSV', 'ApplicationType')
-      ),
-      'Response' => array(
-        'class_name' => 'MigratePGHResponseMigration',
-        'group_name' => 'PGH',
-        'soft_dependencies' => array('PreprocessCSV', 'Application', 'Question')
-      ),
       'Container' => array(
         'class_name' => 'MigratePGHContainerMigration',
         'group_name' => 'PGH',
