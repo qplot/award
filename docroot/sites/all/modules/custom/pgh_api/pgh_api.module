@@ -447,7 +447,9 @@ function pgh_api_progress_for_application($application_nid) {
 
   if (!isset($progress)) {
     $cache = cache_get('pgh_api_application_progress');
-    $progress = $cache->data;
+    if ($cache && isset($cache->data)) {
+      $progress = $cache->data;
+    }
   }
 
   if (!is_array($progress)) {

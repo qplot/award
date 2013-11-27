@@ -26,12 +26,17 @@
 </div></div>
 
 <div class="users-name">
-  <?php print $variables['user']->name; ?>
+  <?php if (!empty($variables['user']->realname)): ?>
+    <?php print $variables['user']->realname; ?>
+  <?php else: ?>
+    <?php print $variables['user']->name; ?>
+  <?php endif; ?>
   <br />
   <span class="users-employer">
     <?php
-    $user_company = field_view_field('user', $variables['user'], 'field_company', array('label' => 'hidden'));
-    print drupal_render($user_company); ?>
+    $user_company = field_view_field('user', $variables['user'], 'field_user_company', array('label' => 'hidden'));
+    print drupal_render($user_company);
+    ?>
   </span>
   <div class="user-links">
     <span class="edit-user"><a href="/user/<?php print $variables['user']->uid; ?>/edit">Edit</a></span>
