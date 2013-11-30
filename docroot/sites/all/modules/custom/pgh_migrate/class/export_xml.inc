@@ -44,8 +44,7 @@ class MigratePGHExportXMLMigration extends MigrationBase {
       // Populate apptype attribute and property
       $apptype = $root->addChild('apptype');
       $apptype->addAttribute('id', $apptype_wrapper->title->value());
-      // $body_name = empty($apptype_wrapper->body->value())?'':$apptype_wrapper->body->value->raw();
-      // $apptype->addAttribute('name', $body_name);
+      $apptype->addAttribute('name', $apptype_wrapper->body->value->raw());
 
       // Find all cateogries
       foreach ($apptype_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {
@@ -53,8 +52,7 @@ class MigratePGHExportXMLMigration extends MigrationBase {
         // Populdate category attribute and property
         $category = $apptype->addChild('category');
         $category->addAttribute('id', $category_wrapper->title->value());
-        // $body_name = empty($category_wrapper->body->value())?'':$category_wrapper->body->value->raw();
-        // $category->addAttribute('name', $body_name);
+        $category->addAttribute('name', $category_wrapper->body->value->raw());
 
         // Find all sections
         foreach ($category_wrapper->field_category_sections->getIterator() as $section_wrapper) {
@@ -62,8 +60,8 @@ class MigratePGHExportXMLMigration extends MigrationBase {
           // Populdate category attribute and property
           $section = $category->addChild('section');
           $section->addAttribute('id', $section_wrapper->title->value());
-          // $body_name = empty($section_wrapper->body->value())?'':$section_wrapper->body->value->raw();
-          // $section->addAttribute('name', $body_name);
+          $body = $section_wrapper->body->value();
+          $section->addAttribute('name', $section_wrapper->field_section_label->value());
 
           // Find all questions
           foreach ($section_wrapper->field_section_questions->getIterator() as $question_wrapper) {
