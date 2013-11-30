@@ -176,11 +176,14 @@ function pgh_api_find_nid($key, $type, $all = FALSE) {
 /**
  * Returns nid(s) based on a supplied entity and property conditions.
  *
- * @param array $entity_conds
- *   A category key.
- *
  * @param array $property_conds
  *   Type of the item
+ *
+ * @param array $field_conds
+ *   Type of the item
+ *
+ * @param array $entity_conds
+ *   A category key.
  *
  * @param bool $all
  *   If all matching nid are returned, or just the first one, default FALSE
@@ -191,7 +194,7 @@ function pgh_api_find_nid($key, $type, $all = FALSE) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_api_node_ids($property_conds, $all = FALSE, $entity_conds = array()) {
+function pgh_api_node_ids($property_conds = array(), $field_conds = array(), $all = FALSE, $entity_conds = array()) {
   $query = new EntityFieldQuery();
   $entity_default = array(
     'entity_type' => 'node'
@@ -202,6 +205,9 @@ function pgh_api_node_ids($property_conds, $all = FALSE, $entity_conds = array()
   }
   foreach ($property_conds as $key => $value) {
     $query->propertyCondition($key, $value);
+  }
+  foreach ($field_conds as $key => $value) {
+    $query->fieldCondition($key, 'value', $value);
   }
 
   $result = $query->execute();
