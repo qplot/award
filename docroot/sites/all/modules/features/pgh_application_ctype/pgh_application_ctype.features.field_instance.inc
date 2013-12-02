@@ -55,6 +55,47 @@ function pgh_application_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-application-field_application_status'
+  $field_instances['node-application-field_application_status'] = array(
+    'bundle' => 'application',
+    'default_value' => array(
+      0 => array(
+        'value' => 'new',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_status',
+    'label' => 'Status',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'node-application-field_application_type'
   $field_instances['node-application-field_application_type'] = array(
     'bundle' => 'application',
@@ -96,6 +137,7 @@ function pgh_application_ctype_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Application Type');
   t('Body');
+  t('Status');
 
   return $field_instances;
 }
