@@ -256,7 +256,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     $form['ajax_div'] = array(
       '#markup' => '',
       '#prefix' => '<div id="pgh_form_ajax_div">',
-      '#suffix' => '</div><br /><br />',
+      '#suffix' => '</div><!-- #question --><br /><br />',
     );
 
     foreach ($cat->field_category_sections['und'] as $sec_id) {
@@ -403,7 +403,7 @@ function pgh_application_form_element_callback($form, &$form_state) {
       $error_msg .= pgh_form_error_html($wrapper->title->value(), $errors);
     }
   }
-  $error_msg .= '</div>';
+  $error_msg .= '</div><!-- #error-container -->';
 
   return $error_msg;
 }
@@ -490,7 +490,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $form['#default_value'] = !empty($answer['value'])?$answer['value']:NULL;
   }
 
-  $form['#title'] = '<div class="question-desc">' . check_markup($wrapper->field_question_prompt->value() . '</div>', 'question_text', '', FALSE);
+  $form['#title'] = '<div class="question-desc">' . check_markup($wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
 
   if (user_access('administer awards system')) {
     $form['#title'] .= ' ' . implode(' ', $admin_info);
@@ -607,11 +607,11 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     }
   }
 
-  $form['#description'] .= '</div>';
+  $form['#description'] .= '</div><!-- #error-container -->';
 
   // Add identifier for theming.
-  $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="question">';
-  $form['#suffix'] = '</div>';
+  $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="question question-type-' . $type . '">';
+  $form['#suffix'] = '</div><!-- #question -->';
 
   // Mark this question has been processed.
   global $pgh_temp_section_questions;
@@ -702,7 +702,7 @@ function pgh_form_error_html($question_id, $messages) {
   foreach ($messages as $message) {
     $output .= '<span>' . $message . '</span>';
   }
-  $output .= '</div>';
+  $output .= '</div><!-- #error -->';
   return $output;
 }
 
