@@ -1178,12 +1178,12 @@ h3 {
     background: #ffba4e url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px;
     border: 1px solid #ffb043;
     @include border-radius(0 0 3px 3px);
-    //@include box-shadow(0 1px 3px rgba(0,0,0,0.1));
+    @include box-shadow(0 1px 3px rgba(0,0,0,0.1));
     margin-bottom: -29px;
     padding-left: 40px;
     width: 130px;
     opacity: 0;
-    @include transition(all 0.4s ease-out);
+    @include transition(opacity 0.4s ease-in-out);
     float: right;
 
     &.saving {
