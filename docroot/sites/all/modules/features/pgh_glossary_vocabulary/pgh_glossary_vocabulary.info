@@ -1,0 +1,13 @@
+name = Glossary Vocabulary
+description = PGH Glossary Vocabulary
+core = 7.x
+package = PGH Vocabulary
+version = 7.x-0.1
+project = pgh_glossary_vocabulary
+dependencies[] = features
+dependencies[] = filter
+dependencies[] = glossify
+dependencies[] = taxonomy
+features[features_api][] = api:2
+features[filter][] = question_text
+features[taxonomy][] = glossary

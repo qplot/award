@@ -490,7 +490,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $form['#default_value'] = !empty($answer['value'])?$answer['value']:NULL;
   }
 
-  $form['#title'] = '<div class="question-desc">' . $wrapper->field_question_prompt->value() . '</div>';
+  $form['#title'] = '<div class="question-desc">' . check_markup($wrapper->field_question_prompt->value() . '</div>', 'question_text', '', FALSE);
 
   if (user_access('administer awards system')) {
     $form['#title'] .= ' ' . implode(' ', $admin_info);
@@ -647,7 +647,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
   $type = $wrapper->field_question_type->value();
   $layout = $wrapper->field_question_layout->value();
-  $prompt = $wrapper->field_question_prompt->value();
+  $prompt = check_markup($wrapper->field_question_prompt->value(), 'question_text', '', FALSE);
 
   if (!empty($layout) && ($type == 'container')) {
     // Print the container parent element.
