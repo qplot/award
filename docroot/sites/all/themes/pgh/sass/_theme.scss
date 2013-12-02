@@ -926,54 +926,73 @@ h3 {
         li {
           display: inline;
 
+          // space the icons
+          $icon-spacing: 11;
+
           a {
             text-indent: -1000000px;
-            background: transparent url(../images/menu-app/cat-menu-icons.png) no-repeat -763px -70px;
-            width: 77px;
+            background: transparent url(../images/menu-app/cat-menu-icons.png) no-repeat -#{$icon-spacing + 1064}px -70px;
+            width: 56px;
             height: 70px;
             float: left;
 
             // prefix award type
             @each $awardTypeMenu in pfc, pr, ltc, chcpfc, chcpr {
 
-              &.#{$awardTypeMenu}-leadership { background-position: 0 -70px;
-                &:hover, &.active { background-position: 0 0; }
+              &.#{$awardTypeMenu}-leadership { background-position: -#{$icon-spacing}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing}px 0; }
               }
 
-              &.#{$awardTypeMenu}-waste { background-position: -77px -70px;
-                &:hover, &.active { background-position: -77px 0; }
+              &.#{$awardTypeMenu}-waste { background-position: -#{$icon-spacing + 76}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 76}px 0; }
               }
 
-              &.#{$awardTypeMenu}-chemicals { background-position: -153px -70px;
-                &:hover, &.active { background-position: -153px 0; }
+              &.#{$awardTypeMenu}-chemicals { background-position: -#{$icon-spacing + 152}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 152}px 0; }
               }
 
-              &.#{$awardTypeMenu}-gor { background-position: -230px -70px;
-                &:hover, &.active { background-position: -230px 0; }
+              &.#{$awardTypeMenu}-gor { background-position: -#{$icon-spacing + 228}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 228}px 0; }
               }
 
-              &.#{$awardTypeMenu}-food { background-position: -305px -70px;
-                &:hover, &.active { background-position: -305px 0; }
+              &.#{$awardTypeMenu}-food { background-position: -#{$icon-spacing + 304}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 304}px 0; }
               }
 
-              &.#{$awardTypeMenu}-epp { background-position: -381px -70px;
-                &:hover, &.active { background-position: -381px 0; }
+              &.#{$awardTypeMenu}-epp { background-position: -#{$icon-spacing + 380}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 380}px 0; }
               }
 
-              &.#{$awardTypeMenu}-energy { background-position: -457px -70px;
-                &:hover, &.active { background-position: -457px 0; }
+              &.#{$awardTypeMenu}-energy { background-position: -#{$icon-spacing + 456}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 456}px 0; }
               }
 
-              &.#{$awardTypeMenu}-water { background-position: -534px -70px;
-                &:hover, &.active { background-position: -534px 0; }
+              &.#{$awardTypeMenu}-water { background-position: -#{$icon-spacing + 532}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 532}px 0; }
               }
 
-              &.#{$awardTypeMenu}-climate { background-position: -610px -70px;
-                &:hover, &.active { background-position: -610px 0; }
+              &.#{$awardTypeMenu}-climate { background-position: -#{$icon-spacing + 608}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 608}px 0; }
               }
 
-              &.#{$awardTypeMenu}-greenbuilding { background-position: -686px -70px;
-                &:hover, &.active { background-position: -686px 0; }
+              &.#{$awardTypeMenu}-greenbuilding { background-position: -#{$icon-spacing + 684}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 684}px 0; }
+              }
+
+              &.#{$awardTypeMenu}-goals { background-position: -#{$icon-spacing + 760}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 760}px 0; }
+              }
+
+              &.#{$awardTypeMenu}-accuracy { background-position: -#{$icon-spacing + 836}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 836}px 0; }
+              }
+
+              &.#{$awardTypeMenu}-appendixa { background-position: -#{$icon-spacing + 912}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 912}px 0; }
+              }
+
+              &.#{$awardTypeMenu}-appendixb { background-position: -#{$icon-spacing + 988}px -70px;
+                &:hover, &.active { background-position: -#{$icon-spacing + 988}px 0; }
               }
             }
           }
@@ -994,7 +1013,7 @@ h3 {
 
     span {
       color: #666666;
-      background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat -761px 0;
+      background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat -1038px 0;
       display: block;
       width: 48px;
       height: 47px;
@@ -1055,6 +1074,26 @@ h3 {
       &.#{$awardTypeh1}-greenbuilding {
         color: #8bc63f;
         span { background-position: -685px 0; }
+      }
+
+      &.#{$awardTypeh1}-goals {
+        //color: #;
+        span { background-position: -734px 0; }
+      }
+
+      &.#{$awardTypeh1}-accuracy {
+        //color: #;
+        span { background-position: -810px 0; }
+      }
+
+      &.#{$awardTypeh1}-appendixa {
+        //color: #;
+        span { background-position: -886px 0; }
+      }
+
+      &.#{$awardTypeh1}-appendixb {
+        //color: #;
+        span { background-position: -962px 0; }
       }
     }
   }
