@@ -27,9 +27,9 @@
 
 <div class="users-name">
   <?php if (!empty($variables['user']->realname)): ?>
-    <?php print $variables['user']->realname; ?>
+    <?php print l($variables['user']->realname, 'user/' . $variables['user']->uid); ?>
   <?php else: ?>
-    <?php print $variables['user']->name; ?>
+    <?php print l($variables['user']->name, 'user/' . $variables['user']->uid); ?>
   <?php endif; ?>
   <br />
   <span class="users-employer">
