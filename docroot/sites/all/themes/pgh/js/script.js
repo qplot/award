@@ -23,17 +23,25 @@
       // Check is app menu block exist.
       if ($(app_menu_id).length) {
 
-        // Don't show drop-down menu untill the jQuery loads.
-        //$(app_menu_id + ' ul.category-menu').css('display', 'block');
+        // Don't show the drop-down if only one item exist.
+        if ($(app_menu_id + ' > .item-list > ul').hasClass('single-item')) {
+
+          // Used to style the single item elements
+          $(app_menu_id).addClass('single-item');
+
+          // Remove the anchor function
+          $('a.category-link').click(function(e) {
+            e.preventDefault();
+          });
+        }
 
         // Wrap application drop-down in active section UL parent for theming.
-        if ($(app_menu_id + ' ul.category-menu li a').hasClass('active')) {
+        else if ($(app_menu_id + ' ul.category-menu li a').hasClass('active')) {
           var activeTitle = $(app_menu_id + ' ul.category-menu li a.active').text();
 
           $('<ul class="selected-item"><li class="cat-menu-closed"><span>' + activeTitle + '</span></li></ul>').prependTo(app_menu_id + ' .item-list');
 
           $(app_menu_id + ' ul.category-menu').appendTo(app_menu_id + ' .item-list ul.selected-item li');
-
 
           // Add back and next arrows.
           var $app_menu_arrows = $('#block-pgh-application-application-category-menu ul.category-menu li a.active').parent('li');
@@ -91,11 +99,19 @@
       // Check is app menu block exist.
       if ($(cat_menu_id).length) {
 
-        // Copy anchor text to a title attribute.
-        $(cat_menu_id + ' ul.category-menu li a').each(function() {
-          var titleAttrText = $(this).text();
-          $(this).attr('title', titleAttrText);
-        });
+        // Don't show the category bar if non exist.
+        if ($(cat_menu_id + ' > .item-list > ul').hasClass('single-item')) {
+          $('#cat-menu-wrap').hide();
+          $('h1#page-title').addClass('no-category');
+
+        } else {
+
+          // Copy anchor text to a title attribute.
+          $(cat_menu_id + ' ul.category-menu li a').each(function() {
+            var titleAttrText = $(this).text();
+            $(this).attr('title', titleAttrText);
+          });
+        }
       }
 
 

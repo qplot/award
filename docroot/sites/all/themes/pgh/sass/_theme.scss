@@ -655,7 +655,7 @@ h3 {
     }
   }
 
-  #block-pgh-user-info-pgh-user-info {
+  #block-pgh-user-info-pgh-user-info { // white header background
 
     .user-picture-wrap {
       border: none;
@@ -663,6 +663,15 @@ h3 {
 
     .users-name {
       color: $green;
+
+      a {
+        color: $green;
+        text-decoration: none;
+
+        &:hover {
+          color: $orange;
+        }
+      }
     }
 
     .user-links {
@@ -861,6 +870,32 @@ h3 {
 
         &:hover {
           background-position: -17px -60px;
+        }
+      }
+
+      &.single-item {
+
+        ul.category-menu.single-item {
+          margin: 0 auto;
+          width: 640px;
+          @include box-shadow(none);
+          position: static;
+          top: auto;
+          left: auto;
+          z-index: auto;
+
+          li {
+            font-size: 24px;
+            line-height: 54px;
+            text-align: center;
+
+            a,
+            a.active {
+              background-color: transparent;
+              border: none;
+              cursor: default;
+            }
+          }
         }
       }
     }
@@ -1178,7 +1213,7 @@ h3 {
     background: #ffba4e url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px;
     border: 1px solid #ffb043;
     @include border-radius(0 0 3px 3px);
-    @include box-shadow(0 1px 3px rgba(0,0,0,0.1));
+    //@include box-shadow(0 1px 3px rgba(0,0,0,0.1));
     margin-bottom: -29px;
     padding-left: 40px;
     width: 130px;
@@ -1211,7 +1246,7 @@ h3 {
   }
 }
 
-#block-pgh-user-info-pgh-user-info {
+#block-pgh-user-info-pgh-user-info { // green header background
   padding: 15px 10px 0 0;
   float: right;
 
@@ -1238,6 +1273,15 @@ h3 {
     font-size: 17px;
     line-height: 18px;
     margin: 5px 0 0 94px;
+
+    a {
+      color: $white;
+      text-decoration: none;
+
+      &:hover {
+        color: $orange;
+      }
+    }
   }
 
   .users-employer {
