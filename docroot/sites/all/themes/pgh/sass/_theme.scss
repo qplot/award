@@ -702,7 +702,7 @@ h3 {
 
   #application-menu-container.stuck {
     width: 100%;
-    @include box-shadow(0 1px 7px rgba(0,0,0,0.3));
+    @include box-shadow(0 1px 7px rgba(0,0,0,0.15));
     position: fixed;
     top: 0;
     z-index: 100;
@@ -1025,8 +1025,7 @@ h3 {
   }
 }
 
-// ! form
-.page-application {
+.page-application { // !-- form
 
   form {
 
@@ -1160,6 +1159,42 @@ h3 {
 
       td {
       }
+    }
+  }
+}
+
+.page-application { // !-- saving indicator
+
+  .pgh-form-status-container {
+    margin: 0 auto;
+    width: 960px;
+  }
+
+  .pgh-form-status {
+    color: $white;
+    font-size: 12px;
+    line-height: 27px;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.1);
+    background: #ffba4e url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px;
+    border: 1px solid #ffb043;
+    @include border-radius(0 0 3px 3px);
+    @include box-shadow(0 1px 3px rgba(0,0,0,0.1));
+    margin-bottom: -29px;
+    padding-left: 40px;
+    width: 130px;
+    opacity: 0;
+    @include transition(opacity 0.4s ease-in-out);
+    float: right;
+
+    &.saving {
+      background-color: #29aa8b;
+      background-image: url(../images/pgh-form/icon-page-saving.gif);
+      border-color: #229f7e;
+      opacity: 1;
+    }
+
+    &.saved {
+      opacity: 1;
     }
   }
 }

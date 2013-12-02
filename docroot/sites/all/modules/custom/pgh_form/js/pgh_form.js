@@ -12,7 +12,7 @@
 
   $(document).ready(function() {
     // Add AJAX save status message.
-    $('#application-menu-container').append('<div class="pgh-form-status">All changes saved</div>');
+    $('#application-menu-container').append('<div class="pgh-form-status-container"><div class="pgh-form-status">All changes saved</div></div>');
 
     // Hide submit button
     $('#pgh-application-form').find('input[type="submit"]').hide();
@@ -47,8 +47,12 @@
   }
 
   Drupal.pghApplicationForm.success = function (response, status) {
-    $('.pgh-form-status').addClass('saving')
+    $('.pgh-form-status').removeClass('saving')
+                         .addClass('saved')
                          .text('All changes saved');
+    setTimeout(function() {
+      $('.pgh-form-status').removeClass('saved');
+    }, 2000);
 
     if (typeof Drupal.ajax.prototype.success === 'function') {
       Drupal.ajax.prototype.success.call(this, response, status);
