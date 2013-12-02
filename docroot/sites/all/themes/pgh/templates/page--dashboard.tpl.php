@@ -77,7 +77,7 @@
   <div id="workgroup">
 
     <div id="workgroup-content" class="column">
-      <p class="dashboard-label">Working Group</p>
+      <p class="dashboard-label">Work Group</p>
       <?php if (entity_access('update', 'node', $work_group)): ?>
         <span class="edit-content"><a href="/node/<?php print $work_group->vid; ?>/edit">Edit</a></span>
       <?php endif; ?>
