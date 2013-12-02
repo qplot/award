@@ -82,7 +82,7 @@ Drupal.behaviors.pghApplicationNumbering = {
       // only add a number to the first matched element.
 
       var top_number = top_index + 1;
-      $(top_element).find('.form-item:eq(0)').prepend('<div class="question-number">' + top_number.toString() + '</div>');
+      $(top_element).find('.form-item:eq(0)').prepend('<div class="question-number">' + top_number.toString() + '.</div>');
 
       // Add an alphabetic ordinal to each question which is a dependent question of the current
       // top-level question.

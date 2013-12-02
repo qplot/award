@@ -1071,8 +1071,18 @@ h3 {
       padding-left: 0;
     }
 
+    .question {
+      padding-left: 30px;
+    }
+
     .question-dependent {
-      margin-left: 50px;
+      padding-left: 60px;
+    }
+
+    .question-number {
+      font-weight: bold;
+      margin-left: -30px;
+      float: left;
     }
 
     .form-item {
