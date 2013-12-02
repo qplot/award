@@ -32,12 +32,12 @@
     <?php print l($variables['user']->name, 'user/' . $variables['user']->uid); ?>
   <?php endif; ?>
   <br />
-  <span class="users-employer">
+  <div class="users-employer">
     <?php
     $user_company = field_view_field('user', $variables['user'], 'field_user_company', array('label' => 'hidden'));
     print drupal_render($user_company);
     ?>
-  </span>
+  </div>
   <div class="user-links">
     <span class="edit-user"><a href="/user/<?php print $variables['user']->uid; ?>/edit">Edit</a></span>
     <span class="logout-user"><a href="/user/logout">Log out</a></span>
