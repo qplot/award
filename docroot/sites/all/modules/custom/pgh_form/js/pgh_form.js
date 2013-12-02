@@ -1,8 +1,9 @@
 //
 // pgh_form.js
 //
-// Provides front-end functionality for the application form. Display's save staus
-// messages and hides the default submit button.
+// Provides front-end functionality for the application form. Displays save status
+// messages, question numbering, and hides the default submit button.
+//
 //
 // @author Jay Roberts <jay@designhammer.com>
 //
@@ -19,7 +20,7 @@
   });
 
   Drupal.pghApplicationForm = {
-    form_id: 'pgh-application-form',
+    form_id: 'pgh-application-form'
   };
 
   Drupal.behaviors.pghApplicationForm = {
@@ -38,18 +39,15 @@
   };
 
   Drupal.pghApplicationForm.beforeSend = function (first, second) {
-    $('.pgh-form-status').addClass('saving')
-                         .text('Saving changes...');
+    $('.pgh-form-status').addClass('saving').text('Saving changes...');
 
     if (typeof Drupal.ajax.prototype.beforeSend === 'function') {
       Drupal.ajax.prototype.beforeSend.call(this, first, second);
     }
-  }
+  };
 
   Drupal.pghApplicationForm.success = function (response, status) {
-    $('.pgh-form-status').removeClass('saving')
-                         .addClass('saved')
-                         .text('All changes saved');
+    $('.pgh-form-status').removeClass('saving').addClass('saved').text('All changes saved');
     setTimeout(function() {
       $('.pgh-form-status').removeClass('saved');
     }, 2000);
@@ -57,15 +55,14 @@
     if (typeof Drupal.ajax.prototype.success === 'function') {
       Drupal.ajax.prototype.success.call(this, response, status);
     }
-  }
+  };
 
   Drupal.pghApplicationForm.error = function (response, uri) {
-    $('.pgh-form-status').removeClass('saving')
-                         .text('Problem saving changes');
+    $('.pgh-form-status').removeClass('saving').text('Problem saving changes');
 
     if (typeof Drupal.ajax.prototype.error === 'function') {
       Drupal.ajax.prototype.error.call(this, response, uri);
     }
-  }
+  };
 
 })(jQuery);
