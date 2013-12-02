@@ -246,12 +246,17 @@ function pgh_application_block_view($delta = '') {
       $application_nid = pgh_application_current_application_nid();
       $category_links = pgh_application_category_links($application_nid);
 
+      $class = 'category-menu';
+      if (count($category_links) == 1) {
+        $class .= ' single-item';
+      }
+
       if ($category_links) {
         $block['content'] = array(
           'list' => array(
             '#theme' => 'item_list',
             '#type' => 'ul',
-            '#attributes' => array('class' => 'category-menu'),
+            '#attributes' => array('class' => $class),
             '#items' => $category_links,
           ),
         );
