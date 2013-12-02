@@ -181,10 +181,11 @@
 
               foreach ($business_unit_wrapper->field_applications->getIterator() as $application_wrapper) {
                 $status_options = $application_wrapper->field_application_status->optionsList();
+                $status = isset($status_options[$application_wrapper->field_application_status->value()]) ? $status_options[$application_wrapper->field_application_status->value()] : '-';
                 $table_params['rows'][] = array(
                   l($application_wrapper->title->value(), 'application/' . $application_wrapper->nid->value()),
                   sprintf('%.0f%%', pgh_api_progress_for_application($application_wrapper->nid->value()) * 100),
-                  $status_options[$application_wrapper->field_application_status->value()],
+                  $status,
                 );
               }
 
