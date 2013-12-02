@@ -486,8 +486,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
-    // Set default value
-    $form['#default_value'] = !empty($answer['value'])?$answer['value']:NULL;
+    // Set default value.
+    $form['#default_value'] = !empty($answer['value']) ? $answer['value'] : NULL;
   }
 
   $form['#title'] = '<div class="question-desc">' . check_markup($wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
@@ -502,11 +502,13 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   // $form['#question_id'] = $wrapper->getIdentifier();
   // $form['#question_validate'] = $wrapper->field_question_validation->value();
   // $form['#element_validate'] = array('pgh_application_form_element_validate');
-  // Dependency display
+
+  // Dependency display.
   if ($parent_qid = $wrapper->field_question_parent_qid->value()) {
     $form['#states'] = pgh_form_question_states($question);
   }
-  // Ajax processing
+
+  // Ajax processing.
   $form['#ajax'] = array(
     'callback' => 'pgh_application_form_element_callback',
     'wrapper' => 'error-container-' . $wrapper->title->value(),
@@ -609,8 +611,20 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 
   $form['#description'] .= '</div><!-- #error-container -->';
 
-  // Add identifier for theming.
-  $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="question question-type-' . $type . '">';
+  $data_attributes = array();
+
+  // Add id and classes for theming.
+  $classes = array(
+    'question',
+    'question-type-' . $type,
+  );
+
+  if ($parent_qid) {
+    $classes[] = 'question-dependent';
+    $data_attributes[] = 'data-parent-id="question-' . $parent_qid . '"';
+  }
+
+  $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
   $form['#suffix'] = '</div><!-- #question -->';
 
   // Mark this question has been processed.
