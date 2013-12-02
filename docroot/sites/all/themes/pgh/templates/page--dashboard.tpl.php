@@ -212,6 +212,28 @@
             }
             // @codingStandardsIgnoreEnd
           ?>
+
+          <div class="progress-bar low">
+            <span class="percentage">12%</span>
+            <span class="bar-container">
+              <span class="progress" style="width:12%"></span>
+            </span>
+          </div>
+
+          <div class="progress-bar mid">
+            <span class="percentage">50%</span>
+            <span class="bar-container">
+              <span class="progress" style="width:50%"></span>
+            </span>
+          </div>
+
+          <div class="progress-bar high">
+            <span class="percentage">100%</span>
+            <span class="bar-container">
+              <span class="progress" style="width:100%"></span>
+            </span>
+          </div>
+
         </div>
 
         <div class="users">
