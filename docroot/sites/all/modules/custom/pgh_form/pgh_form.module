@@ -189,6 +189,7 @@ function pgh_form_application_page($application_nid) {
 function pgh_form_category_page($app_id, $cat_id) {
   // Load the app by app_id.
   if ($app = node_load($app_id)) {
+    drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form_settings.js', array('weight' => 2, 'scope' => 'footer'));
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form.js', array('weight' => 2, 'scope' => 'footer'));
 
     $app_wrapper = entity_metadata_wrapper('node', $app);
