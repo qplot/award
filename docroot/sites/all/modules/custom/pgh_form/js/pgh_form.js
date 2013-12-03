@@ -10,12 +10,104 @@
 (function($) {
   'use strict';
 
+  //
+  // Takes one or more sets of numbers as arguments and returns their sum.
+  //
+  var sum = function() {
+    var i;
+    var sum = 0;
+    for (i = 0; i < arguments.length; i += 1) {
+      sum += arguments[i];
+    }
+    return sum;
+  };
+
+  //
+  // Divides the first argument by the second. Returns 0 if the second argument is 0.
+  //
+  var divide = function(a, b) {
+    if (b === 0) {
+      return 0;
+    }
+    return a / b;
+  };
+
+  var formulas = {
+    'pghq_PFC_waste_4_8_tB_9': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_1',
+        'pghq_PFC_waste_4_8_tB_5'
+      ],
+      'calculation': sum
+    },
+    'pghq_PFC_waste_4_8_tB_10': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_2',
+        'pghq_PFC_waste_4_8_tB_6'
+      ],
+      'calculation': sum
+    }
+  };
+
+  //
+  // Returns a float value for the supplied question id. Returns 0 if not found.
+  //
+  var valueForQuestion = function(question_id) {
+    var $form_field = $('#question-' + question_id).find('input');
+    if ($form_field.length === 0) {
+      console.log('No value for #question-' + question_id);
+      return 0;
+    }
+    var textValue = $form_field.val();
+    textValue = textValue.replace(/[^\d\.\-]/g, "");
+    return parseFloat(textValue);
+  };
+
+  //
+  // Takes an array of question ids and returns a matching array of values.
+  //
+  var fetchArgValues = function(question_ids) {
+    var i;
+    var argValues = [];
+    for (i = 0; i < question_ids.length; i += 1) {
+      var question_id = question_ids[i];
+      var value = valueForQuestion(question_id);
+      argValues.push(value);
+    }
+    return argValues;
+  };
+
+  //
+  // Iterates through all questions on the page. If the question has a formula specified
+  // it fetches the relevant values from other questions, performs the calculation, and
+  // sets the question value to match.
+  //
+  var calculateQuestionValues = function() {
+    // Process calculations
+    $('.question').each(function(index, element) {
+      var question_id = $(element).attr('id').substring(9);
+
+      if (!(question_id in formulas)) {
+        return;
+      }
+
+      var formula = formulas[question_id];
+      var argValues = fetchArgValues(formula.args);
+      var value = formula.calculation.apply(this, argValues);
+
+      $('#question-' + question_id).find('input').val(value);
+    });
+  };
+
   $(document).ready(function() {
     // Add AJAX save status message.
     $('#application-menu-container').append('<div class="pgh-form-status-container"><div class="pgh-form-status">All changes saved</div></div>');
 
-    // Hide submit button
+    // Hide the submit button.
     $('#pgh-application-form').find('input[type="submit"]').hide();
+
+    // Process formula questions.
+    calculateQuestionValues();
   });
 
   Drupal.pghApplicationForm = {
@@ -54,6 +146,8 @@
     if (typeof Drupal.ajax.prototype.success === 'function') {
       Drupal.ajax.prototype.success.call(this, response, status);
     }
+
+    calculateQuestionValues();
   };
 
   Drupal.pghApplicationForm.error = function (response, uri) {
