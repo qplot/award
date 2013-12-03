@@ -628,12 +628,13 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
   $form['#suffix'] = '</div><!-- #question -->';
 
-  // Add question formula handling
-  // If no default value set and formula is given, set formula value
-  $form['#formula_id'] = $wrapper->field_question_formula->value();
-  if (empty($form['#default_value']) && !empty($form['#formula_id'])) {
+  // Add default question id handling
+  // If no default value set and default question is given, set it to default question response value
+  // TODO: change field_question_formula name !!
+  $form['#default_question_id'] = $wrapper->field_question_formula->value();
+  if (empty($form['#default_value']) && !empty($form['#default_question_id'])) {
     // find question
-    if ($fid = pgh_find_question_id($form['#formula_id'])) {
+    if ($fid = pgh_find_question_id($form['#default_question_id'])) {
       // find formula question response
       if ($rid = pgh_api_find_response_id($app_id, $fid)) {
         $answer = pgh_api_get_response($app_id, $fid);
