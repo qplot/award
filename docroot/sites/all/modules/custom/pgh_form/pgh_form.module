@@ -619,6 +619,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $classes = array(
     'question',
     'question-type-' . $type,
+    'question-style-' . $style,
   );
 
   if ($parent_qid) {

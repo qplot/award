@@ -15,14 +15,58 @@
   // Returns a float value for the supplied question id. Returns 0 if not found.
   //
   var valueForQuestion = function(question_id) {
-    var $form_field = $('#question-' + question_id).find('input');
-    if ($form_field.length === 0) {
-      console.log('No value for #question-' + question_id);
+    var $question = $('#question-' + question_id);
+    var $form_field;
+
+    // Fetch the form
+    if ($question.hasClass('question-type-text')) {
+      if ($question.hasClass('question-style-default')) {
+        $form_field = $question.find('input');
+
+        if ($form_field.length === 0) {
+          console.log('No value for #question-' + question_id);
+          return 0;
+        }
+
+        var textValue = $form_field.val();
+        textValue = textValue.replace(/[^\d\.\-]/g, "");
+        return parseFloat(textValue);
+
+      } else {
+        console.log('Unsupported text style');
+        return 0;
+      }
+
+    } else if ($question.hasClass('question-type-selection')) {
+      if ($question.hasClass('question-style-dropdown')) {
+        $form_field = $question.find('select');
+
+        if ($form_field.length === 0) {
+          console.log('No value for #question-' + question_id);
+          return 0;
+        }
+
+        return $form_field.find('option:selected').text();
+
+      } else if ($question.hasClass('question-style-radios')) {
+        $form_field = $question.find('input:radio:checked');
+
+        if ($form_field.length === 0) {
+          console.log('No value for #question-' + question_id);
+          return '';
+        }
+
+        return $question.find('input:radio:checked').next('label:first').html();
+
+      } else {
+        console.log('Unsupported selection style');
+        return 0;
+      }
+
+    } else {
+      console.log('Unsupported type');
       return 0;
     }
-    var textValue = $form_field.val();
-    textValue = textValue.replace(/[^\d\.\-]/g, "");
-    return parseFloat(textValue);
   };
 
   //

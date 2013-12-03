@@ -7,7 +7,7 @@
     //
     // Takes one or more sets of numbers as arguments and returns their sum.
     //
-    sum: function() {
+    sum: function () {
       var i;
       var sum = 0;
       for (i = 0; i < arguments.length; i += 1) {
@@ -19,11 +19,31 @@
     //
     // Divides the first argument by the second. Returns 0 if the second argument is 0.
     //
-    divide: function(a, b) {
+    divide: function (a, b) {
       if (b === 0) {
         return 0;
       }
       return a / b;
+    },
+
+    convertBTU: function (units, amount) {
+      console.log(units);
+      console.log(amount);
+
+      switch (units) {
+        case 'kWh':
+          return amount * 3.413;
+        case 'MWh':
+          return amount * 3413;
+        case 'CCF':
+          return amount * 103;
+        case 'MCF':
+          return amount * 1030;
+        case 'Therm':
+          return amount * 100;
+        default:
+          return 0;
+      }
     }
   };
 
@@ -292,7 +312,19 @@
       'calculation': function(a, b, c, d) {
       	return (a + b + c + d) * 8.5 / 2000;
       }
+    },
+
+    //
+    // Energy formulas
+    //
+    'pghq_PFC_energy_2_11_17': {
+      'args': [
+        'pghq_PFC_energy_2_8_2_3', // Units
+        'pghq_PFC_energy_2_8_2_2' // Amount
+      ],
+      'calculation': handlers.convertBTU
     }
+
   };
 
 })(Drupal);
