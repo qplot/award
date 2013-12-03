@@ -155,9 +155,33 @@ function pgh_preprocess_block(&$variables, $hook) {
 }
 // */
 
+
 /**
  * Implementation of hook_js_alter().
  */
 function pgh_js_alter(&$js) {
   unset($js['misc/tableheader.js']);
+}
+
+
+/**
+ * Render a glossify link.
+ */
+function pgh_glossify_links($vars) {
+  // don't load module's CSS, will add styles in PGH theme
+  // drupal_add_css(drupal_get_path('module', 'glossify') . '/glossify.css');
+
+  if ($vars['type'] == 'taxonomy') {
+    $path = 'taxonomy/term/' . $vars['id'];
+  }
+  else {
+    $path = 'node/' . $vars['id'];
+  }
+
+  if ($vars['tip']) {
+    return l($vars['text'], $path, array('attributes' => array('class' => array('glossify-link'), 'title' => $vars['tip'])));
+  }
+  else {
+    return l($vars['text'], $path, array('attributes' => array ('class' => array('glossify-link'))));
+  }
 }

@@ -117,25 +117,26 @@
 
       // Add waypoints functionailty to app menu.
       // http://imakewebthings.com/jquery-waypoints
-    	// ======================================================================
+      // ======================================================================
       $('#application-menu-container').waypoint('sticky');
 
 
+
       // Show / hide business units on the dashboard.
-    	// ======================================================================
+      // ======================================================================
 
       // Add open height state to each block.
-    	$('.business-unit-block').each(function() {
-    	  var $height_opened = $(this).height();
+      $('.business-unit-block').each(function() {
+        var $height_opened = $(this).height();
         $(this).css('height', $height_opened);
       });
 
       // Set clickable toggle arrow.
-    	$('.business-unit-block').addClass('bu-closed')
-    	                         .prepend('<a href="#" class="toggle"><span>Toggle</span></a>');
+      $('.business-unit-block').addClass('bu-closed')
+                               .prepend('<a href="#" class="toggle"><span>Toggle</span></a>');
 
-    	// Toggle show/hide class.
-    	$('.business-unit-block a.toggle').click(function() {
+      // Toggle show/hide class.
+      $('.business-unit-block a.toggle').click(function() {
         if ($(this).parent().hasClass('bu-closed')) {
           $(this).parent().removeClass('bu-closed').addClass('bu-opened');
         } else {
@@ -145,9 +146,25 @@
       });
 
 
+      // Convert the title tag of a glossify term anchor to a tool tip
+      // ======================================================================
+      $('.glossify-link').each(function() {
+        var glossary_term = $(this).attr('title');
+
+        $('<span class="glossify-tooltip"><em>' + glossary_term + '</em></span>').appendTo(this);
+        $(this).removeAttr('title');
+
+        // Remove the anchor function
+        $(this).click(function(e) {
+          e.preventDefault();
+        });
+
+      });
+
+
       // Replace the fieldset legends with H3s so they are easier to style
-    	// ======================================================================
-    	$('legend').each(function() {
+      // ======================================================================
+      $('legend').each(function() {
         $(this).replaceWith('<h3 class="legend">' + $(this).html() + '</h3>');
       });
 

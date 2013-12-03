@@ -1360,6 +1360,7 @@ h3 {
       float: left;
 
       &:hover {
+        color: $white;
         background-color: #67a697;
       }
     }
@@ -1654,6 +1655,62 @@ form.node-form {
 
     td {
       padding: 7px;
+    }
+  }
+}
+
+
+// !---------------------------- */
+// !-- Glossify ---------------- */
+// !---------------------------- */
+
+a.glossify-link {
+  color: $green;
+  background: transparent url(../images/global/icon-glossary.png) no-repeat right center;
+  padding-right: 20px;
+  cursor: help;
+  position: relative;
+  z-index: 99;
+
+  &:hover {
+    color: $green;
+    text-decoration: none;
+
+    .glossify-tooltip {
+      padding-bottom: 20px;
+      max-height: 45em;
+      opacity: 1;
+    }
+  }
+
+  .glossify-tooltip {
+    padding-bottom: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: -10px;
+    left: -5px;
+    z-index: 1;
+    @include transition(
+      padding 0.3s ease-in-out,
+      opacity 0.3s ease-in-out,
+      max-height 0.3s ease-out
+    );
+
+    em {
+      color: $green;
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      background-color: #e4f7f2;
+      border: 1px solid #3bbe9e;
+      @include border-radius(3px);
+      @include box-shadow(0 1px 7px rgba(0,0,0,0.1));
+      display: block;
+      padding: 10px;
+      width: 240px;
+      height: auto;
     }
   }
 }
