@@ -481,6 +481,77 @@ function pgh_api_save_response($app_id, $qid, $value) {
 }
 
 /**
+ * Returns a keyed array of valid Application Types for the supplied business unit.
+ *
+ * @param object $business_unit
+ *   A Business Unit node.
+ *
+ * @return array
+ *   A an array of Application Types. Keys are machine names, values are descriptions.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_valid_application_types_for_business_unit($business_unit) {
+  if (!$business_unit) {
+    watchdog('pgh_api', 'Invalid business_unit supplied to pgh_api_valid_application_types_for_business_unit', array(), WATCHDOG_ERROR);
+    return array();
+  }
+  $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+
+  if (!$business_unit_wrapper) {
+    watchdog('pgh_api', 'Couldn\'t create wrapper for business_unit in pgh_api_valid_application_types_for_business_unit', array(), WATCHDOG_ERROR);
+    return array();
+  }
+
+  switch ($business_unit_wrapper->field_business_unit_type->value()) {
+    case 'health_system':
+      $types = array(
+        'system_for_change' => 'System for Change',
+      );
+      return $types;
+
+    case 'hospital':
+      $types = array(
+        'partner_for_change' => 'Partner for Change',
+        'partner_recognition' => 'Partner Recognition',
+        'mmmf' => 'Making Medicine Mercury Free',
+        'greening_the_or' => 'Greening the OR',
+        'dehp_free' => 'DEHP Free',
+      );
+      return $types;
+
+    case 'long_term_care':
+      $types = array(
+        'long_term_care' => 'Long Term Care',
+        'mmmf' => 'Making Medicine Mercury Free',
+      );
+      return $types;
+
+    case 'clinic':
+      $types = array('');
+      return $types;
+
+    case 'business_member':
+      $types = array(
+        'champion_for_change_gpo' => 'Champion for Change (GPO)',
+        'champion_for_change_nongpo' => 'Champion for Change (Non-GPO)',
+      );
+      return $types;
+
+    case 'strategic_associate_member':
+      $types = array(
+        'champion_for_change_gpo' => 'Champion for Change (GPO)',
+        'champion_for_change_nongpo' => 'Champion for Change (Non-GPO)',
+      );
+      return $types;
+
+    default:
+      return array();
+  }
+}
+
+
+/**
  * Return an array of question nodes for a specified application nid.
  *
  * @param int $application_nid
@@ -527,6 +598,15 @@ function pgh_api_categories_for_application($application_nid) {
   $application_wrapper = entity_metadata_wrapper('node', $application);
 
   $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
+
+  if (!$application_type) {
+    $variables = array(
+      '%apptype' => $application_wrapper->field_application_type->value(),
+    );
+    watchdog('pgh_api', 'Could not load Application Type %apptype in pgh_api_categories_for_application', $variables, WATCHDOG_ERROR);
+    return array();
+  }
+
   $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
 
   foreach ($application_type_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {

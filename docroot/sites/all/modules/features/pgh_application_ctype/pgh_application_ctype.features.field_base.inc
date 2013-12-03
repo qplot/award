@@ -67,7 +67,7 @@ function pgh_application_ctype_field_default_field_bases() {
         'champion_for_change_nongpo' => 'Champion for Change (Non-GPO)',
         'greening_the_or' => 'Greening the OR',
         'dehp_free' => 'DEHP Free',
-        'system_for_change' => 'System for change',
+        'system_for_change' => 'System for Change',
         'mmmf' => 'Making Medicine Mercury Free',
       ),
       'allowed_values_function' => '',

@@ -80,6 +80,17 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
       }
     }
 
+    // Remove application types which are not valid for this Business Unit.
+    $valid_types = pgh_api_valid_application_types_for_business_unit(node_load($bid));
+    $valid_types = array_keys($valid_types);
+    $valid_types[] = '_none';
+
+    foreach ($form['field_application_type']['und']['#options'] as $id => $name) {
+      if (!in_array($id, $valid_types)) {
+        unset($form['field_application_type']['und']['#options'][$id]);
+      }
+    }
+
     $form['business_unit'] = array(
       '#type' => 'hidden',
       '#value' => $bid,
