@@ -68,6 +68,17 @@
     <?php print $breadcrumb; ?>
   </div></div>
 
+  <div id="drupal-messages"><div id="drupal-messages-inner">
+    <?php print render($page['highlighted']); ?>
+    <?php print $messages; ?>
+    <?php print render($tabs); ?>
+    <?php print render($page['help']); ?>
+    <?php if ($action_links): ?>
+      <ul class="action-links"><?php print render($action_links); ?></ul>
+    <?php endif; ?>
+  </div></div>
+
+
   <?php
     // Check if user is part of a work group.
     if ($work_group):
@@ -270,17 +281,9 @@
   <div id="main">
 
     <div id="content" class="column" role="main">
-      <?php print render($page['highlighted']); ?>
 
       <a id="main-content"></a>
       <h1 class="page__title title" id="page-title">No Work Group Access</h1>
-
-      <?php print $messages; ?>
-      <?php print render($tabs); ?>
-      <?php print render($page['help']); ?>
-      <?php if ($action_links): ?>
-        <ul class="action-links"><?php print render($action_links); ?></ul>
-      <?php endif; ?>
 
       <article class="node clearfix">
 
