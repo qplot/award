@@ -492,6 +492,10 @@ function pgh_api_save_response($app_id, $qid, $value) {
  * @author  Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_valid_application_types_for_business_unit($business_unit) {
+  if (!$business_unit || !is_int($business_unit->nid)) {
+    watchdog('pgh_api', 'Invalid business_unit supplied to pgh_api_valid_application_types_for_business_unit', array(), WATCHDOG_ERROR);
+    return array();
+  }
   $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
 
   if (!$business_unit_wrapper) {
