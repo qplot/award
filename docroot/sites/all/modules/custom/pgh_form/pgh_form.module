@@ -427,7 +427,7 @@ function pgh_application_form_submit($form, &$form_state) {
 
   // Since preparation have all response ready, we just need to save one by one.
   $app_id = $form_state['values']['application'];
-dsm($form_state);
+
   foreach ($form_state['values'] as $qid => &$value) {
     // Assume all question has number.
     if (is_numeric($qid)) {
@@ -487,7 +487,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
     // Set default value.
-    $form['#default_value'] = !empty($answer['value']) ? $answer['value'] : NULL;
+    $form['#default_value'] = !is_null($answer['value']) ? $answer['value'] : NULL;
   }
 
   $form['#title'] = '<div class="question-desc">' . check_markup($wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
