@@ -308,9 +308,6 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     }
   }
 
-  // Update formula for questions
-  // pgh_form_update_formulas($form);
-
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
@@ -794,22 +791,6 @@ function pgh_form_question_states($question) {
   );
 
   return $result;
-}
-
-/**
- * Update form question value according to formula
- * Normally you would call this after form is generated
- *
- * @param array $form
- *   Form array.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_form_update_formulas(&$form) {
-  // question records question_id and formula_id
-  foreach ($form as $key => $element) {
-
-  }
 }
 
 /**
