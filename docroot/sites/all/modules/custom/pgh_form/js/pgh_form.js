@@ -129,7 +129,10 @@
     }
   };
 
+  var activities = 0;
+
   Drupal.pghApplicationForm.beforeSend = function (first, second) {
+    activities += 1;
     $('.pgh-form-status').addClass('saving').text('Saving changes...');
 
     if (typeof Drupal.ajax.prototype.beforeSend === 'function') {
@@ -138,10 +141,13 @@
   };
 
   Drupal.pghApplicationForm.success = function (response, status) {
-    $('.pgh-form-status').removeClass('saving').addClass('saved').text('All changes saved');
-    setTimeout(function() {
-      $('.pgh-form-status').removeClass('saved');
-    }, 2000);
+    activities -= 1;
+    if (activities <= 0) {
+      $('.pgh-form-status').removeClass('saving').addClass('saved').text('All changes saved');
+      setTimeout(function() {
+        $('.pgh-form-status').removeClass('saved');
+      }, 2000);
+    }
 
     if (typeof Drupal.ajax.prototype.success === 'function') {
       Drupal.ajax.prototype.success.call(this, response, status);
@@ -151,7 +157,13 @@
   };
 
   Drupal.pghApplicationForm.error = function (response, uri) {
+    activities -= 1;
+    if (activities <= 0) {
     $('.pgh-form-status').removeClass('saving').text('Problem saving changes');
+    setTimeout(function() {
+        $('.pgh-form-status').removeClass('saved');
+      }, 2000);
+    }
 
     if (typeof Drupal.ajax.prototype.error === 'function') {
       Drupal.ajax.prototype.error.call(this, response, uri);
