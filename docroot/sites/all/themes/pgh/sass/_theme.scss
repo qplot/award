@@ -1377,6 +1377,103 @@ h3 {
   }
 }
 
+// login block
+.custom-user-login.block {
+  margin: 41px 0 0;
+  float: right;
+
+  p {
+    border: 1px solid #67a697;
+    @include border-radius(2px);
+    margin: 0;
+    height: 20px;
+
+    a {
+      color: $white;
+      font-size: 11px;
+      line-height: 14px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 4px 7px 3px;
+      float: left;
+
+      &:hover {
+        color: $white;
+        background-color: #67a697;
+      }
+
+      &.user-login {
+        border-right: 1px solid #67a697;
+      }
+
+      &.user-register {
+      }
+    }
+  }
+}
+
+.page-user.not-logged-in .custom-user-login.block p {
+
+  a.user-login {
+    background-color: #67a697;
+  }
+}
+
+.page-user-register.not-logged-in .custom-user-login.block p {
+
+  a.user-login {
+    background-color: transparent;
+  }
+
+  a.user-register {
+    background-color: #67a697;
+  }
+}
+
+form#user-login,
+form#user-register-form,
+form#user-pass {
+
+  label {
+    font-size: 0.8em;
+  }
+
+  input.form-text {
+    border: 1px solid #d3d3d3;
+    @include border-radius(2px);
+    @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+    padding: 7px;
+  }
+
+  input.form-submit {
+    color: $white;
+    font-size: 1em;
+    font-family: $arial;
+    font-weight: normal;
+    text-align: center;
+    background-color: $green;
+    border: 1px solid $green;
+    @include border-radius(3px);
+    margin-right: 10px;
+    padding: 7px 21px;
+    width: auto;
+
+    &:hover {
+      background-color: $orange;
+      border-color: $orange;
+      @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+    }
+  }
+
+  .description {
+    font-size: 0.75em;
+    line-height: 1.15em;
+    width: 65%;
+    padding-top: 7px;
+  }
+}
+
+
 // profile page
 
 .page-user {
@@ -1717,9 +1814,10 @@ a.glossify-link {
 
 
 // !---------------------------- */
-// !-- Admin Menu -------------- */
+// !-- Admin  ------------------ */
 // !---------------------------- */
 
+//admin menu
 body.admin-menu #admin-menu {
   border-bottom: none;
   -webkit-box-shadow: 0 0 0 transparent;
@@ -1727,4 +1825,21 @@ body.admin-menu #admin-menu {
   box-shadow: 0 0 0 transparent;
   margin: 0;
   padding: 0;
+}
+
+//tabs
+a.tabs-primary__tab-link,
+a.tabs-primary__tab-link.is-active,
+a.tabs-secondary__tab-link,
+a.tabs-secondary__tab-link.is-active {
+  color: #656565;
+  line-height: 2em;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+
+a.tabs-primary__tab-link:active,
+a.tabs-primary__tab-link.is-active {
+  background-color: $white !important;
+  background-image: none !important;
 }

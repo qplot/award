@@ -50,12 +50,12 @@
 
     <?php if ($logged_in): ?>
 
-    <?php
-      $block_user_info = block_load('pgh_user_info', 'pgh_user_info');
-      $block_user_info_render = _block_render_blocks(array($block_user_info));
-      $block_user_info_array = _block_get_renderable_array($block_user_info_render);
-      print drupal_render($block_user_info_array);
-    ?>
+      <?php
+        $block_user_info = block_load('pgh_user_info', 'pgh_user_info');
+        $block_user_info_render = _block_render_blocks(array($block_user_info));
+        $block_user_info_array = _block_get_renderable_array($block_user_info_render);
+        print drupal_render($block_user_info_array);
+      ?>
 
     <?php endif; ?>
 
