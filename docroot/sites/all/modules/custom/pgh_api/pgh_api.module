@@ -527,6 +527,15 @@ function pgh_api_categories_for_application($application_nid) {
   $application_wrapper = entity_metadata_wrapper('node', $application);
 
   $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
+
+  if (!$application_type) {
+    $variables = array(
+      '%apptype' => $application_wrapper->field_application_type->value(),
+    );
+    watchdog('pgh_api', 'Could not load Application Type %apptype in pgh_api_categories_for_application', $variables, WATCHDOG_ERROR);
+    return array();
+  }
+
   $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
 
   foreach ($application_type_wrapper->field_apptype_categories->getIterator() as $category_wrapper) {
