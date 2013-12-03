@@ -129,6 +129,8 @@
     }
   };
 
+  // Keep track of the number of active save operations. When the number is positive we show a
+  // "saving" message. When the number drops to 0 we momentarily show a "Saved" message.
   var activities = 0;
 
   Drupal.pghApplicationForm.beforeSend = function (first, second) {
