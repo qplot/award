@@ -292,6 +292,56 @@
       'calculation': function(a, b, c, d) {
       	return (a + b + c + d) * 8.5 / 2000;
       }
+    },
+      //
+      // Climate Formulas
+      //
+    'pghq_PFC_climate_1_5_24': {
+      'args': [
+        'pghq_PFC_climate_1_5_1',
+        'pghq_PFC_climate_1_5_2',
+        'pghq_PFC_climate_1_5_3',
+        'pghq_PFC_climate_1_5_4',
+        'pghq_PFC_climate_1_5_5',
+        'pghq_PFC_climate_1_5_6',
+        'pghq_PFC_climate_1_5_7',
+        'pghq_PFC_climate_1_5_8',
+        'pghq_PFC_climate_1_5_9',
+        'pghq_PFC_climate_1_5_10',
+        'pghq_PFC_climate_1_5_11',
+        'pghq_PFC_climate_1_5_12',
+        'pghq_PFC_climate_1_5_13',
+        'pghq_PFC_climate_1_5_15',
+        'pghq_PFC_climate_1_5_16',
+        'pghq_PFC_climate_1_5_17',
+        'pghq_PFC_climate_1_5_18',
+        'pghq_PFC_climate_1_5_19',
+        'pghq_PFC_climate_1_5_20',
+        'pghq_PFC_climate_1_5_21',
+        'pghq_PFC_climate_1_5_22',
+        'pghq_PFC_climate_1_5_23'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_climate_3_2_6_21': {
+      'args': [
+        'pghq_PFC_climate_3_2_6_3',
+        'pghq_PFC_climate_3_2_6_7',
+        'pghq_PFC_climate_3_2_6_11',
+        'pghq_PFC_climate_3_2_6_15',
+        'pghq_PFC_climate_3_2_6_19'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_climate_3_2_6_22': {
+      'args': [
+        'pghq_PFC_climate_3_2_6_4',
+        'pghq_PFC_climate_3_2_6_8',
+        'pghq_PFC_climate_3_2_6_12',
+        'pghq_PFC_climate_3_2_6_16',
+        'pghq_PFC_climate_3_2_6_20'
+      ],
+      'calculation': handlers.sum
     }
   };
 
