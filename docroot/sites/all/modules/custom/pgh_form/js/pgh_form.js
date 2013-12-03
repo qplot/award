@@ -10,44 +10,6 @@
 (function($) {
   'use strict';
 
-  //
-  // Takes one or more sets of numbers as arguments and returns their sum.
-  //
-  var sum = function() {
-    var i;
-    var sum = 0;
-    for (i = 0; i < arguments.length; i += 1) {
-      sum += arguments[i];
-    }
-    return sum;
-  };
-
-  //
-  // Divides the first argument by the second. Returns 0 if the second argument is 0.
-  //
-  var divide = function(a, b) {
-    if (b === 0) {
-      return 0;
-    }
-    return a / b;
-  };
-
-  var formulas = {
-    'pghq_PFC_waste_4_8_tB_9': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_1',
-        'pghq_PFC_waste_4_8_tB_5'
-      ],
-      'calculation': sum
-    },
-    'pghq_PFC_waste_4_8_tB_10': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_2',
-        'pghq_PFC_waste_4_8_tB_6'
-      ],
-      'calculation': sum
-    }
-  };
 
   //
   // Returns a float value for the supplied question id. Returns 0 if not found.
@@ -86,6 +48,8 @@
     // Process calculations
     $('.question').each(function(index, element) {
       var question_id = $(element).attr('id').substring(9);
+
+      var formulas = Drupal.settings.pghForm.formulas;
 
       if (!(question_id in formulas)) {
         return;
