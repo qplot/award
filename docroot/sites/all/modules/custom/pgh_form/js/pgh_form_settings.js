@@ -27,9 +27,6 @@
     },
 
     convertBTU: function (units, amount) {
-      console.log(units);
-      console.log(amount);
-
       switch (units) {
         case 'kWh':
           return amount * 3.413;
@@ -373,6 +370,38 @@
         'pghq_PFC_climate_3_2_6_12',
         'pghq_PFC_climate_3_2_6_16',
         'pghq_PFC_climate_3_2_6_20'
+      ],
+      'calculation': handlers.sum
+    },
+
+    //
+    // Green Building formulas
+    //
+    'pghq_PFC_greenbuilding_4_2_tC_3': {
+      'args': [
+        'pghq_PFC_greenbuilding_4_2_tC_1',
+        'pghq_PFC_greenbuilding_4_2_tC_2'
+      ],
+      'calculation': handlers.divide
+    },
+	'pghq_PFC_greenbuilding_4_2_tC_6': {
+      'args': [
+        'pghq_PFC_greenbuilding_4_2_tC_4',
+        'pghq_PFC_greenbuilding_4_2_tC_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_greenbuilding_4_2_tC_7': {
+      'args': [
+        'pghq_PFC_greenbuilding_4_2_tC_1',
+        'pghq_PFC_greenbuilding_4_2_tC_4'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_greenbuilding_4_2_tC_8': {
+      'args': [
+        'pghq_PFC_greenbuilding_4_2_tC_2',
+        'pghq_PFC_greenbuilding_4_2_tC_5'
       ],
       'calculation': handlers.sum
     }
