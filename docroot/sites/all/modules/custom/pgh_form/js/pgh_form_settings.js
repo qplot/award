@@ -481,7 +481,38 @@
     },
 
     //
-    // PFC Climate Formulas
+    // PFC Water formulas
+    //
+    'pghq_PFC_water_2_1tB_7': {
+      'args': [
+        'pghq_PFC_water_2_1tB_1',
+        'pghq_PFC_water_2_1tB_4'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_water_3_1tE_21': {
+      'args': [
+        'pghq_PFC_water_3_1tE_3',
+        'pghq_PFC_water_3_1tE_7',
+        'pghq_PFC_water_3_1tE_11',
+        'pghq_PFC_water_3_1tE_15',
+        'pghq_PFC_water_3_1tE_19'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_water_3_1tE_22': {
+      'args': [
+        'pghq_PFC_water_3_1tE_4',
+        'pghq_PFC_water_3_1tE_8',
+        'pghq_PFC_water_3_1tE_12',
+        'pghq_PFC_water_3_1tE_16',
+        'pghq_PFC_water_3_1tE_20'
+      ],
+      'calculation': handlers.sum
+    },
+
+    //
+    // PFC Climate formulas
     //
     'pghq_PFC_climate_1_5_24': {
       'args': [
