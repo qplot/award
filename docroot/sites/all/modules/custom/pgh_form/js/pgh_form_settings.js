@@ -48,7 +48,7 @@
   Drupal.settings.pghForm.formulas = {
 
     //
-    // Waste formulas
+    // PFC Waste formulas
     //
     'pghq_PFC_waste_4_8_tB_9': {
       'args': [
@@ -311,9 +311,52 @@
       	return (a + b + c + d) * 8.5 / 2000;
       }
     },
+    
+    //
+    // PFC Greening the OR formulas
+    //
+    'pghq_PFC_greeningtheOR_2_3_tB_3': {
+      'args': [
+        'pghq_PFC_greeningtheOR_2_3_tB_2',
+        'pghq_PFC_greeningtheOR_2_3_tB_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_greeningtheOR_2_12_2_tF_3': {
+      'args': [
+        'pghq_PFC_greeningtheOR_2_12_2_tF_1',
+        'pghq_PFC_greeningtheOR_2_12_2_tF_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_greeningtheOR_3_4': {
+      'args': [
+        'pghq_PFC_greeningtheOR_3_3_1',
+        'pghq_PFC_greeningtheOR_3_4_0'
+      ],
+      'calculation': handlers.divide
+    },
 
     //
-    // Energy formulas
+    // PFC Food formulas
+    //
+    'pghq_PFC_food_2_1_4': {
+      'args': [
+        'pghq_PFC_food_2_1_2',
+        'pghq_PFC_food_2_1_3'
+      ],
+      'calculation': handlers.divide
+    },    
+    'pghq_PFC_food_3_1_4': {
+      'args': [
+        'pghq_PFC_food_3_1_2',
+        'pghq_PFC_food_3_1_3'
+      ],
+      'calculation': handlers.divide
+    },    
+
+    //
+    // PFC Energy formulas
     //
     'pghq_PFC_energy_2_11_17': {
       'args': [
@@ -324,7 +367,7 @@
     },
 
     //
-    // Climate Formulas
+    // PFC Climate Formulas
     //
     'pghq_PFC_climate_1_5_24': {
       'args': [
@@ -375,7 +418,7 @@
     },
 
     //
-    // Green Building formulas
+    // PFC Green Building formulas
     //
     'pghq_PFC_greenbuilding_4_2_tC_3': {
       'args': [
@@ -402,6 +445,46 @@
       'args': [
         'pghq_PFC_greenbuilding_4_2_tC_2',
         'pghq_PFC_greenbuilding_4_2_tC_5'
+      ],
+      'calculation': handlers.sum
+    },
+
+    //
+    // PFC Appendix A formulas
+    //
+    'pghq_PFC_appendixa_1_8t_2': {
+      'args': [
+        'pghq_PFC_appendixa_1_7_1t_2',
+        'pghq_PFC_appendixa_1_7_2t_3',
+        'pghq_PFC_appendixa_1_7_3t_2',
+        'pghq_PFC_appendixa_1_7_4t_2',
+        'pghq_PFC_appendixa_1_7_5t_2',
+        'pghq_PFC_appendixa_1_7_6t_2',
+        'pghq_PFC_appendixa_1_7_7t_3',
+        'pghq_PFC_appendixa_1_7_8t_3',
+        'pghq_PFC_appendixa_1_7_9t_2',
+        'pghq_PFC_appendixa_1_7_10t_2',
+        'pghq_PFC_appendixa_1_7_11t_2',
+        'pghq_PFC_appendixa_1_7_12t_3',
+        'pghq_PFC_appendixa_1_7_13t_3',
+        'pghq_PFC_appendixa_1_7_14t_3',
+        'pghq_PFC_appendixa_1_7_15t_2',
+        'pghq_PFC_appendixa_1_7_16t_2',
+        'pghq_PFC_appendixa_1_7_17t_2',
+        'pghq_PFC_appendixa_1_7_18t_2',
+        'pghq_PFC_appendixa_1_7_19t_2',
+        'pghq_PFC_appendixa_1_7_20t_2',
+        'pghq_PFC_appendixa_1_7_21t_2',
+        'pghq_PFC_appendixa_1_7_22t_2',
+        'pghq_PFC_appendixa_1_7_23t_2',
+        'pghq_PFC_appendixa_1_7_24t_2',
+        'pghq_PFC_appendixa_1_7_25t_2',
+        'pghq_PFC_appendixa_1_7_26t_2',
+        'pghq_PFC_appendixa_1_7_27t_2',
+        'pghq_PFC_appendixa_1_7_28t_2',
+        'pghq_PFC_appendixa_1_7_29t_2',
+        'pghq_PFC_appendixa_1_7_30t_3',
+        'pghq_PFC_appendixa_1_7_31t_3'
       ],
       'calculation': handlers.sum
     }
