@@ -4895,23 +4895,18 @@ html.lt-ie9 .page-dashboard h2,
 html.lt-ie8 .page-dashboard h2 {
   margin-bottom: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_ie_hacks\.scss}line{font-family:\0000361}}
-html.lt-ie9 #business-unit .business-unit-block a.toggle,
-html.lt-ie8 #business-unit .business-unit-block a.toggle {
-  background: url(../images/global/blank.png) 0 0 repeat;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_ie_hacks\.scss}line{font-family:\0000367}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_ie_hacks\.scss}line{font-family:\0000363}}
 html.lt-ie9 #business-unit .business-unit-block.bu-closed .info-block,
 html.lt-ie8 #business-unit .business-unit-block.bu-closed .info-block {
   min-height: 120px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_ie_hacks\.scss}line{font-family:\0000377}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_ie_hacks\.scss}line{font-family:\0000373}}
 html.lt-ie9 #business-unit .applications table thead tr,
 html.lt-ie8 #business-unit .applications table thead tr {
   border-right: 1px solid #a2d6c9;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_ie_hacks\.scss}line{font-family:\0000398}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_ie_hacks\.scss}line{font-family:\0000394}}
 html.lt-ie8 #business-unit .applications table th {
   border-right: 1px solid #a2d6c9;
 }
