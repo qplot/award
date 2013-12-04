@@ -173,6 +173,7 @@
           <?php $phone_bu = field_view_field('node', $business_unit, 'field_phone', array('label' => 'hidden')); print render($phone_bu); ?>
         </div>
 
+        <div class="ie-clear-fix"></div>
         </div><!-- /.bu-container-top -->
         <div class="bu-container-bottom">
 
