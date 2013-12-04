@@ -228,22 +228,43 @@
         <div class="users">
           <?php
             $options = array(
+              'query' => array(
+                'bid' => $business_unit->nid,
+              ),
               'attributes' => array(
                 'class' => 'invite-user',
               ),
             );
-            print l(t('Invite users to this Business Unit'), '#', $options);
+            print l(t('Invite users to this Business Unit'), 'invite', $options);
           ?>
           <h3>Users</h3>
 
+          <h4>Active</h4>
           <ul>
             <?php
               // @codingStandardsIgnoreStart
               // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
               foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
-                print '<li><span class="user-name">' . $user->name->value() . '</span>';
-                print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
-                print '</li>';
+                if ($user->status->value()) {
+                  print '<li class="active"><span class="user-name">' . $user->name->value() . '</span>';
+                  print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
+                  print '</li>';
+                }
+              }
+              // @codingStandardsIgnoreEnd
+            ?>
+          </ul>
+
+          <h4>Invited</h4>
+          <ul>
+            <?php
+              // @codingStandardsIgnoreStart
+              // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
+              foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
+                if (!$user->status->value()) {
+                  print '<li class="inactive"><span class="user-name">' . $user->name->value() . '</span>';
+                  print '</li>';
+                }
               }
               // @codingStandardsIgnoreEnd
             ?>

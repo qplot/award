@@ -1,0 +1,276 @@
+<?php
+
+/**
+ * @file
+ * User invitation module.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function pgh_user_invite_menu() {
+  $items = array();
+
+  $items['invite'] = array(
+    'title' => 'Invite Users',
+    'description' => 'Invite users to a Business Unit or Work Group',
+    'page callback' => 'pgh_user_invite_page',
+    'access callback' => 'pgh_user_invite_access',
+  );
+
+  return $items;
+}
+
+
+/**
+ * Access callback for pgh_user_invite_page.
+ *
+ * @return bool
+ *   True if th euser can access the invite page.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_user_invite_access() {
+  // TODO: Implement checks for PGH Administrators, Client Administrators, etc.
+  return TRUE;
+}
+
+
+/**
+ * Page callback for the user invitation page.
+ *
+ * @return string
+ *   Page content.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_user_invite_page() {
+  if (isset($_GET['bid'])) {
+    $business_unit = node_load($_GET['bid']);
+
+    if (!$business_unit) {
+      return MENU_NOT_FOUND;
+    }
+
+    drupal_set_title('Invite users to ' . $business_unit->title);
+
+    return drupal_get_form('pgh_user_invite_form', $business_unit);
+  }
+
+  return MENU_NOT_FOUND;
+}
+
+
+/**
+ * Form callback for the user invitation form.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @return array
+ *   A Drupal form array ready to be rendered.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_user_invite_form($form, &$form_state, $owner) {
+  $form = array();
+
+  $step = NULL;
+  if (isset($form_state['storage']) && isset($form_state['storage']['step'])) {
+    $step = $form_state['storage']['step'];
+  }
+
+  switch ($step) {
+    case NULL:
+      $form['owner'] = array(
+        '#type' => 'hidden',
+        '#value' => $owner->nid,
+      );
+
+      $form['emails'] = array(
+        '#type' => 'textarea',
+        '#title' => 'Email addresses',
+        '#description' => t('Enter email addresses of up to 5 users, one per line. Duplicate addresses will be ignored.'),
+        '#default_value' => '',
+        '#rows' => 5,
+        '#required' => TRUE,
+      );
+
+      $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Send invitations'),
+      );
+      break;
+
+    case 'confirm':
+      $form['owner'] = array(
+        '#type' => 'hidden',
+        '#value' => $owner->nid,
+      );
+
+      $list = array(
+        'items' => $form_state['storage']['valid_emails'],
+        'title' => t('Are your sure you want to send invitations to these @count email addresses?', array('@count' => count($form_state['storage']['valid_emails']))),
+        'attributes' => array(),
+        'type' => 'ul',
+      );
+
+      $form['preview'] = array(
+        '#prefix' => '<p>',
+        '#markup' => theme_item_list($list),
+        '#suffix' => '</p>',
+      );
+
+      $form['cancel'] = array(
+        '#type' => 'submit',
+        '#value' => t('Cancel'),
+        '#submit' => array('pgh_user_invite_form_cancel'),
+        '#limit_validation_errors' => array(),
+      );
+
+      $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Send invitations'),
+        '#submit' => array('pgh_user_invite_form_process'),
+      );
+      break;
+  }
+
+  return $form;
+}
+
+/**
+ * Submit handler for cancel button.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_user_invite_form_cancel($form, &$form_state) {
+  drupal_goto('dashboard');
+}
+
+/**
+ * Ensure owner node is valid and check for valid email addresses.
+ *
+ * Keep in mind that this validation code runs for each form step as well as the cancel button.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_user_invite_form_validate($form, &$form_state) {
+  if ($form_state['triggering_element']['#value'] == 'Cancel') {
+    return;
+  }
+
+  $owner = NULL;
+  if (isset($form_state['values']['owner'])) {
+    $owner = node_load($form_state['values']['owner']);
+  }
+  if (!$owner || !in_array($owner->type, array('business_unit'))) {
+    form_set_error('owner', 'Invalid owner.');
+  }
+
+  // Fetch potential email addresses, skip blank or empty lines.
+  $email_text = isset($form_state['values']['emails']) ? $form_state['values']['emails'] : '';
+  $emails = array();
+  $errors = array();
+
+  foreach (explode("\n", $email_text) as $line) {
+    $line = trim($line);
+
+    // Skip blank lines.
+    if ($line == '') {
+      continue;
+    }
+
+    // Sanity check for line length, we are expecting each email address to be 128 characters or less.
+    if (strlen($line) > 128) {
+      form_set_error('email', 'Input line is too long.');
+      return;
+    }
+
+    if (!filter_var($line, FILTER_VALIDATE_EMAIL)) {
+      $errors[] = t('%line is not a valid email address.', array('%line' => $line));
+      continue;
+    }
+
+    $emails[] = $line;
+  }
+
+  if ($errors) {
+    $list = array(
+      'items' => $errors,
+      'title' => '',
+      'attributes' => array(),
+      'type' => 'ul',
+    );
+    $message = theme_item_list($list);
+    form_set_error('email', render($message));
+    return;
+  }
+}
+
+/**
+ * Process emails and show confirmation form.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_user_invite_form_submit($form, &$form_state) {
+  // Fetch potential email addresses, skip blank or empty lines.
+  $emails = array();
+  foreach (explode("\n", $form_state['values']['emails']) as $line) {
+    $line = trim($line);
+
+    // Skip blank lines.
+    if ($line == '') {
+      continue;
+    }
+
+    $emails[] = $line;
+  }
+
+  $form_state['rebuild'] = TRUE;
+  $form_state['storage']['step'] = 'confirm';
+  $form_state['storage']['valid_emails'] = $emails;
+}
+
+/**
+ * Process emails and send invitations.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_user_invite_form_process($form, &$form_state) {
+  foreach ($form_state['storage']['valid_emails'] as $email) {
+    drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
+  }
+
+  drupal_goto('dashboard');
+}
