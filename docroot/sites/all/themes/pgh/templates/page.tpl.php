@@ -58,11 +58,12 @@
 
     <?php else: ?>
 
+      <div class="custom-user-login block">
       <?php
-        $block = block_load('block', '1');
-        $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));
-        print $output;
+        $block = module_invoke('block', 'block_view', 1);
+        print render($block['content']);
       ?>
+      </div>
 
     <?php endif; ?>
 
