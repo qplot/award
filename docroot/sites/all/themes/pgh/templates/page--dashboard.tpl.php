@@ -173,6 +173,7 @@
           <?php $phone_bu = field_view_field('node', $business_unit, 'field_phone', array('label' => 'hidden')); print render($phone_bu); ?>
         </div>
 
+        <div class="ie-clear-fix"></div>
         </div><!-- /.bu-container-top -->
         <div class="bu-container-bottom">
 
@@ -195,7 +196,7 @@
                 $status = isset($status_options[$application_wrapper->field_application_status->value()]) ? $status_options[$application_wrapper->field_application_status->value()] : '-';
                 $table_params['rows'][] = array(
                   l($application_wrapper->title->value(), 'application/' . $application_wrapper->nid->value()),
-                  sprintf('%.0f%%', pgh_api_progress_for_application($application_wrapper->nid->value()) * 100),
+                  pgh_application_progress(pgh_api_progress_for_application($application_wrapper->nid->value())),
                   $status,
                 );
               }
@@ -228,22 +229,43 @@
         <div class="users">
           <?php
             $options = array(
+              'query' => array(
+                'bid' => $business_unit->nid,
+              ),
               'attributes' => array(
                 'class' => 'invite-user',
               ),
             );
-            print l(t('Invite users to this Business Unit'), '#', $options);
+            print l(t('Invite users to this Business Unit'), 'invite', $options);
           ?>
           <h3>Users</h3>
 
+          <h4>Active</h4>
           <ul>
             <?php
               // @codingStandardsIgnoreStart
               // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
               foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
-                print '<li><span class="user-name">' . $user->name->value() . '</span>';
-                print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
-                print '</li>';
+                if ($user->status->value()) {
+                  print '<li class="active"><span class="user-name">' . $user->name->value() . '</span>';
+                  print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
+                  print '</li>';
+                }
+              }
+              // @codingStandardsIgnoreEnd
+            ?>
+          </ul>
+
+          <h4>Invited</h4>
+          <ul>
+            <?php
+              // @codingStandardsIgnoreStart
+              // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
+              foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
+                if (!$user->status->value()) {
+                  print '<li class="inactive"><span class="user-name">' . $user->name->value() . '</span>';
+                  print '</li>';
+                }
               }
               // @codingStandardsIgnoreEnd
             ?>
