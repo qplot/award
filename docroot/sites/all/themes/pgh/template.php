@@ -163,6 +163,36 @@ function pgh_js_alter(&$js) {
   unset($js['misc/tableheader.js']);
 }
 
+/**
+ * Return markup for an application progress bar.
+ *
+ * @param float $progress
+ *   A float value form 0 to 1 representing the progress of an Application. Use
+ *   pgh_api_progress_for_application() to fetch this.
+ *
+ * @return string
+ *   Markup for a progress bar.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_progress($progress) {
+  $range = 'low';
+  if ($progress > 0.3) {
+    $range = 'mid';
+  }
+  if ($progress > 0.7) {
+    $range = 'high';
+  }
+
+  $output = '<div class="progress-bar ' . $range . '">';
+  $output .= '  <span class="percentage">' . sprintf('%.0f', $progress * 100) . '%</span>';
+  $output .= '  <span class="bar-container">';
+  $output .= '    <span class="progress" style="width:' . sprintf('%.0f', $progress * 100) . '%"></span>';
+  $output .= '  </span>';
+  $output .= '</div>';
+
+  return $output;
+}
 
 /**
  * Render a glossify link.

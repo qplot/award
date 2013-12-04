@@ -474,6 +474,44 @@ h3 {
         }
       }
     }
+
+    .progress-bar {
+      width: 164px;
+
+      .percentage {
+        font-size: 13px;
+        line-height: 28px;
+        width: 40px;
+        float: left;
+      }
+
+      .bar-container {
+        border: 1px solid #eae9e9;
+        @include border-radius(3px);
+        padding: 1px;
+        width: 120px;
+        height: 24px;
+        float: left;
+
+        .progress {
+          @include border-radius(2px);
+          height: 24px;
+          float: left;
+        }
+      }
+
+      &.low .bar-container .progress {
+        @include gradient(#ea4c4c, #e33434);
+      }
+
+      &.mid .bar-container .progress {
+        @include gradient(#ffd656, #ffca3e);
+      }
+
+      &.high .bar-container .progress {
+        @include gradient(#33ab8f, #1f9677);
+      }
+    }
   }
 
   .users {
