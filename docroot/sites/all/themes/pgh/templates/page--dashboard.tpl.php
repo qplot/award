@@ -196,7 +196,7 @@
                 $status = isset($status_options[$application_wrapper->field_application_status->value()]) ? $status_options[$application_wrapper->field_application_status->value()] : '-';
                 $table_params['rows'][] = array(
                   l($application_wrapper->title->value(), 'application/' . $application_wrapper->nid->value()),
-                  sprintf('%.0f%%', pgh_api_progress_for_application($application_wrapper->nid->value()) * 100),
+                  pgh_application_progress(pgh_api_progress_for_application($application_wrapper->nid->value())),
                   $status,
                 );
               }
