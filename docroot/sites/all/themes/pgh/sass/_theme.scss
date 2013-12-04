@@ -209,7 +209,8 @@ h3 {
   #block-pgh-user-info-pgh-user-info {
 
     .user-links .dashboard-user a {
-      background-color: #67a697;
+      color: #8cc8b9;
+      background-color: #005a44;
     }
   }
 
@@ -264,6 +265,7 @@ h3 {
     }
 
     a.toggle {
+      background: url(../images/global/blank.png) 0 0 repeat;
       display: block;
       cursor: pointer;
       position: absolute;
@@ -451,16 +453,16 @@ h3 {
         line-height: 13px;
         text-transform: uppercase;
         border: 1px solid #a2d6c9;
-        border-left: none;
+        border-right: none;
         padding: 12px;
         @include gradient($white, #f8f8f8);
 
         &:first-child {
-          border-left: 1px solid #a2d6c9;
           @include border-radius(3px 0 0 3px);
         }
 
         &:last-child {
+          border-right: 1px solid #a2d6c9;
           @include border-radius(0 3px 3px 0);
         }
       }
@@ -468,20 +470,22 @@ h3 {
       td {
         font-size: 13px;
         list-style: 17px;
-        border-right: 1px solid #ededed;
+        border-left: 1px solid #ededed;
 
-        &:last-child {
-          border-right: none;
+        &:first-child {
+          border-left: none;
         }
       }
     }
 
     .progress-bar {
-      width: 164px;
+      width: 171px;
 
       .percentage {
         font-size: 13px;
         line-height: 28px;
+        text-align: right;
+        padding-right: 7px;
         width: 40px;
         float: left;
       }
@@ -1079,6 +1083,8 @@ h3 {
     // prefix award type
     @each $awardTypeh1 in pfc, pr, ltc, chcpfc, chcpr {
 
+      $category_other_color: darken(#c49a6c, 10%);
+
       &.#{$awardTypeh1}-leadership {
         color: #9159a5;
         span { background-position: 0 0; }
@@ -1130,27 +1136,27 @@ h3 {
       }
 
       &.#{$awardTypeh1}-goals {
-        //color: #;
+        color: $category_other_color;
         span { background-position: -761px 0; }
       }
 
       &.#{$awardTypeh1}-accuracy {
-        //color: #;
+        color: $category_other_color;
         span { background-position: -836px 0; }
       }
 
       &.#{$awardTypeh1}-appendixa {
-        //color: #;
+        color: $category_other_color;
         span { background-position: -914px 0; }
       }
 
       &.#{$awardTypeh1}-appendixb {
-        //color: #;
+        color: $category_other_color;
         span { background-position: -990px 0; }
       }
 
       &.#{$awardTypeh1}-demogrphic {
-        //color: #;
+        color: $category_other_color;
         span { background-position: -1066px 0; }
       }
     }
@@ -1454,7 +1460,7 @@ h3 {
     a {
       color: $white;
       font-size: 11px;
-      line-height: 14px;
+      line-height: 13px;
       text-transform: uppercase;
       text-decoration: none;
       padding: 4px 7px 3px;
@@ -1492,7 +1498,7 @@ h3 {
     a {
       color: $white;
       font-size: 11px;
-      line-height: 14px;
+      line-height: 13px;
       text-transform: uppercase;
       text-decoration: none;
       padding: 4px 7px 3px;
@@ -1516,18 +1522,26 @@ h3 {
 .page-user.not-logged-in .custom-user-login.block p {
 
   a.user-login {
-    background-color: #67a697;
+    color: #8cc8b9;
+    background-color: #005a44;
   }
 }
 
 .page-user-register.not-logged-in .custom-user-login.block p {
 
   a.user-login {
+    color: $white;
     background-color: transparent;
+
+    &:hover {
+      color: $white;
+      background-color: #67a697;
+    }
   }
 
   a.user-register {
-    background-color: #67a697;
+    color: #8cc8b9;
+    background-color: #005a44;
   }
 }
 

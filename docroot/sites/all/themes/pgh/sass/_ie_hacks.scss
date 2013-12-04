@@ -1,6 +1,7 @@
-// IE 7 hacks
+// IE 7 & 8 hacks
 
-html.lt-ie9.lt-ie8 {
+html.lt-ie9,
+html.lt-ie8 {
 
   // misc
   .ie-clear-fix {
@@ -73,8 +74,29 @@ html.lt-ie9.lt-ie8 {
 
       table {
 
+        thead tr {
+          border-right: 1px solid #a2d6c9;
+        }
+      }
+    }
+  }
+
+}
+
+
+// IE 7 hacks
+
+html.lt-ie8 {
+
+  // dashboard-business unit
+  #business-unit {
+
+    .applications {
+
+      table {
+
         th {
-          border-left: 1px solid #a2d6c9;
+          border-right: 1px solid #a2d6c9;
         }
       }
     }
