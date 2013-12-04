@@ -381,13 +381,13 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
  * Application form ajax callback
  */
 function pgh_application_form_element_callback($form, &$form_state) {
-  if (empty($form_state['triggering_element']['#name'])) {
+  if (empty($form_state['triggering_element']['#parents'][0])) {
     return;
   }
-  watchdog('pgh', $form_state['triggering_element']['#name']);
+  // watchdog('pgh', $form_state['triggering_element']['#parents'][0]);
 
   // Find the question.
-  $qid = $form_state['triggering_element']['#name'];
+  $qid = $form_state['triggering_element']['#parents'][0];
   $question = node_load($qid);
   $wrapper = entity_metadata_wrapper('node', $question);
 
@@ -501,7 +501,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $form['#tree'] = FALSE;
 
   // Validation
-  // $form['#question_id'] = $wrapper->getIdentifier();
+  $form['#question_id'] = $wrapper->getIdentifier();
   // $form['#question_validate'] = $wrapper->field_question_validation->value();
   // $form['#element_validate'] = array('pgh_application_form_element_validate');
 
