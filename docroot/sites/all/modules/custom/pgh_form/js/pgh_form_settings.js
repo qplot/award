@@ -27,10 +27,17 @@
     },
 
     //
-    // Divides the first value by the sum of the seconds two values.
+    // Divides the first value by the sum of the remaining values.
     //
-    divideBySum: function(a, b, c) {
-      var sum = b + c;
+    divideBySum: function() {
+      var numerator = arguments[0];
+      var i;
+      var sum = 0;
+
+      for (i = 1; i < arguments.length; i += 1) {
+        sum += arguments[i];
+      }
+
       if (sum === 0) {
         return 0;
       }
