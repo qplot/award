@@ -75,7 +75,73 @@
         default:
           return 0;
       }
+    },
+
+    //
+    // Converts a specified amount of fuel from the specified units to BTUs.
+    // Supports a wide range of units.
+    //
+    convertBTUComplex: function (units, amount) {
+      switch (units) {
+        case 'Electricity: kWh':
+          return amount * 3.413;
+
+        case 'Electricity: MWh':
+          return amount * 3413;
+
+        case 'Natural Gas: CCF':
+          return amount * 103;
+
+        case 'Natural Gas: MCF':
+          return amount * 1030;
+
+        case 'Natural Gas: Therm':
+          return amount * 100;
+
+        case 'Natural Gas: Cubic Meter':
+          return amount * 36.4;
+
+        case 'Natural Gas: Gigajoule':
+          return amount * 947.8;
+
+        case 'Purchased Steam: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Steam: 1000 lb':
+          return amount * 1000;
+
+        case 'Purchased Steam: Therm':
+          return amount * 100;
+
+        case 'Purchased Hot Water: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Chilled Water: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Chilled Water: Ton-Hour':
+          return amount * 12;
+
+        case 'Oil #2 Fuel Oil: U.S. Gallon':
+          return amount * 139;
+
+        case 'Oil #2 Fuel Oil: Imp. Gallon':
+          return amount * 167;
+
+        case 'Oil #2 Fuel Oil: Liter':
+          return amount * 36.7;
+
+        case 'Oil #6 Diesel: U.S. Gallon':
+          return amount * 154;
+
+        case 'Oil #6 Diesel: Imp. Gallon':
+          return amount * 185;
+
+        default:
+          return amount * 40.7;
+      }
     }
+
   };
 
   // Map arguments and handlers for specific questions.
@@ -374,7 +440,6 @@
     //
     // PFC Food formulas
     //
-    //( pghq_PFC_food_1_3_1_1 / pghq_PFC_food_1_3_1_4) / ( pghq_PFC_food_1_3_1_2 / pghq_PFC_food_1_3_1_5)
     'pghq_PFC_food_1_3_1_6': {
       'args': [
       'pghq_PFC_food_1_3_1_1',
