@@ -365,9 +365,154 @@
       ],
       'calculation': handlers.convertBTU
     },
+    'pghq_PFC_energy_2_11_21': {
+      'args': [
+        '_PFC_energy_2_11_1',
+        '_PFC_energy_2_11_3',
+        '_PFC_energy_2_11_5',
+        '_PFC_energy_2_11_7',
+        '_PFC_energy_2_11_9',
+        '_PFC_energy_2_11_11',
+        '_PFC_energy_2_11_13',
+        '_PFC_energy_2_11_15',
+        '_PFC_energy_2_11_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_2_11_22': {
+      'args': [
+        'pghq_PFC_energy_2_11_2',
+        'pghq_PFC_energy_2_11_4',
+        'pghq_PFC_energy_2_11_6',
+        'pghq_PFC_energy_2_11_8',
+        'pghq_PFC_energy_2_11_10',
+        'pghq_PFC_energy_2_11_12',
+        'pghq_PFC_energy_2_11_14',
+        'pghq_PFC_energy_2_11_16',
+        'pghq_PFC_energy_2_11_18
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_2_12': {
+      'args': [
+        'pghq_PFC_energy_2_11_18',
+        'pghq_PFC_energy_2_11_20
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_3_1_1_4': {
+      'args': [
+        'pghq_PFC_energy_2_11_21',
+        'pghq_PFC_energy_3_1_1_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_5': {
+      'args': [
+        'pghq_PFC_energy_2_11_21',
+        'pghq_PFC_energy_3_1_1_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_6': {
+      'args': [
+        'pghq_PFC_energy_3_1_1_1',
+        'pghq_PFC_energy_2_7_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_7': {
+      'args': [
+        'pghq_PFC_energy_3_1_1_2',
+        'pghq_PFC_energy_2_7_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_8': {
+      'args': [
+        'pghq_PFC_energy_3_1_1_3',
+        'pghq_PFC_energy_2_7_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_9': {
+      'args': [
+        'ppghq_PFC_energy_3_1_1_5',
+        'pghq_PFC_energy_3_1_1_6'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_9': {
+      'args': [
+        'ppghq_PFC_energy_3_1_1_5',
+        'pghq_PFC_energy_3_1_1_7'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_4_4_31': {
+      'args': [
+        'pghq_PFC_energy_4_4_3',
+        'pghq_PFC_energy_4_4_9',
+        'pghq_PFC_energy_4_4_15',
+        'pghq_PFC_energy_4_4_21',
+        'pghq_PFC_energy_4_4_27'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_4_4_32': {
+      'args': [
+        'pghq_PFC_energy_4_4_5',
+        'pghq_PFC_energy_4_4_11',
+        'pghq_PFC_energy_4_4_17',
+        'pghq_PFC_energy_4_4_23',
+        'pghq_PFC_energy_4_4_29'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_4_4_33': {
+      'args': [
+        'pghq_PFC_energy_4_4_6',
+        'pghq_PFC_energy_4_4_12',
+        'pghq_PFC_energy_4_4_18',
+        'pghq_PFC_energy_4_4_24',
+        'pghq_PFC_energy_4_4_30'
+      ],
+      'calculation': handlers.sum
+    },
 
     //
-    // PFC Climate Formulas
+    // PFC Water formulas
+    //
+    'pghq_PFC_water_2_1tB_7': {
+      'args': [
+        'pghq_PFC_water_2_1tB_1',
+        'pghq_PFC_water_2_1tB_4'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_water_3_1tE_21': {
+      'args': [
+        'pghq_PFC_water_3_1tE_3',
+        'pghq_PFC_water_3_1tE_7',
+        'pghq_PFC_water_3_1tE_11',
+        'pghq_PFC_water_3_1tE_15',
+        'pghq_PFC_water_3_1tE_19'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_water_3_1tE_22': {
+      'args': [
+        'pghq_PFC_water_3_1tE_4',
+        'pghq_PFC_water_3_1tE_8',
+        'pghq_PFC_water_3_1tE_12',
+        'pghq_PFC_water_3_1tE_16',
+        'pghq_PFC_water_3_1tE_20'
+      ],
+      'calculation': handlers.sum
+    },
+
+    //
+    // PFC Climate formulas
     //
     'pghq_PFC_climate_1_5_24': {
       'args': [
