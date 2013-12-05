@@ -259,6 +259,15 @@
       ],
       'calculation': handlers.sum
     },
+    'pghq_PFC_waste_6_3_5': {
+      'args': [
+        'pghq_PFC_waste_6_2_16',
+        'pghq_PFC_waste_6_3_5_0'
+      ],
+      'calculation': function (a, b) {
+        return a * 2000 / b / 365;
+      }
+    },
     'pghq_PFC_waste_8_10_1tE_9': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_1',
