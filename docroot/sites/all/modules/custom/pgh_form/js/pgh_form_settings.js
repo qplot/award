@@ -45,7 +45,20 @@
     },
 
     //
-    // Converts an amount of energy specified in the supplied units to BTUs.
+    // Converts an amount of energy from the specified units to BTUs.
+    // This Simple version handles two sets of units 'MWh' and 'kWh'. For more detailed
+    // conversion use convertBTU().
+    //
+    convertBTUSimple: function(units, amount) {
+      if (units === 'MWh') {
+        return amount * 3413;
+      } else {
+        return amount * 3.413;
+      }
+    },
+
+    //
+    // Converts a specified amount of energy from the specified units to BTUs.
     //
     convertBTU: function (units, amount) {
       switch (units) {
