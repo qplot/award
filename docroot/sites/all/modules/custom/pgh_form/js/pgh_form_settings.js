@@ -374,6 +374,25 @@
     //
     // PFC Food formulas
     //
+    //( pghq_PFC_food_1_3_1_1 / pghq_PFC_food_1_3_1_4) / ( pghq_PFC_food_1_3_1_2 / pghq_PFC_food_1_3_1_5)
+    'pghq_PFC_food_1_3_1_6': {
+      'args': [
+      'pghq_PFC_food_1_3_1_1',
+      'pghq_PFC_food_1_3_1_4',
+      'pghq_PFC_food_1_3_1_2',
+      'pghq_PFC_food_1_3_1_5'
+      ],
+      'calculation': function(a, b, c, d) {
+        if (a === 0 ||
+            b === 0 ||
+            c === 0 ||
+            d === 0) {
+          return 0;
+        } else {
+          return a / b / c / d;
+        }
+      }
+    },
     'pghq_PFC_food_2_1_4': {
       'args': [
         'pghq_PFC_food_2_1_2',
