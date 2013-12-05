@@ -26,6 +26,20 @@
       return a / b;
     },
 
+    //
+    // Divides the first value by the sum of the seconds two values.
+    //
+    divideBySum: function(a, b, c) {
+      var sum = b + c;
+      if (sum === 0) {
+        return 0;
+      }
+      return a / sum;
+    },
+
+    //
+    // Converts an amount of energy specified in the supplied units to BTUs.
+    //
     convertBTU: function (units, amount) {
       switch (units) {
         case 'kWh':
@@ -311,7 +325,7 @@
       	return (a + b + c + d) * 8.5 / 2000;
       }
     },
-    
+
     //
     // PFC Greening the OR formulas
     //
@@ -346,14 +360,14 @@
         'pghq_PFC_food_2_1_3'
       ],
       'calculation': handlers.divide
-    },    
+    },
     'pghq_PFC_food_3_1_4': {
       'args': [
         'pghq_PFC_food_3_1_2',
         'pghq_PFC_food_3_1_3'
       ],
       'calculation': handlers.divide
-    },    
+    },
 
     //
     // PFC Energy formulas
@@ -572,7 +586,7 @@
       ],
       'calculation': handlers.divide
     },
-	'pghq_PFC_greenbuilding_4_2_tC_6': {
+	  'pghq_PFC_greenbuilding_4_2_tC_6': {
       'args': [
         'pghq_PFC_greenbuilding_4_2_tC_4',
         'pghq_PFC_greenbuilding_4_2_tC_5'
