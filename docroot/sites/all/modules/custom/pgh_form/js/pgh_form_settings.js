@@ -140,6 +140,55 @@
         default:
           return amount * 40.7;
       }
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into into gallons.
+    //
+    convertGallonsAndDivide: function (units, amount, divisor) {
+      if (divisor === 0) {
+        return 0;
+      }
+
+      var converted = 0;
+      switch (units) {
+        case 'Hundred Cubic Feet':
+          converted = amount * 748;
+          break;
+
+        case 'Cubic Feet':
+          converted = amount * 7.48;
+          break;
+
+        default:
+          converted = amount;
+          break;
+      }
+
+      return converted / divisor;
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into into gallons.
+    // Supports 'square feet' and 'other'.
+    //
+    convertGallonsAndDivideSimple: function (units, amount, divisor) {
+      if (divisor === 0) {
+        return 0;
+      }
+
+      var converted = 0;
+      switch (units) {
+        case 'square feet':
+          converted = amount;
+          break;
+
+        default:
+          converted = amount * 43560;
+          break;
+      }
+
+      return converted / divisor;
     }
 
   };
