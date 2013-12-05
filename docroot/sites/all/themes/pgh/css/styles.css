@@ -4208,8 +4208,8 @@ h3 {
   font-size: 12px;
   line-height: 27px;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-  background: #ffba4e url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px;
-  border: 1px solid #ffb043;
+  background: #29aa8b url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px;
+  border: 1px solid #229f7e;
   -webkit-border-radius: 0 0 3px 3px;
   -moz-border-radius: 0 0 3px 3px;
   -ms-border-radius: 0 0 3px 3px;
@@ -4228,9 +4228,9 @@ h3 {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\000031384}}
 .page-application .pgh-form-status.saving {
-  background-color: #29aa8b;
+  background-color: #ffba4e;
   background-image: url(../images/pgh-form/icon-page-saving.gif);
-  border-color: #229f7e;
+  border-color: #ffb043;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
