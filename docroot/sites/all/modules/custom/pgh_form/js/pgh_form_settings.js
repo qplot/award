@@ -565,14 +565,14 @@
         'pghq_PFC_energy_2_11_12',
         'pghq_PFC_energy_2_11_14',
         'pghq_PFC_energy_2_11_16',
-        'pghq_PFC_energy_2_11_18
+        'pghq_PFC_energy_2_11_18'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_energy_2_12': {
       'args': [
         'pghq_PFC_energy_2_11_18',
-        'pghq_PFC_energy_2_11_20
+        'pghq_PFC_energy_2_11_20'
       ],
       'calculation': handlers.sum
     },
