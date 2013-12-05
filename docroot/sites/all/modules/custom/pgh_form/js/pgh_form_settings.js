@@ -26,6 +26,40 @@
       return a / b;
     },
 
+    //
+    // Divides the first value by the sum of the remaining values.
+    //
+    divideBySum: function() {
+      var numerator = arguments[0];
+      var i;
+      var sum = 0;
+
+      for (i = 1; i < arguments.length; i += 1) {
+        sum += arguments[i];
+      }
+
+      if (sum === 0) {
+        return 0;
+      }
+      return a / sum;
+    },
+
+    //
+    // Converts an amount of energy from the specified units to BTUs.
+    // This Simple version handles two sets of units 'MWh' and 'kWh'. For more detailed
+    // conversion use convertBTU().
+    //
+    convertBTUSimple: function(units, amount) {
+      if (units === 'MWh') {
+        return amount * 3413;
+      } else {
+        return amount * 3.413;
+      }
+    },
+
+    //
+    // Converts a specified amount of energy from the specified units to BTUs.
+    //
     convertBTU: function (units, amount) {
       switch (units) {
         case 'kWh':
@@ -41,7 +75,122 @@
         default:
           return 0;
       }
+    },
+
+    //
+    // Converts a specified amount of fuel from the specified units to BTUs.
+    // Supports a wide range of units.
+    //
+    convertBTUComplex: function (units, amount) {
+      switch (units) {
+        case 'Electricity: kWh':
+          return amount * 3.413;
+
+        case 'Electricity: MWh':
+          return amount * 3413;
+
+        case 'Natural Gas: CCF':
+          return amount * 103;
+
+        case 'Natural Gas: MCF':
+          return amount * 1030;
+
+        case 'Natural Gas: Therm':
+          return amount * 100;
+
+        case 'Natural Gas: Cubic Meter':
+          return amount * 36.4;
+
+        case 'Natural Gas: Gigajoule':
+          return amount * 947.8;
+
+        case 'Purchased Steam: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Steam: 1000 lb':
+          return amount * 1000;
+
+        case 'Purchased Steam: Therm':
+          return amount * 100;
+
+        case 'Purchased Hot Water: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Chilled Water: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Chilled Water: Ton-Hour':
+          return amount * 12;
+
+        case 'Oil #2 Fuel Oil: U.S. Gallon':
+          return amount * 139;
+
+        case 'Oil #2 Fuel Oil: Imp. Gallon':
+          return amount * 167;
+
+        case 'Oil #2 Fuel Oil: Liter':
+          return amount * 36.7;
+
+        case 'Oil #6 Diesel: U.S. Gallon':
+          return amount * 154;
+
+        case 'Oil #6 Diesel: Imp. Gallon':
+          return amount * 185;
+
+        default:
+          return amount * 40.7;
+      }
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into into gallons.
+    //
+    convertGallonsAndDivide: function (units, amount, divisor) {
+      if (divisor === 0) {
+        return 0;
+      }
+
+      var converted = 0;
+      switch (units) {
+        case 'Hundred Cubic Feet':
+          converted = amount * 748;
+          break;
+
+        case 'Cubic Feet':
+          converted = amount * 7.48;
+          break;
+
+        default:
+          converted = amount;
+          break;
+      }
+
+      return converted / divisor;
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into into gallons.
+    // Supports 'square feet' and 'other'.
+    //
+    convertGallonsAndDivideSimple: function (units, amount, divisor) {
+      if (divisor === 0) {
+        return 0;
+      }
+
+      var converted = 0;
+      switch (units) {
+        case 'square feet':
+          converted = amount;
+          break;
+
+        default:
+          converted = amount * 43560;
+          break;
+      }
+
+      return converted / divisor;
     }
+
   };
 
   // Map arguments and handlers for specific questions.
@@ -109,6 +258,15 @@
         'pghq_PFC_waste_6_2_13'
       ],
       'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_3_5': {
+      'args': [
+        'pghq_PFC_waste_6_2_16',
+        'pghq_PFC_waste_6_3_5_0'
+      ],
+      'calculation': function (a, b) {
+        return a * 2000 / b / 365;
+      }
     },
     'pghq_PFC_waste_8_10_1tE_9': {
       'args': [
@@ -311,7 +469,7 @@
       	return (a + b + c + d) * 8.5 / 2000;
       }
     },
-    
+
     //
     // PFC Greening the OR formulas
     //
@@ -340,20 +498,38 @@
     //
     // PFC Food formulas
     //
+    'pghq_PFC_food_1_3_1_6': {
+      'args': [
+      'pghq_PFC_food_1_3_1_1',
+      'pghq_PFC_food_1_3_1_4',
+      'pghq_PFC_food_1_3_1_2',
+      'pghq_PFC_food_1_3_1_5'
+      ],
+      'calculation': function(a, b, c, d) {
+        if (a === 0 ||
+            b === 0 ||
+            c === 0 ||
+            d === 0) {
+          return 0;
+        } else {
+          return a / b / c / d;
+        }
+      }
+    },
     'pghq_PFC_food_2_1_4': {
       'args': [
         'pghq_PFC_food_2_1_2',
         'pghq_PFC_food_2_1_3'
       ],
       'calculation': handlers.divide
-    },    
+    },
     'pghq_PFC_food_3_1_4': {
       'args': [
         'pghq_PFC_food_3_1_2',
         'pghq_PFC_food_3_1_3'
       ],
       'calculation': handlers.divide
-    },    
+    },
 
     //
     // PFC Energy formulas
@@ -389,14 +565,14 @@
         'pghq_PFC_energy_2_11_12',
         'pghq_PFC_energy_2_11_14',
         'pghq_PFC_energy_2_11_16',
-        'pghq_PFC_energy_2_11_18
+        'pghq_PFC_energy_2_11_18'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_energy_2_12': {
       'args': [
         'pghq_PFC_energy_2_11_18',
-        'pghq_PFC_energy_2_11_20
+        'pghq_PFC_energy_2_11_20'
       ],
       'calculation': handlers.sum
     },
@@ -572,7 +748,7 @@
       ],
       'calculation': handlers.divide
     },
-	'pghq_PFC_greenbuilding_4_2_tC_6': {
+	  'pghq_PFC_greenbuilding_4_2_tC_6': {
       'args': [
         'pghq_PFC_greenbuilding_4_2_tC_4',
         'pghq_PFC_greenbuilding_4_2_tC_5'
