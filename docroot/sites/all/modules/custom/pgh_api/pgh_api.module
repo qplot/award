@@ -499,6 +499,28 @@ function pgh_api_save_response($app_id, $qid, $value) {
 }
 
 /**
+ * Returns an options array of all of the Work Groups in the system.
+ *
+ * @return array
+ *   An options array of Work Groups.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_all_work_groups_options() {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'work_group');
+  $results = $query->execute();
+  $nodes = node_load_multiple(array_keys($results['node']));
+
+  $options = array();
+  foreach ($nodes as $node) {
+    $options[$node->nid] = $node->title;
+  }
+  return $options;
+}
+
+/**
  * Returns a keyed array of valid Application Types for the supplied business unit.
  *
  * @param object $business_unit
