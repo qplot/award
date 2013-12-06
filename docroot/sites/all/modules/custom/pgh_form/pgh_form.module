@@ -45,6 +45,15 @@ function pgh_form_menu() {
     'access callback' => TRUE,
   );
 
+  $items['application/%node/submit'] = array(
+    'title' => 'Review application for submission',
+    'description' => 'Review and submit an application',
+    'page callback' => 'pgh_form_application_submit_page',
+    'page arguments' => array(1),
+    'access callback' => 'node_access',
+    'access arguments' => array('update', 1),
+  );
+
   return $items;
 }
 
@@ -190,7 +199,7 @@ function pgh_form_category_page($application, $category_id) {
     $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
 
     // Set the page title.
-    $title = $application_type_wrapper->body->value->raw();
+    $title = $application_type_wrapper->body->value() ? $application_type_wrapper->body->value->raw() : '';
     drupal_set_title($application_wrapper->getIdentifier() . ' - ' . 'Application: ' . $title);
 
     // Find category_id if key is provided.
@@ -787,4 +796,131 @@ function pgh_parse_layout($layout) {
     $result[] = array_map('trim', explode('|', $row));
   }
   return $result;
+}
+
+/**
+ * Display completion status of the application and notes on any validation errors.
+ *
+ * If the application is complete and has no errors allow the user to submit the application which
+ * will set the status to submitted and prevent any additional changes from being made.
+ *
+ * @param object $application
+ *   The application node to submit.
+ *
+ * @return array
+ *   A renderable array for the submit form.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_form_application_submit_page($application) {
+  $categories = pgh_api_categories_for_application($application->nid);
+
+  $rows = array();
+
+  $incomplete_categories = FALSE;
+  $invalid_categories = FALSE;
+
+  foreach ($categories as $category) {
+    $category_wrapper = entity_metadata_wrapper('node', $category);
+    $progress = pgh_api_progress_for_category($application->nid, $category->nid);
+
+    if ($progress < 1) {
+      $incomplete_categories = TRUE;
+    }
+
+    $validation = '<span class="valid">Valid</span>';
+    if (!pgh_api_category_is_valid($application->nid, $category->nid)) {
+      $validation = '<span class="invalid">There are validation errors in this category</span>';
+      $invalid_categories = TRUE;
+    }
+
+    $category_name = $category_wrapper->body->value() ? $category_wrapper->body->value->raw() : 'Missing title for category ' . $category->nid;
+
+    $rows[] = array(
+      l($category_name, 'application/' . $application->nid . '/category/' . $category->title),
+      pgh_progress_bar($progress),
+      $validation,
+    );
+  }
+
+  $output = array();
+  $output['categories'] = array(
+    '#theme' => 'table',
+    '#header' => array('Category', 'Progress', 'Validation'),
+    '#rows' => $rows,
+  );
+
+  if ($invalid_categories) {
+    $output['incomplete_categories'] = array(
+      '#prefix' => '<div class="submission_warning">',
+      '#markup' => t('Some of the categories have validation errors. Please review the marked categories for missing or invalid responses.'),
+      '#suffix' => '</div>',
+    );
+  }
+  else {
+    $output['incomplete_categories'] = array(
+      '#prefix' => '<div class="submission_message">',
+      '#markup' => t('Please ensure your application is complete. You will not be able to make changes after submitting.'),
+      '#suffix' => '</div>',
+    );
+    $output['submit_form'] = drupal_get_form('pgh_form_application_submit_form', $application);
+  }
+
+  return $output;
+}
+
+/**
+ * Form callback for application submission.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @param object $application
+ *   Node for a specific application instance.
+ *
+ * @return array
+ *   A form array.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_form_application_submit_form($form, &$form_state, $application) {
+  $form = array();
+
+  $form['application_nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $application->nid,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit this application',
+  );
+  return $form;
+}
+
+/**
+ * Form submission handler for application submission.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @return array
+ *   A form array.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_form_application_submit_form_submit($form, &$form_state) {
+  $application = node_load($form_state['values']['application_nid']);
+  $application_wrapper = entity_metadata_wrapper('node', $application);
+  $application_wrapper->field_application_status->set('submitted');
+  $application_wrapper->save();
+
+  drupal_set_message('The application has been submitted successfully');
+  drupal_goto('dashboard');
 }
