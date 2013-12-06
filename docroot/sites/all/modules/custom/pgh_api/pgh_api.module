@@ -341,16 +341,23 @@ function pgh_api_find_response_id($app_id, $qid) {
  */
 function pgh_api_get_response($app_id, $qid) {
   $rid = pgh_api_find_response_id($app_id, $qid);
-  $response = array();
+  $response = array(
+    'value' => '',
+    'point' => 0,
+    'updated' => 0,
+  );
   if ($rid) {
-    $response = node_load($rid);
-    $wrapper = entity_metadata_wrapper('node', $response);
+    $response_node = node_load($rid);
+    $wrapper = entity_metadata_wrapper('node', $response_node);
 
     $response = array(
-      'value' => $wrapper->body->value->raw(),
+      'value' => $wrapper->body->value() ? $wrapper->body->value->raw() : '',
       'point' => $wrapper->field_response_point->value(),
       'updated' => $wrapper->field_response_updated->value(),
     );
+  }
+  else {
+    watchdog('pgh_api', 'Couldn\'t find response $rid for question %qid in pgh_api_get_response', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
   }
 
   return $response;
