@@ -228,7 +228,7 @@ function pgh_api_node_ids($property_conds = array(), $field_conds = array(), $al
 /**
  * Validate question based on validation rules and value.
  *
- * @param array $validations
+ * @param string $validations
  *   Validation rules string delimited by comma
  *
  * @param array $value
