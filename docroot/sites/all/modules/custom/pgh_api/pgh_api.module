@@ -182,11 +182,11 @@ function pgh_api_find_nid($key, $type, $all = FALSE) {
  * @param array $field_conds
  *   Type of the item
  *
- * @param array $entity_conds
- *   A category key.
- *
  * @param bool $all
  *   If all matching nid are returned, or just the first one, default FALSE
+ *
+ * @param array $entity_conds
+ *   A category key.
  *
  * @return int
  *   The nid for the supplied id or 0 if not found.
@@ -323,7 +323,7 @@ function pgh_api_find_response_id($app_id, $qid) {
  * @param int $qid
  *   NID for a specific question instance.
  *
- * @return
+ * @return array
  *   A response array, passed by reference. This will be set to an array containing 'value' and 'points' elements.
  *
  * @author Fang Jin <fang@designhammer.com>
@@ -409,7 +409,7 @@ function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE)
 }
 
 /**
- * Save question value to response
+ * Save a question value to its response.
  *
  * @param int $app_id
  *   NID for a specific application instance.
