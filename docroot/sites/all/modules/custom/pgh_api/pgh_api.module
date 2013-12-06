@@ -238,12 +238,16 @@ function pgh_api_node_ids($property_conds = array(), $field_conds = array(), $al
  *   Array of string of error messages
  *
  * @author Fang Jin <fang@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_validate_question_value($validations, $value) {
+  if (!trim($validations)) {
+    return array();
+  }
   $errors = array();
-  $validates = explode(',', $validations);
-  foreach ($validates as $validate) {
-    switch (trim($validate)) {
+  $rules = explode(',', $validations);
+  foreach ($rules as $rule) {
+    switch (trim($rule)) {
       case 'nonnegative':
         if (!is_numeric($value) || $value < 0) {
           $errors[] = 'The item value needs to be a positive number.';
@@ -272,8 +276,14 @@ function pgh_api_validate_question_value($validations, $value) {
         }
         break;
 
+      case 'required':
+        if ($value === '') {
+          $errors[] = 'This field is required.';
+        }
+        break;
+
       default:
-        $errors[] = 'Unsupported validation rule: ' . $validate;
+        $errors[] = 'Unsupported validation rule: ' . $rule;
         break;
     }
   }
@@ -327,6 +337,7 @@ function pgh_api_find_response_id($app_id, $qid) {
  *   A response array, passed by reference. This will be set to an array containing 'value' and 'points' elements.
  *
  * @author Fang Jin <fang@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_get_response($app_id, $qid) {
   $rid = pgh_api_find_response_id($app_id, $qid);
