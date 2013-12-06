@@ -426,8 +426,10 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
-    // Set default value.
-    $form['#default_value'] = !is_null($answer['value']) ? $answer['value'] : NULL;
+    // Only set the default value if a response has been provided.
+    if ($answer['updated']) {
+      $form['#default_value'] = $answer['value'];
+    }
   }
 
   $form['#title'] = '<div class="question-desc">' . check_markup($wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
