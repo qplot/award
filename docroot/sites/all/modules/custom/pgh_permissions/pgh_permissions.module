@@ -342,18 +342,28 @@ function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
 
     if (isset($_GET['wgid'])) {
       $wgid = $_GET['wgid'];
+      $form['work_group'] = array(
+        '#type' => 'hidden',
+        '#value' => $wgid,
+      );
+
     }
-    elseif (isset($form_state['node'])) {
+    elseif (isset($form_state['node']) && isset($form_state['node']->nid)) {
       $work_group = pgh_api_work_group_for_business_unit($form_state['node']->nid);
       if ($work_group) {
         $wgid = $work_group->nid;
       }
+      $form['work_group'] = array(
+        '#type' => 'hidden',
+        '#value' => $wgid,
+      );
     }
-
-    $form['work_group'] = array(
-      '#type' => 'hidden',
-      '#value' => $wgid,
-    );
+    elseif (user_access('administer awards system')) {
+      $form['work_group'] = array(
+        '#type' => 'select',
+        '#options' => pgh_api_all_work_groups_options(),
+      );
+    }
 
     // Redirect to dashboard after saving node.
     $form['actions']['submit']['#submit'][] = 'pgh_permissions_form_node_form_submit';
