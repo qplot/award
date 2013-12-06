@@ -153,6 +153,12 @@ function pgh_form_application_page($application) {
 
   $application_wrapper = entity_metadata_wrapper('node', $application);
   $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
+
+  if ($application_type === FALSE) {
+    drupal_set_message('Couldn\'t load application type  ' . $application_wrapper->field_application_type->value());
+    return MENU_NOT_FOUND;
+  }
+
   $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
 
   $first_category = NULL;
