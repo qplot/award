@@ -19,8 +19,6 @@ $pgh_temp_section_questions = NULL;
 function pgh_form_menu() {
   $items = array();
 
-  // TODO: Implement access callbacks.
-
   $items['application/%node'] = array(
     'title' => 'View application',
     'description' => 'Fill out an application',
@@ -107,28 +105,22 @@ function theme_pgh_form_table($vars) {
   $rows = array();
   $i = 0;
   foreach ($parse as $row) {
-    // treating every row to be same, no header row
+    // Treat every row to be the same, no header row.
     // First row is header.
-    // if ($i == 0) {
-    //   $header = $row;
-    // }
-    // else {
-      $data = array();
-      foreach ($row as $cell) {
-        // Check if cell is a question.
-        $cell_data = $cell;
-        // dsm($cell);
-        if (substr($cell, 0, 5) == 'pghq_') {
-          // Find the question.
-          if ($qid = pgh_find_question_id($cell)) {
-            $cell_data = render($element[$qid]);
-          }
+    $data = array();
+    foreach ($row as $cell) {
+      // Check if cell is a question.
+      $cell_data = $cell;
+      // dsm($cell);
+      if (substr($cell, 0, 5) == 'pghq_') {
+        // Find the question.
+        if ($qid = pgh_find_question_id($cell)) {
+          $cell_data = render($element[$qid]);
         }
-        $data[] = array('data' => $cell_data);
       }
-      $rows[] = $data;
-    // }
-    // $i = $i + 1;
+      $data[] = array('data' => $cell_data);
+    }
+    $rows[] = $data;
   }
 
   return theme('table', array('header' => $header, 'rows' => $rows));
@@ -137,11 +129,11 @@ function theme_pgh_form_table($vars) {
 /**
  * Page callback to display an edit form for a specific application and category.
  *
- * @param int $application_nid
- *   NID for a specific application instance.
+ * @param object $application
+ *   Node for a specific application instance.
  *
- * @return string
- *   Rendered HTML for the page contents.
+ * @return int
+ *   MENU status constants.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
@@ -175,8 +167,8 @@ function pgh_form_application_page($application) {
 /**
  * Page callback to display an edit form for a specific application and category.
  *
- * @param int $application
- *   NID for a specific application instance.
+ * @param object $application
+ *   Node for a specific application instance.
  *
  * @param string $category_id
  *   The category id to display.
@@ -318,67 +310,20 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     '#type' => 'hidden',
     '#value' => $app_id
   );
-// dsm($form);
   return $form;
 }
 
-/**
- * Set validation error
- * Similar to form_set_error
- *
- * @param array $qid
- *   Form element.
- *
- * @param array $form_state
- *   Form state array.
- */
-// function pgh_form_set_error($qid, $msg) {
-//   if (variable_get('pgh_form_drupal_validate', FALSE)) {
-//     form_set_error($qid, $msg);
-//   }
-
-//   global $pgh_temp_validation_errors;
-
-//   $pgh_temp_validation_errors[] = array(
-//     'qid' => $qid,
-//     'message' => $msg
-//   );
-// }
-
-// function pgh_application_form_validate($form, &$form_state) {
-//   dsm($form);
-// }
 
 /**
- * Application form element validation handler.
+ * Application form AJAX callback.
  *
- * @param array $element
- *   Form element.
+ * @param array $form
+ *   Form array.
  *
  * @param array $form_state
  *   Form state array.
  *
- * @author Fang Jin <fang@designhammer.com>
- */
-// function pgh_application_form_element_validate($element, &$form_state) {
-//   // Grab the question id, this might not always be the case, need FIX.
-//   $qid = $element['#parents'][0];
-
-//   // Make sure this question requires an answer.
-//   if (empty($form_state['values'][$qid])) {
-//     return;
-//   }
-
-//   $value = $form_state['values'][$qid];
-
-//   if (!empty($element['#question_validate'])) {
-//     $errors = pgh_api_validate_question_value($element['#question_validate'], $value);
-//     $form_state['values']['errors'][$qid] = $errors;
-//   }
-// }
-
-/**
- * Application form ajax callback
+ * @author  Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_element_callback($form, &$form_state) {
   if (empty($form_state['triggering_element']['#parents'][0])) {
@@ -397,7 +342,7 @@ function pgh_application_form_element_callback($form, &$form_state) {
   pgh_api_save_response($app_id, $qid, $value);
 
   // Validate the response.
-  $error_msg = '<div id="error-container-'. $wrapper->title->value() . '">';
+  $error_msg = '<div id="error-container-' . $wrapper->title->value() . '">';
   if ($validations = $wrapper->field_question_validation->value()) {
     $errors = pgh_api_validate_question_value($validations, $value);
     if ($errors) {
@@ -424,8 +369,6 @@ function pgh_application_form_element_callback($form, &$form_state) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form_submit($form, &$form_state) {
-  // dsm($form_state['values']);
-
   // Since preparation have all response ready, we just need to save one by one.
   $app_id = $form_state['values']['application'];
 
@@ -433,7 +376,7 @@ function pgh_application_form_submit($form, &$form_state) {
     // Assume all question has number.
     if (is_numeric($qid)) {
 
-      // Media selector bug, need to access from input
+      // Media selector bug, need to access from input.
       if (isset($value['fid'])) {
         $value = $form_state['input'][$qid]['fid'];
       }
@@ -441,10 +384,6 @@ function pgh_application_form_submit($form, &$form_state) {
       pgh_api_save_response($app_id, $qid, $value);
     }
   }
-  // Handle file submission separately, since Drupal doesn't capture file in value instead in input
-  // if (!empty($form_state['input']['fid'])) {
-  //   pgh_api_save_response($app_id, $qid, $form_state['input']['fid']);
-  // }
 }
 
 /**
@@ -500,10 +439,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   // Make sure the flat return.
   $form['#tree'] = FALSE;
 
-  // Validation
   $form['#question_id'] = $wrapper->getIdentifier();
-  // $form['#question_validate'] = $wrapper->field_question_validation->value();
-  // $form['#element_validate'] = array('pgh_application_form_element_validate');
 
   // Dependency display.
   if ($parent_qid = $wrapper->field_question_parent_qid->value()) {
@@ -630,14 +566,13 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
   $form['#suffix'] = '</div><!-- #question -->';
 
-  // Add default question id handling
-  // If no default value set and default question is given, set it to default question response value
-  // TODO: change field_question_formula name !!
+  // Add default question id handling.
+  // If no default value is set and a default question id is given, set it to default question response value.
   $form['#default_question_id'] = $wrapper->field_question_formula->value();
   if (empty($form['#default_value']) && !empty($form['#default_question_id'])) {
-    // find question
+    // Fetch question.
     if ($fid = pgh_find_question_id($form['#default_question_id'])) {
-      // find formula question response
+      // Fetch the question response.
       if ($rid = pgh_api_find_response_id($app_id, $fid)) {
         $answer = pgh_api_get_response($app_id, $fid);
         $form['#default_value'] = $answer['value'];
@@ -645,7 +580,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     }
   }
 
-  // Mark this question has been processed.
+  // Mark this question as processed.
   global $pgh_temp_section_questions;
   unset($pgh_temp_section_questions[$wrapper->getIdentifier()]);
 
