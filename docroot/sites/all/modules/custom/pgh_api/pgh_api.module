@@ -182,11 +182,11 @@ function pgh_api_find_nid($key, $type, $all = FALSE) {
  * @param array $field_conds
  *   Type of the item
  *
- * @param array $entity_conds
- *   A category key.
- *
  * @param bool $all
  *   If all matching nid are returned, or just the first one, default FALSE
+ *
+ * @param array $entity_conds
+ *   A category key.
  *
  * @return int
  *   The nid for the supplied id or 0 if not found.
@@ -228,7 +228,7 @@ function pgh_api_node_ids($property_conds = array(), $field_conds = array(), $al
 /**
  * Validate question based on validation rules and value.
  *
- * @param array $validations
+ * @param string $validations
  *   Validation rules string delimited by comma
  *
  * @param array $value
@@ -238,12 +238,16 @@ function pgh_api_node_ids($property_conds = array(), $field_conds = array(), $al
  *   Array of string of error messages
  *
  * @author Fang Jin <fang@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_validate_question_value($validations, $value) {
+  if (!trim($validations)) {
+    return array();
+  }
   $errors = array();
-  $validates = explode(',', $validations);
-  foreach ($validates as $validate) {
-    switch (trim($validate)) {
+  $rules = explode(',', $validations);
+  foreach ($rules as $rule) {
+    switch (trim($rule)) {
       case 'nonnegative':
         if (!is_numeric($value) || $value < 0) {
           $errors[] = 'The item value needs to be a positive number.';
@@ -272,8 +276,14 @@ function pgh_api_validate_question_value($validations, $value) {
         }
         break;
 
+      case 'required':
+        if ($value === '') {
+          $errors[] = 'This field is required.';
+        }
+        break;
+
       default:
-        $errors[] = 'Unsupported validation rule: ' . $validate;
+        $errors[] = 'Unsupported validation rule: ' . $rule;
         break;
     }
   }
@@ -323,23 +333,31 @@ function pgh_api_find_response_id($app_id, $qid) {
  * @param int $qid
  *   NID for a specific question instance.
  *
- * @return
+ * @return array
  *   A response array, passed by reference. This will be set to an array containing 'value' and 'points' elements.
  *
  * @author Fang Jin <fang@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_get_response($app_id, $qid) {
   $rid = pgh_api_find_response_id($app_id, $qid);
-  $response = array();
+  $response = array(
+    'value' => '',
+    'point' => 0,
+    'updated' => 0,
+  );
   if ($rid) {
-    $response = node_load($rid);
-    $wrapper = entity_metadata_wrapper('node', $response);
+    $response_node = node_load($rid);
+    $wrapper = entity_metadata_wrapper('node', $response_node);
 
     $response = array(
-      'value' => $wrapper->body->value->raw(),
+      'value' => $wrapper->body->value() ? $wrapper->body->value->raw() : '',
       'point' => $wrapper->field_response_point->value(),
       'updated' => $wrapper->field_response_updated->value(),
     );
+  }
+  else {
+    watchdog('pgh_api', 'Couldn\'t find response $rid for question %qid in pgh_api_get_response', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
   }
 
   return $response;
@@ -409,7 +427,7 @@ function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE)
 }
 
 /**
- * Save question value to response
+ * Save a question value to its response.
  *
  * @param int $app_id
  *   NID for a specific application instance.
@@ -582,6 +600,35 @@ function pgh_api_questions_for_application($application_nid) {
 }
 
 /**
+ * Return an array of question nodes for a specified application category.
+ *
+ * @param int $application_nid
+ *   The NID of the application.
+ *
+ * @param int $category_nid
+ *   The NID of the category.
+ *
+ * @return array
+ *   An array of Question nodes.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_questions_for_category($application_nid, $category_nid) {
+  $category = node_load($category_nid);
+  $questions = array();
+
+  $category_wrapper = entity_metadata_wrapper('node', $category);
+  foreach ($category_wrapper->field_category_sections->getIterator() as $section_wrapper) {
+    foreach ($section_wrapper->field_section_questions->getIterator() as $question_wrapper) {
+      $questions[$question_wrapper->title->value()] = $question_wrapper->value();
+    }
+  }
+
+  return $questions;
+}
+
+
+/**
  * Return an array of category nodes for a specified application nid.
  *
  * @param int $application_nid
@@ -714,5 +761,43 @@ function pgh_api_progress_for_category($application_nid, $category_nid) {
   return $progress;
 }
 
+/**
+ * Checks all of the questions in the supplied application category for validation errors.
+ *
+ * @param int $application_nid
+ *   The NID of the application.
+ *
+ * @param int $category_nid
+ *   The NID of the category.
+ *
+ * @return float
+ *   A float value from 0 to 1 indicating the total application progress.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_category_is_valid($application_nid, $category_nid) {
+  // TODO: Currently this does not take into account questions which are not valid but shouldn't be
+  // considered because their parent value is not selected.
+  $questions = pgh_api_questions_for_category($application_nid, $category_nid);
 
+  $cat = node_load($category_nid);
 
+  $errors = array();
+
+  foreach ($questions as $question) {
+    $question_wrapper = entity_metadata_wrapper('node', $question);
+
+    $response_array = pgh_api_get_response($application_nid, $question->nid);
+
+    $errors = array_merge($errors, pgh_api_validate_question_value($question_wrapper->field_question_validation->value(), $response_array['value'], TRUE));
+
+    if ($errors) {
+      // // die(var_dump($question_wrapper->field_question_validation->value()));
+      // dsm('Errors for qid: ' . $question->nid) . ' - ' . $question_wrapper->field_question_validation->value();
+      // dsm($errors);
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}

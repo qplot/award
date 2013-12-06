@@ -26,6 +26,40 @@
       return a / b;
     },
 
+    //
+    // Divides the first value by the sum of the remaining values.
+    //
+    divideBySum: function() {
+      var numerator = arguments[0];
+      var i;
+      var sum = 0;
+
+      for (i = 1; i < arguments.length; i += 1) {
+        sum += arguments[i];
+      }
+
+      if (sum === 0) {
+        return 0;
+      }
+      return a / sum;
+    },
+
+    //
+    // Converts an amount of energy from the specified units to BTUs.
+    // This Simple version handles two sets of units 'MWh' and 'kWh'. For more detailed
+    // conversion use convertBTU().
+    //
+    convertBTUSimple: function(units, amount) {
+      if (units === 'MWh') {
+        return amount * 3413;
+      } else {
+        return amount * 3.413;
+      }
+    },
+
+    //
+    // Converts a specified amount of energy from the specified units to BTUs.
+    //
     convertBTU: function (units, amount) {
       switch (units) {
         case 'kWh':
@@ -41,6 +75,155 @@
         default:
           return 0;
       }
+    },
+
+    //
+    // Converts a specified amount of fuel from the specified units to BTUs.
+    // Supports a wide range of units.
+    //
+    convertBTUComplex: function (units, amount) {
+      switch (units) {
+        case 'Electricity: kWh':
+          return amount * 3.413;
+
+        case 'Electricity: MWh':
+          return amount * 3413;
+
+        case 'Natural Gas: CCF':
+          return amount * 103;
+
+        case 'Natural Gas: MCF':
+          return amount * 1030;
+
+        case 'Natural Gas: Therm':
+          return amount * 100;
+
+        case 'Natural Gas: Cubic Meter':
+          return amount * 36.4;
+
+        case 'Natural Gas: Gigajoule':
+          return amount * 947.8;
+
+        case 'Purchased Steam: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Steam: 1000 lb':
+          return amount * 1000;
+
+        case 'Purchased Steam: Therm':
+          return amount * 100;
+
+        case 'Purchased Hot Water: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Chilled Water: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Chilled Water: Ton-Hour':
+          return amount * 12;
+
+        case 'Oil #2 Fuel Oil: U.S. Gallon':
+          return amount * 139;
+
+        case 'Oil #2 Fuel Oil: Imp. Gallon':
+          return amount * 167;
+
+        case 'Oil #2 Fuel Oil: Liter':
+          return amount * 36.7;
+
+        case 'Oil #6 Diesel: U.S. Gallon':
+          return amount * 154;
+
+        case 'Oil #6 Diesel: Imp. Gallon':
+          return amount * 185;
+
+        default:
+          return amount * 40.7;
+      }
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into into gallons.
+    //
+    convertGallonsAndDivide: function (units, amount, divisor) {
+      if (divisor === 0) {
+        return 0;
+      }
+
+      var converted = 0;
+      switch (units) {
+        case 'Hundred Cubic Feet':
+          converted = amount * 748;
+          break;
+
+        case 'Cubic Feet':
+          converted = amount * 7.48;
+          break;
+
+        default:
+          converted = amount;
+          break;
+      }
+
+      return converted / divisor;
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into into gallons.
+    // Supports 'square feet' and 'other'.
+    //
+    convertGallonsAndDivideSimple: function (units, amount, divisor) {
+      if (divisor === 0) {
+        return 0;
+      }
+
+      var converted = 0;
+      switch (units) {
+        case 'square feet':
+          converted = amount;
+          break;
+
+        default:
+          converted = amount * 43560;
+          break;
+      }
+
+      return converted / divisor;
+    },
+
+    //
+    // Converts a specified amount of fuel oil from the specified units into BTUs.
+    //
+    convertFuelOil: function (units, amount) {
+      if (units == 'U.S. Gallon') {
+        return amount * 133;
+      } else if (units == 'Imp. Gallon') {
+        return amount * 1067;
+      } else {
+        return amount * 36.7;
+      }
+    },
+
+    //
+    // Converts a specified amount of steam from the specified units into BTUs.
+    //
+    convertSteam: function (units, amount) {
+      if (units == 'kBTU') {
+        return amount;
+      } else {
+        return amount * 100;
+      }
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into BTUs.
+    //
+    convertWater: function (units, amount) {
+      if (units == 'kBTU') {
+        return amount;
+      } else {
+        return amount * 12;
+      }
     }
   };
 
@@ -48,7 +231,7 @@
   Drupal.settings.pghForm.formulas = {
 
     //
-    // Waste formulas
+    // PFC Waste formulas
     //
     'pghq_PFC_waste_4_8_tB_9': {
       'args': [
@@ -109,6 +292,15 @@
         'pghq_PFC_waste_6_2_13'
       ],
       'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_3_5': {
+      'args': [
+        'pghq_PFC_waste_6_2_16',
+        'pghq_PFC_waste_6_3_5_0'
+      ],
+      'calculation': function (a, b) {
+        return a * 2000 / b / 365;
+      }
     },
     'pghq_PFC_waste_8_10_1tE_9': {
       'args': [
@@ -313,8 +505,290 @@
     },
 
     //
-    // Energy formulas
+    // PFC Chemicals
     //
+    'pghq_PFC_chemicals_2_4_2_3': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_1',
+        'pghq_PFC_chemicals_2_4_2_1',
+        'pghq_PFC_chemicals_2_4_2_2'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_chemicals_2_4_2_6': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_4',
+        'pghq_PFC_chemicals_2_4_2_4',
+        'pghq_PFC_chemicals_2_4_2_5'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_chemicals_2_4_2_9': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_7',
+        'pghq_PFC_chemicals_2_4_2_7',
+        'pghq_PFC_chemicals_2_4_2_8'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_chemicals_2_4_2_12': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_10',
+        'pghq_PFC_chemicals_2_4_2_10',
+        'pghq_PFC_chemicals_2_4_2_11'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_chemicals_2_4_2_15': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_13',
+        'pghq_PFC_chemicals_2_4_2_13',
+        'pghq_PFC_chemicals_2_4_2_14'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_chemicals_2_4_2_18': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_16',
+        'pghq_PFC_chemicals_2_4_2_16',
+        'pghq_PFC_chemicals_2_4_2_17'
+      ],
+      'calculation': handlers.divideBySum
+    },
+
+    //
+    // PFC Greening the OR formulas
+    //
+    'pghq_PFC_greeningtheOR_2_3_tB_3': {
+      'args': [
+        'pghq_PFC_greeningtheOR_2_3_tB_2',
+        'pghq_PFC_greeningtheOR_2_3_tB_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_greeningtheOR_2_12_2_tF_3': {
+      'args': [
+        'pghq_PFC_greeningtheOR_2_12_2_tF_1',
+        'pghq_PFC_greeningtheOR_2_12_2_tF_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_greeningtheOR_3_4': {
+      'args': [
+        'pghq_PFC_greeningtheOR_3_3_1',
+        'pghq_PFC_greeningtheOR_3_4_0'
+      ],
+      'calculation': handlers.divide
+    },
+
+    //
+    // PFC Food formulas
+    //
+    'pghq_PFC_food_1_3_1_6': {
+      'args': [
+      'pghq_PFC_food_1_3_1_1',
+      'pghq_PFC_food_1_3_1_4',
+      'pghq_PFC_food_1_3_1_2',
+      'pghq_PFC_food_1_3_1_5'
+      ],
+      'calculation': function(a, b, c, d) {
+        if (a === 0 ||
+            b === 0 ||
+            c === 0 ||
+            d === 0) {
+          return 0;
+        } else {
+          return a / b / c / d;
+        }
+      }
+    },
+    'pghq_PFC_food_2_1_4': {
+      'args': [
+        'pghq_PFC_food_2_1_2',
+        'pghq_PFC_food_2_1_3'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_food_3_1_4': {
+      'args': [
+        'pghq_PFC_food_3_1_2',
+        'pghq_PFC_food_3_1_3'
+      ],
+      'calculation': handlers.divide
+    },
+
+    //
+    // PFC Energy
+    //
+    'pghq_PFC_energy_2_11_1': {
+      'args': [
+        'pghq_PFC_energy_2_7_5',
+        'pghq_PFC_energy_2_11_4',
+      ],
+      'calculation': handlers.convertBTUSimple
+    },
+    'pghq_PFC_energy_2_11_2': {
+      'args': [
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_energy_2_11_3': {
+      'args': [
+        'pghq_PFC_energy_2_7_9',
+        'pghq_PFC_energy_2_7_8'
+      ],
+      'calculation': handlers.convertBTUSimple
+    },
+    'pghq_PFC_energy_2_11_4': {
+      'args': [
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_energy_2_11_5': {
+      'args': [
+        'pghq_PFC_energy_2_7_13',
+        'pghq_PFC_energy_2_7_12'
+      ],
+      'calculation': handlers.convertBTUSimple
+    },
+    'pghq_PFC_energy_2_11_6': {
+      'args': [
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_energy_2_11_7': {
+      'args': [
+        'pghq_PFC_energy_2_7_17',
+        'pghq_PFC_energy_2_7_16'
+      ],
+      'calculation': handlers.convertBTUSimple
+    },
+    'pghq_PFC_energy_2_11_8': {
+      'args': [
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_energy_2_11_9': {
+      'args': [
+        'pghq_PFC_energy_2_7_21',
+        'pghq_PFC_energy_2_7_20'
+      ],
+      'calculation': handlers.convertBTUSimple
+    },
+    'pghq_PFC_energy_2_11_10': {
+      'args': [
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_energy_2_11_11': {
+      'args': [
+        'pghq_PFC_energy_2_7_25',
+        'pghq_PFC_energy_2_7_24'
+      ],
+      'calculation': handlers.convertBTUSimple
+    },
+    'pghq_PFC_energy_2_11_12': {
+      'args': [
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_energy_2_11_13': {
+      'args': [
+        'pghq_PFC_energy_2_7_29',
+        'pghq_PFC_energy_2_7_28'
+      ],
+      'calculation': handlers.convertBTUSimple
+    },
+    'pghq_PFC_energy_2_11_14': {
+      'args': [
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+
     'pghq_PFC_energy_2_11_17': {
       'args': [
         'pghq_PFC_energy_2_8_2_3', // Units
@@ -322,9 +796,219 @@
       ],
       'calculation': handlers.convertBTU
     },
+    'pghq_PFC_energy_2_11_21': {
+      'args': [
+        '_PFC_energy_2_11_1',
+        '_PFC_energy_2_11_3',
+        '_PFC_energy_2_11_5',
+        '_PFC_energy_2_11_7',
+        '_PFC_energy_2_11_9',
+        '_PFC_energy_2_11_11',
+        '_PFC_energy_2_11_13',
+        '_PFC_energy_2_11_15',
+        '_PFC_energy_2_11_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_2_11_22': {
+      'args': [
+        'pghq_PFC_energy_2_11_2',
+        'pghq_PFC_energy_2_11_4',
+        'pghq_PFC_energy_2_11_6',
+        'pghq_PFC_energy_2_11_8',
+        'pghq_PFC_energy_2_11_10',
+        'pghq_PFC_energy_2_11_12',
+        'pghq_PFC_energy_2_11_14',
+        'pghq_PFC_energy_2_11_16',
+        'pghq_PFC_energy_2_11_18'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_2_12': {
+      'args': [
+        'pghq_PFC_energy_2_11_18',
+        'pghq_PFC_energy_2_11_20'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_3_1_1_2': {
+      'args': [
+        'pghq_PFC_energy_2_7_5',    // electricity_units
+        'pghq_PFC_energy_2_7_6',    // electricity_amount
+        'pghq_PFC_energy_2_7_9',    // natural_gas_units
+        'pghq_PFC_energy_2_7_10',   // natural_gas_amount
+        'pghq_PFC_energy_2_7_13',   // fuel_oil_units
+        'pghq_PFC_energy_2_7_14',   // fuel_oil_amount
+        'pghq_PFC_energy_2_7_17',   // steam_units
+        'pghq_PFC_energy_2_7_18',   // steam_amount
+        'pghq_PFC_energy_2_7_21',   // chilled_water_units
+        'pghq_PFC_energy_2_7_22',   // chilled_water_amount
+        'pghq_PFC_energy_2_7_25',   // hot_water_units
+        'pghq_PFC_energy_2_7_26',   // hot_water_amount
+        'pghq_PFC_energy_2_7_29',   // diesel_units
+        'pghq_PFC_energy_2_7_30',   // diesel_amount
+        'pghq_PFC_energy_2_8_2_3',  // renewable_1_units
+        'pghq_PFC_energy_2_8_2_4',  // renewable_1_amount
+        'pghq_PFC_energy_2_8_2_8',  // renewable_2_units
+        'pghq_PFC_energy_2_8_2_9',  // renewable_2_amount
+        'pghq_PFC_energy_2_8_2_13', // renewable_3_units
+        'pghq_PFC_energy_2_8_2_14'  // renewable_3_amount
+      ],
+      'calculation': function() {
+        var electricity_units     = arguments[0];
+        var electricity_amount    = arguments[1];
+        var natural_gas_units     = arguments[2];
+        var natural_gas_amount    = arguments[3];
+        var fuel_oil_units        = arguments[4];
+        var fuel_oil_amount       = arguments[5];
+        var steam_units           = arguments[6];
+        var steam_amount          = arguments[7];
+        var chilled_water_units   = arguments[8];
+        var chilled_water_amount  = arguments[9];
+        var hot_water_units       = arguments[10];
+        var hot_water_amount      = arguments[11];
+        var diesel_units          = arguments[12];
+        var diesel_amount         = arguments[13];
+        var renewable_1_units     = arguments[14];
+        var renewable_1_amount    = arguments[15];
+        var renewable_2_units     = arguments[16];
+        var renewable_2_amount    = arguments[17];
+        var renewable_3_units     = arguments[18];
+        var renewable_3_amount    = arguments[19];
+
+        var sum = 0;
+
+        // TODO: convertBTU handler doesn't support Cubic Meter units.
+
+        sum += handlers.convertBTUSimple(electricity_units, electricity_amount);
+        sum += handlers.convertBTU(natural_gas_units, natural_gas_amount);
+        sum += handlers.convertFuelOil(fuel_oil_units, fuel_oil_amount);
+        sum += handlers.convertSteam(steam_units, steam_amount);
+        sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
+        sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
+        sum += handlers.convertFuelOil(diesel_units, diesel_amount);
+        sum += handlers.convertBTU(renewable_1_units, renewable_1_amount);
+        sum += handlers.convertBTU(renewable_2_units, renewable_2_amount);
+        sum += handlers.convertBTU(renewable_3_units, renewable_3_amount);
+
+        return sum;
+      }
+
+    },
+
+    'pghq_PFC_energy_3_1_1_4': {
+      'args': [
+        'pghq_PFC_energy_2_11_21',
+        'pghq_PFC_energy_3_1_1_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_5': {
+      'args': [
+        'pghq_PFC_energy_2_11_21',
+        'pghq_PFC_energy_3_1_1_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_6': {
+      'args': [
+        'pghq_PFC_energy_3_1_1_1',
+        'pghq_PFC_energy_2_7_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_7': {
+      'args': [
+        'pghq_PFC_energy_3_1_1_2',
+        'pghq_PFC_energy_2_7_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_8': {
+      'args': [
+        'pghq_PFC_energy_3_1_1_3',
+        'pghq_PFC_energy_2_7_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_9': {
+      'args': [
+        'ppghq_PFC_energy_3_1_1_5',
+        'pghq_PFC_energy_3_1_1_6'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_3_1_1_9': {
+      'args': [
+        'ppghq_PFC_energy_3_1_1_5',
+        'pghq_PFC_energy_3_1_1_7'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_energy_4_4_31': {
+      'args': [
+        'pghq_PFC_energy_4_4_3',
+        'pghq_PFC_energy_4_4_9',
+        'pghq_PFC_energy_4_4_15',
+        'pghq_PFC_energy_4_4_21',
+        'pghq_PFC_energy_4_4_27'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_4_4_32': {
+      'args': [
+        'pghq_PFC_energy_4_4_5',
+        'pghq_PFC_energy_4_4_11',
+        'pghq_PFC_energy_4_4_17',
+        'pghq_PFC_energy_4_4_23',
+        'pghq_PFC_energy_4_4_29'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_energy_4_4_33': {
+      'args': [
+        'pghq_PFC_energy_4_4_6',
+        'pghq_PFC_energy_4_4_12',
+        'pghq_PFC_energy_4_4_18',
+        'pghq_PFC_energy_4_4_24',
+        'pghq_PFC_energy_4_4_30'
+      ],
+      'calculation': handlers.sum
+    },
 
     //
-    // Climate Formulas
+    // PFC Water formulas
+    //
+    'pghq_PFC_water_2_1tB_7': {
+      'args': [
+        'pghq_PFC_water_2_1tB_1',
+        'pghq_PFC_water_2_1tB_4'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_water_3_1tE_21': {
+      'args': [
+        'pghq_PFC_water_3_1tE_3',
+        'pghq_PFC_water_3_1tE_7',
+        'pghq_PFC_water_3_1tE_11',
+        'pghq_PFC_water_3_1tE_15',
+        'pghq_PFC_water_3_1tE_19'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_water_3_1tE_22': {
+      'args': [
+        'pghq_PFC_water_3_1tE_4',
+        'pghq_PFC_water_3_1tE_8',
+        'pghq_PFC_water_3_1tE_12',
+        'pghq_PFC_water_3_1tE_16',
+        'pghq_PFC_water_3_1tE_20'
+      ],
+      'calculation': handlers.sum
+    },
+
+    //
+    // PFC Climate formulas
     //
     'pghq_PFC_climate_1_5_24': {
       'args': [
@@ -375,7 +1059,7 @@
     },
 
     //
-    // Green Building formulas
+    // PFC Green Building formulas
     //
     'pghq_PFC_greenbuilding_4_2_tC_3': {
       'args': [
@@ -384,7 +1068,7 @@
       ],
       'calculation': handlers.divide
     },
-	'pghq_PFC_greenbuilding_4_2_tC_6': {
+	  'pghq_PFC_greenbuilding_4_2_tC_6': {
       'args': [
         'pghq_PFC_greenbuilding_4_2_tC_4',
         'pghq_PFC_greenbuilding_4_2_tC_5'
@@ -402,6 +1086,46 @@
       'args': [
         'pghq_PFC_greenbuilding_4_2_tC_2',
         'pghq_PFC_greenbuilding_4_2_tC_5'
+      ],
+      'calculation': handlers.sum
+    },
+
+    //
+    // PFC Appendix A formulas
+    //
+    'pghq_PFC_appendixa_1_8t_2': {
+      'args': [
+        'pghq_PFC_appendixa_1_7_1t_2',
+        'pghq_PFC_appendixa_1_7_2t_3',
+        'pghq_PFC_appendixa_1_7_3t_2',
+        'pghq_PFC_appendixa_1_7_4t_2',
+        'pghq_PFC_appendixa_1_7_5t_2',
+        'pghq_PFC_appendixa_1_7_6t_2',
+        'pghq_PFC_appendixa_1_7_7t_3',
+        'pghq_PFC_appendixa_1_7_8t_3',
+        'pghq_PFC_appendixa_1_7_9t_2',
+        'pghq_PFC_appendixa_1_7_10t_2',
+        'pghq_PFC_appendixa_1_7_11t_2',
+        'pghq_PFC_appendixa_1_7_12t_3',
+        'pghq_PFC_appendixa_1_7_13t_3',
+        'pghq_PFC_appendixa_1_7_14t_3',
+        'pghq_PFC_appendixa_1_7_15t_2',
+        'pghq_PFC_appendixa_1_7_16t_2',
+        'pghq_PFC_appendixa_1_7_17t_2',
+        'pghq_PFC_appendixa_1_7_18t_2',
+        'pghq_PFC_appendixa_1_7_19t_2',
+        'pghq_PFC_appendixa_1_7_20t_2',
+        'pghq_PFC_appendixa_1_7_21t_2',
+        'pghq_PFC_appendixa_1_7_22t_2',
+        'pghq_PFC_appendixa_1_7_23t_2',
+        'pghq_PFC_appendixa_1_7_24t_2',
+        'pghq_PFC_appendixa_1_7_25t_2',
+        'pghq_PFC_appendixa_1_7_26t_2',
+        'pghq_PFC_appendixa_1_7_27t_2',
+        'pghq_PFC_appendixa_1_7_28t_2',
+        'pghq_PFC_appendixa_1_7_29t_2',
+        'pghq_PFC_appendixa_1_7_30t_3',
+        'pghq_PFC_appendixa_1_7_31t_3'
       ],
       'calculation': handlers.sum
     }

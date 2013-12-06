@@ -175,7 +175,7 @@ function pgh_js_alter(&$js) {
  *
  * @author  Jay Roberts <jay@designhammer.com>
  */
-function pgh_application_progress($progress) {
+function pgh_progress_bar($progress) {
   $range = 'low';
   if ($progress > 0.3) {
     $range = 'mid';
