@@ -189,8 +189,42 @@
       }
 
       return converted / divisor;
-    }
+    },
 
+    //
+    // Converts a specified amount of fuel oil from the specified units into BTUs.
+    //
+    convertFuelOil: function (units, amount) {
+      if (units == 'U.S. Gallon') {
+        return amount * 133;
+      } else if (units == 'Imp. Gallon') {
+        return amount * 1067;
+      } else {
+        return amount * 36.7;
+      }
+    },
+
+    //
+    // Converts a specified amount of steam from the specified units into BTUs.
+    //
+    convertSteam: function (units, amount) {
+      if (units == 'kBTU') {
+        return amount;
+      } else {
+        return amount * 100;
+      }
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into BTUs.
+    //
+    convertWater: function (units, amount) {
+      if (units == 'kBTU') {
+        return amount;
+      } else {
+        return amount * 12;
+      }
+    }
   };
 
   // Map arguments and handlers for specific questions.
@@ -848,18 +882,11 @@
 
         sum += handlers.convertBTUSimple(electricity_units, electricity_amount);
         sum += handlers.convertBTU(natural_gas_units, natural_gas_amount);
-
-        // TODO: Fuel oil conversion (fuel_oil)
-
-        // TODO: Steam conversion (steam)
-
-        // TODO: Water conversion (chilled)
-
-        // TODO: Water conversion (hot)
-
-        // TODO: Fuel oil conversion (diesel)
-
-
+        sum += handlers.convertFuelOil(fuel_oil_units, fuel_oil_amount);
+        sum += handlers.convertSteam(steam_units, steam_amount);
+        sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
+        sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
+        sum += handlers.convertFuelOil(diesel_units, diesel_amount);
         sum += handlers.convertBTU(renewable_1_units, renewable_1_amount);
         sum += handlers.convertBTU(renewable_2_units, renewable_2_amount);
         sum += handlers.convertBTU(renewable_3_units, renewable_3_amount);
