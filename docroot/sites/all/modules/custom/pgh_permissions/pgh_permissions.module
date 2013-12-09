@@ -266,6 +266,21 @@ function pgh_permissions_node_access_application($application, $op, $account) {
         return NODE_ACCESS_ALLOW;
       }
 
+      // If the application's current status is one of the locked down statuses, return NODE_ACCESS_DENY
+      $application_wrapper = entity_metadata_wrapper('node', $application);
+      $locked = array(
+        'submitted',
+        'assigned-for-review',
+        'review-in-progress',
+        'final-scoring-complete',
+        'initial-award-recommended',
+        'review-complete',
+        'final-award-determined',
+      );
+      if (in_array($application_wrapper->field_application_status->value(), $locked)) {
+        return NODE_ACCESS_DENY;
+      }
+
       $business_unit = pgh_api_business_unit_for_application($application->nid);
 
       // Work Group administrators can update.
