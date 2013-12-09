@@ -59,10 +59,7 @@
     <?php else: ?>
 
       <div class="custom-user-login block">
-      <?php
-        $block = module_invoke('block', 'block_view', 1);
-        print render($block['content']);
-      ?>
+        <p><a class="user-login" href="/user">User login</a> <a class="user-register" href="/user/register">Create account</a></p>
       </div>
 
     <?php endif; ?>
