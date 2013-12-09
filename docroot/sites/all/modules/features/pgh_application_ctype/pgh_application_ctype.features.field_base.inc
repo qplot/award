@@ -17,6 +17,9 @@ function pgh_application_ctype_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_application_status',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(

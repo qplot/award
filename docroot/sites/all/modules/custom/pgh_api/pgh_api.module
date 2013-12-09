@@ -580,7 +580,6 @@ function pgh_api_valid_application_types_for_business_unit($business_unit) {
 
     case 'strategic_associate_member':
       $types = array(
-        'champion_for_change_gpo' => 'Champion for Change (GPO)',
         'champion_for_change_nongpo' => 'Champion for Change (Non-GPO)',
       );
       return $types;
