@@ -211,6 +211,14 @@ function pgh_user_invite_form_validate($form, &$form_state) {
       continue;
     }
 
+    // Some valid email addresses (email+example@gmail.com) contain characters which are invalid for Drupal usernames.
+    // If we don't stop it here then the user will be able to use the one-time log in link but will never be able to
+    // change their password.
+    if ($username_error = user_validate_name($line)) {
+      $errors[] = t('%line contains unsupported characters.', array('%line' => $line));
+      continue;
+    }
+
     $emails[] = $line;
   }
 
