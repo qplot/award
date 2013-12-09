@@ -178,6 +178,7 @@ function pgh_user_invite_form_validate($form, &$form_state) {
     return;
   }
 
+  // Fetch owner (the Business Unit that the new users will be added to).
   $owner = NULL;
   if (isset($form_state['values']['owner'])) {
     $owner = node_load($form_state['values']['owner']);
@@ -259,6 +260,8 @@ function pgh_user_invite_form_submit($form, &$form_state) {
 /**
  * Process emails and send invitations.
  *
+ * If an email address exists in Drupal the user account will be added to the Business Unit.
+ *
  * @param array $form
  *   Form array.
  *
@@ -269,6 +272,38 @@ function pgh_user_invite_form_submit($form, &$form_state) {
  */
 function pgh_user_invite_form_process($form, &$form_state) {
   foreach ($form_state['storage']['valid_emails'] as $email) {
+    $invite_user = user_load_by_mail($email);
+    if (!$invite_user) {
+      // Create a new user object.
+      $new_user = array(
+        'name' => $email,
+        'mail' => $email,
+        'pass' => user_password(8),
+        'status' => 1,
+        'init' => $email,
+      );
+
+      $invite_user = user_save(NULL, $new_user);
+
+      if (!$invite_user) {
+        drupal_set_message(t('There was a problem inviting %email', array('%email' => $email)));
+      }
+
+      // Send the new account notification.
+      drupal_mail('user',
+        'register_no_approval_required',
+        $invite_user->mail,
+        language_default(),
+        array('account' => $invite_user),
+        variable_get('site_mail', ini_get('sendmail_from')));
+    }
+
+    // Fetch owner (the Business Unit that the new users will be added to).
+    $owner = node_load($form_state['values']['owner']);
+
+    // Add the user to the owner Business Unit.
+    pgh_api_add_user_to_business_unit($invite_user, $owner);
+
     drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
   }
 

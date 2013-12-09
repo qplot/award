@@ -813,12 +813,35 @@ function pgh_api_category_is_valid($application_nid, $category_nid) {
     $errors = array_merge($errors, pgh_api_validate_question_value($question_wrapper->field_question_validation->value(), $response_array['value'], TRUE));
 
     if ($errors) {
-      // // die(var_dump($question_wrapper->field_question_validation->value()));
-      // dsm('Errors for qid: ' . $question->nid) . ' - ' . $question_wrapper->field_question_validation->value();
-      // dsm($errors);
       return FALSE;
     }
   }
 
   return TRUE;
+}
+
+
+/**
+ * Adds the supplied user to the list of users for the Business Unit.
+ *
+ * @param object $user
+ *   A Drupal user object.
+ *
+ * @param object $business_unit
+ *   A Business Unit node.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_add_user_to_business_unit($user, $business_unit) {
+  $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+
+  // Ignore duplicate additions.
+  foreach ($business_unit_wrapper->field_users->getIterator() as $user_wrapper) {
+    if ($user->uid == $user_wrapper->uid->value()) {
+      return;
+    }
+  }
+
+  $business_unit_wrapper->field_users[] = $user->uid;
+  $business_unit_wrapper->save();
 }

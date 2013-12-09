@@ -248,36 +248,33 @@
           ?>
           <h3>Users</h3>
 
-          <h4>Active</h4>
           <ul>
             <?php
               // @codingStandardsIgnoreStart
               // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
+              $users = array();
               foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
-                if ($user->status->value()) {
-                  print '<li class="active"><span class="user-name">' . $user->name->value() . '</span>';
-                  print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
-                  print '</li>';
+                $users[] = $user;
+              }
+              usort($users, 'pgh_sort_users_by_last_access');
+
+              foreach ($users as $user) {
+                $last_access = 'Never logged in';
+                if ($user->last_access->value()) {
+                  $last_access = format_date($user->last_access->value(), 'short');
                 }
+
+                print '<li class="active"><span class="user-name">' . $user->name->value() . '</span>';
+                print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . ' ' . $last_access . '</span>';
+                print '</li>';
               }
               // @codingStandardsIgnoreEnd
             ?>
           </ul>
 
-          <h4>Invited</h4>
-          <ul>
-            <?php
-              // @codingStandardsIgnoreStart
-              // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
-              foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
-                if (!$user->status->value()) {
-                  print '<li class="inactive"><span class="user-name">' . $user->name->value() . '</span>';
-                  print '</li>';
-                }
-              }
-              // @codingStandardsIgnoreEnd
-            ?>
-          </ul>
+          <p class="user-message">
+            Please contact a PGH Administrator if you need help with a user account.
+          </p>
         </div>
 
         </div><!-- /.bu-container-bottom -->
