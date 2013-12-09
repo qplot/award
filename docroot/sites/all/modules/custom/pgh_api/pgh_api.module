@@ -444,6 +444,13 @@ function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE)
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_api_save_response($app_id, $qid, $value) {
+  $application = node_load($app_id);
+  $application_wrapper = entity_metadata_wrapper('node', $application);
+  if ($application_wrapper->field_application_status->value() == 'new') {
+    $application_wrapper->field_application_status->set('in-progress');
+    $application_wrapper->save();
+  }
+
   $question = node_load($qid);
   $question_wrapper = entity_metadata_wrapper('node', $question);
   $type = $question_wrapper->field_question_type->value();
