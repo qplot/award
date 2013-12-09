@@ -938,13 +938,6 @@
       ],
       'calculation': handlers.divide
     },
-    'pghq_PFC_energy_3_1_1_9': {
-      'args': [
-        'ppghq_PFC_energy_3_1_1_5',
-        'pghq_PFC_energy_3_1_1_7'
-      ],
-      'calculation': handlers.divide
-    },
     'pghq_PFC_energy_4_4_31': {
       'args': [
         'pghq_PFC_energy_4_4_3',
