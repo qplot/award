@@ -41,7 +41,7 @@
       if (sum === 0) {
         return 0;
       }
-      return a / sum;
+      return numerator / sum;
     },
 
     //
