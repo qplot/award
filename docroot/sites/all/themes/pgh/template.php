@@ -212,6 +212,26 @@ function pgh_glossify_links($vars) {
     return l($vars['text'], $path, array('attributes' => array('class' => array('glossify-link'), 'title' => $vars['tip'])));
   }
   else {
-    return l($vars['text'], $path, array('attributes' => array ('class' => array('glossify-link'))));
+    return l($vars['text'], $path, array('attributes' => array('class' => array('glossify-link'))));
   }
+}
+
+/**
+ * Custom sort function for Entity Metadata Wrapper users, sorts by last_access.
+ *
+ * See: http://php.net/manual/en/function.usort.php
+ *
+ * @param object $a
+ *   An EMW wrapping a Drupal user object.
+ *
+ * @param object $b
+ *   An EMW wrapping a Drupal user object.
+ *
+ * @return int
+ *   An int value indicating the cardinality of the supplied arguments.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_sort_users_by_last_access($a, $b) {
+  return $a->last_access->value() > $b->last_access->value() ? -1 : 1;
 }
