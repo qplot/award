@@ -571,6 +571,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
 
   if ($parent_qid) {
     $classes[] = 'question-dependent';
+    $classes[] = 'data-parent-id-question-' . $parent_qid;
     $data_attributes[] = 'data-parent-id="question-' . $parent_qid . '"';
   }
 

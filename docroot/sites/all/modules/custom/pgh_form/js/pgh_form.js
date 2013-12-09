@@ -64,7 +64,7 @@
       }
 
     } else {
-      console.log('Unsupported type');
+      console.log('Unsupported question type: #' + $question.attr('id') + ', ' + $question.attr('class'));
       return 0;
     }
   };
@@ -189,7 +189,7 @@
       $('.question-number').remove();
 
       var $all_questions = $('.question');
-      var $top_level_questions = $('.question:not(.question-dependent,.question-type-html)');
+      var $top_level_questions = $all_questions.not('.question-dependent,.question-type-html');
 
       // Add an ordinal to the first form-item of each top-level question.
       $top_level_questions.each(function(top_index, top_element) {
@@ -198,12 +198,12 @@
         // only add a number to the first matched element.
 
         var top_number = top_index + 1;
-        $(top_element).find('.form-item:eq(0)').prepend('<div class="question-number">' + top_number.toString() + '.</div>');
+        $(top_element).find('.form-item').eq(0).prepend('<div class="question-number">' + top_number.toString() + '.</div>');
 
         // Add an alphabetic ordinal to each question which is a dependent question of the current
         // top-level question.
-        $all_questions.filter('[data-parent-id="' + $(top_element).attr('id') + '"]').each(function(sub_index, sub_element) {
-          $(sub_element).find('.form-item:eq(0)').prepend('<div class="question-number sub">' + top_number.toString() + '.' + letters[sub_index] + '</div>');
+        $all_questions.filter('.data-parent-id-' + $(top_element).attr('id')).each(function(sub_index, sub_element) {
+          $(sub_element).find('.form-item').eq(0).prepend('<div class="question-number sub">' + top_number.toString() + '.' + letters[sub_index] + '</div>');
         });
       });
     }
