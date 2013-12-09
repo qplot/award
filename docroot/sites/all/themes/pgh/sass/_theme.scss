@@ -740,9 +740,29 @@ h3 {
       }
     }
   }
+
+  .custom-user-login.block { // white header background
+
+    p {
+      border-color: #67a697;
+
+      a {
+        color: $green;
+
+        &:hover {
+          color: $white;
+          background-color: #67a697;
+        }
+      }
+    }
+  }
 }
 
-.page-application { //sponsor
+// !---------------------------- */
+// !-- Application sponsor ----- */
+// !---------------------------- */
+
+.page-application {
 
   #sponsor-wrap {
     background-color: #f2f2f2;
@@ -760,7 +780,11 @@ h3 {
   }
 }
 
-.page-application { //app menu
+// !---------------------------- */
+// !-- Application menu -------- */
+// !---------------------------- */
+
+.page-application {
 
   #application-menu-container.stuck {
     width: 100%;
@@ -953,6 +977,13 @@ h3 {
       }
     }
   }
+}
+
+// !---------------------------- */
+// !-- Application categories -- */
+// !---------------------------- */
+
+.page-application {
 
   #cat-menu-wrap {
     background: #2c2c2c url(../images/menu-app/cat-menu-bg.png) repeat center top;
@@ -1057,6 +1088,13 @@ h3 {
       }
     }
   }
+}
+
+// !---------------------------- */
+// !-- Application H1 cat ------ */
+// !---------------------------- */
+
+.page-application.page-application-category {
 
   h1#page-title {
     padding: 10px 0;
@@ -1163,7 +1201,11 @@ h3 {
   }
 }
 
-.page-application { // !-- form
+// !---------------------------- */
+// !-- Application form -------- */
+// !---------------------------- */
+
+.page-application {
 
   form {
 
@@ -1214,20 +1256,20 @@ h3 {
 
     input.form-submit {
       color: $white;
-      font-size: 21px;
+      font-size: 17px;
       font-family: $cabin;
       font-weight: normal;
       text-align: center;
-      background-color: $green;
+      @include gradient(lighten($green, 5%), $green);
       border: 1px solid $green;
       @include border-radius(3px);
-      @include box-shadow(0 1px 3px rgba(0,0,0,0.3));
+      @include box-shadow(0 1px 2px rgba(0,0,0,0.2));
       margin: 0 auto;
-      padding: 14px 0;
-      width: 60%;
+      padding: 10px 14px;
+      width: auto;
 
       &:hover {
-        background-color: $orange;
+        @include gradient($orange, lighten($orange, 5%));
         border-color: $orange;
         @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
       }
@@ -1255,6 +1297,14 @@ h3 {
       }
     }
 
+    input.input-incorrect {
+      color: #bc9906;
+      font-weight: bold;
+      text-shadow: 0 1px #fdfbee;
+      background-color: #faf3d0;
+      border-color: #ebc610;
+    }
+
     .content-incorrect {
       color: #bc9906;
       text-shadow: 0 1px #fdfbee;
@@ -1267,98 +1317,107 @@ h3 {
       padding: 9px 9px 9px 32px;
       width: 47%;
     }
+  }
+}
 
-    td .content-incorrect {
-      background-position: 7px 45%;
-      margin: 5px 0 0;
-      padding: 5px 5px 5px 32px;
-      width: 70%;
+// !---------------------------- */
+// !-- Application tables ------ */
+// !---------------------------- */
+
+.page-application {
+
+  td .content-incorrect {
+    background-position: 7px 45%;
+    margin: 5px 0 0;
+    padding: 5px 5px 5px 32px;
+    width: 70%;
+  }
+
+  table {
+    border: 1px solid #a2d6c9;
+    border-bottom: none;
+    border-collapse: separate !important;
+    @include border-radius(3px);
+    margin-bottom: 2em;
+    width: 960px;
+
+    .form-item {
+      border: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
-    input.input-incorrect {
-      color: #bc9906;
+    tr {
+      background-color: transparent;
+      border: none;
+    }
+
+    th, td {
+      font-size: 0.9em;
+      font-family: $arial;
+      font-weight: normal;
+      border-right: 1px solid $grayLight;
+      border-bottom: 1px solid #a2d6c9;
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    th {
+      color: $green;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      text-align: left;
+      @include gradient($white, #f8f8f8);
+      padding: 8px 5px;
+    }
+
+    tr.odd td {
+    }
+
+    tr.even td {
+    }
+
+    td {
+
+      p {
+        margin: 0;
+      }
+
+      select {
+        width: 200px;
+      }
+
+      .ajax-progress {
+        display: block;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    .question {
+      padding-left: 0;
+    }
+
+    .question-dependent {
+    }
+
+    .question-number {
+      font-size: 13px;
       font-weight: bold;
-      text-shadow: 0 1px #fdfbee;
-      background-color: #faf3d0;
-      border-color: #ebc610;
-    }
-
-    table {
-      border: 1px solid #a2d6c9;
-      border-bottom: none;
-      border-collapse: separate !important;
-      @include border-radius(3px);
-      margin-bottom: 2em;
-      width: 960px;
-
-      .form-item {
-        border: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-      }
-
-      tr {
-        background-color: transparent;
-        border: none;
-      }
-
-      th, td {
-        font-size: 0.9em;
-        font-family: $arial;
-        font-weight: normal;
-        border-right: 1px solid $grayLight;
-        border-bottom: 1px solid #a2d6c9;
-        padding: 5px;
-        vertical-align: top;
-      }
-
-      th {
-        @include gradient($white, #f8f8f8);
-      }
-
-      tr.odd td {
-      }
-
-      tr.even td {
-      }
-
-      td {
-
-        p {
-          margin: 0;
-        }
-
-        select {
-          width: 200px;
-        }
-
-        .ajax-progress {
-          display: block;
-        }
-
-        &:last-child {
-          border-right: none;
-        }
-      }
-
-      .question {
-        padding-left: 0;
-      }
-
-      .question-dependent {
-      }
-
-      .question-number {
-        font-size: 13px;
-        font-weight: bold;
-        margin-left: 0;
-        float: none;
-      }
+      margin-left: 0;
+      float: none;
     }
   }
 }
 
-.page-application { // !-- saving indicator
+
+// !---------------------------- */
+// !-- saving indicator -------- */
+// !---------------------------- */
+
+.page-application {
 
   .pgh-form-status-container {
     margin: 0 auto;
@@ -1391,6 +1450,39 @@ h3 {
     &.saved {
       @include opacity(1);
     }
+  }
+}
+
+// !---------------------------- */
+// !-- submission warnings ----- */
+// !---------------------------- */
+
+.page-application {
+
+  .submission_message,
+  .submission_warning {
+    color: #bc9906;
+    text-shadow: 0 1px #fdfbee;
+    font-size: 0.9em;
+    line-height: 1.1em;
+    background: #faf3d0 url(../images/global/icon-warning-content.png) no-repeat 9px 45%;
+    border: 1px solid #f5e9ac;
+    @include border-radius(3px);
+    display: inline-block;
+    @include ie7-inline-block();
+    margin: 5px 0 1em;
+    padding: 9px 9px 9px 34px;
+    width: auto;
+  }
+
+  .submission_message {
+  }
+
+  .submission_warning {
+    color: #c01730;
+    text-shadow: 0 1px 0 $white;
+    background: #fadbe1 url(../images/global/icon-error-content.png) no-repeat 9px 45%;
+    border-color: #f5bcc7;
   }
 }
 
@@ -1523,7 +1615,7 @@ h3 {
 
   a.user-login {
     color: #8cc8b9;
-    background-color: #005a44;
+    background-color: transparent;
   }
 }
 
@@ -1541,7 +1633,7 @@ h3 {
 
   a.user-register {
     color: #8cc8b9;
-    background-color: #005a44;
+    background-color: transparent;
   }
 }
 
