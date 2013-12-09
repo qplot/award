@@ -10,63 +10,6 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-
-/**
- * Implementation of hook_permission().
- */
-// function pgh_application_permission() {
-//   return array(
-//     'edit field_application_status' => array(
-//       'title' => t('Edit Application status field'),
-//       'description' => t('Modify the status field of an application.'),
-//     ),
-//   );
-// }
-
-/**
- * Implementation of hook_field_access().
- *
- * @param string $op
- *   The operation to be performed. Possible values: 'edit', 'view'.
- *
- * @param array $field
- *   The field on which the operation is to be performed.
- *
- * @param string $entity_type
- *   The type of $entity; for example, 'node' or 'user'.
- *
- * @param object $entity
- *   (optional) The entity for the operation.
- *
- * @param object $account
- *   (optional) The account to check; if not given use currently logged in user.
- *
- * @return bool
- *   TRUE if the operation is allowed, and FALSE if the operation is denied.
- */
-// function pgh_application_field_access($op, $field, $entity_type, $entity, $account) {
-//   dsm($field);
-//   if ($field['type'] == 'field_application_status') {
-//     // First we'll check if the user has the 'superuser'
-//     // permissions that node provides. This way administrators
-//     // will be able to administer the content types.
-//     if (user_access('bypass node access', $account)) {
-//       return TRUE;
-//     }
-//     if (user_access('administer content types', $account)) {
-//       return TRUE;
-//     }
-//     if (user_access('administer awards system', $account)) {
-//       return TRUE;
-//     }
-
-//     return FALSE;
-//   }
-//   // Ignore for other field types.
-//   return TRUE;
-// }
-
-
 /**
  * Implementation of hook_form_node_form_alter().
  *
@@ -92,7 +35,7 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
     if (isset($_GET['bid'])) {
       $bid = $_GET['bid'];
     }
-    elseif (isset($form_state['node'])) {
+    elseif (isset($form_state['node']) && isset($form_state['node']->nid)) {
       $business_unit = pgh_api_business_unit_for_application($form_state['node']->nid);
       if ($business_unit) {
         $bid = $business_unit->nid;
@@ -113,6 +56,15 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
     $form['business_unit'] = array(
       '#type' => 'hidden',
       '#value' => $bid,
+    );
+
+    // We will be auto-generating the node title and body so don't do anything with it here.
+    unset($form['title']);
+    unset($form['body']);
+
+    $form['field_application_status'] = array(
+      '#type' => 'hidden',
+      '#value' => 'new',
     );
 
     // Redirect to dashboard after saving node.
@@ -168,6 +120,32 @@ function pgh_application_node_validate($node, $form, &$form_state) {
     form_set_error('business_unit', 'You do not have permission to modify this Business Unit.');
     return;
   }
+}
+
+/**
+ * Implementation of hook_node_presave().
+ *
+ * Auto-generate the application title and body.
+ *
+ * @param object $node
+ *   The node that is being inserted or updated.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_application_node_presave($node) {
+  if ($node->type !== 'application') {
+    return;
+  }
+
+  // Auto-generate application title.
+  $business_unit = node_load($node->business_unit);
+  $application_type_id = field_get_items('node', $node, 'field_application_type');
+  $application_type_id = $application_type_id[0]['value'];
+
+  $application_type = pgh_api_application_type_by_id($application_type_id);
+
+  $node->title = $application_type->body['und'][0]['value'];
+  $node->body['und'][0]['value'] = $application_type->body['und'][0]['value'] . ' application for ' . $business_unit->title;
 }
 
 /**
