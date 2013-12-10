@@ -209,4 +209,15 @@
     }
   };
 
+  Drupal.behaviors.pghApplicationCategoryLinks = {
+    attach: function(context, settings) {
+      var pathArray = window.location.pathname.split( '/' );
+      var appId = pathArray[2];
+      $('a[href^="category-link"]').each(function (i, element) {
+        var categoryId = $(this).attr('href').substring(14);
+        $(this).attr('href', '/application/' + appId + '/category/' + categoryId);
+      });
+    }
+  };
+
 })(jQuery);
