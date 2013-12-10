@@ -8,7 +8,7 @@
  */
 
 // Define a temp variable to hold the questions.
-$pgh_temp_section_questions = NULL;
+$_pgh_form_temp_section_questions_ = NULL;
 
 // Define a temp variable to hold the validation errors.
 // $pgh_temp_validation_errors = NULL;
@@ -244,7 +244,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
   // TODO: This is a very brittle way to skip already rendered questions. We should not use globals for this.
   // Also, it leaves technically invalid question specifiers in the Section objects.
   // Questions contained within tables/containers should be filtered out at migration time, not render time.
-  global $pgh_temp_section_questions;
+  global $_pgh_form_temp_section_questions_;
 
   $form = array();
 
@@ -291,17 +291,17 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
         }
 
         // Add all question inside this section.
-        $pgh_temp_section_questions = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
-        // dsm($pgh_temp_section_questions);
+        $_pgh_form_temp_section_questions_ = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
+        // dsm($_pgh_form_temp_section_questions_);
         foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
 
-          if (!isset($pgh_temp_section_questions[$q_wrapper->getIdentifier()])) {
+          if (!isset($_pgh_form_temp_section_questions_[$q_wrapper->getIdentifier()])) {
             continue;
           }
 
           $major = 'question_' . $q_wrapper->label();
 
-          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_gen_form_question_layout($q_wrapper->value(), $app_id);
+          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_form_render_question_layout($q_wrapper->value(), $app_id);
 
           $debug = $debug + 1;
           if ($debug == $total) {
@@ -344,8 +344,6 @@ function pgh_application_form_element_callback($form, &$form_state) {
   if (empty($form_state['triggering_element']['#parents'][0])) {
     return;
   }
-  // watchdog('pgh', $form_state['triggering_element']['#parents'][0]);
-
   // Find the question.
   $qid = $form_state['triggering_element']['#parents'][0];
   $question = node_load($qid);
@@ -417,7 +415,7 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_gen_form_question($question, $app_id = NULL) {
+function pgh_form_render_question($question, $app_id = NULL) {
   $form = array();
 
   $wrapper = entity_metadata_wrapper('node', $question);
@@ -469,7 +467,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     'wrapper' => 'error-container-' . $wrapper->title->value(),
   );
 
-  // Based on different question type.
+  // Perform additional question-type specific processing.
   switch ($type) {
     case 'html':
     case 'container':
@@ -530,8 +528,6 @@ function pgh_gen_form_question($question, $app_id = NULL) {
       $media = array(
         '#type' => 'media',
         '#input' => TRUE,
-        // Use element_validate to do ajax handling, however it doesn't fire after upload file selected.
-        '#element_validate' => array('pgh_application_form_element_callback'),
         '#media_options' => array(
           'global' => array(
             'types' => array('document'),
@@ -599,8 +595,8 @@ function pgh_gen_form_question($question, $app_id = NULL) {
   }
 
   // Mark this question as processed.
-  global $pgh_temp_section_questions;
-  unset($pgh_temp_section_questions[$wrapper->getIdentifier()]);
+  global $_pgh_form_temp_section_questions_;
+  unset($_pgh_form_temp_section_questions_[$wrapper->getIdentifier()]);
 
   return $form;
 }
@@ -628,7 +624,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_gen_form_question_layout($question, $app_id = NULL) {
+function pgh_form_render_question_layout($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
   $type = $wrapper->field_question_type->value();
   $layout = $wrapper->field_question_layout->value();
@@ -654,7 +650,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
           // Find the question.
           if ($qid = pgh_find_question_id($cell)) {
             $child = node_load($qid);
-            $result[$qid] = pgh_gen_form_question($child, $app_id);
+            $result[$qid] = pgh_form_render_question($child, $app_id);
           }
         }
       }
@@ -662,7 +658,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
   }
   else {
     // This is the original without layout handling.
-    $result = pgh_gen_form_question($question, $app_id);
+    $result = pgh_form_render_question($question, $app_id);
   }
 
   return $result;

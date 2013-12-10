@@ -10,7 +10,6 @@
 (function($) {
   'use strict';
 
-
   //
   // Returns a float value for the supplied question id. Returns 0 if not found.
   //
@@ -216,6 +215,20 @@
       $('a[href^="category-link"]').each(function (i, element) {
         var categoryId = $(this).attr('href').substring(14);
         $(this).attr('href', '/application/' + appId + '/category/' + categoryId);
+      });
+    }
+  };
+
+  //
+  // Trigger a form submission if the value of a file id field is changed.
+  //
+  // When a file is selected with the Media module file upload pop-up, the hidden field containing the uploaded file id
+  // is properly updated. However, this change does not trigger an AJAX form submission so we do it manually here.
+  //
+  Drupal.behaviors.pghMediaUploadOnChange = {
+    attach: function (context, settings) {
+      $('input.fid', context).change(function() {
+        $(this).parents('form').submit();
       });
     }
   };
