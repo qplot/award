@@ -14,7 +14,7 @@ function pgh_work_group_ctype_node_info() {
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
-      'title_label' => t('Name'),
+      'title_label' => t('Name of Workgroup'),
       'help' => '',
     ),
   );

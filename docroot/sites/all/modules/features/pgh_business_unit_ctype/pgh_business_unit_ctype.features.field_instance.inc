@@ -36,14 +36,15 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'body',
-    'label' => 'Body',
-    'required' => FALSE,
+    'label' => 'Description / Notes',
+    'required' => 0,
     'settings' => array(
-      'display_summary' => TRUE,
-      'text_processing' => 1,
+      'display_summary' => 0,
+      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
         'rows' => 20,
@@ -454,6 +455,49 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-business_unit-field_same_as_billing'
+  $field_instances['node-business_unit-field_same_as_billing'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 19,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_same_as_billing',
+    'label' => 'Same as Billing Address',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 18,
+    ),
+  );
+
   // Exported field_instance: 'node-business_unit-field_shipping_address_1'
   $field_instances['node-business_unit-field_shipping_address_1'] = array(
     'bundle' => 'business_unit',
@@ -490,7 +534,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 19,
     ),
   );
 
@@ -530,7 +574,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 20,
     ),
   );
 
@@ -570,7 +614,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 21,
     ),
   );
 
@@ -610,7 +654,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 22,
     ),
   );
 
@@ -650,7 +694,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 10,
+      'weight' => 23,
     ),
   );
 
@@ -760,13 +804,14 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Billing city');
   t('Billing state');
   t('Billing zip code');
-  t('Body');
   t('Business unit type');
+  t('Description / Notes');
   t('Facility users');
   t('Phone');
   t('Provide state abbreviation.');
   t('Provide the number of beds for this business unit.');
   t('Provide the number of facility users for this business unit.');
+  t('Same as Billing Address');
   t('Shipping address 1');
   t('Shipping address 2');
   t('Shipping city');

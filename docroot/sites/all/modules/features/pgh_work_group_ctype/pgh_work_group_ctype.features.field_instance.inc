@@ -36,14 +36,15 @@ function pgh_work_group_ctype_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'body',
-    'label' => 'Body',
-    'required' => FALSE,
+    'label' => 'Description / Notes',
+    'required' => 0,
     'settings' => array(
-      'display_summary' => TRUE,
-      'text_processing' => 1,
+      'display_summary' => 0,
+      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
         'rows' => 20,
@@ -143,8 +144,8 @@ function pgh_work_group_ctype_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Administrators');
-  t('Body');
   t('Business units');
+  t('Description / Notes');
 
   return $field_instances;
 }
