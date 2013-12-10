@@ -63,7 +63,7 @@
       }
 
     } else {
-      console.log('Unsupported question type: #' + $question.attr('id') + ', ' + $question.attr('class'));
+      console.log('Unsupported question type: #' + question_id + ', ' + $question.attr('class'));
       return 0;
     }
   };
