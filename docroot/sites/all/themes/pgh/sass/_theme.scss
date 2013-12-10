@@ -30,6 +30,10 @@ h3 {
   font-weight: normal;
 }
 
+.field-name-body div.field-item { // replaces the P tag margin
+  margin: 1.4em 0;
+}
+
 // !---------------------------- */
 // !-- Header ------------------ */
 // !---------------------------- */
@@ -675,7 +679,6 @@ h3 {
 
   .info-block {
     font-size: 0.8em;
-    font-weight: bold;
 
     div {
       display: inline;
@@ -683,7 +686,12 @@ h3 {
 
     .field-label,
     .field-items {
+      font-weight: normal;
       float: none;
+    }
+
+    .field-items {
+      font-weight: bold;
     }
 
     .clearfix:after { //override
@@ -709,14 +717,8 @@ h3 {
 
     .field-name-field-shipping-state {}
 
-    .field-name-field-number-beds {
-      border-left: 1px solid #d4d4d4;
-      margin-left: 8px;
-      padding-left: 10px;
-    }
-
-    .field-name-field-facility-users {
-      text-transform: capitalize;
+    .field-name-field-number-beds,
+    .field-name-field-number-ors {
       border-left: 1px solid #d4d4d4;
       margin-left: 8px;
       padding-left: 10px;
