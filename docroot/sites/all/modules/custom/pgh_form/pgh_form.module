@@ -295,7 +295,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
           $major = 'question_' . $q_wrapper->label();
 
-          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_gen_form_question_layout($q_wrapper->value(), $app_id);
+          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_form_render_question_layout($q_wrapper->value(), $app_id);
 
           $debug = $debug + 1;
           if ($debug == $total) {
@@ -411,7 +411,7 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_gen_form_question($question, $app_id = NULL) {
+function pgh_form_render_question($question, $app_id = NULL) {
   $form = array();
 
   $wrapper = entity_metadata_wrapper('node', $question);
@@ -622,7 +622,7 @@ function pgh_gen_form_question($question, $app_id = NULL) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_gen_form_question_layout($question, $app_id = NULL) {
+function pgh_form_render_question_layout($question, $app_id = NULL) {
   $wrapper = entity_metadata_wrapper('node', $question);
   $type = $wrapper->field_question_type->value();
   $layout = $wrapper->field_question_layout->value();
@@ -648,7 +648,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
           // Find the question.
           if ($qid = pgh_find_question_id($cell)) {
             $child = node_load($qid);
-            $result[$qid] = pgh_gen_form_question($child, $app_id);
+            $result[$qid] = pgh_form_render_question($child, $app_id);
           }
         }
       }
@@ -656,7 +656,7 @@ function pgh_gen_form_question_layout($question, $app_id = NULL) {
   }
   else {
     // This is the original without layout handling.
-    $result = pgh_gen_form_question($question, $app_id);
+    $result = pgh_form_render_question($question, $app_id);
   }
 
   return $result;
