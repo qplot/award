@@ -138,14 +138,19 @@ function pgh_application_node_presave($node) {
   }
 
   // Auto-generate application title.
-  $business_unit = node_load($node->business_unit);
-  $application_type_id = field_get_items('node', $node, 'field_application_type');
-  $application_type_id = $application_type_id[0]['value'];
+  //
+  // $node->business_unit will be set by the node creation form but may not be available when
+  // saving an application later. Only auto generate if we actually have a business_unit.
+  if (isset($node->business_unit)) {
+    $business_unit = node_load($node->business_unit);
+    $application_type_id = field_get_items('node', $node, 'field_application_type');
+    $application_type_id = $application_type_id[0]['value'];
 
-  $application_type = pgh_api_application_type_by_id($application_type_id);
+    $application_type = pgh_api_application_type_by_id($application_type_id);
 
-  $node->title = $application_type->body['und'][0]['value'];
-  $node->body['und'][0]['value'] = $application_type->body['und'][0]['value'] . ' application for ' . $business_unit->title;
+    $node->title = $application_type->body['und'][0]['value'];
+    $node->body['und'][0]['value'] = $application_type->body['und'][0]['value'] . ' application for ' . $business_unit->title;
+  }
 }
 
 /**
