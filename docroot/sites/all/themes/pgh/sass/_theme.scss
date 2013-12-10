@@ -1613,6 +1613,52 @@ h3 {
 
 
 // !---------------------------- */
+// !-- Application show errors - */
+// !---------------------------- */
+
+.page-application {
+
+  table {
+
+    .show-errors {
+      color: #777;
+      font-size: 11px;
+      line-height: 14px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-left: 1px solid #ededed;
+      @include border-radius(2px);
+      padding: 4px 10px 3px;
+      float: right;
+      cursor: pointer;
+
+      &:hover {
+        color: $white;
+        background-color: #c01730;
+        border-color: #c01730;
+      }
+    }
+
+    .error-list {
+      color: #bc9906;
+  	  background-color: #fefdf8;
+      border: 1px solid #faeeb0;
+  	  margin: 5px 0 0;
+  	  padding: 9px 3%;
+      width: 93.3%;
+      float: right;
+
+      p {
+        font-size: 1em;
+        line-height: 1.2em;
+        padding-bottom: 5px;
+      }
+    }
+  }
+}
+
+
+// !---------------------------- */
 // !-- saving indicator -------- */
 // !---------------------------- */
 
