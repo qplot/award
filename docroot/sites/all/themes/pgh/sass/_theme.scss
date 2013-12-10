@@ -756,6 +756,34 @@ h3 {
       }
     }
   }
+
+  #review-submit-wrap {
+    background-color: $white;
+    border-bottom: 1px solid #ededed;
+
+    #review-submit-wrap-inner {
+      text-align: center;
+    }
+
+    a {
+      color: $green;
+      font-size: 11px;
+      line-height: 13px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid #67a697;
+      @include border-radius(2px);
+      display: inline-block;
+      @include ie7-inline-block();
+      margin: 10px auto;
+      padding: 4px 7px 3px;
+
+      &:hover {
+        color: $white;
+        background-color: #67a697;
+      }
+    }
+  }
 }
 
 // !---------------------------- */
@@ -1217,11 +1245,9 @@ h3 {
     }
 
     .question {
-      padding-left: 40px;
     }
 
     .question-dependent {
-      padding-left: 70px;
     }
 
     .question-number {
@@ -1230,15 +1256,30 @@ h3 {
       float: left;
     }
 
-    .form-item {
-      border-bottom: 1px solid #ededed;
-      margin-bottom: 25px;
-      padding-bottom: 25px;
+    .question {
 
       .form-item {
-        border: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
+        border-bottom: 1px solid #ededed;
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+        padding-left: 40px;
+
+        .form-item {
+          border: none;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    .question-dependent {
+
+      .form-item {
+        padding-left: 70px;
+
+        .form-item {
+          padding-left: 0;
+        }
       }
     }
 
@@ -1306,16 +1347,17 @@ h3 {
     }
 
     .content-incorrect {
-      color: #bc9906;
-      text-shadow: 0 1px #fdfbee;
+      color: #d6b52b;
       font-size: 0.9em;
-      line-height: 1.1em;
-      background: #faf3d0 url(../images/global/icon-warning-content.png) no-repeat 9px 45%;
-      border: 1px solid #f5e9ac;
+      line-height: 1.2em;
+      background: #fefdf8 url(../images/global/icon-warning-small.png) no-repeat 4px 5px;
+      border: 1px solid #faeeb0;
       @include border-radius(3px);
+      display: inline-block;
+      @include ie7-inline-block();
       margin: 5px 0 1em;
-      padding: 9px 9px 9px 32px;
-      width: 47%;
+      padding: 5px 5px 4px 20px;
+      width: auto;
     }
   }
 }
@@ -1327,10 +1369,9 @@ h3 {
 .page-application {
 
   td .content-incorrect {
-    background-position: 7px 45%;
+    background-position: 4px 5px;
+    @include border-radius(0);
     margin: 5px 0 0;
-    padding: 5px 5px 5px 32px;
-    width: 70%;
   }
 
   table {
@@ -1340,12 +1381,6 @@ h3 {
     @include border-radius(3px);
     margin-bottom: 2em;
     width: 960px;
-
-    .form-item {
-      border: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
 
     tr {
       background-color: transparent;
@@ -1396,7 +1431,10 @@ h3 {
       }
     }
 
-    .question {
+    .question .form-item {
+      border: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
       padding-left: 0;
     }
 
