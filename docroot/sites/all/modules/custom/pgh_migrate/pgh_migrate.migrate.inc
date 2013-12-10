@@ -55,6 +55,11 @@ function pgh_migrate_migrate_api() {
         'group_name' => 'PGH',
         'soft_dependencies' => array('PreprocessCSV', 'Question')
       ),
+      'Formula' => array(
+        'class_name' => 'MigratePGHFormulaMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV', 'Question')
+      ),
       // 'ExportXML' => array(
       //   'class_name' => 'MigratePGHExportXMLMigration',
       //   'group_name' => 'PGH',

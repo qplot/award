@@ -70,6 +70,7 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
       'responses',
       'sections',
       'containers',
+      'formulas',
     );
 
     foreach ($dirs as $dir) {
