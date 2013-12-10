@@ -60,6 +60,7 @@ function pgh_business_unit_ctype_field_group_info() {
       2 => 'field_shipping_city',
       3 => 'field_shipping_state',
       4 => 'field_shipping_zipcode',
+      5 => 'field_same_as_billing',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -67,7 +68,7 @@ function pgh_business_unit_ctype_field_group_info() {
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'group-shipping-address field-group-fieldset',
-        'description' => '',
+        'description' => 'This is the address to which you would like an award plaque shipped.',
       ),
       'formatter' => 'open',
     ),

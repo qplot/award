@@ -34,6 +34,7 @@
     hide($content['field_billing_state']);
     hide($content['field_billing_zipcode']);
     // shipping address
+    hide($content['field_same_as_billing']);
     hide($content['field_shipping_address_1']);
     hide($content['field_shipping_address_2']);
     hide($content['field_shipping_city']);
