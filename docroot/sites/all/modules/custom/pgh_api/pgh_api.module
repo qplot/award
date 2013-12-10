@@ -827,6 +827,40 @@ function pgh_api_category_is_valid($application_nid, $category_nid) {
   return TRUE;
 }
 
+/**
+ * Returns an array of errors keyed on the question id for the supplied application category.
+ *
+ * @param int $application_nid
+ *   The NID of the application.
+ *
+ * @param int $category_nid
+ *   The NID of the category.
+ *
+ * @return array
+ *   An array of errors keyed on question id.
+ */
+function pgh_api_errors_for_category($application_nid, $category_nid) {
+  // TODO: Currently this does not take into account questions which are not valid but shouldn't be
+  // considered because their parent value is not selected.
+  $questions = pgh_api_questions_for_category($application_nid, $category_nid);
+
+  $cat = node_load($category_nid);
+
+  $errors = array();
+
+  foreach ($questions as $question) {
+    $question_wrapper = entity_metadata_wrapper('node', $question);
+
+    $response_array = pgh_api_get_response($application_nid, $question->nid);
+
+    $question_errors = pgh_api_validate_question_value($question_wrapper->field_question_validation->value(), $response_array['value'], TRUE);
+    if ($question_errors) {
+      $errors[$question->title] = $question_errors;
+    }
+  }
+
+  return $errors;
+}
 
 /**
  * Adds the supplied user to the list of users for the Business Unit.

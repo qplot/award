@@ -814,6 +814,8 @@ function pgh_parse_layout($layout) {
  * @author  Jay Roberts <jay@designhammer.com>
  */
 function pgh_form_application_submit_page($application) {
+  drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form_submission.js', array('weight' => 2, 'scope' => 'footer'));
+
   $categories = pgh_api_categories_for_application($application->nid);
 
   $rows = array();
@@ -830,8 +832,24 @@ function pgh_form_application_submit_page($application) {
     }
 
     $validation = '<span class="valid">Valid</span>';
-    if (!pgh_api_category_is_valid($application->nid, $category->nid)) {
+    $category_errors = pgh_api_errors_for_category($application->nid, $category->nid);
+
+    if ($category_errors) {
       $validation = '<span class="invalid">There are validation errors in this category</span>';
+      $validation .= '<div class="error-list" style="border: 1px solid red; width: 100%;">';
+      $validation .= '<span>You can click and error below to go to the question it refers to.</span>';
+
+      foreach ($category_errors as $qid => $question_errors) {
+        foreach ($question_errors as $error) {
+          $options = array(
+            'fragment' => 'question-' . $qid,
+          );
+          $validation .= l($error, 'application/' . $application->nid . '/category/' . $category->title, $options) . '<br />';
+        }
+      }
+
+      $validation .= '</div>';
+
       $invalid_categories = TRUE;
     }
 
