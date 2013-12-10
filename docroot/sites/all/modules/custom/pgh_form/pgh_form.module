@@ -338,8 +338,6 @@ function pgh_application_form_element_callback($form, &$form_state) {
   if (empty($form_state['triggering_element']['#parents'][0])) {
     return;
   }
-  // watchdog('pgh', $form_state['triggering_element']['#parents'][0]);
-
   // Find the question.
   $qid = $form_state['triggering_element']['#parents'][0];
   $question = node_load($qid);
@@ -463,7 +461,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
     'wrapper' => 'error-container-' . $wrapper->title->value(),
   );
 
-  // Based on different question type.
+  // Perform additional question-type specific processing.
   switch ($type) {
     case 'html':
     case 'container':
@@ -524,8 +522,6 @@ function pgh_form_render_question($question, $app_id = NULL) {
       $media = array(
         '#type' => 'media',
         '#input' => TRUE,
-        // Use element_validate to do ajax handling, however it doesn't fire after upload file selected.
-        '#element_validate' => array('pgh_application_form_element_callback'),
         '#media_options' => array(
           'global' => array(
             'types' => array('document'),
