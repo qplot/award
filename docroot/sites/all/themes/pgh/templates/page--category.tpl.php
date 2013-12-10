@@ -101,9 +101,11 @@
   </div>
   </div></div>
 
+  <?php if ($logged_in): ?>
   <div id="review-submit-wrap"><div id="review-submit-wrap-inner">
     <a href="../submit">Review and submit this application</a>
   </div></div>
+  <?php endif; ?>
 
   <div id="main-wrap"><div id="main-wrap-inner">
   <div id="main">
