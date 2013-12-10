@@ -846,31 +846,102 @@ h3 {
       }
     }
   }
+}
+
+// !---------------------------- */
+// !-- Application progress ---- */
+// !---------------------------- */
+
+.page-application {
 
   #review-submit-wrap {
     background-color: $white;
     border-bottom: 1px solid #ededed;
 
     #review-submit-wrap-inner {
-      text-align: center;
     }
 
-    a {
+    .progress-wrap {
+      width: 590px;
+      margin: 0 auto;
+      padding: 10px 0;
+      @include clearfix;
+    }
+
+    a.review-btn {
       color: $green;
       font-size: 11px;
       line-height: 13px;
+      text-align: center;
       text-transform: uppercase;
       text-decoration: none;
       border: 1px solid #67a697;
       @include border-radius(2px);
-      display: inline-block;
-      @include ie7-inline-block();
-      margin: 10px auto;
-      padding: 4px 7px 3px;
+      width: 250px;
+      margin: 3px 0 0 15px;
+      padding: 4px 0 3px;
+      float: left;
 
       &:hover {
         color: $white;
         background-color: #67a697;
+      }
+    }
+
+    .cat-progress {
+      border-right: 1px solid #ededed;
+      padding-right: 15px;
+      width: 305px;
+      float: left;
+
+      .label {
+        font-size: 0.7em;
+        line-height: 28px;
+        text-transform: uppercase;
+        text-align: left;
+        width: 134px;
+        float: left;
+      }
+    }
+
+    .progress-bar {
+      width: 171px;
+      float: left;
+
+      .percentage {
+        font-size: 13px;
+        line-height: 28px;
+        text-align: left;
+        padding-right: 7px;
+        width: 40px;
+        float: left;
+      }
+
+      .bar-container {
+        border: 1px solid #eae9e9;
+        @include border-radius(3px);
+        padding: 1px;
+        width: 120px;
+        height: 24px;
+        float: left;
+
+        .progress {
+          @include border-radius(2px);
+          height: 24px;
+          float: left;
+        }
+      }
+
+      &.low .bar-container .progress {
+        @include gradient(#ea4c4c, #e33434);
+      }
+
+      &.mid .bar-container .progress {
+        @include gradient(#ffd656, #ffca3e);
+      }
+
+      &.high .bar-container .progress {
+        @include gradient(#33ab8f, #1f9677);
       }
     }
   }
