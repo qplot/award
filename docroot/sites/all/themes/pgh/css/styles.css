@@ -4548,7 +4548,7 @@ h3 {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\000031690}}
 .page-application .pgh-form-status.saving {
   background-color: #ffba4e;
-  background-image: url(../images/pgh-form/icon-page-saving.gif);
+  background-image: url(../images/pgh-form/icon-page-saving.gif?=yellow);
   border-color: #ffb043;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
