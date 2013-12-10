@@ -23,8 +23,8 @@ function pgh_business_unit_ctype_node_info() {
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
-      'title_label' => t('Name'),
-      'help' => '',
+      'title_label' => t('Name of Institution'),
+      'help' => t('The "Name of Institution" field below should be the formal name of the institution that you want to see on an award plaque.'),
     ),
   );
   return $items;
