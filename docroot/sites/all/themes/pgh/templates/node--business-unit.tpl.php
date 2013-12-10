@@ -43,7 +43,7 @@
     // additional info
     hide($content['field_business_unit_type']);
     hide($content['field_number_beds']);
-    hide($content['field_facility_users']);
+    hide($content['field_number_ors']);
     hide($content['field_website_url']);
     hide($content['field_phone']);
 
@@ -68,9 +68,9 @@
       <?php print render($content['field_number_beds']); ?>
     <?php endif; ?>
 
-    <?php $facility_users = field_get_items('node', $node, 'field_facility_users'); ?>
-    <?php if ($facility_users): ?>
-      <?php print render($content['field_facility_users']); ?>
+    <?php $number_ors = field_get_items('node', $node, 'field_number_ors'); ?>
+    <?php if ($number_ors): ?>
+      <?php print render($content['field_number_ors']); ?>
     <?php endif; ?>
 
   </div>

@@ -88,10 +88,10 @@ function pgh_business_unit_ctype_field_group_info() {
     'label' => 'Unit info',
     'weight' => '5',
     'children' => array(
-      0 => 'field_facility_users',
-      1 => 'field_number_beds',
-      2 => 'field_phone',
-      3 => 'field_website_url',
+      0 => 'field_number_beds',
+      1 => 'field_phone',
+      2 => 'field_website_url',
+      3 => 'field_number_ors',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

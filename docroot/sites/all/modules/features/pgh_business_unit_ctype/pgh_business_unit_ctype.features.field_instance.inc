@@ -69,7 +69,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 18,
+        'weight' => 17,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -335,12 +335,52 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-business_unit-field_facility_users'
-  $field_instances['node-business_unit-field_facility_users'] = array(
+  // Exported field_instance: 'node-business_unit-field_number_beds'
+  $field_instances['node-business_unit-field_number_beds'] = array(
     'bundle' => 'business_unit',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Provide the number of facility users for this business unit.',
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_number_beds',
+    'label' => 'Number of Beds',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 14,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_number_ors'
+  $field_instances['node-business_unit-field_number_ors'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'inline',
@@ -357,8 +397,8 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_facility_users',
-    'label' => 'Facility users',
+    'field_name' => 'field_number_ors',
+    'label' => 'Number of ORs',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -372,46 +412,6 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 15,
-    ),
-  );
-
-  // Exported field_instance: 'node-business_unit-field_number_beds'
-  $field_instances['node-business_unit-field_number_beds'] = array(
-    'bundle' => 'business_unit',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Provide the number of beds for this business unit.',
-    'display' => array(
-      'default' => array(
-        'label' => 'inline',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 16,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_number_beds',
-    'label' => 'Beds',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 14,
     ),
   );
 
@@ -451,7 +451,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 16,
     ),
   );
 
@@ -471,7 +471,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
-        'weight' => 19,
+        'weight' => 18,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -712,7 +712,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 17,
+        'weight' => 16,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -791,14 +791,13 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('Applications');
-  t('Beds');
   t('Billing address 1');
   t('Billing address 2');
   t('Billing city');
@@ -806,11 +805,10 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Billing zip code');
   t('Business unit type');
   t('Description / Notes');
-  t('Facility users');
+  t('Number of Beds');
+  t('Number of ORs');
   t('Phone');
   t('Provide state abbreviation.');
-  t('Provide the number of beds for this business unit.');
-  t('Provide the number of facility users for this business unit.');
   t('Same as Billing Address');
   t('Shipping address 1');
   t('Shipping address 2');

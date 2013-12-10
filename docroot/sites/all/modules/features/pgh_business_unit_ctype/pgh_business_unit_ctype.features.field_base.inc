@@ -223,13 +223,16 @@ function pgh_business_unit_ctype_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_facility_users'
-  $field_bases['field_facility_users'] = array(
+  // Exported field_base: 'field_number_beds'
+  $field_bases['field_number_beds'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_facility_users',
+    'field_name' => 'field_number_beds',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -252,13 +255,16 @@ function pgh_business_unit_ctype_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_number_beds'
-  $field_bases['field_number_beds'] = array(
+  // Exported field_base: 'field_number_ors'
+  $field_bases['field_number_ors'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_number_beds',
+    'field_name' => 'field_number_ors',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(

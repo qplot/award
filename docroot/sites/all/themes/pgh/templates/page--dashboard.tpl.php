@@ -98,12 +98,15 @@
 
 
       <?php
-        $options = array(
-          'query' => array(
-            'wgid' => $work_group->nid,
-          ),
-        );
-        print l(t('Add a new Business Unit'), 'node/add/business-unit', $options);
+        // Check to see if user has the correct role.
+        if (in_array('administrator', array_values($user->roles)) && in_array('PGH Administrator', array_values($user->roles))) {
+          $options = array(
+            'query' => array(
+              'wgid' => $work_group->nid,
+            ),
+          );
+          print l(t('Add a new Business Unit'), 'node/add/business-unit', $options);
+        }
       ?>
     </div>
 
@@ -146,7 +149,7 @@
           <?php $shipping_city = field_view_field('node', $business_unit, 'field_shipping_city', array('label' => 'hidden')); print render($shipping_city); ?>
           <?php $shipping_state = field_view_field('node', $business_unit, 'field_shipping_state', array('label' => 'hidden')); print render($shipping_state); ?>
           <?php $number_beds = field_view_field('node', $business_unit, 'field_number_beds'); print render($number_beds); ?>
-          <?php $facility_users = field_view_field('node', $business_unit, 'field_facility_users'); print render($facility_users); ?>
+          <?php $number_ors = field_view_field('node', $business_unit, 'field_number_ors'); print render($number_ors); ?>
         </div>
 
         <div class="billing-address">
