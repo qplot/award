@@ -798,15 +798,15 @@
     },
     'pghq_PFC_energy_2_11_21': {
       'args': [
-        '_PFC_energy_2_11_1',
-        '_PFC_energy_2_11_3',
-        '_PFC_energy_2_11_5',
-        '_PFC_energy_2_11_7',
-        '_PFC_energy_2_11_9',
-        '_PFC_energy_2_11_11',
-        '_PFC_energy_2_11_13',
-        '_PFC_energy_2_11_15',
-        '_PFC_energy_2_11_17'
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17'
       ],
       'calculation': handlers.sum
     },
@@ -933,7 +933,7 @@
     },
     'pghq_PFC_energy_3_1_1_9': {
       'args': [
-        'ppghq_PFC_energy_3_1_1_5',
+        'pghq_PFC_energy_3_1_1_5',
         'pghq_PFC_energy_3_1_1_6'
       ],
       'calculation': handlers.divide
