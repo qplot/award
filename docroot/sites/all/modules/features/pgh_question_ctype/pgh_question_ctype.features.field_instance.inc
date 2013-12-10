@@ -51,7 +51,7 @@ function pgh_question_ctype_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 14,
+      'weight' => 12,
     ),
   );
 
@@ -118,7 +118,7 @@ function pgh_question_ctype_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_question_formula',
-    'label' => 'Formula',
+    'label' => 'Default Formula',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -132,46 +132,6 @@ function pgh_question_ctype_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 11,
-    ),
-  );
-
-  // Exported field_instance: 'node-question-field_question_handler'
-  $field_instances['node-question-field_question_handler'] = array(
-    'bundle' => 'question',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 13,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_question_handler',
-    'label' => 'Formula Handler',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 12,
     ),
   );
 
@@ -359,46 +319,6 @@ function pgh_question_ctype_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_question_points',
     'label' => 'Points',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 15,
-    ),
-  );
-
-  // Exported field_instance: 'node-question-field_question_populated'
-  $field_instances['node-question-field_question_populated'] = array(
-    'bundle' => 'question',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 14,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_question_populated',
-    'label' => 'Populated Question',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -618,15 +538,13 @@ function pgh_question_ctype_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Body');
+  t('Default Formula');
   t('Default Value');
-  t('Formula');
-  t('Formula Handler');
   t('Layout');
   t('Options');
   t('Parent ID');
   t('Parent Required Value');
   t('Points');
-  t('Populated Question');
   t('Post Prompt');
   t('Prompt');
   t('Style');

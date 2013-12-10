@@ -15,5 +15,4 @@ files[] = class/section.inc
 files[] = class/category.inc
 files[] = class/apptype.inc
 files[] = class/container.inc
-files[] = class/formula.inc
 files[] = class/export_xml.inc
