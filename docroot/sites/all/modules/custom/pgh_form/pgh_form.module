@@ -525,7 +525,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
         '#media_options' => array(
           'global' => array(
             'types' => array('document'),
-            'schemes' => array('http'),
+            'file_directory' => 'application/' . $app_id,
           ),
         ),
         '#attached' => array(),
