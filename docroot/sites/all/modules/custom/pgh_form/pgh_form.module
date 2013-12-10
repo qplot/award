@@ -10,9 +10,6 @@
 // Define a temp variable to hold the questions.
 $pgh_temp_section_questions = NULL;
 
-// Define a temp variable to hold the formulas.
-$pgh_temp_category_formulas = NULL;
-
 // Define a temp variable to hold the validation errors.
 // $pgh_temp_validation_errors = NULL;
 
@@ -242,10 +239,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
   // Also, it leaves technically invalid question specifiers in the Section objects.
   // Questions contained within tables/containers should be filtered out at migration time, not render time.
   global $pgh_temp_section_questions;
-  global $pgh_temp_category_formulas;
 
   $form = array();
-  $pgh_temp_category_formulas = array();
 
   if (empty($app_id) || empty($cat_id)) {
     return $form;
@@ -254,7 +249,6 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
   // Load category by name, can be id as well.
   $cat = node_load($cat_id);
   $questions = array();
-  $formulas = array();
 
   if (!empty($cat->field_category_sections['und'])) {
     // For debugging purpose add a counter.
@@ -301,7 +295,6 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
           $major = 'question_' . $q_wrapper->label();
 
-          // Add question element
           $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_gen_form_question_layout($q_wrapper->value(), $app_id);
 
           $debug = $debug + 1;
@@ -316,10 +309,6 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
       }
     }
   }
-  // Add formula as JS variable
-  drupal_add_js(array(
-    'formulas' => $pgh_temp_category_formulas
-  ), 'setting');
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -603,21 +592,6 @@ function pgh_gen_form_question($question, $app_id = NULL) {
     }
   }
 
-  // Add formulas for this question
-  if ($wrapper->field_question_formula->value() && $wrapper->field_question_handler->value()) {
-
-    // Extract variable out of formula
-    $pattern = '/pghq_[A-Za-z0-9_]*/';
-    if (preg_match_all($pattern, $wrapper->field_question_formula->value(), $matches)) {
-      global $pgh_temp_category_formulas;
-
-      $pgh_temp_category_formulas[$wrapper->label()] = array(
-        'args' => $matches[0],
-        'calculation' => $wrapper->field_question_handler->value()
-      );
-    }
-  }
-
   // Mark this question as processed.
   global $pgh_temp_section_questions;
   unset($pgh_temp_section_questions[$wrapper->getIdentifier()]);
@@ -840,6 +814,8 @@ function pgh_parse_layout($layout) {
  * @author  Jay Roberts <jay@designhammer.com>
  */
 function pgh_form_application_submit_page($application) {
+  drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form_submission.js', array('weight' => 2, 'scope' => 'footer'));
+
   $categories = pgh_api_categories_for_application($application->nid);
 
   $rows = array();
@@ -856,8 +832,24 @@ function pgh_form_application_submit_page($application) {
     }
 
     $validation = '<span class="valid">Valid</span>';
-    if (!pgh_api_category_is_valid($application->nid, $category->nid)) {
+    $category_errors = pgh_api_errors_for_category($application->nid, $category->nid);
+
+    if ($category_errors) {
       $validation = '<span class="invalid">There are validation errors in this category</span>';
+      $validation .= '<div class="error-list" style="border: 1px solid red; width: 100%;">';
+      $validation .= '<span>You can click and error below to go to the question it refers to.</span>';
+
+      foreach ($category_errors as $qid => $question_errors) {
+        foreach ($question_errors as $error) {
+          $options = array(
+            'fragment' => 'question-' . $qid,
+          );
+          $validation .= l($error, 'application/' . $application->nid . '/category/' . $category->title, $options) . '<br />';
+        }
+      }
+
+      $validation .= '</div>';
+
       $invalid_categories = TRUE;
     }
 

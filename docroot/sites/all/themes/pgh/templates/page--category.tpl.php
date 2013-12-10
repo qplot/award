@@ -103,7 +103,7 @@
 
   <?php if ($logged_in): ?>
   <div id="review-submit-wrap"><div id="review-submit-wrap-inner">
-    <a href="../submit">Review and submit this application</a>
+    Category Progress: <?php print pgh_progress_bar($category_progress); ?> <a href="../submit">Review and submit this application</a>
   </div></div>
   <?php endif; ?>
 
