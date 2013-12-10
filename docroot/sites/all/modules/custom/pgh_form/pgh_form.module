@@ -531,7 +531,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
         '#media_options' => array(
           'global' => array(
             'types' => array('document'),
-            'schemes' => array('http'),
+            'file_directory' => 'application/' . $app_id,
           ),
         ),
         '#attached' => array(),
@@ -838,8 +838,8 @@ function pgh_form_application_submit_page($application) {
 
     if ($category_errors) {
       $validation = '<span class="invalid">There are validation errors in this category</span>';
-      $validation .= '<div class="error-list" style="border: 1px solid red; width: 100%;">';
-      $validation .= '<span>You can click and error below to go to the question it refers to.</span>';
+      $validation .= '<div class="error-list">';
+      $validation .= '<p>You can click an error below to go to the question it refers to.</p>';
 
       foreach ($category_errors as $qid => $question_errors) {
         foreach ($question_errors as $error) {
