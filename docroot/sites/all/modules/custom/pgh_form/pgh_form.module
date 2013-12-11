@@ -670,6 +670,12 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
       '#suffix' => '</div>',
     );
 
+    // We add the post prompt to the description so that it will be contained within the question form-item. Otherwise, post prompts
+    // wouldn't be hidden for dependent questions.
+    if ($question_wrapper->field_question_post_prompt->value()) {
+      $result['#description'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
+    }
+
     if (user_access('administer awards system')) {
       $result['#title'] .= ' ' . implode(' ', $admin_info);
     }
