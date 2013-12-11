@@ -564,7 +564,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   // We add the post prompt to the description so that it will be contained within the question form-item. Otherwise, post prompts
   // wouldn't be hidden for dependent questions.
   if ($question_wrapper->field_question_post_prompt->value()) {
-    $form_item['#description'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
+    $form_item['#description'] .= '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
   }
 
   $data_attributes = array();
