@@ -515,7 +515,6 @@ function pgh_form_render_question($question, $app_id = NULL) {
           break;
 
         default:
-          // $form['#markup'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
           $form['#prefix'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
           $form['#type'] = 'textfield';
           $form['#size'] = NULL;
@@ -543,7 +542,6 @@ function pgh_form_render_question($question, $app_id = NULL) {
       break;
 
     default:
-      // $form['#markup'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
       $form['#type'] = 'textfield';
       $form['#size'] = NULL;
       $form['#prefix'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
@@ -578,7 +576,11 @@ function pgh_form_render_question($question, $app_id = NULL) {
   }
 
   $form['#prefix'] = '<div id="question-' . $question_wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
-  $form['#suffix'] = '</div><!-- #question -->';
+  $form['#suffix'] = '';
+  if ($question_wrapper->field_question_post_prompt->value()) {
+    $form['#suffix'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
+  }
+  $form['#suffix'] .= '</div><!-- #question -->';
 
   // Add default question id handling.
   // If no default value is set and a default question id is given, set it to default question response value.

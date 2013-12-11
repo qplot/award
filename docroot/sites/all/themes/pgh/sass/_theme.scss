@@ -1407,12 +1407,6 @@ h3 {
       padding-left: 0;
     }
 
-    .question {
-    }
-
-    .question-dependent {
-    }
-
     .question-number {
       font-weight: bold;
       margin-left: -40px;
@@ -1421,8 +1415,9 @@ h3 {
 
     .question {
 
+      border-bottom: 1px solid #ededed;
+
       .form-item {
-        border-bottom: 1px solid #ededed;
         margin-bottom: 25px;
         padding-bottom: 25px;
         padding-left: 40px;
@@ -1432,6 +1427,11 @@ h3 {
           margin-bottom: 0;
           padding-bottom: 0;
         }
+      }
+
+      .question-post-prompt {
+        font-size: 13px;
+        padding-left: 40px;
       }
     }
 
