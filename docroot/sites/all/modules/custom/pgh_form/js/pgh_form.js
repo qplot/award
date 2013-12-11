@@ -133,7 +133,6 @@
     // Also ensure that third level dependent questions are properly hidden.
     $('.question > .form-item').each(function() {
       var id = $(this).closest('.question').attr('id');
-      console.log($(this).css('display'));
       $('.data-parent-id-' + id).toggle($(this).css('display') !== 'none');
     });
 

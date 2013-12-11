@@ -629,23 +629,50 @@ function pgh_form_render_question($question, $app_id = NULL) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_form_render_question_layout($question, $app_id = NULL) {
-  $wrapper = entity_metadata_wrapper('node', $question);
-  $type = $wrapper->field_question_type->value();
-  $layout = $wrapper->field_question_layout->value();
-  $prompt = check_markup($wrapper->field_question_prompt->value(), 'question_text', '', FALSE);
+  $question_wrapper = entity_metadata_wrapper('node', $question);
+  $type = $question_wrapper->field_question_type->value();
+  $layout = $question_wrapper->field_question_layout->value();
+  $prompt = check_markup($question_wrapper->field_question_prompt->value(), 'question_text', '', FALSE);
+
+  // Store any question-specific administrative information in $admin_info. Items will be
+  // included after the question prompt if the user is an awards administrator.
+  $admin_info = array();
+  $admin_info[] = ' <small>[' . $question_wrapper->title->value() . ']</small> ';
+  $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $question_wrapper->getIdentifier() . '/edit') . '</small>';
+
+  $result = array();
 
   if (!empty($layout) && ($type == 'container')) {
     // Print the container parent element.
     $parse = pgh_parse_layout($layout);
 
+    $parent_qid = $question_wrapper->field_question_parent_qid->value();
+    $classes = array('question-container');
+    if ($parent_qid) {
+      $classes[] = 'question-dependent';
+      $classes[] = 'data-parent-id-question-' . $parent_qid;
+      $data_attributes[] = 'data-parent-id="question-' . $parent_qid . '"';
+
+      $result['#states'] = pgh_form_question_states($question);
+    }
+
+    $opening_div = '<div id="question-' . $question_wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
+
     // We should be able to add prompt to the prefix section.
-    $result = array(
-      '#prefix' => $prompt,
-      // '#postfix' => '',
+    $result += array(
+      '#type' => 'item',
+      '#title' => $prompt,
+      '#markup' => 'Container markup',
+      '#prefix' => $opening_div,
       '#tree' => TRUE,
       '#theme' => 'pgh_form_table',
       '#layout' => $parse,
+      '#suffix' => '</div>',
     );
+
+    if (user_access('administer awards system')) {
+      $result['#title'] .= ' ' . implode(' ', $admin_info);
+    }
 
     // Print child elements.
     foreach ($parse as $row) {
