@@ -53,6 +53,9 @@ function pgh_application_ctype_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_application_type',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -68,6 +71,8 @@ function pgh_application_ctype_field_default_field_bases() {
         'long_term_care' => 'Long Term Care',
         'champion_for_change_gpo' => 'Champion for Change (GPO)',
         'champion_for_change_nongpo' => 'Champion for Change (Non-GPO)',
+        'chc_partner_for_change' => 'CHC Partner for Change',
+        'chc_partner_recognition' => 'CHC Partner Recognition',
         'greening_the_or' => 'Greening the OR',
         'dehp_free' => 'DEHP Free',
         'system_for_change' => 'System for Change',
