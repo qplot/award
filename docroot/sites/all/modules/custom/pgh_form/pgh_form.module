@@ -467,7 +467,6 @@ function pgh_form_render_question($question, $app_id = NULL) {
     'wrapper' => 'error-container-' . $question_wrapper->title->value(),
   );
 
-
   // Perform additional question-type specific processing.
   switch ($type) {
     case 'html':
@@ -504,6 +503,10 @@ function pgh_form_render_question($question, $app_id = NULL) {
         case 'radios':
           $form_item['#type'] = 'radios';
           $form_item['#options'] = $options;
+          // The empty string is coerced to 0, we want to treat it as not supplied.
+          if ($answer['value'] == '') {
+            unset($form_item['#default_value']);
+          }
           break;
 
         case 'checkboxes':
@@ -564,7 +567,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   // We add the post prompt to the description so that it will be contained within the question form-item. Otherwise, post prompts
   // wouldn't be hidden for dependent questions.
   if ($question_wrapper->field_question_post_prompt->value()) {
-    $form_item['#description'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
+    $form_item['#description'] .= '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
   }
 
   $data_attributes = array();
