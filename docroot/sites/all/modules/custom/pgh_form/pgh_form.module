@@ -467,6 +467,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
     'wrapper' => 'error-container-' . $question_wrapper->title->value(),
   );
 
+
   // Perform additional question-type specific processing.
   switch ($type) {
     case 'html':
@@ -648,6 +649,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
 
     $parent_qid = $question_wrapper->field_question_parent_qid->value();
     $classes = array('question-container');
+    $data_attributes = array();
     if ($parent_qid) {
       $classes[] = 'question-dependent';
       $classes[] = 'data-parent-id-question-' . $parent_qid;
