@@ -306,6 +306,11 @@ function pgh_user_invite_form_process($form, &$form_state) {
         variable_get('site_mail', ini_get('sendmail_from')));
     }
 
+    // Grant the Business Unit role to this user if not already granted.
+    if ($role = user_role_load_by_name('Business Unit User')) {
+      user_multiple_role_edit(array($invite_user->uid), 'add_role', $role->rid);
+    }
+
     // Fetch owner (the Business Unit that the new users will be added to).
     $owner = node_load($form_state['values']['owner']);
 

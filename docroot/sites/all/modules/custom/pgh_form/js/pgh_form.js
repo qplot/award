@@ -115,6 +115,30 @@
 
     // Process formula questions.
     calculateQuestionValues();
+
+    // Drupal's FAPI state handling doesn't allow us to bind a state to the visibility of an element. We need
+    // that behavior because dependent questions may be dependees of other questions. When the parent question
+    // is hidden its children should be hidden as well.
+    //
+    // Drupal's state.js provides the 'states:visible' event which we can bind to. This event will fire on a dependent
+    // question when its visibility is changed by FAPI. This code will show/hide the child questions appropriately.
+    //
+    // Note: this code only goes one level below the FAPI's change so if there is a chain of dependent questions
+    // longer than three, all questions after the third one will be unaffected when the top level item changes.
+    $('.question').bind('state:visible', function(e) {
+      if (e.trigger) {
+        var id = $(this).closest('.question').attr('id');
+        $(e.target).closest('.form-item, .form-submit, .form-wrapper')[e.value ? 'slideDown' : 'slideUp']();
+        $('.data-parent-id-' + id)[e.value ? 'slideDown' : 'slideUp']();
+        return false;
+      }
+    });
+
+    // Also ensure that third level dependent questions are properly hidden.
+    $('.question > .form-item').each(function() {
+      var id = $(this).closest('.question').attr('id');
+      $('.data-parent-id-' + id).toggle($(this).css('display') !== 'none');
+    });
   });
 
   Drupal.pghApplicationForm = {

@@ -277,7 +277,7 @@ function pgh_api_validate_question_value($validations, $value) {
         break;
 
       case 'required':
-        if ($value === '') {
+        if ($value === '' || $value === NULL) {
           $errors[] = 'This field is required.';
         }
         break;
@@ -575,7 +575,10 @@ function pgh_api_valid_application_types_for_business_unit($business_unit) {
       return $types;
 
     case 'clinic':
-      $types = array('');
+      $types = array(
+        'chc_partner_for_change' => 'CHC Partner for Change',
+        'chc_partner_recognition' => 'CHC Partner Recognition',
+      );
       return $types;
 
     case 'business_member':
