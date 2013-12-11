@@ -120,6 +120,30 @@ function pgh_application_node_validate($node, $form, &$form_state) {
     form_set_error('business_unit', 'You do not have permission to modify this Business Unit.');
     return;
   }
+
+  // One application of each valid type per business unit.
+  $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+
+  $open_statuses = array(
+    'new',
+    'in-progress',
+    'submitted',
+    'assigned-for-review',
+    'review-in-progress',
+  );
+
+  foreach ($business_unit_wrapper->field_applications->getIterator() as $application_wrapper) {
+    if ($application_wrapper->field_application_type->value() == $node->field_application_type['und'][0]['value'] &&
+        in_array($application_wrapper->field_application_status->value(), $open_statuses)) {
+
+      $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
+      $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
+
+      form_set_error('business_unit', t('There is already an open @type application for this Business Unit.', array('@type' => $application_type_wrapper->body->value->raw())));
+      return;
+    }
+  }
+
 }
 
 /**
