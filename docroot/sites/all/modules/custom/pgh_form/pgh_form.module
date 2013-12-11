@@ -418,24 +418,24 @@ function pgh_application_form_submit($form, &$form_state) {
 function pgh_form_render_question($question, $app_id = NULL) {
   $form = array();
 
-  $wrapper = entity_metadata_wrapper('node', $question);
-  $type = $wrapper->field_question_type->value();
-  $style = $wrapper->field_question_style->value();
+  $question_wrapper = entity_metadata_wrapper('node', $question);
+  $type = $question_wrapper->field_question_type->value();
+  $style = $question_wrapper->field_question_style->value();
 
   // Store any question-specific administrative information in $admin_info. Items will be
   // included after the question prompt if the user is an awards administrator.
   $admin_info = array();
-  $admin_info[] = ' <small>[' . $wrapper->title->value() . ']</small> ';
-  $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $wrapper->getIdentifier() . '/edit') . '</small>';
+  $admin_info[] = ' <small>[' . $question_wrapper->title->value() . ']</small> ';
+  $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $question_wrapper->getIdentifier() . '/edit') . '</small>';
 
   // Prepare response for question expecting a response.
   if (!in_array($type, array('html', 'container'))) {
-    $rid = pgh_api_find_response_id($app_id, $wrapper->getIdentifier());
+    $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
     if (!$rid) {
-      $rid = pgh_api_set_response($app_id, $wrapper->getIdentifier());
+      $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
     }
 
-    $answer = pgh_api_get_response($app_id, $wrapper->getIdentifier());
+    $answer = pgh_api_get_response($app_id, $question_wrapper->getIdentifier());
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
@@ -445,7 +445,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
     }
   }
 
-  $form['#title'] = '<div class="question-desc">' . check_markup($wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
+  $form['#title'] = '<div class="question-desc">' . check_markup($question_wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
 
   if (user_access('administer awards system')) {
     $form['#title'] .= ' ' . implode(' ', $admin_info);
@@ -454,17 +454,17 @@ function pgh_form_render_question($question, $app_id = NULL) {
   // Make sure the flat return.
   $form['#tree'] = FALSE;
 
-  $form['#question_id'] = $wrapper->getIdentifier();
+  $form['#question_id'] = $question_wrapper->getIdentifier();
 
   // Dependency display.
-  if ($parent_qid = $wrapper->field_question_parent_qid->value()) {
+  if ($parent_qid = $question_wrapper->field_question_parent_qid->value()) {
     $form['#states'] = pgh_form_question_states($question);
   }
 
   // Ajax processing.
   $form['#ajax'] = array(
     'callback' => 'pgh_application_form_element_callback',
-    'wrapper' => 'error-container-' . $wrapper->title->value(),
+    'wrapper' => 'error-container-' . $question_wrapper->title->value(),
   );
 
   // Perform additional question-type specific processing.
@@ -491,7 +491,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
       break;
 
     case 'selection':
-      $options = $wrapper->field_question_options->value();
+      $options = $question_wrapper->field_question_options->value();
 
       switch ($style) {
         case 'dropdown':
@@ -515,7 +515,6 @@ function pgh_form_render_question($question, $app_id = NULL) {
           break;
 
         default:
-          // $form['#markup'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
           $form['#prefix'] = '<b><em>Not Implemented Style - ' . $style . '</em></b>';
           $form['#type'] = 'textfield';
           $form['#size'] = NULL;
@@ -543,20 +542,19 @@ function pgh_form_render_question($question, $app_id = NULL) {
       break;
 
     default:
-      // $form['#markup'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
       $form['#type'] = 'textfield';
       $form['#size'] = NULL;
       $form['#prefix'] = '<b><em>Not Implemented Type - ' . $type . '</em></b>';
       break;
   }
 
-  $form['#description'] = '<div id="error-container-' . $wrapper->title->value() . '">';
+  $form['#description'] = '<div id="error-container-' . $question_wrapper->title->value() . '">';
 
   // Add error validation to description.
-  if ((!empty($answer['updated'])) && ($validations = $wrapper->field_question_validation->value())) {
+  if ((!empty($answer['updated'])) && ($validations = $question_wrapper->field_question_validation->value())) {
     $errors = pgh_api_validate_question_value($validations, $answer['value']);
     if ($errors) {
-      $form['#description'] .= pgh_form_error_html($wrapper->title->value(), $errors);
+      $form['#description'] .= pgh_form_error_html($question_wrapper->title->value(), $errors);
     }
   }
 
@@ -577,12 +575,16 @@ function pgh_form_render_question($question, $app_id = NULL) {
     $data_attributes[] = 'data-parent-id="question-' . $parent_qid . '"';
   }
 
-  $form['#prefix'] = '<div id="question-' . $wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
-  $form['#suffix'] = '</div><!-- #question -->';
+  $form['#prefix'] = '<div id="question-' . $question_wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
+  $form['#suffix'] = '';
+  if ($question_wrapper->field_question_post_prompt->value()) {
+    $form['#suffix'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
+  }
+  $form['#suffix'] .= '</div><!-- #question -->';
 
   // Add default question id handling.
   // If no default value is set and a default question id is given, set it to default question response value.
-  $form['#default_question_id'] = $wrapper->field_question_formula->value();
+  $form['#default_question_id'] = $question_wrapper->field_question_formula->value();
   if (empty($form['#default_value']) && !empty($form['#default_question_id'])) {
     // Fetch question.
     if ($fid = pgh_find_question_id($form['#default_question_id'])) {
@@ -596,7 +598,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
 
   // Mark this question as processed.
   global $_pgh_form_temp_section_questions_;
-  unset($_pgh_form_temp_section_questions_[$wrapper->getIdentifier()]);
+  unset($_pgh_form_temp_section_questions_[$question_wrapper->getIdentifier()]);
 
   return $form;
 }
