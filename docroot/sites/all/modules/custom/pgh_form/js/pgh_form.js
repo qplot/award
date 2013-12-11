@@ -126,8 +126,12 @@
     // Note: this code only goes one level below the FAPI's change so if there is a chain of dependent questions
     // longer than three, all questions after the third one will be unaffected when the top level item changes.
     $('.question').bind('state:visible', function(e) {
-      var id = $(this).closest('.question').attr('id');
-      $('.data-parent-id-' + id).toggle(e.value);
+      if (e.trigger) {
+        var id = $(this).closest('.question').attr('id');
+        $(e.target).closest('.form-item, .form-submit, .form-wrapper')[e.value ? 'slideDown' : 'slideUp']();
+        $('.data-parent-id-' + id)[e.value ? 'slideDown' : 'slideUp']();
+        return false;
+      }
     });
 
     // Also ensure that third level dependent questions are properly hidden.
@@ -135,7 +139,6 @@
       var id = $(this).closest('.question').attr('id');
       $('.data-parent-id-' + id).toggle($(this).css('display') !== 'none');
     });
-
   });
 
   Drupal.pghApplicationForm = {
