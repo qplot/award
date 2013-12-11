@@ -560,6 +560,12 @@ function pgh_form_render_question($question, $app_id = NULL) {
 
   $form['#description'] .= '</div><!-- #error-container -->';
 
+  // We add the post prompt to the description so that it will be contained within the question form-item. Otherwise, post prompts
+  // wouldn't be hidden for dependent questions.
+  if ($question_wrapper->field_question_post_prompt->value()) {
+    $form['#description'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
+  }
+
   $data_attributes = array();
 
   // Add id and classes for theming.
@@ -576,11 +582,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   }
 
   $form['#prefix'] = '<div id="question-' . $question_wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
-  $form['#suffix'] = '';
-  if ($question_wrapper->field_question_post_prompt->value()) {
-    $form['#suffix'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
-  }
-  $form['#suffix'] .= '</div><!-- #question -->';
+  $form['#suffix'] = '</div><!-- #question -->';
 
   // Add default question id handling.
   // If no default value is set and a default question id is given, set it to default question response value.
