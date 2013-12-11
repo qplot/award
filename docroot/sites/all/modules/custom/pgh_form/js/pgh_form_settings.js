@@ -623,7 +623,7 @@
     'pghq_PFC_energy_2_11_1': {
       'args': [
         'pghq_PFC_energy_2_7_5',
-        'pghq_PFC_energy_2_11_4',
+        'pghq_PFC_energy_2_7_4',
       ],
       'calculation': handlers.convertBTUSimple
     },
@@ -796,6 +796,47 @@
       ],
       'calculation': handlers.convertBTU
     },
+    'pghq_PFC_energy_2_11_18': {
+      'args': [
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
+    'pghq_PFC_energy_2_11_19': {
+      'args': [
+        'pghq_PFC_energy_2_8_2_3', // Units
+        'pghq_PFC_energy_2_8_2_2' // Amount
+      ],
+      'calculation': handlers.convertBTU
+    },
+    'pghq_PFC_energy_2_11_20': {
+      'args': [
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_1',
+        'pghq_PFC_energy_2_11_3',
+        'pghq_PFC_energy_2_11_5',
+        'pghq_PFC_energy_2_11_7',
+        'pghq_PFC_energy_2_11_9',
+        'pghq_PFC_energy_2_11_11',
+        'pghq_PFC_energy_2_11_13',
+        'pghq_PFC_energy_2_11_15',
+        'pghq_PFC_energy_2_11_17',
+        'pghq_PFC_energy_2_11_19',
+        'pghq_PFC_energy_2_11_21'
+      ],
+      'calculation': handlers.divideBySum
+    },
     'pghq_PFC_energy_2_11_21': {
       'args': [
         'pghq_PFC_energy_2_11_1',
@@ -895,7 +936,6 @@
       }
 
     },
-
     'pghq_PFC_energy_3_1_1_4': {
       'args': [
         'pghq_PFC_energy_2_11_21',
@@ -938,6 +978,41 @@
       ],
       'calculation': handlers.divide
     },
+    'pghq_PFC_energy_4_4_5': {
+      'args': [
+        'pghq_PFC_energy_4_4_4',
+        'pghq_PFC_energy_4_4_3'
+      ],
+      'calculation': handlers.convertBTUComplex
+    },
+    'pghq_PFC_energy_4_4_11': {
+      'args': [
+        'pghq_PFC_energy_4_4_10',
+        'pghq_PFC_energy_4_4_9'
+      ],
+      'calculation': handlers.convertBTUComplex
+    },
+    'pghq_PFC_energy_4_4_17': {
+      'args': [
+        'pghq_PFC_energy_4_4_16',
+        'pghq_PFC_energy_4_4_15'
+      ],
+      'calculation': handlers.convertBTUComplex
+    },
+    'pghq_PFC_energy_4_4_23': {
+      'args': [
+        'pghq_PFC_energy_4_4_22',
+        'pghq_PFC_energy_4_4_21'
+      ],
+      'calculation': handlers.convertBTUComplex
+    },
+    'pghq_PFC_energy_4_4_29': {
+      'args': [
+        'pghq_PFC_energy_4_4_28',
+        'pghq_PFC_energy_4_4_27'
+      ],
+      'calculation': handlers.convertBTUComplex
+    },
     'pghq_PFC_energy_4_4_31': {
       'args': [
         'pghq_PFC_energy_4_4_3',
@@ -972,6 +1047,54 @@
     //
     // PFC Water formulas
     //
+    'pghq_PFC_water_1_7': {
+      'args': [
+        'pghq_PFC_water_1_5_1_14',
+        'pghq_PFC_water_1_5_1_13',
+        'pghq_PFC_water_1_5_1_1'
+      ],
+      'calculation': handlers.convertGallonsAndDivide
+    },
+    'pghq_PFC_water_1_8': {
+      'args': [
+        'pghq_PFC_water_1_5_1_14',
+        'pghq_PFC_water_1_5_1_13',
+        'pghq_PFC_water_1_8_0'
+      ],
+      'calculation': handlers.convertGallonsAndDivide
+    },
+    'pghq_PFC_water_1_9': {
+      'args': [
+        'pghq_PFC_water_1_5_1_14',
+        'pghq_PFC_water_1_5_1_13',
+        'pghq_PFC_water_1_9_0'
+      ],
+      'calculation': handlers.convertGallonsAndDivide
+    },
+    'pghq_PFC_water_1_12': {
+      'args': [
+        'pghq_PFC_water_1_5_1_14',
+        'pghq_PFC_water_1_5_1_13',
+        'pghq_PFC_water_1_5_1_7'
+      ],
+      'calculation': handlers.convertGallonsAndDivide
+    },
+    'pghq_PFC_water_2_1tB_3': {
+      'args': [
+        'pghq_PFC_water_2_1tB_2',
+        'pghq_PFC_water_2_1tB_1',
+        'pghq_PFC_water_2_1tB_7'
+      ],
+      'calculation': handlers.convertGallonsAndDivide
+    },
+    'pghq_PFC_water_2_1tB_6': {
+      'args': [
+        'pghq_PFC_water_2_1tB_5',
+        'pghq_PFC_water_2_1tB_4',
+        'pghq_PFC_water_2_1tB_7'
+      ],
+      'calculation': handlers.convertGallonsAndDivide
+    },
     'pghq_PFC_water_2_1tB_7': {
       'args': [
         'pghq_PFC_water_2_1tB_1',
