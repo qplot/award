@@ -1479,27 +1479,56 @@ h3 {
       }
     }
 
-    a.button.launcher {
+    .launcher {
+
+      .media-item {
+        border: none;
+        padding: 0;
+
+        .media-thumbnail {
+
+          .file {
+            margin-right: 7px;
+
+            img {
+              margin-bottom: 4px;
+            }
+          }
+
+          .label-wrapper {
+            display: none;
+          }
+        }
+      }
+    }
+
+    a.button.launcher,
+    a.button.remove {
       color: $white;
       font-weight: normal;
       text-align: center;
       text-decoration: none;
-      background-color: $green;
+      @include gradient(lighten($green, 5%), $green);
       border: 1px solid $green;
       @include border-radius(3px);
       @include box-shadow(0 1px 3px rgba(0,0,0,0.1));
-      margin: 0 auto;
+      margin: 0 10px 0 0;
       padding: 5px 20px;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
 
       &:hover {
-        background-color: $orange;
+        @include gradient($orange, lighten($orange, 5%));
         border-color: $orange;
         @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
       }
     }
+
+    // a.button.remove {
+    //   @include gradient(#ea4539, darken(#ea4539, 5%));
+    //   border-color: darken(#ea4539, 5%);
+    // }
 
     input.input-incorrect {
       color: #bc9906;
