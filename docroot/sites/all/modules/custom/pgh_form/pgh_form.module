@@ -640,7 +640,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
   $admin_info[] = ' <small>[' . $question_wrapper->title->value() . ']</small> ';
   $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $question_wrapper->getIdentifier() . '/edit') . '</small>';
 
-  $result = array();
+  $form_item = array();
 
   if (!empty($layout) && ($type == 'container')) {
     // Print the container parent element.
@@ -653,13 +653,13 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
       $classes[] = 'data-parent-id-question-' . $parent_qid;
       $data_attributes[] = 'data-parent-id="question-' . $parent_qid . '"';
 
-      $result['#states'] = pgh_form_question_states($question);
+      $form_item['#states'] = pgh_form_question_states($question);
     }
 
     $opening_div = '<div id="question-' . $question_wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
 
     // We should be able to add prompt to the prefix section.
-    $result += array(
+    $form_item += array(
       '#type' => 'item',
       '#title' => $prompt,
       '#markup' => 'Container markup',
@@ -673,11 +673,11 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
     // We add the post prompt to the description so that it will be contained within the question form-item. Otherwise, post prompts
     // wouldn't be hidden for dependent questions.
     if ($question_wrapper->field_question_post_prompt->value()) {
-      $result['#description'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
+      $form_item['#description'] = '<div class="question-post-prompt">' . check_markup($question_wrapper->field_question_post_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-post-prompt -->';
     }
 
     if (user_access('administer awards system')) {
-      $result['#title'] .= ' ' . implode(' ', $admin_info);
+      $form_item['#title'] .= ' ' . implode(' ', $admin_info);
     }
 
     // Print child elements.
@@ -687,7 +687,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
           // Find the question.
           if ($qid = pgh_find_question_id($cell)) {
             $child = node_load($qid);
-            $result[$qid] = pgh_form_render_question($child, $app_id);
+            $form_item[$qid] = pgh_form_render_question($child, $app_id);
           }
         }
       }
@@ -695,10 +695,10 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
   }
   else {
     // This is the original without layout handling.
-    $result = pgh_form_render_question($question, $app_id);
+    $form_item = pgh_form_render_question($question, $app_id);
   }
 
-  return $result;
+  return $form_item;
 }
 
 /**
