@@ -705,27 +705,27 @@ function pgh_form_question_states($question) {
 
   // Load parent question.
   $parent_qid = $wrapper->field_question_parent_qid->value();
-  $parent = pgh_find_question_id($parent_qid);
-  $parent_question = node_load($parent);
-  $pwrapper = entity_metadata_wrapper('node', $parent_question);
-  $parent_type = $pwrapper->field_question_type->value();
-  $parent_style = $pwrapper->field_question_style->value();
+  $parent_nid = pgh_find_question_id($parent_qid);
+  $parent_question = node_load($parent_nid);
+  $parent_wrapper = entity_metadata_wrapper('node', $parent_question);
+  $parent_type = $parent_wrapper->field_question_type->value();
+  $parent_style = $parent_wrapper->field_question_style->value();
 
-  $name = $pwrapper->getIdentifier();
+  $name = $parent_wrapper->getIdentifier();
   $value = $wrapper->field_question_parent_value->value();
-  $input = '';
+  $condition = '';
   switch ($parent_type) {
     case 'selection':
       switch ($parent_style) {
         // Multiple choices.
         case 'checkboxes':
-          $name = $pwrapper->getIdentifier() . '[' . $value . ']';
-          $input = array('checked' => TRUE);
+          $name = $parent_wrapper->getIdentifier() . '[' . $value . ']';
+          $condition = array('checked' => TRUE);
           break;
 
         // Single choice, ex. radios.
         default:
-          $options = $pwrapper->field_question_options->value();
+          $options = $parent_wrapper->field_question_options->value();
           $value = array_search($value, $options);
           break;
       }
@@ -735,12 +735,12 @@ function pgh_form_question_states($question) {
       // Noop. Dependant question display is currently only supported for the 'selection' question type.
       break;
   }
-  if (empty($input)) {
-    $input = array('value' => $value);
+  if (empty($condition)) {
+    $condition = array('value' => $value);
   }
   $result = array(
     'visible' => array(
-      ':input[name="' . $name . '"]' => $input
+      ':input[name="' . $name . '"]' => $condition,
     ),
   );
 
