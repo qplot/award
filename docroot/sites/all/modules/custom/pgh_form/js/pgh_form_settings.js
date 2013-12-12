@@ -205,6 +205,19 @@
     },
 
     //
+    // Converts a specified amount of diesel from the specified units into BTUs.
+    //
+    convertDiesel: function (units, amount) {
+      if (units == 'U.S. Gallon') {
+        return amount * 154;
+      } else if (units == 'Imp. Gallon') {
+        return amount * 185;
+      } else {
+        return amount * 40.7;
+      }
+    },
+
+    //
     // Converts a specified amount of steam from the specified units into BTUs.
     //
     convertSteam: function (units, amount) {
@@ -212,6 +225,23 @@
         return amount;
       } else {
         return amount * 100;
+      }
+    },
+
+    //
+    // Converts a specified amount of natural gas from the specified units into BTUs.
+    //
+    convertNaturalGas: function (units, amount) {
+      if (units == 'CCF') {
+        return amount * 103;
+      } else if (units == 'MCF') {
+        return amount * 1030;
+      } else if (units == 'Therm') {
+        return amount * 100;
+      } else if (units == 'Cubic Meter') {
+        return amount * 36.4;
+      } else {
+        return amount * 947.8;
       }
     },
 
@@ -1079,6 +1109,19 @@
       ],
       'calculation': handlers.convertGallonsAndDivide
     },
+    'pghq_PFC_water_1_11': {
+      'args': [
+        'pghq_PFC_water_1_5_1_14', // Units 1
+        'pghq_PFC_water_1_5_1_13', // Amount 1
+        'pghq_PFC_water_1_5_1_1' // Divisor 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+        'pghq_PFC_water_1_5_1_3' // Divisor 2
+      ],
+      'calculation': function (a, b, c, d, e, f) {
+      	return handlers.convertGallonsAndDivice(a, b, c) / handlers.convertGallonsAndDivide(d, e, f);
+      }
+    },
     'pghq_PFC_water_1_12': {
       'args': [
         'pghq_PFC_water_1_5_1_14',
@@ -1253,6 +1296,118 @@
       ],
       'calculation': handlers.sum
     },
+    'pghq_PFC_appendixa_1_9t_1': {
+			'args': [
+				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
+				'pghq_PFC_appendixa_1_7_2t_2', // Amount 1
+				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
+				'pghq_PFC_appendixa_1_7_7t_2', // Amount 2
+				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
+				'pghq_PFC_appendixa_1_7_8t_2', // Amount 3
+				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
+				'pghq_PFC_appendixa_1_7_14t_2' // Amount 4
+			],
+			'calculation': function (a, b, c, d, e, f, g, h) {
+				var total = 0;
+				if (a === 'No') {
+					total += b;
+				}
+				if (c === 'No') {
+					total += d;
+				}
+				if (e === 'No') {
+					total += f;
+				}
+				if (g === 'No') {
+					total += h;
+				}
+				return total;
+			}
+		},
+    'pghq_PFC_appendixa_1_9t_2': {
+			'args': [
+				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
+				'pghq_PFC_appendixa_1_7_2t_3', // Amount 1
+				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
+				'pghq_PFC_appendixa_1_7_7t_3', // Amount 2
+				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
+				'pghq_PFC_appendixa_1_7_8t_3', // Amount 3
+				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
+				'pghq_PFC_appendixa_1_7_14t_3' // Amount 4
+			],
+			'calculation': function (a, b, c, d, e, f, g, h) {
+				var total = 0;
+				if (a === 'No') {
+					total += b;
+				}
+				if (c === 'No') {
+					total += d;
+				}
+				if (e === 'No') {
+					total += f;
+				}
+				if (g === 'No') {
+					total += h;
+				}
+				return total;
+			}
+		},
+    'pghq_PFC_appendixa_1_10t_1': {
+			'args': [
+				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
+				'pghq_PFC_appendixa_1_7_2t_2', // Amount 1
+				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
+				'pghq_PFC_appendixa_1_7_7t_2', // Amount 2
+				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
+				'pghq_PFC_appendixa_1_7_8t_2', // Amount 3
+				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
+				'pghq_PFC_appendixa_1_7_14t_2' // Amount 4
+			],
+			'calculation': function (a, b, c, d, e, f, g, h) {
+				var total = 0;
+				if (a === 'Yes') {
+					total += b;
+				}
+				if (c === 'Yes') {
+					total += d;
+				}
+				if (e === 'Yes') {
+					total += f;
+				}
+				if (g === 'Yes') {
+					total += h;
+				}
+				return total;
+			}
+		},
+    'pghq_PFC_appendixa_1_10t_2': {
+			'args': [
+				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
+				'pghq_PFC_appendixa_1_7_2t_3', // Amount 1
+				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
+				'pghq_PFC_appendixa_1_7_7t_3', // Amount 2
+				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
+				'pghq_PFC_appendixa_1_7_8t_3', // Amount 3
+				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
+				'pghq_PFC_appendixa_1_7_14t_3' // Amount 4
+			],
+			'calculation': function (a, b, c, d, e, f, g, h) {
+				var total = 0;
+				if (a === 'Yes') {
+					total += b;
+				}
+				if (c === 'Yes') {
+					total += d;
+				}
+				if (e === 'Yes') {
+					total += f;
+				}
+				if (g === 'Yes') {
+					total += h;
+				}
+				return total;
+			}
+		},
 
     //
     // PR Waste formulas
