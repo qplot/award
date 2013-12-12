@@ -164,12 +164,14 @@
   // "saving" message. When the number drops to 0 we momentarily show a "Saved" message.
   var activities = 0;
 
-  Drupal.pghApplicationForm.beforeSend = function (first, second) {
+  Drupal.pghApplicationForm.beforeSend = function (first, options) {
     activities += 1;
     $('.pgh-form-status').addClass('saving').text('Saving changes...');
 
+    $('input[type="checkbox"]').attr('disabled', 'disabled');
+
     if (typeof Drupal.ajax.prototype.beforeSend === 'function') {
-      Drupal.ajax.prototype.beforeSend.call(this, first, second);
+      Drupal.ajax.prototype.beforeSend.call(this, first, options);
     }
   };
 
@@ -177,6 +179,8 @@
     activities -= 1;
     if (activities <= 0) {
       $('.pgh-form-status').removeClass('saving').addClass('saved').text('All changes saved');
+      $('input[type="checkbox"]').removeAttr('disabled');
+
       setTimeout(function() {
         $('.pgh-form-status').removeClass('saved');
       }, 2000);
@@ -192,8 +196,10 @@
   Drupal.pghApplicationForm.error = function (response, uri) {
     activities -= 1;
     if (activities <= 0) {
-    $('.pgh-form-status').removeClass('saving').text('Problem saving changes');
-    setTimeout(function() {
+      $('.pgh-form-status').removeClass('saving').text('Problem saving changes');
+      $('input[type="checkbox"]').removeAttr('disabled');
+
+      setTimeout(function() {
         $('.pgh-form-status').removeClass('saved');
       }, 2000);
     }
