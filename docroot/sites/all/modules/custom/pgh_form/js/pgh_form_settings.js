@@ -223,6 +223,8 @@
     convertSteam: function (units, amount) {
       if (units == 'kBTU') {
         return amount;
+      } else if (units == '1000 pounds') {
+        return amount * 1000;
       } else {
         return amount * 100;
       }
