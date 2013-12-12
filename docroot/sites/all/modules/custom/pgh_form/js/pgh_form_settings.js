@@ -912,6 +912,10 @@
       ],
       'calculation': handlers.sum
     },
+
+    //
+    // I think this formula is incorrect. Please review the commented out one below and if correct, replace.
+    //
     'pghq_PFC_energy_3_1_1_2': {
       'args': [
         'pghq_PFC_energy_2_7_5',    // electricity_units
@@ -975,7 +979,45 @@
         return sum;
       }
 
-    },
+//     },
+//     'pghq_PFC_energy_3_1_1_2': {
+//       'args': [
+//         'pghq_PFC_energy_2_7_5', // Electricity Units
+//         'pghq_PFC_energy_2_11_6', // Electricity Amount
+//         'pghq_PFC_energy_2_7_9', // Natural Gas Units
+//         'pghq_PFC_energy_2_7_10', // Natural Gas Amount
+//         'pghq_PFC_energy_2_7_13', // Fuel Oil Units
+//         'pghq_PFC_energy_2_7_14', // Fuel Oil Amount
+//         'pghq_PFC_energy_2_7_17', // Steam Units
+//         'pghq_PFC_energy_2_7_18', // Steam Amount
+//         'pghq_PFC_energy_2_7_21', // Chilled Water Units
+//         'pghq_PFC_energy_2_7_22', // Chilled Water Amount
+//         'pghq_PFC_energy_2_7_25', // Hot Water Units
+//         'pghq_PFC_energy_2_7_26', // Hot Water Amount
+//         'pghq_PFC_energy_2_7_29', // Diesel Units
+//         'pghq_PFC_energy_2_7_30', // Diesel Amount
+//         'pghq_PFC_energy_2_8_2_3', // Renewable Energy 1 Units
+//         'pghq_PFC_energy_2_8_2_4', // Renewable Energy 1 Amount
+//         'pghq_PFC_energy_2_8_2_8', // Renewable Energy 2 Units
+//         'pghq_PFC_energy_2_8_2_9', // Renewable Energy 2 Amount
+//         'pghq_PFC_energy_2_8_2_13', // Renewable Energy 3 Units
+//         'pghq_PFC_energy_2_8_2_14' // Renewable Energy 3 Amount
+//       ],
+//       'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A) {
+//       	var elecTotal = handlers.convertBTUSimple (elecU, elecA);
+//       	var natGasTotal = handlers.convertNaturalGas (natGasU, natGasA);
+//       	var fuelTotal = handlers.convertFuelOil (fuelU, fuelA);
+//       	var steamTotal = handlers.convertSteam (steamU, steamA);
+//       	var chillTotal = handlers.convertWater (chillU, chillA);
+//       	var hotTotal = handlers.convertWater (hotU, hotA);
+//       	var dieselTotal = handlers.convertDiesel (dieselU, dieselA);
+//       	var renew1Total = handlers.convertBTU (renew1U, renew1A);
+//       	var renew2Total = handlers.convertBTU (renew2U, renew2A);
+//       	var renew3Total = handlers.convertBTU (renew3U, renew3A);
+//       	return elecTotal + natGasTotal + fuelTotal + steamTotal + chillTotal + hotTotal + dieselTotal + renew1Total + renew2Total + renew3Total;
+//       }
+//     },
+
     'pghq_PFC_energy_3_1_1_4': {
       'args': [
         'pghq_PFC_energy_2_11_21',
@@ -1115,7 +1157,7 @@
       'args': [
         'pghq_PFC_water_1_5_1_14', // Units 1
         'pghq_PFC_water_1_5_1_13', // Amount 1
-        'pghq_PFC_water_1_5_1_1' // Divisor 1
+        'pghq_PFC_water_1_5_1_1', // Divisor 1
         'pghq_PFC_water_1_5_1_16', // Units 2
         'pghq_PFC_water_1_5_1_15', // Amount 2
         'pghq_PFC_water_1_5_1_3' // Divisor 2
