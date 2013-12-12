@@ -1219,6 +1219,124 @@
       ],
       'calculation': handlers.sum
     },
+    'pghq_PFC_water_2_3_tC_3': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_2', // Units 1
+        'pghq_PFC_water_2_3_tC_1', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_6': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_5', // Units 1
+        'pghq_PFC_water_2_3_tC_4', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_9': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_8', // Units 1
+        'pghq_PFC_water_2_3_tC_7', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_12': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_11', // Units 1
+        'pghq_PFC_water_2_3_tC_10', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_15': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_14', // Units 1
+        'pghq_PFC_water_2_3_tC_13', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_18': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_17', // Units 1
+        'pghq_PFC_water_2_3_tC_16', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_21': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_20', // Units 1
+        'pghq_PFC_water_2_3_tC_19', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_24': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_23', // Units 1
+        'pghq_PFC_water_2_3_tC_22', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_27': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_26', // Units 1
+        'pghq_PFC_water_2_3_tC_25', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_3_tC_30': {
+      'args': [
+        'pghq_PFC_water_2_3_tC_29', // Units 1
+        'pghq_PFC_water_2_3_tC_28', // Amount 1
+        'pghq_PFC_water_1_5_1_16', // Units 2
+        'pghq_PFC_water_1_5_1_15', // Amount 2
+      ],
+      'calculation': function (a, b, c, d) {
+      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      }
+    },
+    'pghq_PFC_water_2_5': {
+      'args': [
+        'pghq_PFC_water_1_5_1_14',
+        'pghq_PFC_water_1_5_1_13',
+        'pghq_PFC_water_2_4_1'
+      ],
+      'calculation': handlers.convertGallonsAndDivide
+    },
     'pghq_PFC_water_3_1tE_21': {
       'args': [
         'pghq_PFC_water_3_1tE_3',
@@ -1326,6 +1444,71 @@
     //
     // PFC Appendix A formulas
     //
+    'pghq_PFC_appendixa_1_8t_1': {
+      'args': [
+        'pghq_PFC_water_1_5_1_14', // amount 1
+        'pghq_PFC_water_1_5_1_13', // amount 2
+        'pghq_PFC_water_1_5_1_14', // amount 3
+        'pghq_PFC_water_1_5_1_13', // amount 4
+        'pghq_PFC_water_1_5_1_14', // amount 5
+        'pghq_PFC_water_1_5_1_13', // amount 6
+        'pghq_PFC_water_1_5_1_14', // amount 7
+        'pghq_PFC_water_1_5_1_13', // amount 8
+        'pghq_PFC_water_1_5_1_14', // amount 9
+        'pghq_PFC_water_1_5_1_13', // amount 10
+        'pghq_PFC_water_1_5_1_14', // amount 11
+        'pghq_PFC_water_1_5_1_13', // amount 12
+        'pghq_PFC_water_1_5_1_14', // units 12
+        'pghq_PFC_water_1_5_1_13', // amount 13
+        'pghq_PFC_water_1_5_1_14', // units 13
+        'pghq_PFC_water_1_5_1_13', // amount 14
+        'pghq_PFC_water_1_5_1_14', // amount 15
+        'pghq_PFC_water_1_5_1_13', // amount 16
+        'pghq_PFC_water_1_5_1_14', // amount 17
+        'pghq_PFC_water_1_5_1_13', // amount 18
+        'pghq_PFC_water_1_5_1_14', // amount 19
+        'pghq_PFC_water_1_5_1_13', // amount 20
+        'pghq_PFC_water_1_5_1_14', // amount 21
+        'pghq_PFC_water_1_5_1_13', // amount 22
+        'pghq_PFC_water_1_5_1_14', // amount 23
+        'pghq_PFC_water_1_5_1_13', // amount 24
+        'pghq_PFC_water_1_5_1_14', // amount 25
+        'pghq_PFC_water_1_5_1_13', // amount 26
+        'pghq_PFC_water_1_5_1_14', // amount 27
+        'pghq_PFC_water_1_5_1_13', // amount 28
+        'pghq_PFC_water_1_5_1_14', // amount 29
+        'pghq_PFC_water_1_5_1_13', // amount 30
+        'pghq_PFC_water_1_5_1_14', // units 30
+        'pghq_PFC_water_1_5_1_13', // amount 31
+        'pghq_PFC_water_2_4_1' // units 31
+      ],
+      'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8, amount9, amount10, amount11, amount12, units12, amount13, units13, amount14, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29, amount30, units30, amount31, units31) {
+      	var converted12 = 0;
+      	var converted13 = 0;
+      	var converted30 = 0;
+      	var converted31 = 0;
+      	if (units12 === 'Gallons') {
+      		converted12 = amount12 * 0.004;
+      	} else {
+      		converted12 = amount12;
+      	}
+      	if (units13 === 'Gallons') {
+      		converted13 = amount13 * 0.004;
+      	} else {
+      		converted13 = amount13;
+      	}
+      	if (units30 === 'Gallons') {
+      		converted30 = amount30 * 0.004;
+      	} else {
+      		converted30 = amount30;
+      	}
+      	if (units31 === 'Gallons') {
+      		converted31 = amount31 * 0.004;
+      	} else {
+      		converted31 = amount31;
+      	}
+      	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+    },
     'pghq_PFC_appendixa_1_8t_2': {
       'args': [
         'pghq_PFC_appendixa_1_7_1t_2',
