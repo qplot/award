@@ -65,6 +65,7 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
     $dirs = array(
       'applications',
       'apptypes',
+      'business_units',
       'categories',
       'questions',
       'responses',

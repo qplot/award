@@ -128,7 +128,7 @@
 
         <?php
         $business_unit_type = field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden'));
-        print render($business_unit_type);
+        print $business_unit_type ? render($business_unit_type) : '<span class="not-specified">Not specified</span>';
         ?>
         <?php if (entity_access('update', 'node', $business_unit)): ?>
           <span class="edit-content"><a href="/node/<?php print $business_unit->vid; ?>/edit">Edit</a></span>

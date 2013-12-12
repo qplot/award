@@ -443,6 +443,12 @@ function pgh_permissions_node_insert($node) {
     return;
   }
 
+  // If we are migrating Business Units they may not have a Work Group set. In this case
+  // do nothing.
+  if (!isset($node->work_group)) {
+    return;
+  }
+
   $work_group = node_load($node->work_group);
   $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
   $work_group_wrapper->field_business_units[] = intval($node->nid);
@@ -464,6 +470,13 @@ function pgh_permissions_node_delete($node) {
 
   // Get parent Work Group.
   $work_group = pgh_api_work_group_for_business_unit($node->nid);
+
+  // If the Business Unit doesn't have a Work Group (maybe it was migrated or created manually)
+  // do nothing.
+  if (!$work_group) {
+    return;
+  }
+
   $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
 
   // Remove the deleted Business Unit from the parent Work Group.

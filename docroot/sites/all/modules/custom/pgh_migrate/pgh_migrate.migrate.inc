@@ -55,11 +55,11 @@ function pgh_migrate_migrate_api() {
         'group_name' => 'PGH',
         'soft_dependencies' => array('PreprocessCSV', 'Question')
       ),
-      // 'ExportXML' => array(
-      //   'class_name' => 'MigratePGHExportXMLMigration',
-      //   'group_name' => 'PGH',
-      //   'soft_dependencies' => array('ApplicationType')
-      // ),
+      'BusinessUnit' => array(
+        'class_name' => 'MigratePGHBusinessUnitMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV', 'Question')
+      ),
     ),
   );
   return $api;
