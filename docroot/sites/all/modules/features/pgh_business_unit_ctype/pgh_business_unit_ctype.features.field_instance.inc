@@ -94,7 +94,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -218,6 +218,46 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-business_unit-field_billing_country'
+  $field_instances['node-business_unit-field_billing_country'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 20,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_billing_country',
+    'label' => 'Billing Country',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
+    ),
+  );
+
   // Exported field_instance: 'node-business_unit-field_billing_state'
   $field_instances['node-business_unit-field_billing_state'] = array(
     'bundle' => 'business_unit',
@@ -298,6 +338,46 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-business_unit-field_business_unit_sfid'
+  $field_instances['node-business_unit-field_business_unit_sfid'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 19,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_business_unit_sfid',
+    'label' => 'Salesforce Id',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'node-business_unit-field_business_unit_type'
   $field_instances['node-business_unit-field_business_unit_type'] = array(
     'bundle' => 'business_unit',
@@ -332,6 +412,46 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_facility_users'
+  $field_instances['node-business_unit-field_facility_users'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Provide the number of facility users for this business unit.',
+    'display' => array(
+      'default' => array(
+        'label' => 'inline',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 15,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_facility_users',
+    'label' => 'Facility users',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 9,
     ),
   );
 
@@ -455,49 +575,6 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-business_unit-field_same_as_billing'
-  $field_instances['node-business_unit-field_same_as_billing'] = array(
-    'bundle' => 'business_unit',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 18,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_same_as_billing',
-    'label' => 'Same as Billing Address',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'display_label' => 1,
-      ),
-      'type' => 'options_onoff',
-      'weight' => 18,
-    ),
-  );
-
   // Exported field_instance: 'node-business_unit-field_shipping_address_1'
   $field_instances['node-business_unit-field_shipping_address_1'] = array(
     'bundle' => 'business_unit',
@@ -615,6 +692,46 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 21,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_shipping_country'
+  $field_instances['node-business_unit-field_shipping_country'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 21,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_shipping_country',
+    'label' => 'Shipping Country',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 24,
     ),
   );
 
@@ -737,7 +854,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -798,6 +915,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Applications');
+  t('Billing Country');
   t('Billing address 1');
   t('Billing address 2');
   t('Billing city');
@@ -805,11 +923,14 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Billing zip code');
   t('Business unit type');
   t('Description / Notes');
+  t('Facility users');
   t('Number of Beds');
   t('Number of ORs');
   t('Phone');
   t('Provide state abbreviation.');
-  t('Same as Billing Address');
+  t('Provide the number of facility users for this business unit.');
+  t('Salesforce Id');
+  t('Shipping Country');
   t('Shipping address 1');
   t('Shipping address 2');
   t('Shipping city');
