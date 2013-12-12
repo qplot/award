@@ -145,6 +145,28 @@
     //
     // Converts a specified amount of water from the specified units into into gallons.
     //
+    convertGallons: function (units, amount, divisor) {
+      var converted = 0;
+      switch (units) {
+        case 'Hundred Cubic Feet':
+          converted = amount * 748;
+          break;
+
+        case 'Cubic Feet':
+          converted = amount * 7.48;
+          break;
+
+        default:
+          converted = amount;
+          break;
+      }
+
+      return converted;
+    },
+
+    //
+    // Converts a specified amount of water from the specified units into into gallons and divides by divisor.
+    //
     convertGallonsAndDivide: function (units, amount, divisor) {
       if (divisor === 0) {
         return 0;
@@ -1163,7 +1185,7 @@
         'pghq_PFC_water_1_5_1_3' // Divisor 2
       ],
       'calculation': function (a, b, c, d, e, f) {
-      	return handlers.convertGallonsAndDivice(a, b, c) / handlers.convertGallonsAndDivide(d, e, f);
+      	return handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f);
       }
     },
     'pghq_PFC_water_1_12': {
