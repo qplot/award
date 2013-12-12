@@ -788,14 +788,22 @@
       ],
       'calculation': handlers.divideBySum
     },
-
-    'pghq_PFC_energy_2_11_17': {
-      'args': [
-        'pghq_PFC_energy_2_8_2_3', // Units
-        'pghq_PFC_energy_2_8_2_2' // Amount
-      ],
-      'calculation': handlers.convertBTU
-    },
+		'pghq_PFC_energy_2_11_17': {
+			'args': [
+				'pghq_PFC_energy_2_8_2_3', // Units 1
+				'pghq_PFC_energy_2_8_2_2', // Amount 1
+				'pghq_PFC_energy_2_8_2_8', // Units 2
+				'pghq_PFC_energy_2_8_2_7', // Amount 2
+				'pghq_PFC_energy_2_8_2_13', // Units 3
+				'pghq_PFC_energy_2_8_2_12' // Amount 3
+			],
+			'calculation': function (a, b, c, d, e, f) {
+				var x = handlers.convertBTU(a, b);
+				var y = handlers.convertBTU(c, d);
+				var z = handlers.convertBTU(e, f);
+				return x + y + z;
+			}
+		},
     'pghq_PFC_energy_2_11_18': {
       'args': [
         'pghq_PFC_energy_2_11_17',
@@ -1490,6 +1498,34 @@
       ],
       'calculation': handlers.sum
     },
+    'pghq_PR_appendixa_1_9t_1': {
+			'args': [
+				'pghq_PR_appendixa_1_7_2t_1', // Radio 1
+				'pghq_PR_appendixa_1_7_2t_2', // Amount 1
+				'pghq_PR_appendixa_1_7_7t_1', // Radio 2
+				'pghq_PR_appendixa_1_7_7t_2', // Amount 2
+				'pghq_PR_appendixa_1_7_8t_1', // Radio 3
+				'pghq_PR_appendixa_1_7_8t_2', // Amount 3
+				'pghq_PR_appendixa_1_7_14t_1', // Radio 4
+				'pghq_PR_appendixa_1_7_14t_2' // Amount 4
+			],
+			'calculation': function (a, b, c, d, e, f, g, h) {
+				var total = 0;
+				if (a === 'No') {
+					total += b;
+				}
+				if (c === 'No') {
+					total += d;
+				}
+				if (e === 'No') {
+					total += f;
+				}
+				if (g === 'No') {
+					total += h;
+				}
+				return total;
+			}
+		},
 
     //
     // LTC Waste formulas
