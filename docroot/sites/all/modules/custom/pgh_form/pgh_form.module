@@ -204,14 +204,22 @@ function pgh_form_category_page($application, $category_id) {
 
     $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
 
-    // Set the page title.
-    $title = $application_type_wrapper->body->value() ? $application_type_wrapper->body->value->raw() : '';
-    drupal_set_title($application_wrapper->getIdentifier() . ' - ' . 'Application: ' . $title);
+    $application_title = $application_type_wrapper->body->value() ? $application_type_wrapper->body->value->raw() : '';
 
     // Find category_id if key is provided.
     if (!is_numeric($category_id)) {
       $category_id = pgh_api_find_nid($category_id, 'category');
     }
+
+    $category = node_load($category_id);
+    $category_wrapper = entity_metadata_wrapper('node', $category);
+
+    $category_title = $category_wrapper->title->value() . ' (no name provided)';
+    if ($category_wrapper->body->value()) {
+      $category_title = $category_wrapper->body->value->raw();
+    }
+
+    drupal_set_title($application_title . ': ' . $category_title);
 
     return drupal_get_form('pgh_application_form', $application->nid, $category_id);;
   }
