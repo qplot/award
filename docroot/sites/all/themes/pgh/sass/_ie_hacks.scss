@@ -69,11 +69,55 @@ html.lt-ie8 {
     .applications {
 
       table {
+        border-collapse: collapse !important;
 
         thead tr {
           border-right: 1px solid #a2d6c9;
         }
       }
+    }
+  }
+
+  // application form
+  .page-application {
+
+    form {
+
+      input.form-text,
+      select {
+        max-width: inherit;
+        width: auto;
+      }
+
+      .content-incorrect {
+      }
+
+      table {
+
+        th, td {
+        }
+
+        td {
+
+          select {
+            width: 150px;
+          }
+        }
+
+        td .content-incorrect {
+          width: 150px;
+        }
+      }
+    }
+  }
+
+  // glossify
+  a.glossify-link {
+
+    .glossify-tooltip {
+      display: block;
+      width: 262px;
+      bottom: 0;
     }
   }
 
@@ -90,10 +134,26 @@ html.lt-ie8 {
     .applications {
 
       table {
+        border-collapse: collapse !important;
 
         th {
           border-right: 1px solid #a2d6c9;
         }
+      }
+    }
+  }
+
+  // application form
+  .page-application {
+
+    form {
+
+      .content-incorrect {
+        display: inline;
+      }
+
+      table {
+        border-collapse: collapse !important;
       }
     }
   }
