@@ -1001,7 +1001,7 @@
         return sum;
       }
 
-//     },
+     },
 //     'pghq_PFC_energy_3_1_1_2': {
 //       'args': [
 //         'pghq_PFC_energy_2_7_5', // Electricity Units
@@ -1508,6 +1508,7 @@
       		converted31 = amount31;
       	}
       	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+      }
     },
     'pghq_PFC_appendixa_1_8t_2': {
       'args': [
