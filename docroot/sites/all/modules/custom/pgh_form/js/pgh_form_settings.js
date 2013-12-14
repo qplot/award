@@ -691,7 +691,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -715,7 +714,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -739,7 +737,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -763,7 +760,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -787,7 +783,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -811,7 +806,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -835,7 +829,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -877,8 +870,8 @@
     },
     'pghq_PFC_energy_2_11_19': {
       'args': [
-        'pghq_PFC_energy_2_8_2_3', // Units
-        'pghq_PFC_energy_2_8_2_2' // Amount
+        'pghq_PFC_energy_2_8_2_18', // Units
+        'pghq_PFC_energy_2_8_2_17' // Amount
       ],
       'calculation': handlers.convertBTU
     },
@@ -892,7 +885,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17',
         'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
@@ -908,7 +900,6 @@
         'pghq_PFC_energy_2_11_9',
         'pghq_PFC_energy_2_11_11',
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
         'pghq_PFC_energy_2_11_17'
       ],
       'calculation': handlers.sum
@@ -922,7 +913,6 @@
         'pghq_PFC_energy_2_11_10',
         'pghq_PFC_energy_2_11_12',
         'pghq_PFC_energy_2_11_14',
-        'pghq_PFC_energy_2_11_16',
         'pghq_PFC_energy_2_11_18'
       ],
       'calculation': handlers.sum
