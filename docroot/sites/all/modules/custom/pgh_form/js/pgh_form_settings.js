@@ -1876,41 +1876,41 @@
     //
     'pghq_PR_appendixa_1_8t_1': {
       'args': [
-        'pghq_PR_water_1_5_1_14', // amount 1
-        'pghq_PR_water_1_5_1_13', // amount 2
-        'pghq_PR_water_1_5_1_14', // amount 3
-        'pghq_PR_water_1_5_1_13', // amount 4
-        'pghq_PR_water_1_5_1_14', // amount 5
-        'pghq_PR_water_1_5_1_13', // amount 6
-        'pghq_PR_water_1_5_1_14', // amount 7
-        'pghq_PR_water_1_5_1_13', // amount 8
-        'pghq_PR_water_1_5_1_14', // amount 9
-        'pghq_PR_water_1_5_1_13', // amount 10
-        'pghq_PR_water_1_5_1_14', // amount 11
-        'pghq_PR_water_1_5_1_13', // amount 12
-        'pghq_PR_water_1_5_1_14', // units 12
-        'pghq_PR_water_1_5_1_13', // amount 13
-        'pghq_PR_water_1_5_1_14', // units 13
-        'pghq_PR_water_1_5_1_13', // amount 14
-        'pghq_PR_water_1_5_1_14', // amount 15
-        'pghq_PR_water_1_5_1_13', // amount 16
-        'pghq_PR_water_1_5_1_14', // amount 17
-        'pghq_PR_water_1_5_1_13', // amount 18
-        'pghq_PR_water_1_5_1_14', // amount 19
-        'pghq_PR_water_1_5_1_13', // amount 20
-        'pghq_PR_water_1_5_1_14', // amount 21
-        'pghq_PR_water_1_5_1_13', // amount 22
-        'pghq_PR_water_1_5_1_14', // amount 23
-        'pghq_PR_water_1_5_1_13', // amount 24
-        'pghq_PR_water_1_5_1_14', // amount 25
-        'pghq_PR_water_1_5_1_13', // amount 26
-        'pghq_PR_water_1_5_1_14', // amount 27
-        'pghq_PR_water_1_5_1_13', // amount 28
-        'pghq_PR_water_1_5_1_14', // amount 29
-        'pghq_PR_water_1_5_1_13', // amount 30
-        'pghq_PR_water_1_5_1_14', // units 30
-        'pghq_PR_water_1_5_1_13', // amount 31
-        'pghq_PR_water_2_4_1' // units 31
+        'pghq_PR_appendixa_1_7_1t_1', // amount 1
+        'pghq_PR_appendixa_1_7_2t_2', // amount 2
+        'pghq_PR_appendixa_1_7_3t_1', // amount 3
+        'pghq_PR_appendixa_1_7_4t_1', // amount 4
+        'pghq_PR_appendixa_1_7_5t_1', // amount 5
+        'pghq_PR_appendixa_1_7_6t_1', // amount 6
+        'pghq_PR_appendixa_1_7_7t_2', // amount 7
+        'pghq_PR_appendixa_1_7_8t_2', // amount 8
+        'pghq_PR_appendixa_1_7_9t_1', // amount 9
+        'pghq_PR_appendixa_1_7_10t_1', // amount 10
+        'pghq_PR_appendixa_1_7_11t_1', // amount 11
+        'pghq_PR_appendixa_1_7_12t_1', // amount 12
+        'pghq_PR_appendixa_1_7_12t_2', // units 12
+        'pghq_PR_appendixa_1_7_13t_1', // amount 13
+        'pghq_PR_appendixa_1_7_13t_2', // units 13
+        'pghq_PR_appendixa_1_7_14t_2', // amount 14
+        'pghq_PR_appendixa_1_7_15t_1', // amount 15
+        'pghq_PR_appendixa_1_7_16t_1', // amount 16
+        'pghq_PR_appendixa_1_7_17t_1', // amount 17
+        'pghq_PR_appendixa_1_7_18t_1', // amount 18
+        'pghq_PR_appendixa_1_7_19t_1', // amount 19
+        'pghq_PR_appendixa_1_7_20t_1', // amount 20
+        'pghq_PR_appendixa_1_7_21t_1', // amount 21
+        'pghq_PR_appendixa_1_7_22t_1', // amount 22
+        'pghq_PR_appendixa_1_7_23t_1', // amount 23
+        'pghq_PR_appendixa_1_7_24t_1', // amount 24
+        'pghq_PR_appendixa_1_7_25t_1', // amount 25
+        'pghq_PR_appendixa_1_7_26t_1', // amount 26
+        'pghq_PR_appendixa_1_7_27t_1', // amount 27
+        'pghq_PR_appendixa_1_7_28t_1', // amount 28
+        'pghq_PR_appendixa_1_7_29t_1', // amount 29
+        'pghq_PR_appendixa_1_7_30t_1', // amount 30
+        'pghq_PR_appendixa_1_7_30t_2', // units 30
+        'pghq_PR_appendixa_1_7_31t_1', // amount 31
+        'pghq_PR_appendixa_1_7_31t_2' // units 31
       ],
       'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8, amount9, amount10, amount11, amount12, units12, amount13, units13, amount14, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29, amount30, units30, amount31, units31) {
       	var converted12 = 0;
@@ -3070,41 +3070,41 @@
     //
     'pghq_LTC_appendixa_1_8t_1': {
       'args': [
-        'pghq_LTC_water_1_5_1_14', // amount 1
-        'pghq_LTC_water_1_5_1_13', // amount 2
-        'pghq_LTC_water_1_5_1_14', // amount 3
-        'pghq_LTC_water_1_5_1_13', // amount 4
-        'pghq_LTC_water_1_5_1_14', // amount 5
-        'pghq_LTC_water_1_5_1_13', // amount 6
-        'pghq_LTC_water_1_5_1_14', // amount 7
-        'pghq_LTC_water_1_5_1_13', // amount 8
-        'pghq_LTC_water_1_5_1_14', // amount 9
-        'pghq_LTC_water_1_5_1_13', // amount 10
-        'pghq_LTC_water_1_5_1_14', // amount 11
-        'pghq_LTC_water_1_5_1_13', // amount 12
-        'pghq_LTC_water_1_5_1_14', // units 12
-        'pghq_LTC_water_1_5_1_13', // amount 13
-        'pghq_LTC_water_1_5_1_14', // units 13
-        'pghq_LTC_water_1_5_1_13', // amount 14
-        'pghq_LTC_water_1_5_1_14', // amount 15
-        'pghq_LTC_water_1_5_1_13', // amount 16
-        'pghq_LTC_water_1_5_1_14', // amount 17
-        'pghq_LTC_water_1_5_1_13', // amount 18
-        'pghq_LTC_water_1_5_1_14', // amount 19
-        'pghq_LTC_water_1_5_1_13', // amount 20
-        'pghq_LTC_water_1_5_1_14', // amount 21
-        'pghq_LTC_water_1_5_1_13', // amount 22
-        'pghq_LTC_water_1_5_1_14', // amount 23
-        'pghq_LTC_water_1_5_1_13', // amount 24
-        'pghq_LTC_water_1_5_1_14', // amount 25
-        'pghq_LTC_water_1_5_1_13', // amount 26
-        'pghq_LTC_water_1_5_1_14', // amount 27
-        'pghq_LTC_water_1_5_1_13', // amount 28
-        'pghq_LTC_water_1_5_1_14', // amount 29
-        'pghq_LTC_water_1_5_1_13', // amount 30
-        'pghq_LTC_water_1_5_1_14', // units 30
-        'pghq_LTC_water_1_5_1_13', // amount 31
-        'pghq_LTC_water_2_4_1' // units 31
+        'pghq_LTC_appendixa_1_7_1t_1', // amount 1
+        'pghq_LTC_appendixa_1_7_2t_2', // amount 2
+        'pghq_LTC_appendixa_1_7_3t_1', // amount 3
+        'pghq_LTC_appendixa_1_7_4t_1', // amount 4
+        'pghq_LTC_appendixa_1_7_5t_1', // amount 5
+        'pghq_LTC_appendixa_1_7_6t_1', // amount 6
+        'pghq_LTC_appendixa_1_7_7t_2', // amount 7
+        'pghq_LTC_appendixa_1_7_8t_2', // amount 8
+        'pghq_LTC_appendixa_1_7_9t_1', // amount 9
+        'pghq_LTC_appendixa_1_7_10t_1', // amount 10
+        'pghq_LTC_appendixa_1_7_11t_1', // amount 11
+        'pghq_LTC_appendixa_1_7_12t_1', // amount 12
+        'pghq_LTC_appendixa_1_7_12t_2', // units 12
+        'pghq_LTC_appendixa_1_7_13t_1', // amount 13
+        'pghq_LTC_appendixa_1_7_13t_2', // units 13
+        'pghq_LTC_appendixa_1_7_14t_2', // amount 14
+        'pghq_LTC_appendixa_1_7_15t_1', // amount 15
+        'pghq_LTC_appendixa_1_7_16t_1', // amount 16
+        'pghq_LTC_appendixa_1_7_17t_1', // amount 17
+        'pghq_LTC_appendixa_1_7_18t_1', // amount 18
+        'pghq_LTC_appendixa_1_7_19t_1', // amount 19
+        'pghq_LTC_appendixa_1_7_20t_1', // amount 20
+        'pghq_LTC_appendixa_1_7_21t_1', // amount 21
+        'pghq_LTC_appendixa_1_7_22t_1', // amount 22
+        'pghq_LTC_appendixa_1_7_23t_1', // amount 23
+        'pghq_LTC_appendixa_1_7_24t_1', // amount 24
+        'pghq_LTC_appendixa_1_7_25t_1', // amount 25
+        'pghq_LTC_appendixa_1_7_26t_1', // amount 26
+        'pghq_LTC_appendixa_1_7_27t_1', // amount 27
+        'pghq_LTC_appendixa_1_7_28t_1', // amount 28
+        'pghq_LTC_appendixa_1_7_29t_1', // amount 29
+        'pghq_LTC_appendixa_1_7_30t_1', // amount 30
+        'pghq_LTC_appendixa_1_7_30t_2', // units 30
+        'pghq_LTC_appendixa_1_7_31t_1', // amount 31
+        'pghq_LTC_appendixa_1_7_31t_2' // units 31
       ],
       'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8, amount9, amount10, amount11, amount12, units12, amount13, units13, amount14, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29, amount30, units30, amount31, units31) {
       	var converted12 = 0;
@@ -3501,43 +3501,43 @@
     //
     // CHCPR Appendix A formulas
     //
-    'pghq_CHCPR_appendixa_1_8t_1': {
+    'pghq_CFCPR_appendixa_1_8t_1': {
       'args': [
-        'pghq_CHCPR_water_1_5_1_14', // amount 1
-        'pghq_CHCPR_water_1_5_1_13', // amount 2
-        'pghq_CHCPR_water_1_5_1_14', // amount 3
-        'pghq_CHCPR_water_1_5_1_13', // amount 4
-        'pghq_CHCPR_water_1_5_1_14', // amount 5
-        'pghq_CHCPR_water_1_5_1_13', // amount 6
-        'pghq_CHCPR_water_1_5_1_14', // amount 7
-        'pghq_CHCPR_water_1_5_1_13', // amount 8
-        'pghq_CHCPR_water_1_5_1_14', // amount 9
-        'pghq_CHCPR_water_1_5_1_13', // amount 10
-        'pghq_CHCPR_water_1_5_1_14', // amount 11
-        'pghq_CHCPR_water_1_5_1_13', // amount 12
-        'pghq_CHCPR_water_1_5_1_14', // units 12
-        'pghq_CHCPR_water_1_5_1_13', // amount 13
-        'pghq_CHCPR_water_1_5_1_14', // units 13
-        'pghq_CHCPR_water_1_5_1_13', // amount 14
-        'pghq_CHCPR_water_1_5_1_14', // amount 15
-        'pghq_CHCPR_water_1_5_1_13', // amount 16
-        'pghq_CHCPR_water_1_5_1_14', // amount 17
-        'pghq_CHCPR_water_1_5_1_13', // amount 18
-        'pghq_CHCPR_water_1_5_1_14', // amount 19
-        'pghq_CHCPR_water_1_5_1_13', // amount 20
-        'pghq_CHCPR_water_1_5_1_14', // amount 21
-        'pghq_CHCPR_water_1_5_1_13', // amount 22
-        'pghq_CHCPR_water_1_5_1_14', // amount 23
-        'pghq_CHCPR_water_1_5_1_13', // amount 24
-        'pghq_CHCPR_water_1_5_1_14', // amount 25
-        'pghq_CHCPR_water_1_5_1_13', // amount 26
-        'pghq_CHCPR_water_1_5_1_14', // amount 27
-        'pghq_CHCPR_water_1_5_1_13', // amount 28
-        'pghq_CHCPR_water_1_5_1_14', // amount 29
-        'pghq_CHCPR_water_1_5_1_13', // amount 30
-        'pghq_CHCPR_water_1_5_1_14', // units 30
-        'pghq_CHCPR_water_1_5_1_13', // amount 31
-        'pghq_CHCPR_water_2_4_1' // units 31
+        'pghq_CFCPR_appendixa_1_7_1t_1', // amount 1
+        'pghq_CFCPR_appendixa_1_7_2t_2', // amount 2
+        'pghq_CFCPR_appendixa_1_7_3t_1', // amount 3
+        'pghq_CFCPR_appendixa_1_7_4t_1', // amount 4
+        'pghq_CFCPR_appendixa_1_7_5t_1', // amount 5
+        'pghq_CFCPR_appendixa_1_7_6t_1', // amount 6
+        'pghq_CFCPR_appendixa_1_7_7t_2', // amount 7
+        'pghq_CFCPR_appendixa_1_7_8t_2', // amount 8
+        'pghq_CFCPR_appendixa_1_7_9t_1', // amount 9
+        'pghq_CFCPR_appendixa_1_7_10t_1', // amount 10
+        'pghq_CFCPR_appendixa_1_7_11t_1', // amount 11
+        'pghq_CFCPR_appendixa_1_7_12t_1', // amount 12
+        'pghq_CFCPR_appendixa_1_7_12t_2', // units 12
+        'pghq_CFCPR_appendixa_1_7_13t_1', // amount 13
+        'pghq_CFCPR_appendixa_1_7_13t_2', // units 13
+        'pghq_CFCPR_appendixa_1_7_14t_2', // amount 14
+        'pghq_CFCPR_appendixa_1_7_15t_1', // amount 15
+        'pghq_CFCPR_appendixa_1_7_16t_1', // amount 16
+        'pghq_CFCPR_appendixa_1_7_17t_1', // amount 17
+        'pghq_CFCPR_appendixa_1_7_18t_1', // amount 18
+        'pghq_CFCPR_appendixa_1_7_19t_1', // amount 19
+        'pghq_CFCPR_appendixa_1_7_20t_1', // amount 20
+        'pghq_CFCPR_appendixa_1_7_21t_1', // amount 21
+        'pghq_CFCPR_appendixa_1_7_22t_1', // amount 22
+        'pghq_CFCPR_appendixa_1_7_23t_1', // amount 23
+        'pghq_CFCPR_appendixa_1_7_24t_1', // amount 24
+        'pghq_CFCPR_appendixa_1_7_25t_1', // amount 25
+        'pghq_CFCPR_appendixa_1_7_26t_1', // amount 26
+        'pghq_CFCPR_appendixa_1_7_27t_1', // amount 27
+        'pghq_CFCPR_appendixa_1_7_28t_1', // amount 28
+        'pghq_CFCPR_appendixa_1_7_29t_1', // amount 29
+        'pghq_CFCPR_appendixa_1_7_30t_1', // amount 30
+        'pghq_CFCPR_appendixa_1_7_30t_2', // units 30
+        'pghq_CFCPR_appendixa_1_7_31t_1', // amount 31
+        'pghq_CFCPR_appendixa_1_7_31t_2' // units 31
       ],
       'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8, amount9, amount10, amount11, amount12, units12, amount13, units13, amount14, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29, amount30, units30, amount31, units31) {
       	var converted12 = 0;
@@ -4883,43 +4883,43 @@
     //
     // CFCPFC Appendix A formulas
     //
-    'pghq_CFCPFC_appendixa_1_8t_1': {
+    'pghq_CHCPFC_appendixa_1_8t_1': {
       'args': [
-        'pghq_CFCPFC_water_1_5_1_14', // amount 1
-        'pghq_CFCPFC_water_1_5_1_13', // amount 2
-        'pghq_CFCPFC_water_1_5_1_14', // amount 3
-        'pghq_CFCPFC_water_1_5_1_13', // amount 4
-        'pghq_CFCPFC_water_1_5_1_14', // amount 5
-        'pghq_CFCPFC_water_1_5_1_13', // amount 6
-        'pghq_CFCPFC_water_1_5_1_14', // amount 7
-        'pghq_CFCPFC_water_1_5_1_13', // amount 8
-        'pghq_CFCPFC_water_1_5_1_14', // amount 9
-        'pghq_CFCPFC_water_1_5_1_13', // amount 10
-        'pghq_CFCPFC_water_1_5_1_14', // amount 11
-        'pghq_CFCPFC_water_1_5_1_13', // amount 12
-        'pghq_CFCPFC_water_1_5_1_14', // units 12
-        'pghq_CFCPFC_water_1_5_1_13', // amount 13
-        'pghq_CFCPFC_water_1_5_1_14', // units 13
-        'pghq_CFCPFC_water_1_5_1_13', // amount 14
-        'pghq_CFCPFC_water_1_5_1_14', // amount 15
-        'pghq_CFCPFC_water_1_5_1_13', // amount 16
-        'pghq_CFCPFC_water_1_5_1_14', // amount 17
-        'pghq_CFCPFC_water_1_5_1_13', // amount 18
-        'pghq_CFCPFC_water_1_5_1_14', // amount 19
-        'pghq_CFCPFC_water_1_5_1_13', // amount 20
-        'pghq_CFCPFC_water_1_5_1_14', // amount 21
-        'pghq_CFCPFC_water_1_5_1_13', // amount 22
-        'pghq_CFCPFC_water_1_5_1_14', // amount 23
-        'pghq_CFCPFC_water_1_5_1_13', // amount 24
-        'pghq_CFCPFC_water_1_5_1_14', // amount 25
-        'pghq_CFCPFC_water_1_5_1_13', // amount 26
-        'pghq_CFCPFC_water_1_5_1_14', // amount 27
-        'pghq_CFCPFC_water_1_5_1_13', // amount 28
-        'pghq_CFCPFC_water_1_5_1_14', // amount 29
-        'pghq_CFCPFC_water_1_5_1_13', // amount 30
-        'pghq_CFCPFC_water_1_5_1_14', // units 30
-        'pghq_CFCPFC_water_1_5_1_13', // amount 31
-        'pghq_CFCPFC_water_2_4_1' // units 31
+        'pghq_CHCPFC_appendixa_1_7_1t_1', // amount 1
+        'pghq_CHCPFC_appendixa_1_7_2t_2', // amount 2
+        'pghq_CHCPFC_appendixa_1_7_3t_1', // amount 3
+        'pghq_CHCPFC_appendixa_1_7_4t_1', // amount 4
+        'pghq_CHCPFC_appendixa_1_7_5t_1', // amount 5
+        'pghq_CHCPFC_appendixa_1_7_6t_1', // amount 6
+        'pghq_CHCPFC_appendixa_1_7_7t_2', // amount 7
+        'pghq_CHCPFC_appendixa_1_7_8t_2', // amount 8
+        'pghq_CHCPFC_appendixa_1_7_9t_1', // amount 9
+        'pghq_CHCPFC_appendixa_1_7_10t_1', // amount 10
+        'pghq_CHCPFC_appendixa_1_7_11t_1', // amount 11
+        'pghq_CHCPFC_appendixa_1_7_12t_1', // amount 12
+        'pghq_CHCPFC_appendixa_1_7_12t_2', // units 12
+        'pghq_CHCPFC_appendixa_1_7_13t_1', // amount 13
+        'pghq_CHCPFC_appendixa_1_7_13t_2', // units 13
+        'pghq_CHCPFC_appendixa_1_7_14t_2', // amount 14
+        'pghq_CHCPFC_appendixa_1_7_15t_1', // amount 15
+        'pghq_CHCPFC_appendixa_1_7_16t_1', // amount 16
+        'pghq_CHCPFC_appendixa_1_7_17t_1', // amount 17
+        'pghq_CHCPFC_appendixa_1_7_18t_1', // amount 18
+        'pghq_CHCPFC_appendixa_1_7_19t_1', // amount 19
+        'pghq_CHCPFC_appendixa_1_7_20t_1', // amount 20
+        'pghq_CHCPFC_appendixa_1_7_21t_1', // amount 21
+        'pghq_CHCPFC_appendixa_1_7_22t_1', // amount 22
+        'pghq_CHCPFC_appendixa_1_7_23t_1', // amount 23
+        'pghq_CHCPFC_appendixa_1_7_24t_1', // amount 24
+        'pghq_CHCPFC_appendixa_1_7_25t_1', // amount 25
+        'pghq_CHCPFC_appendixa_1_7_26t_1', // amount 26
+        'pghq_CHCPFC_appendixa_1_7_27t_1', // amount 27
+        'pghq_CHCPFC_appendixa_1_7_28t_1', // amount 28
+        'pghq_CHCPFC_appendixa_1_7_29t_1', // amount 29
+        'pghq_CHCPFC_appendixa_1_7_30t_1', // amount 30
+        'pghq_CHCPFC_appendixa_1_7_30t_2', // units 30
+        'pghq_CHCPFC_appendixa_1_7_31t_1', // amount 31
+        'pghq_CHCPFC_appendixa_1_7_31t_2' // units 31
       ],
       'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8, amount9, amount10, amount11, amount12, units12, amount13, units13, amount14, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29, amount30, units30, amount31, units31) {
       	var converted12 = 0;
