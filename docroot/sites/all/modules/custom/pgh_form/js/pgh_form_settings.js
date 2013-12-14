@@ -145,7 +145,7 @@
     //
     // Converts a specified amount of water from the specified units into into gallons.
     //
-    convertGallons: function (units, amount, divisor) {
+    convertGallons: function (units, amount) {
       var converted = 0;
       switch (units) {
         case 'Hundred Cubic Feet':
