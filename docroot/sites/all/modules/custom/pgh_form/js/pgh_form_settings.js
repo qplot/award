@@ -677,7 +677,7 @@
     'pghq_PFC_energy_2_11_1': {
       'args': [
         'pghq_PFC_energy_2_7_5',
-        'pghq_PFC_energy_2_7_4',
+        'pghq_PFC_energy_2_7_4'
       ],
       'calculation': handlers.convertBTUSimple
     },
