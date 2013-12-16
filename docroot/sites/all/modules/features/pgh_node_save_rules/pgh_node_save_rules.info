@@ -1,0 +1,10 @@
+name = PGH Node Save Rules
+description = A set of Rules to run when when content is saved.
+core = 7.x
+package = PGH Rules
+version = 7.x-0.1
+project = pgh_node_save_rules
+dependencies[] = entity
+dependencies[] = rules
+features[features_api][] = api:2
+features[rules_config][] = rules_business_unit_save_redirect
