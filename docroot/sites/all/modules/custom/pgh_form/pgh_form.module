@@ -520,7 +520,9 @@ function pgh_form_render_question($question, $app_id = NULL) {
         case 'checkboxes':
           $form_item['#type'] = 'checkboxes';
           $form_item['#options'] = drupal_map_assoc($options);
-          $form_item['#default_value'] = unserialize($form_item['#default_value']);
+          if (isset($form_item['#default_value'])) {
+            $form_item['#default_value'] = unserialize($form_item['#default_value']);
+          }
           if (empty($answer['value'])) {
             unset($form_item['#default_value']);
           }
