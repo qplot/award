@@ -1055,14 +1055,67 @@ h3 {
     border-bottom: 1px solid #e4e4e4;
 
     #sponsor-wrap-inner {
-      padding: 36px 0;
+      padding: 24px 0;
     }
   }
 
   #sponsor {
     color: #999;
     font-size: 13px;
-    line-height: 17px;
+    line-height: 18px;
+    @include clearfix;
+
+    a {
+      color: #999;
+      display: block;
+
+      &:hover {
+        color: $green;
+      }
+
+      &.bbraun span {
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        &.sponsor-img {
+          width: 185px;
+          padding-left: 2px;
+        }
+
+        &.sponsor-text {
+          width: 675px;
+        }
+      }
+
+      &.sterilmed span {
+
+        &.sponsor-img {
+          padding-left: 270px;
+          width: 115px;
+        }
+
+        &.sponsor-text {
+          width: 315px;
+          padding-top: 27px;
+        }
+      }
+    }
+
+    span {
+
+      &.sponsor-img {
+        border-right: 1px solid #d0d0d0;
+        padding-right: 48px;
+        float: left;
+      }
+
+      &.sponsor-text {
+        border-left: 1px solid #d0d0d0;
+        margin-left: -1px;
+        padding-left: 48px;
+        float: left;
+      }
+    }
   }
 }
 
