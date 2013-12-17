@@ -9,6 +9,15 @@
  */
 function pgh_node_save_rules_default_rules_configuration() {
   $items = array();
+  $items['rules_application_save_redirect'] = entity_import('rules_config', '{ "rules_application_save_redirect" : {
+      "LABEL" : "Application save redirect",
+      "PLUGIN" : "reaction rule",
+      "OWNER" : "rules",
+      "REQUIRES" : [ "rules" ],
+      "ON" : { "node_insert--application" : { "bundle" : "application" } },
+      "DO" : [ { "redirect" : { "url" : "application\\/[node:nid]", "force" : 0 } } ]
+    }
+  }');
   $items['rules_business_unit_save_redirect'] = entity_import('rules_config', '{ "rules_business_unit_save_redirect" : {
       "LABEL" : "Business Unit save redirect",
       "PLUGIN" : "reaction rule",
