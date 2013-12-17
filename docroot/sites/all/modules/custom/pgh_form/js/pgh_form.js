@@ -27,7 +27,7 @@
           return 0;
         }
 
-        var textValue = $form_field.val();
+        var textValue = $form_field.val().trim();
         textValue = textValue.replace(/[^\d\.\-]/g, "");
         return parseFloat(textValue);
 
@@ -45,7 +45,7 @@
           return 0;
         }
 
-        return $form_field.find('option:selected').text();
+        return $form_field.find('option:selected').text().trim();
 
       } else if ($question.hasClass('question-style-radios')) {
         $form_field = $question.find('input:radio:checked');
@@ -55,7 +55,7 @@
           return '';
         }
 
-        return $question.find('input:radio:checked').next('label:first').html();
+        return $question.find('input:radio:checked').next('label:first').html().trim();
 
       } else {
         console.log('Unsupported selection style');
