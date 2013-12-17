@@ -178,11 +178,13 @@ function pgh_permissions_node_access_business_unit($business_unit, $op, $account
       }
 
       // Work Group administrators can update.
-      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
-      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
-      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
-        if ($administrator->uid->value() == $account->uid) {
-          return NODE_ACCESS_ALLOW;
+      $work_groups = pgh_api_work_groups_for_business_unit($business_unit->nid);
+      foreach ($work_groups as $work_group) {
+        $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+        foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+          if ($administrator->uid->value() == $account->uid) {
+            return NODE_ACCESS_ALLOW;
+          }
         }
       }
 
@@ -201,11 +203,13 @@ function pgh_permissions_node_access_business_unit($business_unit, $op, $account
       }
 
       // Work Group administrators can view.
-      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
-      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
-      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
-        if ($administrator->uid->value() == $account->uid) {
-          return NODE_ACCESS_ALLOW;
+      $work_groups = pgh_api_work_groups_for_business_unit($business_unit->nid);
+      foreach ($work_groups as $work_group) {
+        $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+        foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+          if ($administrator->uid->value() == $account->uid) {
+            return NODE_ACCESS_ALLOW;
+          }
         }
       }
 
@@ -284,11 +288,13 @@ function pgh_permissions_node_access_application($application, $op, $account) {
       $business_unit = pgh_api_business_unit_for_application($application->nid);
 
       // Work Group administrators can update.
-      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
-      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
-      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
-        if ($administrator->uid->value() == $account->uid) {
-          return NODE_ACCESS_ALLOW;
+      $work_groups = pgh_api_work_groups_for_business_unit($business_unit->nid);
+      foreach ($work_groups as $work_group) {
+        $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+        foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+          if ($administrator->uid->value() == $account->uid) {
+            return NODE_ACCESS_ALLOW;
+          }
         }
       }
 
@@ -311,11 +317,13 @@ function pgh_permissions_node_access_application($application, $op, $account) {
       $business_unit = pgh_api_business_unit_for_application($application->nid);
 
       // Work Group administrators can view.
-      $work_group = pgh_api_work_group_for_business_unit($business_unit->nid);
-      $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
-      foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
-        if ($administrator->uid->value() == $account->uid) {
-          return NODE_ACCESS_ALLOW;
+      $work_groups = pgh_api_work_groups_for_business_unit($business_unit->nid);
+      foreach ($work_groups as $work_group) {
+        $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+        foreach ($work_group_wrapper->field_administrators->getIterator() as $administrator) {
+          if ($administrator->uid->value() == $account->uid) {
+            return NODE_ACCESS_ALLOW;
+          }
         }
       }
 
@@ -363,16 +371,6 @@ function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
       );
 
     }
-    elseif (isset($form_state['node']) && isset($form_state['node']->nid)) {
-      $work_group = pgh_api_work_group_for_business_unit($form_state['node']->nid);
-      if ($work_group) {
-        $wgid = $work_group->nid;
-      }
-      $form['work_group'] = array(
-        '#type' => 'hidden',
-        '#value' => $wgid,
-      );
-    }
     elseif (user_access('administer awards system')) {
       $form['work_group'] = array(
         '#type' => 'select',
@@ -415,26 +413,25 @@ function pgh_permissions_node_validate($node, $form, &$form_state) {
     return;
   }
 
-  if (!isset($node->work_group)) {
-    form_set_error('work_group', 'Work Group is required');
-    return;
-  }
+  // If work_group is specified ensure it is a valid Work Group node and that the
+  // user has permission to modify it (by adding a Business Unit to it).
+  if (isset($node->work_group)) {
+    if (!is_numeric($node->work_group)) {
+      form_set_error('work_group', 'Invalid Work Group');
+      return;
+    }
 
-  if (!is_numeric($node->work_group)) {
-    form_set_error('work_group', 'Invalid Work Group');
-    return;
-  }
+    $work_group = node_load($node->work_group);
 
-  $work_group = node_load($node->work_group);
+    if (!$work_group) {
+      form_set_error('work_group', 'Invalid Work Group');
+      return;
+    }
 
-  if (!$work_group) {
-    form_set_error('work_group', 'Invalid Work Group');
-    return;
-  }
-
-  if (!entity_access('update', 'node', $work_group)) {
-    form_set_error('work_group', 'You do not have permission to modify this Work Group.');
-    return;
+    if (!entity_access('update', 'node', $work_group)) {
+      form_set_error('work_group', 'You do not have permission to modify this Work Group.');
+      return;
+    }
   }
 }
 
@@ -476,23 +473,25 @@ function pgh_permissions_node_delete($node) {
     return;
   }
 
-  // Get parent Work Group.
-  $work_group = pgh_api_work_group_for_business_unit($node->nid);
+  // Get parent Work Groups.
+  $work_groups = pgh_api_work_groups_for_business_unit($node->nid);
 
-  // If the Business Unit doesn't have a Work Group (maybe it was migrated or created manually)
+  // If the Business Unit doesn't have any Work Groups (maybe it was migrated or created manually)
   // do nothing.
   if (!$work_group) {
     return;
   }
 
-  $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+  foreach ($work_groups as $work_group) {
+    $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
 
-  // Remove the deleted Business Unit from the parent Work Group.
-  for ($i = 0; $i < count($work_group_wrapper->field_business_units->value()); $i++) {
-    if ($work_group_wrapper->field_business_units[$i]->value()->nid == $node->nid) {
-      $work_group_wrapper->field_business_units[$i]->set(NULL);
-      $work_group_wrapper->save();
-      break;
+    // Remove the deleted Business Unit from the parent Work Group.
+    for ($i = 0; $i < count($work_group_wrapper->field_business_units->value()); $i++) {
+      if ($work_group_wrapper->field_business_units[$i]->value()->nid == $node->nid) {
+        $work_group_wrapper->field_business_units[$i]->set(NULL);
+        $work_group_wrapper->save();
+        break;
+      }
     }
   }
 }
