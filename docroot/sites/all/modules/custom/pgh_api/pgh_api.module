@@ -41,8 +41,8 @@ function pgh_api_work_groups_for_user() {
   if (isset($result['node'])) {
     $business_unit_nids = array_keys($result['node']);
     foreach ($business_unit_nids as $business_unit_nid) {
-      $work_group = pgh_api_work_group_for_business_unit($business_unit_nid);
-      if ($work_group) {
+      $work_groups = pgh_api_work_groups_for_business_unit($business_unit_nid);
+      foreach ($work_groups as $work_group) {
         $nids[] = $work_group->nid;
       }
     }
@@ -60,15 +60,15 @@ function pgh_api_work_groups_for_user() {
 }
 
 /**
- * Returns the Work Group node which owns the specified Business Unit node.
+ * Returns all of the Work Group nodes which have a reference to the specified Business Unit node.
  *
  * @param int $business_unit_nid
  *   This nid of the Business Unit to find a Work Group for.
  *
  * @return object
- *   A fully loaded Work Group node which is the owner of the specified Business Unit, or FALSE if not found.
+ *   An array of fully loaded Work Group nodes which have references to the specified Business Unit or an empty array if not found.
  */
-function pgh_api_work_group_for_business_unit($business_unit_nid) {
+function pgh_api_work_groups_for_business_unit($business_unit_nid) {
   $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', 'node')
                   ->propertyCondition('type', 'work_group')
@@ -76,11 +76,15 @@ function pgh_api_work_group_for_business_unit($business_unit_nid) {
                   ->execute();
 
   if (isset($result['node'])) {
+    $work_groups = array();
     $nids = array_keys($result['node']);
-    return node_load($nids[0]);
+    foreach ($nids as $nid) {
+      $work_groups[] = node_load($nid);
+    }
+    return $work_groups;
   }
 
-  return FALSE;
+  return array();
 }
 
 /**
