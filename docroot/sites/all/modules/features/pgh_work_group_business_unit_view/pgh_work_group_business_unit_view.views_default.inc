@@ -25,6 +25,7 @@ function pgh_work_group_business_unit_view_views_default_views() {
   $handler->display->display_options['title'] = 'Work Groups and Business Units';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer nodes';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
