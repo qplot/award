@@ -504,6 +504,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
         case 'dropdown':
           $form_item['#type'] = 'select';
           $form_item['#options'] = $options;
+          $form_item['#empty_option'] = t('Select an option...');
           break;
 
         case 'default':

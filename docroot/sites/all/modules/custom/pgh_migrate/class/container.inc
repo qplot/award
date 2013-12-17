@@ -33,7 +33,8 @@ class MigratePGHContainerMigration extends Migration {
       5 => array('c3', 'column 3'),
       6 => array('c4', 'column 4'),
       7 => array('c5', 'column 5'),
-      // 10 => array('qid', 'question id'),
+      8 => array('c6', 'column 6'),
+      9 => array('c7', 'column 7'),
     );
 
     // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
@@ -86,6 +87,8 @@ class MigratePGHContainerMigration extends Migration {
       $row->c3,
       $row->c4,
       $row->c5,
+      $row->c6,
+      $row->c7,
     );
     $cols = implode('|', array_filter($cols));
 

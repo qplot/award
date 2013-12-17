@@ -93,17 +93,32 @@
 
   </div><!-- /#application-menu-container -->
 
-  <div id="sponsor-wrap"><div id="sponsor-wrap-inner">
-  <div id="sponsor">
-
-    <div>Sponsor Block Goes Here.</div>
-
-  </div>
-  </div></div>
+  <?php $application_type = $node->field_application_type['und'][0]['value']; ?>
+  <?php if ($application_type == 'dehp_free'): ?>
+    <div id="sponsor-wrap"><div id="sponsor-wrap-inner">
+    <div id="sponsor">
+        <a class="bbraun" href="http://bbraun.com/" target="_blank">
+        <span class="sponsor-img"><img src="/sites/all/themes/pgh/images/sponsor-logos/bbraun.png" alt="B. Braun Medical Inc. (logo)" width="185" height="46"></span>
+        <span class="sponsor-text">This award generously made possible by B. Braun Medical Inc., a company committed to supplying solution containers not made with natural rubber latex, DEHP or PVC.</span>
+        </a>
+    </div>
+    </div></div>
+  <?php elseif ($application_type == 'greening_the_or' || substr(arg(3), -strlen('_gor')) == '_gor'): ?>
+    <div id="sponsor-wrap"><div id="sponsor-wrap-inner">
+    <div id="sponsor">
+      <a class="sterilmed" href="http://www.sterilmed.com/" target="_blank">
+      <span class="sponsor-img"><img src="/sites/all/themes/pgh/images/sponsor-logos/sterilmed.png" alt="Sterilmed (logo)" width="115" height="71"></span>
+      <span class="sponsor-text">Sterilmed is the proud sponsor of this Award.</span>
+      </a>
+    </div>
+    </div></div>
+  <?php endif; ?>
 
   <?php if ($logged_in): ?>
   <div id="review-submit-wrap"><div id="review-submit-wrap-inner">
     <div class="progress-wrap">
+
+    <div class="bu-info"><span class="bu-name"><?php print $business_unit->title; ?></span> — no.<?php print arg(1); ?></div>
 
     <div class="cat-progress">
       <span class="label">Category Progress:</span>
@@ -126,9 +141,6 @@
       <?php print render($title_prefix); ?>
       <?php if ($title): ?>
         <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
-        <h2><?php print $business_unit->title; ?></h2>
-        <h2><?php print arg(1); ?></h2>
-
       <?php endif; ?>
       <?php print render($title_suffix); ?>
 

@@ -168,6 +168,14 @@
         $(this).replaceWith('<h3 class="legend">' + $(this).html() + '</h3>');
       });
 
+
+      // Disable node save page and add a progress indicator in case of long load times.
+      // ======================================================================
+      $('.node-form').submit(function () {
+        var $button = $(this).find('#edit-submit');
+        $button.attr('disabled', 'disabled').addClass('working').val('Working...');
+      });
+
   });
 
 })(jQuery, Drupal, this, this.document);

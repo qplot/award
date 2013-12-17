@@ -944,7 +944,7 @@ h3 {
     }
 
     .progress-wrap {
-      width: 590px;
+      width: 960px;
       margin: 0 auto;
       padding: 10px 0;
       @include clearfix;
@@ -1026,6 +1026,21 @@ h3 {
         @include gradient(#33ab8f, #1f9677);
       }
     }
+
+    .bu-info {
+      color: #999;
+      font-size: 0.7em;
+      line-height: 1.2em;
+      border-right: 1px solid #ededed;
+      margin-right: 15px;
+      padding: 8px 15px 8px 0;
+      width: 339px;
+      float: left;
+
+      .bu-name {
+        text-transform: uppercase;
+      }
+    }
   }
 }
 
@@ -1040,14 +1055,67 @@ h3 {
     border-bottom: 1px solid #e4e4e4;
 
     #sponsor-wrap-inner {
-      padding: 36px 0;
+      padding: 24px 0;
     }
   }
 
   #sponsor {
     color: #999;
     font-size: 13px;
-    line-height: 17px;
+    line-height: 18px;
+    @include clearfix;
+
+    a {
+      color: #999;
+      display: block;
+
+      &:hover {
+        color: $green;
+      }
+
+      &.bbraun span {
+        padding-top: 12px;
+        padding-bottom: 12px;
+
+        &.sponsor-img {
+          width: 185px;
+          padding-left: 2px;
+        }
+
+        &.sponsor-text {
+          width: 675px;
+        }
+      }
+
+      &.sterilmed span {
+
+        &.sponsor-img {
+          padding-left: 270px;
+          width: 115px;
+        }
+
+        &.sponsor-text {
+          width: 315px;
+          padding-top: 27px;
+        }
+      }
+    }
+
+    span {
+
+      &.sponsor-img {
+        border-right: 1px solid #d0d0d0;
+        padding-right: 48px;
+        float: left;
+      }
+
+      &.sponsor-text {
+        border-left: 1px solid #d0d0d0;
+        margin-left: -1px;
+        padding-left: 48px;
+        float: left;
+      }
+    }
   }
 }
 
@@ -2275,11 +2343,21 @@ form.node-form {
     font-weight: normal;
     text-align: center;
     background-color: $green;
+    background-position: 10px 8px;
     border: 1px solid $green;
     @include border-radius(3px);
     margin-right: 10px;
-    padding: 7px 21px;
-    width: auto;
+    padding: 7px 0;
+    width: 84px;
+    @include transition(all 0.4s ease-out);
+
+    &.working {
+      text-align: left;
+      background: #ffba4e url(../images/pgh-form/icon-page-saving.gif?=yellow) no-repeat 10px 8px;
+      border-color: #ffb043;
+      padding-left: 38px;
+      width: 132px;
+    }
 
     &#edit-delete {
       background-color: #ea4539;
@@ -2288,8 +2366,8 @@ form.node-form {
 
     &:hover,
     &#edit-delete:hover {
-      background-color: $orange;
-      border-color: $orange;
+      background-color: #ffba4e;
+      border-color: #ffb043;
       @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
     }
   }
