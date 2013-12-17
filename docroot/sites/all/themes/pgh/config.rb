@@ -6,6 +6,8 @@
 # file for more information.
 #
 
+# Fix for error "Compass: Invalid US-ASCII character xE2"
+Encoding.default_external = "utf-8"
 
 # Change this to :production when ready to deploy the CSS to the live server.
 environment = :development

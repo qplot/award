@@ -58,6 +58,7 @@ function pgh_preprocess_page(&$variables, $hook) {
   if (arg(0) == 'application' && arg(2) == 'category') {
     $variables['theme_hook_suggestions'][] = 'page__category';
 
+    $variables['business_unit'] = pgh_api_business_unit_for_application(arg(1));
     $variables['category_progress'] = pgh_api_progress_for_category(arg(1), pgh_api_find_nid(arg(3), 'category'));
   }
 

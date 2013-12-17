@@ -126,6 +126,9 @@
       <?php print render($title_prefix); ?>
       <?php if ($title): ?>
         <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
+        <h2><?php print $business_unit->title; ?></h2>
+        <h2><?php print arg(1); ?></h2>
+
       <?php endif; ?>
       <?php print render($title_suffix); ?>
 
@@ -139,6 +142,8 @@
       <?php print render($page['content']); ?>
 
     </div>
+
+    <div class="back-top"><a href="#page">↑ Back to top</a></div>
 
     <?php
       // Render the sidebars to see if there's anything in them.

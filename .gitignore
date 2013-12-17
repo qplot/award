@@ -2,3 +2,5 @@
 .sass-cache
 
 sample/*
+
+/docroot/sites/all/themes/pgh/node_modules/
