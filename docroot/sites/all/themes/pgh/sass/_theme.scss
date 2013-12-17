@@ -2290,11 +2290,21 @@ form.node-form {
     font-weight: normal;
     text-align: center;
     background-color: $green;
+    background-position: 10px 8px;
     border: 1px solid $green;
     @include border-radius(3px);
     margin-right: 10px;
-    padding: 7px 21px;
-    width: auto;
+    padding: 7px 0;
+    width: 84px;
+    @include transition(all 0.4s ease-out);
+
+    &.working {
+      text-align: left;
+      background: #ffba4e url(../images/pgh-form/icon-page-saving.gif?=yellow) no-repeat 10px 8px;
+      border-color: #ffb043;
+      padding-left: 38px;
+      width: 132px;
+    }
 
     &#edit-delete {
       background-color: #ea4539;
@@ -2303,8 +2313,8 @@ form.node-form {
 
     &:hover,
     &#edit-delete:hover {
-      background-color: $orange;
-      border-color: $orange;
+      background-color: #ffba4e;
+      border-color: #ffb043;
       @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
     }
   }

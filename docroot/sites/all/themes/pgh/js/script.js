@@ -173,7 +173,7 @@
       // ======================================================================
       $('.node-form').submit(function () {
         var $button = $(this).find('#edit-submit');
-        $button.attr('disabled', 'disabled').addClass('working');
+        $button.attr('disabled', 'disabled').addClass('working').val('Working...');
       });
 
   });
