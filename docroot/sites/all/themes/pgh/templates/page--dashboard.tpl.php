@@ -128,7 +128,7 @@
 
         <?php
         $business_unit_type = field_view_field('node', $business_unit, 'field_business_unit_type', array('label' => 'hidden'));
-        print $business_unit_type ? render($business_unit_type) : '<span class="not-specified">Not specified</span>';
+        print $business_unit_type ? render($business_unit_type) : '<div class="field-not-specified">Not specified</div>';
         ?>
         <?php if (entity_access('update', 'node', $business_unit)): ?>
           <span class="edit-content"><a href="/node/<?php print $business_unit->vid; ?>/edit">Edit</a></span>
@@ -179,6 +179,11 @@
         <div class="ie-clear-fix"></div>
         </div><!-- /.bu-container-top -->
         <div class="bu-container-bottom">
+
+
+        <?php if(!($business_unit_type)): ?>
+            <p class="needs-bu">Before adding an application, a business unit type needs to identified. <a href="/node/<?php print $business_unit->vid; ?>/edit#edit-field-business-unit-type">Please select a business unit to begin</a></p>
+        <?php else: ?>
 
         <div class="applications">
           <a class="application-archive" href="#">View application archive</a>
@@ -267,19 +272,19 @@
                   $last_access = format_date($user->last_access->value(), 'short');
                 }
 
-                print '<li class="active"><span class="user-name">' . $user->name->value() . '</span>';
-                print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . ' ' . $last_access . '</span>';
+                print '<li class="item-user">';
+                print '<span class="view-user">' . l('View', 'user/' . $user->uid->value()) . '</span>';
+                print '<span class="user-name">' . $user->name->value() . '<span class="access-time">Last access: ' . $last_access . '</span></span>';
                 print '</li>';
               }
               // @codingStandardsIgnoreEnd
             ?>
           </ul>
 
-          <p class="user-message">
-            Please contact a PGH Administrator if you need help with a user account.
-          </p>
+          <p class="user-message">Please contact a PGH Administrator if you need help with a user account.</p>
         </div>
 
+        <?php endif; ?>
         </div><!-- /.bu-container-bottom -->
 
       </div>
