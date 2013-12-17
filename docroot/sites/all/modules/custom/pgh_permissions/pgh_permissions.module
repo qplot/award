@@ -385,6 +385,14 @@ function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
 
     // Don't validate on deletion.
     $form['actions']['delete']['#limit_validation_errors'] = array();
+
+  }
+  elseif ($form['type']['#value'] == 'work_group') {
+    // Non administrators should not be able to change the title of a work group.
+    if (!user_access('administer awards system')) {
+      $form['title']['#access'] = FALSE;
+    }
+    dsm($form);
   }
 }
 
