@@ -140,6 +140,8 @@
 
     </div>
 
+    <div class="back-top"><a href="#page">↑ Back to top</a></div>
+
     <?php
       // Render the sidebars to see if there's anything in them.
       $sidebar_first  = render($page['sidebar_first']);
