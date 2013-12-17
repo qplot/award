@@ -575,6 +575,49 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-business_unit-field_same_as_billing'
+  $field_instances['node-business_unit-field_same_as_billing'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 18,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_same_as_billing',
+    'label' => 'Same as Billing Address',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 18,
+    ),
+  );
+
   // Exported field_instance: 'node-business_unit-field_shipping_address_1'
   $field_instances['node-business_unit-field_shipping_address_1'] = array(
     'bundle' => 'business_unit',
@@ -930,6 +973,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Provide state abbreviation.');
   t('Provide the number of facility users for this business unit.');
   t('Salesforce Id');
+  t('Same as Billing Address');
   t('Shipping Country');
   t('Shipping address 1');
   t('Shipping address 2');
