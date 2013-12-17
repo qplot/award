@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Work Group Business Unit View feature.
+ */
+
+include_once 'pgh_work_group_business_unit_view.features.inc';
