@@ -105,6 +105,8 @@
   <div id="review-submit-wrap"><div id="review-submit-wrap-inner">
     <div class="progress-wrap">
 
+    <div class="bu-info"><span class="bu-name"><?php print $business_unit->title; ?></span> — no.<?php print arg(1); ?></div>
+
     <div class="cat-progress">
       <span class="label">Category Progress:</span>
       <?php print pgh_progress_bar($category_progress); ?>
@@ -126,9 +128,6 @@
       <?php print render($title_prefix); ?>
       <?php if ($title): ?>
         <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
-        <h2><?php print $business_unit->title; ?></h2>
-        <h2><?php print arg(1); ?></h2>
-
       <?php endif; ?>
       <?php print render($title_suffix); ?>
 
