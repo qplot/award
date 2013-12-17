@@ -394,11 +394,10 @@ function pgh_application_form_submit($form, &$form_state) {
   $app_id = $form_state['values']['application'];
 
   foreach ($form_state['values'] as $qid => &$value) {
-    // Assume all question has number.
     if (is_numeric($qid)) {
 
       // Media selector bug, need to access from input.
-      if (isset($value['fid'])) {
+      if (is_array($value) && isset($value['fid'])) {
         $value = $form_state['input'][$qid]['fid'];
       }
 
