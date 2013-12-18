@@ -154,6 +154,9 @@
         $('<span class="glossify-tooltip"><em>' + glossary_term + '</em></span>').appendTo(this);
         $(this).removeAttr('title');
 
+        var position_tip = $(this).position();
+        $(this).children('.glossify-tooltip').css('left', '-' + position_tip.left + 'px');
+
         // Remove the anchor function
         $(this).click(function(e) {
           e.preventDefault();
