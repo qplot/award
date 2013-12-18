@@ -1586,6 +1586,10 @@ h3 {
       .form-item {
         padding-left: 70px;
 
+        table {
+          width: 890px;
+        }
+
         .form-item {
           padding-left: 0;
         }
@@ -2426,13 +2430,18 @@ a.glossify-link {
   }
 
   .glossify-tooltip {
+    font-size: 13px;
+    line-height: 17px;
+    display: block;
+    margin-left: 30px;
     padding-bottom: 0;
+    width: 922px;
     max-height: 0;
     overflow: hidden;
     @include opacity(0);
     position: absolute;
-    bottom: -10px;
-    left: -5px;
+    bottom: 0;
+    // left: 0; <- handled in jQuery
     z-index: 1;
     @include transition(
       padding 0.3s ease-in-out,
@@ -2448,10 +2457,10 @@ a.glossify-link {
       background-color: #e4f7f2;
       border: 1px solid #3bbe9e;
       @include border-radius(3px);
-      @include box-shadow(0 1px 7px rgba(0,0,0,0.1));
+      @include box-shadow(0 1px 7px rgba(0,0,0,0.15));
       display: block;
       padding: 10px;
-      width: 240px;
+      width: 900px;
       height: auto;
     }
   }
