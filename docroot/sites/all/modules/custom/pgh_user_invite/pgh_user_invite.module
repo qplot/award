@@ -19,7 +19,7 @@ function pgh_user_invite_menu() {
     'description' => 'Invite users to a Business Unit',
     'page callback' => 'pgh_user_invite_page',
     'access callback' => 'user_access',
-    'access arguments' => 'invite users business unit',
+    'access arguments' => array('invite users business unit'),
   );
 
   return $items;

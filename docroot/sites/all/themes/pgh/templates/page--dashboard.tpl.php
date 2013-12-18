@@ -181,7 +181,10 @@
 
 
         <?php if(!($business_unit_type)): ?>
-            <p class="needs-bu">Before adding an application, a business unit type needs to be identified. <a href="/node/<?php print $business_unit->vid; ?>/edit#edit-field-business-unit-type">Please select a business unit to begin</a></p>
+            <p class="needs-bu">
+              Before adding an application, a Business Unit type needs to be identified.
+              <a href="/node/<?php print $business_unit->vid; ?>/edit#edit-field-business-unit-type">Please update this Business Unit</a>
+            </p>
         <?php else: ?>
 
         <div class="applications">
