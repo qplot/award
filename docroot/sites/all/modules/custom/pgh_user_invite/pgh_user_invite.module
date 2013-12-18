@@ -16,28 +16,27 @@ function pgh_user_invite_menu() {
 
   $items['invite'] = array(
     'title' => 'Invite Users',
-    'description' => 'Invite users to a Business Unit or Work Group',
+    'description' => 'Invite users to a Business Unit',
     'page callback' => 'pgh_user_invite_page',
-    'access callback' => 'pgh_user_invite_access',
+    'access callback' => 'user_access',
+    'access arguments' => 'invite users business unit',
   );
 
   return $items;
 }
 
-
 /**
- * Access callback for pgh_user_invite_page.
- *
- * @return bool
- *   True if th euser can access the invite page.
- *
- * @author Jay Roberts <jay@designhammer.com>
+ * Implementation of hook_permission().
  */
-function pgh_user_invite_access() {
-  // TODO: Implement checks for PGH Administrators, Client Administrators, etc.
-  return TRUE;
+function pgh_user_invite_permission() {
+  return array(
+    'invite users business unit' => array(
+      'title' => t('Invite users to a Business Unit'),
+      'description' => t('Invite users to a Business Unit by email, adding existing accounts and creating accounts for new users.'),
+      'restrict access' => FALSE,
+    ),
+  );
 }
-
 
 /**
  * Page callback for the user invitation page.
@@ -53,6 +52,10 @@ function pgh_user_invite_page() {
 
     if (!$business_unit) {
       return MENU_NOT_FOUND;
+    }
+
+    if (!entity_access('update', 'node', $business_unit)) {
+      return MENU_ACCESS_DENIED;
     }
 
     drupal_set_title('Invite users to ' . $business_unit->title);

@@ -242,6 +242,7 @@
         </div>
 
         <div class="users">
+          <?php if (user_access('invite users business unit')): ?>
           <?php
             $options = array(
               'query' => array(
@@ -253,6 +254,7 @@
             );
             print l(t('Invite users to this Business Unit'), 'invite', $options);
           ?>
+          <?php endif; ?>
           <h3>Users</h3>
 
           <ul>
