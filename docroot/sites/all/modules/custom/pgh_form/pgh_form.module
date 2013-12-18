@@ -429,6 +429,10 @@ function pgh_form_render_question($question, $app_id = NULL) {
   $type = $question_wrapper->field_question_type->value();
   $style = $question_wrapper->field_question_style->value();
 
+  if ($style == 'date') {
+    drupal_add_library('system', 'ui.datepicker');
+  }
+
   // Store any question-specific administrative information in $admin_info. Items will be
   // included after the question prompt if the user is an awards administrator.
   $admin_info = array();

@@ -19,7 +19,7 @@
 
     // Fetch the form
     if ($question.hasClass('question-type-text')) {
-      if ($question.hasClass('question-style-default')) {
+      if ($question.hasClass('question-style-default') || $question.hasClass('question-style-date')) {
         $form_field = $question.find('input');
 
         if ($form_field.length === 0) {
@@ -139,6 +139,12 @@
       var id = $(this).closest('.question').attr('id');
       $('.data-parent-id-' + id).toggle($(this).css('display') !== 'none');
     });
+
+    // Add date pickers
+    $('.question-style-date input').datepicker({
+      dateFormat: 'yy-mm-dd'
+    });
+
   });
 
   Drupal.pghApplicationForm = {

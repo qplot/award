@@ -280,6 +280,12 @@ function pgh_api_validate_question_value($validations, $value) {
         }
         break;
 
+      case 'date':
+        if (!preg_match('/^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/', $value)) {
+          $errors[] = 'The item value must be a date in the format YYYY-MM-DD.';
+        }
+        break;
+
       case 'required':
         if ($value === '' || $value === NULL) {
           $errors[] = 'This field is required.';
