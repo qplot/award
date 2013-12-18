@@ -96,18 +96,17 @@
 
       <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
 
-
+      <?php if (in_array('administrator', array_values($user->roles)) && in_array('PGH Administrator', array_values($user->roles))): ?>
       <?php
         // Check to see if user has the correct role.
-        if (in_array('administrator', array_values($user->roles)) && in_array('PGH Administrator', array_values($user->roles))) {
-          $options = array(
-            'query' => array(
-              'wgid' => $work_group->nid,
-            ),
-          );
-          print l(t('Add a new Business Unit'), 'node/add/business-unit', $options);
-        }
+        $options = array(
+          'query' => array(
+            'wgid' => $work_group->nid,
+          ),
+        );
+        print l(t('Add a new Business Unit'), 'node/add/business-unit', $options);
       ?>
+    <?php endif; ?>
     </div>
 
   </div><!-- /#workgroup -->
