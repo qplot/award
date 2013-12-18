@@ -296,8 +296,8 @@ function _glossify_to_links($text, $terms, $type, $case_sensitivity, $first_only
           $link->appendXML($term_txt);
         }
         else {
-          $tip = $tooltips ? $terms[strtolower($term_txt)]->tip : '';
-          $link->appendXML(theme('glossify_links', array('type' => $type, 'id' => $terms[strtolower($term_txt)]->id, 'text' => $term_txt, 'tip' => $tip)));
+          $tip = $tooltips ? $terms[strtolower($term_norm)]->tip : '';
+          $link->appendXML(theme('glossify_links', array('type' => $type, 'id' => $terms[strtolower($term_norm)]->id, 'text' => $term_txt, 'tip' => $tip)));
           $matched[] = ($case_sensitivity ? $match[0] : strtolower($match[0]));
         }
         $parent->insertBefore($link, $refnode);
