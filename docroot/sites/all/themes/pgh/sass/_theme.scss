@@ -1719,78 +1719,81 @@ h3 {
     margin: 5px 0 0;
   }
 
-  table {
-    border: 1px solid #a2d6c9;
-    border-bottom: none;
-    border-collapse: separate !important;
-    @include border-radius(3px);
-    margin-bottom: 2em;
-    width: 960px;
+  .question-container {
 
-    tr {
-      background-color: transparent;
-      border: none;
-    }
+    table {
+      border: 1px solid #a2d6c9;
+      border-bottom: none;
+      border-collapse: separate !important;
+      @include border-radius(3px);
+      margin-bottom: 2em;
+      width: 960px;
 
-    th, td {
-      font-size: 0.9em;
-      font-family: $arial;
-      font-weight: normal;
-      border-right: 1px solid $grayLight;
-      border-bottom: 1px solid #a2d6c9;
-      padding: 5px;
-      vertical-align: top;
-    }
-
-    th {
-      color: $green;
-      font-size: 0.85em;
-      text-transform: uppercase;
-      text-align: left;
-      @include gradient($white, #f8f8f8);
-      padding: 8px 5px;
-    }
-
-    tr.odd td {
-    }
-
-    tr.even td {
-    }
-
-    td {
-
-      p {
-        margin: 0;
+      tr {
+        background-color: transparent;
+        border: none;
       }
 
-      select {
-        width: 200px;
+      th, td {
+        font-size: 0.9em;
+        font-family: $arial;
+        font-weight: normal;
+        border-right: 1px solid $grayLight;
+        border-bottom: 1px solid #a2d6c9;
+        padding: 5px;
+        vertical-align: top;
       }
 
-      .ajax-progress {
-        display: block;
+      th {
+        color: $green;
+        font-size: 0.85em;
+        text-transform: uppercase;
+        text-align: left;
+        @include gradient($white, #f8f8f8);
+        padding: 8px 5px;
       }
 
-      &:last-child {
-        border-right: none;
+      tr.odd td {
       }
-    }
 
-    .question .form-item {
-      border: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-      padding-left: 0;
-    }
+      tr.even td {
+      }
 
-    .question-dependent {
-    }
+      td {
 
-    .question-number {
-      font-size: 13px;
-      font-weight: bold;
-      margin-left: 0;
-      float: none;
+        p {
+          margin: 0;
+        }
+
+        select {
+          width: 200px;
+        }
+
+        .ajax-progress {
+          display: block;
+        }
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+
+      .question .form-item {
+        border: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        padding-left: 0;
+      }
+
+      .question-dependent {
+      }
+
+      .question-number {
+        font-size: 13px;
+        font-weight: bold;
+        margin-left: 0;
+        float: none;
+      }
     }
   }
 }

@@ -65,7 +65,7 @@ Types are entered as text and must be one of the following:  `html`,` text`, `fi
 #### html
 The `html` question type allows an application to include a section of filtered markup within the body of an application. This might be some detailed explanatory information, legal information, or other custom text. It does not display a form field and any response for this question will be blank and may be ignored.
 
-Content may include image tags and anchors. All other tags will be stripped out. 
+Content may include image tags and anchors. All other tags will be stripped out.
 
 Content for questions of this type can is specified in the prompt field.
 
@@ -81,6 +81,7 @@ Valid styles are:
 
 - `default`  A standard single-line textfield.
 - `textarea`  A multiline textarea.
+- `date`  A textfield with a date picker.
 
 There is no limitation on storage length for `text` questions.
 
@@ -94,7 +95,7 @@ File uploads will be handled by Drupal's upload functionality.
 `file` fields support only the `default` style.
 
 #### selection
-The `selection` question type allows a user to choose one or more options from a set of options. These can include Yes/No questions, selecting a Month from a list of months or checking all items that apply in a list of checkboxes. 
+The `selection` question type allows a user to choose one or more options from a set of options. These can include Yes/No questions, selecting a Month from a list of months or checking all items that apply in a list of checkboxes.
 
 All `selection` question must also include the `options` field.
 
@@ -121,7 +122,7 @@ The container type allows a natural specification of the placement of each quest
 ### parent id & parent required value
 Some questions should only be displayed if a previous question has a specific value. e.g. "If you answered 'Yes' to the previous question, please upload a document." This functionality is referred to here and elsewhere as Dependent Questions.
 
-The `parent id` field stores the Question ID of a question and `parent required value` should be set to a possible value of that question. 
+The `parent id` field stores the Question ID of a question and `parent required value` should be set to a possible value of that question.
 
 If that question's value in the application matches `parent required value` then this question will be displayed, otherwise it will be hidden.
 
@@ -174,6 +175,7 @@ These validation rules are applied on a per-question basis. A rule which states 
 - `nonnegative` The provided value must be a non-negative number.
 - `nonzero` The provided value must not be a non-zero number.
 - `percentage` The provided value must be an integer between 0 and 100.
+- `date` A textual representation of a date in the format YYYY-MM-DD.
 
 ### score
 
@@ -181,7 +183,7 @@ Some questions may provide scoring information so that automatic scoring can be 
 
 `text` fields must have a single value specified. This value will be awarded if the question is completed. If a response to the question is omitted, no points will be awarded.
 
-`selection` questions must have a pipe-separated list of values specified, one for each option in the `options` field. 
+`selection` questions must have a pipe-separated list of values specified, one for each option in the `options` field.
 
 `html`, `file`, and `container` types do not participate in automatic scoring so the `score` field can be omitted for these.
 
@@ -201,7 +203,7 @@ The `points` field records the total possible points for each option of a given 
 
 `text` fields must have a single value specified. This value will be awarded if the question is completed. If a response to the question is omitted, no points will be awarded.
 
-`selection` questions must have a pipe-separated list of values specified, one for each option in the `options` field. 
+`selection` questions must have a pipe-separated list of values specified, one for each option in the `options` field.
 
 `html`, `file`, and `container` types do not participate in automatic scoring so the `score` field can be omitted for these.
 
