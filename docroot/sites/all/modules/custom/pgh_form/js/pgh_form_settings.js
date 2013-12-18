@@ -4123,7 +4123,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4147,7 +4146,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4171,7 +4169,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4195,7 +4192,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4219,7 +4215,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4243,7 +4238,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4267,7 +4261,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4300,7 +4293,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4324,7 +4316,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17',
         'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
@@ -4340,7 +4331,6 @@
         'pghq_CHCPFC_energy_2_11_9',
         'pghq_CHCPFC_energy_2_11_11',
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_15',
         'pghq_CHCPFC_energy_2_11_17'
       ],
       'calculation': handlers.sum
@@ -4354,7 +4344,6 @@
         'pghq_CHCPFC_energy_2_11_10',
         'pghq_CHCPFC_energy_2_11_12',
         'pghq_CHCPFC_energy_2_11_14',
-        'pghq_CHCPFC_energy_2_11_16',
         'pghq_CHCPFC_energy_2_11_18'
       ],
       'calculation': handlers.sum
