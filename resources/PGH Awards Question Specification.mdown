@@ -1,7 +1,7 @@
 # PGH Awards Question Specification
 
-Last Updated: 11/8/2013
-By: Stephen Pashby
+Last Updated: 12/18/2013
+By: Jay Roberts
 
 This document includes formatting guidelines for question data which will be imported into the new Awards system. This specification will be updated over the course of the project to reflect changes and updates to the process.
 
