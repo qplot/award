@@ -196,6 +196,10 @@ function pgh_form_application_page($application) {
 function pgh_form_category_page($application, $category_id) {
   // Load the app by app_id.
   if ($application) {
+    pgh_api_question_is_active($application->nid, 230948); // pghq_PFC_energy_3_7 109
+    pgh_api_question_is_active($application->nid, 230962); // pghq_PFC_energy_3_8 109.j
+    pgh_api_question_is_active($application->nid, 230963); // pghq_PFC_energy_3_8_1
+
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form_settings.js', array('weight' => 2, 'scope' => 'footer'));
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form.js', array('weight' => 2, 'scope' => 'footer'));
 
