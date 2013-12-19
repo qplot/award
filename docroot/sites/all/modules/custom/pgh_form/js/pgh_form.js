@@ -146,6 +146,9 @@
         dateFormat: 'yy-mm-dd'
       });
     }
+
+    // Add currency prefix.
+    $('.question-style-currency input').before('<span class="currency-prefix">$</span> ');
   });
 
   Drupal.pghApplicationForm = {
