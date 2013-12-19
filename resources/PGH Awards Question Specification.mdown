@@ -82,6 +82,7 @@ Valid styles are:
 - `default`  A standard single-line textfield.
 - `textarea`  A multiline textarea.
 - `date`  A textfield with a date picker.
+- `currency`  A textfield with a leading $.
 
 There is no limitation on storage length for `text` questions.
 
@@ -176,6 +177,7 @@ These validation rules are applied on a per-question basis. A rule which states 
 - `nonzero` The provided value must not be a non-zero number.
 - `percentage` The provided value must be an integer between 0 and 100.
 - `date` A textual representation of a date in the format YYYY-MM-DD.
+- `currency` A positive currency value in the en-US culture format without leading $.
 
 ### score
 
