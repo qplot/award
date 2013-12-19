@@ -285,7 +285,7 @@ function pgh_business_unit_ctype_field_default_field_bases() {
         'hospital' => 'Health care facility (with beds and operating rooms)',
         'clinic' => 'Health care facility (with no overnight beds)',
         'long_term_care' => 'Health care facility (with overnight beds and no operating rooms)',
-        'health_system' => 'Health System (TBD) Health System',
+        'health_system' => 'Health System',
         'business_member' => 'Business Member (includes A/E, P/S, and NON GPO businesses and GPO)',
         'strategic_associate_member' => 'Strategic Associate Member (non profits, NGO, state, governmental and regional networks, associations and other groups)',
       ),
