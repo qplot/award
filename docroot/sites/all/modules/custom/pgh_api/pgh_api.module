@@ -851,14 +851,8 @@ function pgh_api_progress_for_application($application_nid) {
 /**
  * Calculate progress for a specific application and category.
  *
- * Currently progress is the total number of 'text', 'file', and 'selection' questions in
+ * Currently progress is the total number of active 'text', 'file', and 'selection' questions in
  * the category divided by the number of updated responses for those questions.
- *
- * This has a limitation of not correctly omitting dependent questions which are not
- * applicable due to their parent question's value.
- *
- * For most application types it is not currently possible to get 100% completion without
- * answering each dependent question.
  *
  * @param int $application_nid
  *   The NID of the application.
@@ -872,6 +866,50 @@ function pgh_api_progress_for_application($application_nid) {
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_progress_for_category($application_nid, $category_nid) {
+  $application = node_load($application_nid);
+
+  if (!$application) {
+    watchdog('pgh_api', 'Tried to load invalid application nid $id in pgh_api_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
+    return 0;
+  }
+
+  $application_wrapper = entity_metadata_wrapper('node', $application);
+
+  $category_progress = @unserialize($application_wrapper->field_category_progress->value());
+
+  if ($category_progress === FALSE || !is_array($category_progress)) {
+    return 0;
+  }
+
+  return isset($category_progress[$category_nid]) ? $category_progress[$category_nid] : 0;
+}
+
+/**
+ * Calculate progress for a specific application and category.
+ *
+ * Progress is the total number of active 'text', 'file', and 'selection' questions in
+ * the category divided by the number of updated responses for those questions.
+ *
+ * This function uses pgh_api_question_is_active to determine if the question should be included
+ * in he progress calculation. This function is comparatively slow so we should only recalculate when
+ * the category form is submitted. After recalculating, the progress value is saved to a serialized array
+ * which is stored in a field o the Application node.
+ *
+ * This ensures that fetching progress for a category or whole application is always just a series of fast
+ * lookups and calculation is never done on more than a category's worth of questions at a time.
+ *
+ * @param int $application_nid
+ *   The NID of the application.
+ *
+ * @param int $category_nid
+ *   The NID of the category.
+ *
+ * @return float
+ *   A float value from 0 to 1 indicating the total category progress.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_recalculate_progress_for_category($application_nid, $category_nid) {
   // Get all of the question/response pairs for a category.
   $query = "SELECT rq.entity_id AS response_id,
                    rq.field_response_question_target_id AS question_id,
@@ -897,9 +935,11 @@ function pgh_api_progress_for_category($application_nid, $category_nid) {
   $response_count = 0;
 
   while ($result = $results->fetchObject()) {
-    $question_count++;
-    if ($result->response_updated) {
-      $response_count++;
+    if (pgh_api_question_is_active($application_nid, $result->question_id)) {
+      $question_count++;
+      if ($result->response_updated) {
+        $response_count++;
+      }
     }
   }
 
@@ -908,6 +948,27 @@ function pgh_api_progress_for_category($application_nid, $category_nid) {
   if ($question_count != 0) {
     $progress = $response_count / $question_count;
   }
+
+  // Store calculated progress in a serialized field on the Application.
+  $application = node_load($application_nid);
+
+  if (!$application) {
+    watchdog('pgh_api', 'Tried to load invalid application nid $id in pgh_api_recalculate_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
+    return 0;
+  }
+
+  $application_wrapper = entity_metadata_wrapper('node', $application);
+
+  $category_progress = @unserialize($application_wrapper->field_category_progress->value());
+
+  if ($category_progress === FALSE || !is_array($category_progress)) {
+    $category_progress = array();
+  }
+
+  $category_progress[$category_nid] = $progress;
+
+  $application_wrapper->field_category_progress->set(serialize($category_progress));
+  $application_wrapper->save();
 
   return $progress;
 }
@@ -927,11 +988,7 @@ function pgh_api_progress_for_category($application_nid, $category_nid) {
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_api_category_is_valid($application_nid, $category_nid) {
-  // TODO: Currently this does not take into account questions which are not valid but shouldn't be
-  // considered because their parent value is not selected.
   $questions = pgh_api_questions_for_category($application_nid, $category_nid);
-
-  $cat = node_load($category_nid);
 
   $errors = array();
 
@@ -963,11 +1020,7 @@ function pgh_api_category_is_valid($application_nid, $category_nid) {
  *   An array of errors keyed on question id.
  */
 function pgh_api_errors_for_category($application_nid, $category_nid) {
-  // TODO: Currently this does not take into account questions which are not valid but shouldn't be
-  // considered because their parent value is not selected.
   $questions = pgh_api_questions_for_category($application_nid, $category_nid);
-
-  $cat = node_load($category_nid);
 
   $errors = array();
 
