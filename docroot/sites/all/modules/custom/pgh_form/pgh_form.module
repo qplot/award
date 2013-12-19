@@ -333,6 +333,12 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     '#type' => 'hidden',
     '#value' => $app_id
   );
+
+  $form['category'] = array(
+    '#type' => 'hidden',
+    '#value' => $cat_id
+  );
+
   return $form;
 }
 
@@ -372,6 +378,8 @@ function pgh_application_form_element_callback($form, &$form_state) {
   }
   $error_msg .= '</div><!-- #error-container -->';
 
+  pgh_api_recalculate_progress_for_category($form_state['values']['application'], $form_state['values']['category']);
+
   return $error_msg;
 }
 
@@ -404,6 +412,8 @@ function pgh_application_form_submit($form, &$form_state) {
       pgh_api_save_response($app_id, $qid, $value);
     }
   }
+
+  pgh_api_recalculate_progress_for_category($form_state['values']['application'], $form_state['values']['category']);
 }
 
 /**
