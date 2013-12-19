@@ -436,6 +436,116 @@ function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE)
   return $response->nid;
 }
 
+
+/**
+ * Returns a boolean indicating if the question should be considered active.
+ *
+ * A Question is 'active' if it is not a dependent question or if all of the
+ * questions up the dependency chain are not active. It is necessary to make this distinction
+ * because Questions which are not active should not count as progress indicators and should not
+ * display validation errors on the application review and submit page.
+ *
+ * This function recurses up the chain of question parents.
+ *
+ * @param int $application_nid
+ *   The NID for the Application to check.
+ *
+ * @param int $question_nid
+ *   The NID for the Question to check.
+ *
+ * @return bool
+ *   A boolean indicating if the question should be considered active.
+ *
+ * @author  Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_question_is_active($application_nid, $question_nid) {
+  $question = node_load($question_nid);
+
+  if (!$question) {
+    watchdog('pgh_api', 'Tried to load invalid question nid $id in pgh_api_question_is_active', array('%id' => $question_nid), WATCHDOG_ERROR);
+    return FALSE;
+  }
+
+  $parent = field_get_items('node', $question, 'field_question_parent_qid');
+
+  // Non-dependent questions are always active.
+  if (!$parent) {
+    return TRUE;
+  }
+
+  // Next we check to see if the parent response value is different from the Parent Required Value of this question.
+  // We need to do a bit of object loading and value conversion.
+
+  // Unbox the field value.
+  $parent_qid = $parent[0]['value'];
+  $parent_nid = pgh_api_find_nid($parent_qid, 'question');
+
+  $question_parent_required_value = field_get_items('node', $question, 'field_question_parent_value');
+
+  // Unbox the required value.
+  if ($question_parent_required_value) {
+    $question_parent_required_value = $question_parent_required_value[0]['value'];
+  }
+
+  // Convert the value to its internal representation.
+  $question_parent_required_value = pgh_api_internal_value($parent_nid, $question_parent_required_value);
+
+  // Fetch the parent question's response.
+  $parent_response = node_load(pgh_api_find_response_id($application_nid, $parent_nid));
+
+  if (!$parent_response) {
+    watchdog('pgh_api', 'Tried to load invalid parent response $id in pgh_api_question_is_active', array('%id' => $parent_nid), WATCHDOG_ERROR);
+    return FALSE;
+  }
+
+  $parent_response_wrapper = entity_metadata_wrapper('node', $parent_response);
+  $parent_response_value = $parent_response_wrapper->body->value() ? $parent_response_wrapper->body->value->raw() : '';
+
+  // If the parent's response value doesn't match the required value for this question, then this question is not active.
+  if ($parent_response_value != $question_parent_required_value) {
+    return FALSE;
+  }
+
+  // If the values match, we are only active if our parent is also active.
+  return pgh_api_question_is_active($application_nid, $parent_nid);
+}
+
+/**
+ * Converts an externally specified Response value into its internal representation.
+ *
+ * Specifically, for selects , it converts option text ('Yes', 'No') into its numerical representation
+ * (0, 1). For other question types it returns the original value.
+ *
+ * This is an ugly function and it is only necessary because the system uses two distinct representations
+ * for question values.
+ *
+ * @param int $question_nid
+ *   The NID of the speicifc question.
+ *
+ * @param mixed $value
+ *   A value, likely from field_parent_value.
+ *
+ * @return mixed
+ *   The representation of $value as it would be stored in a Response object.
+ *
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+function pgh_api_internal_value($question_nid, $value) {
+  $question = node_load($question_nid);
+  $question_wrapper = entity_metadata_wrapper('node', $question);
+  $question_type = $question_wrapper->field_question_type->value();
+
+  switch ($question_type) {
+    case 'selection':
+      $options = $question_wrapper->field_question_options->value();
+      return array_search($value, $options);
+
+    default:
+      return $value;
+  }
+}
+
+
 /**
  * Save a question value to its response.
  *
@@ -862,6 +972,9 @@ function pgh_api_errors_for_category($application_nid, $category_nid) {
   $errors = array();
 
   foreach ($questions as $question) {
+    if (!pgh_api_question_is_active($application_nid, $question->nid)) {
+      continue;
+    }
     $question_wrapper = entity_metadata_wrapper('node', $question);
 
     $response_array = pgh_api_get_response($application_nid, $question->nid);
