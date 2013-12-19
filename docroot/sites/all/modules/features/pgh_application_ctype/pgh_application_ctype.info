@@ -16,6 +16,7 @@ features[field_base][] = field_application_type
 features[field_instance][] = node-application-body
 features[field_instance][] = node-application-field_application_status
 features[field_instance][] = node-application-field_application_type
+features[field_instance][] = node-application-field_category_progress
 features[node][] = application
 features[user_permission][] = create field_application_status
 features[user_permission][] = edit field_application_status
