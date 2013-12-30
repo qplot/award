@@ -59,7 +59,7 @@
     <?php else: ?>
 
       <div class="custom-user-login block">
-        <p><a class="user-login" href="/user">User login</a> <a class="user-register" href="/user/register">Create account</a></p>
+        <p><a class="user-login" href="/user">User login</a> <?php if (variable_get('user_register', 1)): ?><a class="user-register" href="/user/register">Create account</a><?php endif; ?></p>
       </div>
 
     <?php endif; ?>
