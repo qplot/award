@@ -287,63 +287,93 @@
     //
     // PFC Waste formulas
     //
-    'pghq_PFC_waste_4_8_tB_9': {
+    'pghq_PFC_waste_4_8_tB_13': {
       'args': [
         'pghq_PFC_waste_4_8_tB_1',
-        'pghq_PFC_waste_4_8_tB_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_4_8_tB_10': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_2',
-        'pghq_PFC_waste_4_8_tB_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_4_8_tB_11': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_3',
         'pghq_PFC_waste_4_8_tB_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_4_8_tB_12': {
+    'pghq_PFC_waste_4_8_tB_14': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_4',
+        'pghq_PFC_waste_4_8_tB_2',
         'pghq_PFC_waste_4_8_tB_8'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_14': {
+    'pghq_PFC_waste_4_8_tB_15': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_3',
+        'pghq_PFC_waste_4_8_tB_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_4_8_tB_16': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_4',
+        'pghq_PFC_waste_4_8_tB_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_4_8_tB_17': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_5',
+        'pghq_PFC_waste_4_8_tB_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_4_8_tB_18': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_6',
+        'pghq_PFC_waste_4_8_tB_12'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_2_20': {
       'args': [
         'pghq_PFC_waste_6_2_1',
-        'pghq_PFC_waste_6_2_6',
-        'pghq_PFC_waste_6_2_10'
+        'pghq_PFC_waste_6_2_8',
+        'pghq_PFC_waste_6_2_14'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_15': {
+    'pghq_PFC_waste_6_2_21': {
       'args': [
         'pghq_PFC_waste_6_2_2',
-        'pghq_PFC_waste_6_2_7',
-        'pghq_PFC_waste_6_2_11'
+        'pghq_PFC_waste_6_2_9',
+        'pghq_PFC_waste_6_2_15'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_16': {
+    'pghq_PFC_waste_6_2_22': {
       'args': [
         'pghq_PFC_waste_6_2_3',
-        'pghq_PFC_waste_6_2_8',
-        'pghq_PFC_waste_6_2_12'
+        'pghq_PFC_waste_6_2_10',
+        'pghq_PFC_waste_6_2_16'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_17': {
+    'pghq_PFC_waste_6_2_23': {
       'args': [
         'pghq_PFC_waste_6_2_4',
-        'pghq_PFC_waste_6_2_9',
-        'pghq_PFC_waste_6_2_13'
+        'pghq_PFC_waste_6_2_11',
+        'pghq_PFC_waste_6_2_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_2_24': {
+      'args': [
+        'pghq_PFC_waste_6_2_5',
+        'pghq_PFC_waste_6_2_12',
+        'pghq_PFC_waste_6_2_18'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_2_25': {
+      'args': [
+        'pghq_PFC_waste_6_2_6',
+        'pghq_PFC_waste_6_2_13',
+        'pghq_PFC_waste_6_2_19'
       ],
       'calculation': handlers.sum
     },
@@ -356,31 +386,45 @@
         return a * 2000 / b / 365;
       }
     },
-    'pghq_PFC_waste_8_10_1tE_9': {
+    'pghq_PFC_waste_8_10_1tE_13': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_1',
-        'pghq_PFC_waste_8_10_1tE_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_8_10_1tE_10': {
-      'args': [
-        'pghq_PFC_waste_8_10_1tE_2',
-        'pghq_PFC_waste_8_10_1tE_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_8_10_1tE_11': {
-      'args': [
-        'pghq_PFC_waste_8_10_1tE_3',
         'pghq_PFC_waste_8_10_1tE_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_8_10_1tE_12': {
+    'pghq_PFC_waste_8_10_1tE_14': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_2',
+        'pghq_PFC_waste_8_10_1tE_8'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_15': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_3',
+        'pghq_PFC_waste_8_10_1tE_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_16': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_4',
-        'pghq_PFC_waste_8_10_1tE_8'
+        'pghq_PFC_waste_8_10_1tE_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_17': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_5',
+        'pghq_PFC_waste_8_10_1tE_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_18': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_6',
+        'pghq_PFC_waste_8_10_1tE_12'
       ],
       'calculation': handlers.sum
     },
@@ -405,144 +449,216 @@
     'pghq_PFC_waste_10_1_tG_1': {
       'args': [
         'pghq_PFC_waste_2_3_tA_2',
-        'pghq_PFC_waste_6_2_14',
-        'pghq_PFC_waste_8_10_1tE_9'
+        'pghq_PFC_waste_6_2_20',
+        'pghq_PFC_waste_8_10_1tE_13'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tG_2': {
       'args': [
         'pghq_PFC_waste_2_3_tA_3',
-        'pghq_PFC_waste_6_2_15',
-        'pghq_PFC_waste_8_10_1tE_10'
+        'pghq_PFC_waste_6_2_21',
+        'pghq_PFC_waste_8_10_1tE_14'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tG_3': {
       'args': [
         'pghq_PFC_waste_2_3_tA_4',
-        'pghq_PFC_waste_6_2_16',
-        'pghq_PFC_waste_8_10_1tE_11'
+        'pghq_PFC_waste_6_2_22',
+        'pghq_PFC_waste_8_10_1tE_15'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tG_4': {
       'args': [
         'pghq_PFC_waste_2_3_tA_5',
-        'pghq_PFC_waste_6_2_17',
-        'pghq_PFC_waste_8_10_1tE_12'
+        'pghq_PFC_waste_6_2_23',
+        'pghq_PFC_waste_8_10_1tE_16'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_10_1_tG_5': {
+      'args': [
+        'pghq_PFC_waste_2_3_tA_6',
+        'pghq_PFC_waste_6_2_24',
+        'pghq_PFC_waste_8_10_1tE_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_10_1_tG_6': {
+      'args': [
+        'pghq_PFC_waste_2_3_tA_7',
+        'pghq_PFC_waste_6_2_25',
+        'pghq_PFC_waste_8_10_1tE_18'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tH_1': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_1',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_2_3_tA_2',
+        'pghq_PFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_2': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_2',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_2_3_tA_3',
+        'pghq_PFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_3': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_3',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_2_3_tA_4',
+        'pghq_PFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_4': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_4',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_2_3_tA_5',
+        'pghq_PFC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_5': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_9',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_2_3_tA_6',
+        'pghq_PFC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_6': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_10',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_2_3_tA_7',
+        'pghq_PFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_7': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_11',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_4_8_tB_13',
+        'pghq_PFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_8': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_12',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_4_8_tB_14',
+        'pghq_PFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_9': {
       'args': [
-        'pghq_PFC_waste_6_2_14',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_4_8_tB_15',
+        'pghq_PFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_10': {
       'args': [
-        'pghq_PFC_waste_6_2_15',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_4_8_tB_16',
+        'pghq_PFC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_11': {
       'args': [
-        'pghq_PFC_waste_6_2_16',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_4_8_tB_17',
+        'pghq_PFC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_12': {
       'args': [
-        'pghq_PFC_waste_6_2_17',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_4_8_tB_18',
+        'pghq_PFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_13': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_9',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_6_2_20',
+        'pghq_PFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_14': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_10',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_6_2_21',
+        'pghq_PFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_15': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_11',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_6_2_22',
+        'pghq_PFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_16': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_12',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_6_2_23',
+        'pghq_PFC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_17': {
+      'args': [
+        'pghq_PFC_waste_6_2_24',
+        'pghq_PFC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_18': {
+      'args': [
+        'pghq_PFC_waste_6_2_25',
+        'pghq_PFC_waste_10_1_tG_6'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_19': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_13',
+        'pghq_PFC_waste_10_1_tG_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_20': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_14',
+        'pghq_PFC_waste_10_1_tG_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_21': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_15',
+        'pghq_PFC_waste_10_1_tG_3'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_22': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_16',
+        'pghq_PFC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_23': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_17',
+        'pghq_PFC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_24': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_18',
+        'pghq_PFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
