@@ -137,8 +137,11 @@
         case 'Oil #6 Diesel: Imp. Gallon':
           return amount * 185;
 
-        default:
+         case 'Oil #6 Diesel: Liter':
           return amount * 40.7;
+
+        default:
+          return 0;
       }
     },
 
