@@ -66,6 +66,7 @@ class MigratePGHPreprocessCSVMigration extends MigrationBase {
       'applications',
       'apptypes',
       'business_units',
+      'work_groups',
       'categories',
       'questions',
       'responses',

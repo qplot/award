@@ -58,7 +58,12 @@ function pgh_migrate_migrate_api() {
       'BusinessUnit' => array(
         'class_name' => 'MigratePGHBusinessUnitMigration',
         'group_name' => 'PGH',
-        'soft_dependencies' => array('PreprocessCSV', 'Question')
+        'soft_dependencies' => array('PreprocessCSV')
+      ),
+      'WorkGroup' => array(
+        'class_name' => 'MigratePGHWorkGroupMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV')
       ),
     ),
   );
