@@ -9,6 +9,22 @@
 
 (function($) {
   'use strict';
+  //
+  // Shim for String.trim() in older browsers.
+  //
+  if (!String.prototype.trim){
+    String.prototype.trim = function(){
+      return this.replace(/^\s+|\s+$/g,'');
+    };
+  }
+
+  // Stub console.
+  if (!window.console) {
+    window.console = {};
+  }
+  if (!window.console.log) {
+    window.console.log = function () { };
+  }
 
   //
   // Returns a float value for the supplied question id. Returns 0 if not found.
@@ -27,7 +43,7 @@
           return 0;
         }
 
-        var textValue = $form_field.val().trim();
+        var textValue = $.trim($form_field.val());
         textValue = textValue.replace(/[^\d\.\-]/g, "");
         return parseFloat(textValue);
 
@@ -45,7 +61,7 @@
           return 0;
         }
 
-        return $form_field.find('option:selected').text().trim();
+        return $form_field.find('option:selected').val().trim();
 
       } else if ($question.hasClass('question-style-radios')) {
         $form_field = $question.find('input:radio:checked');
@@ -134,7 +150,7 @@
       }
     });
 
-    // Also ensure that third level dependent questions are properly hidden.
+    // Ensure that third level dependent questions are properly hidden on page load.
     $('.question > .form-item').each(function() {
       var id = $(this).closest('.question').attr('id');
       $('.data-parent-id-' + id).toggle($(this).css('display') !== 'none');
