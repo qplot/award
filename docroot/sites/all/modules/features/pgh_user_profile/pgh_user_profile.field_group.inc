@@ -23,9 +23,10 @@ function pgh_user_profile_field_group_info() {
     'label' => 'Account Info',
     'weight' => '2',
     'children' => array(
-      0 => 'account',
-      1 => 'timezone',
-      2 => 'overlay_control',
+      0 => 'field_user_sfid',
+      1 => 'account',
+      2 => 'timezone',
+      3 => 'overlay_control',
     ),
     'format_type' => 'div',
     'format_settings' => array(
