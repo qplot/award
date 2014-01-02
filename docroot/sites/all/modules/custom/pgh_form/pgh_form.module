@@ -483,10 +483,12 @@ function pgh_form_render_question($question, $app_id = NULL) {
   }
 
   // Ajax processing.
-  $form_item['#ajax'] = array(
-    'callback' => 'pgh_application_form_element_callback',
-    'wrapper' => 'error-container-' . $question_wrapper->title->value(),
-  );
+  if (_pgh_form_should_use_ajax()) {
+    $form_item['#ajax'] = array(
+      'callback' => 'pgh_application_form_element_callback',
+      'wrapper' => 'error-container-' . $question_wrapper->title->value(),
+    );
+  }
 
   // Perform additional question-type specific processing.
   switch ($type) {
@@ -986,6 +988,22 @@ function pgh_form_application_submit_form($form, &$form_state, $application) {
     '#value' => 'Submit this application',
   );
   return $form;
+}
+
+/**
+ * Returns a boolean indicating whether the form should use Drupal Form API AJAX functionality.
+ *
+ * AJAX functionality breaks on older browsers (shows long running script warning).
+ *
+ * @return bool
+ *   A boolean indicating whether the form should use Drupal Form API AJAX functionality.
+ */
+function _pgh_form_should_use_ajax() {
+  // Brute force old IE detection.
+  if (preg_match('/(?i)msie [4-8]/', $_SERVER['HTTP_USER_AGENT'])) {
+    return FALSE;
+  }
+  return TRUE;
 }
 
 /**
