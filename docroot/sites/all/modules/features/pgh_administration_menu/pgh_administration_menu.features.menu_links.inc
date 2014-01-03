@@ -10,6 +10,26 @@
 function pgh_administration_menu_menu_default_menu_links() {
   $menu_links = array();
 
+  // Exported menu link: menu-awards-administration_applications:admin/applications
+  $menu_links['menu-awards-administration_applications:admin/applications'] = array(
+    'menu_name' => 'menu-awards-administration',
+    'link_path' => 'admin/applications',
+    'router_path' => 'admin/applications',
+    'link_title' => 'Applications',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+      'identifier' => 'menu-awards-administration_applications:admin/applications',
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 0,
+    'customized' => 1,
+  );
   // Exported menu link: menu-awards-administration_business-units-by-work-group:admin/work-groups-and-business-units
   $menu_links['menu-awards-administration_business-units-by-work-group:admin/work-groups-and-business-units'] = array(
     'menu_name' => 'menu-awards-administration',
@@ -52,6 +72,7 @@ function pgh_administration_menu_menu_default_menu_links() {
   );
   // Translatables
   // Included for use with string extractors like potx.
+  t('Applications');
   t('Business Units by Work Group');
   t('Work Groups');
 
