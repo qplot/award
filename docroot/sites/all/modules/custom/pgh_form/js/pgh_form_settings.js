@@ -137,8 +137,11 @@
         case 'Oil #6 Diesel: Imp. Gallon':
           return amount * 185;
 
-        default:
+         case 'Oil #6 Diesel: Liter':
           return amount * 40.7;
+
+        default:
+          return 0;
       }
     },
 
@@ -287,63 +290,93 @@
     //
     // PFC Waste formulas
     //
-    'pghq_PFC_waste_4_8_tB_9': {
+    'pghq_PFC_waste_4_8_tB_13': {
       'args': [
         'pghq_PFC_waste_4_8_tB_1',
-        'pghq_PFC_waste_4_8_tB_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_4_8_tB_10': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_2',
-        'pghq_PFC_waste_4_8_tB_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_4_8_tB_11': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_3',
         'pghq_PFC_waste_4_8_tB_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_4_8_tB_12': {
+    'pghq_PFC_waste_4_8_tB_14': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_4',
+        'pghq_PFC_waste_4_8_tB_2',
         'pghq_PFC_waste_4_8_tB_8'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_14': {
+    'pghq_PFC_waste_4_8_tB_15': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_3',
+        'pghq_PFC_waste_4_8_tB_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_4_8_tB_16': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_4',
+        'pghq_PFC_waste_4_8_tB_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_4_8_tB_17': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_5',
+        'pghq_PFC_waste_4_8_tB_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_4_8_tB_18': {
+      'args': [
+        'pghq_PFC_waste_4_8_tB_6',
+        'pghq_PFC_waste_4_8_tB_12'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_2_20': {
       'args': [
         'pghq_PFC_waste_6_2_1',
-        'pghq_PFC_waste_6_2_6',
-        'pghq_PFC_waste_6_2_10'
+        'pghq_PFC_waste_6_2_8',
+        'pghq_PFC_waste_6_2_14'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_15': {
+    'pghq_PFC_waste_6_2_21': {
       'args': [
         'pghq_PFC_waste_6_2_2',
-        'pghq_PFC_waste_6_2_7',
-        'pghq_PFC_waste_6_2_11'
+        'pghq_PFC_waste_6_2_9',
+        'pghq_PFC_waste_6_2_15'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_16': {
+    'pghq_PFC_waste_6_2_22': {
       'args': [
         'pghq_PFC_waste_6_2_3',
-        'pghq_PFC_waste_6_2_8',
-        'pghq_PFC_waste_6_2_12'
+        'pghq_PFC_waste_6_2_10',
+        'pghq_PFC_waste_6_2_16'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_6_2_17': {
+    'pghq_PFC_waste_6_2_23': {
       'args': [
         'pghq_PFC_waste_6_2_4',
-        'pghq_PFC_waste_6_2_9',
-        'pghq_PFC_waste_6_2_13'
+        'pghq_PFC_waste_6_2_11',
+        'pghq_PFC_waste_6_2_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_2_24': {
+      'args': [
+        'pghq_PFC_waste_6_2_5',
+        'pghq_PFC_waste_6_2_12',
+        'pghq_PFC_waste_6_2_18'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_6_2_25': {
+      'args': [
+        'pghq_PFC_waste_6_2_6',
+        'pghq_PFC_waste_6_2_13',
+        'pghq_PFC_waste_6_2_19'
       ],
       'calculation': handlers.sum
     },
@@ -356,31 +389,45 @@
         return a * 2000 / b / 365;
       }
     },
-    'pghq_PFC_waste_8_10_1tE_9': {
+    'pghq_PFC_waste_8_10_1tE_13': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_1',
-        'pghq_PFC_waste_8_10_1tE_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_8_10_1tE_10': {
-      'args': [
-        'pghq_PFC_waste_8_10_1tE_2',
-        'pghq_PFC_waste_8_10_1tE_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_PFC_waste_8_10_1tE_11': {
-      'args': [
-        'pghq_PFC_waste_8_10_1tE_3',
         'pghq_PFC_waste_8_10_1tE_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_PFC_waste_8_10_1tE_12': {
+    'pghq_PFC_waste_8_10_1tE_14': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_2',
+        'pghq_PFC_waste_8_10_1tE_8'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_15': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_3',
+        'pghq_PFC_waste_8_10_1tE_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_16': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_4',
-        'pghq_PFC_waste_8_10_1tE_8'
+        'pghq_PFC_waste_8_10_1tE_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_17': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_5',
+        'pghq_PFC_waste_8_10_1tE_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_8_10_1tE_18': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_6',
+        'pghq_PFC_waste_8_10_1tE_12'
       ],
       'calculation': handlers.sum
     },
@@ -405,144 +452,216 @@
     'pghq_PFC_waste_10_1_tG_1': {
       'args': [
         'pghq_PFC_waste_2_3_tA_2',
-        'pghq_PFC_waste_6_2_14',
-        'pghq_PFC_waste_8_10_1tE_9'
+        'pghq_PFC_waste_6_2_20',
+        'pghq_PFC_waste_8_10_1tE_13'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tG_2': {
       'args': [
         'pghq_PFC_waste_2_3_tA_3',
-        'pghq_PFC_waste_6_2_15',
-        'pghq_PFC_waste_8_10_1tE_10'
+        'pghq_PFC_waste_6_2_21',
+        'pghq_PFC_waste_8_10_1tE_14'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tG_3': {
       'args': [
         'pghq_PFC_waste_2_3_tA_4',
-        'pghq_PFC_waste_6_2_16',
-        'pghq_PFC_waste_8_10_1tE_11'
+        'pghq_PFC_waste_6_2_22',
+        'pghq_PFC_waste_8_10_1tE_15'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tG_4': {
       'args': [
         'pghq_PFC_waste_2_3_tA_5',
-        'pghq_PFC_waste_6_2_17',
-        'pghq_PFC_waste_8_10_1tE_12'
+        'pghq_PFC_waste_6_2_23',
+        'pghq_PFC_waste_8_10_1tE_16'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_10_1_tG_5': {
+      'args': [
+        'pghq_PFC_waste_2_3_tA_6',
+        'pghq_PFC_waste_6_2_24',
+        'pghq_PFC_waste_8_10_1tE_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_PFC_waste_10_1_tG_6': {
+      'args': [
+        'pghq_PFC_waste_2_3_tA_7',
+        'pghq_PFC_waste_6_2_25',
+        'pghq_PFC_waste_8_10_1tE_18'
       ],
       'calculation': handlers.sum
     },
     'pghq_PFC_waste_10_1_tH_1': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_1',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_2_3_tA_2',
+        'pghq_PFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_2': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_2',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_2_3_tA_3',
+        'pghq_PFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_3': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_3',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_2_3_tA_4',
+        'pghq_PFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_4': {
       'args': [
-        'pghq_PFC_waste_10_1_tG_4',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_2_3_tA_5',
+        'pghq_PFC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_5': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_9',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_2_3_tA_6',
+        'pghq_PFC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_6': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_10',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_2_3_tA_7',
+        'pghq_PFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_7': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_11',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_4_8_tB_13',
+        'pghq_PFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_8': {
       'args': [
-        'pghq_PFC_waste_4_8_tB_12',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_4_8_tB_14',
+        'pghq_PFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_9': {
       'args': [
-        'pghq_PFC_waste_6_2_14',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_4_8_tB_15',
+        'pghq_PFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_10': {
       'args': [
-        'pghq_PFC_waste_6_2_15',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_4_8_tB_16',
+        'pghq_PFC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_11': {
       'args': [
-        'pghq_PFC_waste_6_2_16',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_4_8_tB_17',
+        'pghq_PFC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_12': {
       'args': [
-        'pghq_PFC_waste_6_2_17',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_4_8_tB_18',
+        'pghq_PFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_13': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_9',
-        'pghq_PFC_waste_2_3_tA_2'
+        'pghq_PFC_waste_6_2_20',
+        'pghq_PFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_14': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_10',
-        'pghq_PFC_waste_2_3_tA_4'
+        'pghq_PFC_waste_6_2_21',
+        'pghq_PFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_15': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_11',
-        'pghq_PFC_waste_2_3_tA_3'
+        'pghq_PFC_waste_6_2_22',
+        'pghq_PFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_PFC_waste_10_1_tH_16': {
       'args': [
-        'pghq_PFC_waste_8_10_1tE_12',
-        'pghq_PFC_waste_2_3_tA_5'
+        'pghq_PFC_waste_6_2_23',
+        'pghq_PFC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_17': {
+      'args': [
+        'pghq_PFC_waste_6_2_24',
+        'pghq_PFC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_18': {
+      'args': [
+        'pghq_PFC_waste_6_2_25',
+        'pghq_PFC_waste_10_1_tG_6'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_19': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_13',
+        'pghq_PFC_waste_10_1_tG_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_20': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_14',
+        'pghq_PFC_waste_10_1_tG_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_21': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_15',
+        'pghq_PFC_waste_10_1_tG_3'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_22': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_16',
+        'pghq_PFC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_23': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_17',
+        'pghq_PFC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_PFC_waste_10_1_tH_24': {
+      'args': [
+        'pghq_PFC_waste_8_10_1tE_18',
+        'pghq_PFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
@@ -925,111 +1044,147 @@
       'calculation': handlers.sum
     },
 
-    //
-    // I think this formula is incorrect. Please review the commented out one below and if correct, replace.
-    //
-    'pghq_PFC_energy_3_1_1_2': {
-      'args': [
-        'pghq_PFC_energy_2_7_5',    // electricity_units
-        'pghq_PFC_energy_2_7_6',    // electricity_amount
-        'pghq_PFC_energy_2_7_9',    // natural_gas_units
-        'pghq_PFC_energy_2_7_10',   // natural_gas_amount
-        'pghq_PFC_energy_2_7_13',   // fuel_oil_units
-        'pghq_PFC_energy_2_7_14',   // fuel_oil_amount
-        'pghq_PFC_energy_2_7_17',   // steam_units
-        'pghq_PFC_energy_2_7_18',   // steam_amount
-        'pghq_PFC_energy_2_7_21',   // chilled_water_units
-        'pghq_PFC_energy_2_7_22',   // chilled_water_amount
-        'pghq_PFC_energy_2_7_25',   // hot_water_units
-        'pghq_PFC_energy_2_7_26',   // hot_water_amount
-        'pghq_PFC_energy_2_7_29',   // diesel_units
-        'pghq_PFC_energy_2_7_30',   // diesel_amount
-        'pghq_PFC_energy_2_8_2_3',  // renewable_1_units
-        'pghq_PFC_energy_2_8_2_4',  // renewable_1_amount
-        'pghq_PFC_energy_2_8_2_8',  // renewable_2_units
-        'pghq_PFC_energy_2_8_2_9',  // renewable_2_amount
-        'pghq_PFC_energy_2_8_2_13', // renewable_3_units
-        'pghq_PFC_energy_2_8_2_14'  // renewable_3_amount
-      ],
-      'calculation': function() {
-        var electricity_units     = arguments[0];
-        var electricity_amount    = arguments[1];
-        var natural_gas_units     = arguments[2];
-        var natural_gas_amount    = arguments[3];
-        var fuel_oil_units        = arguments[4];
-        var fuel_oil_amount       = arguments[5];
-        var steam_units           = arguments[6];
-        var steam_amount          = arguments[7];
-        var chilled_water_units   = arguments[8];
-        var chilled_water_amount  = arguments[9];
-        var hot_water_units       = arguments[10];
-        var hot_water_amount      = arguments[11];
-        var diesel_units          = arguments[12];
-        var diesel_amount         = arguments[13];
-        var renewable_1_units     = arguments[14];
-        var renewable_1_amount    = arguments[15];
-        var renewable_2_units     = arguments[16];
-        var renewable_2_amount    = arguments[17];
-        var renewable_3_units     = arguments[18];
-        var renewable_3_amount    = arguments[19];
-
-        var sum = 0;
-
-        // TODO: convertBTU handler doesn't support Cubic Meter units.
-
-        sum += handlers.convertBTUSimple(electricity_units, electricity_amount);
-        sum += handlers.convertBTU(natural_gas_units, natural_gas_amount);
-        sum += handlers.convertFuelOil(fuel_oil_units, fuel_oil_amount);
-        sum += handlers.convertSteam(steam_units, steam_amount);
-        sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
-        sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
-        sum += handlers.convertFuelOil(diesel_units, diesel_amount);
-        sum += handlers.convertBTU(renewable_1_units, renewable_1_amount);
-        sum += handlers.convertBTU(renewable_2_units, renewable_2_amount);
-        sum += handlers.convertBTU(renewable_3_units, renewable_3_amount);
-
-        return sum;
-      }
-
-     },
+//     //
+//     // I think this formula is incorrect. Please review the commented out one below and if correct, replace.
+//     //
 //     'pghq_PFC_energy_3_1_1_2': {
 //       'args': [
-//         'pghq_PFC_energy_2_7_5', // Electricity Units
-//         'pghq_PFC_energy_2_11_6', // Electricity Amount
-//         'pghq_PFC_energy_2_7_9', // Natural Gas Units
-//         'pghq_PFC_energy_2_7_10', // Natural Gas Amount
-//         'pghq_PFC_energy_2_7_13', // Fuel Oil Units
-//         'pghq_PFC_energy_2_7_14', // Fuel Oil Amount
-//         'pghq_PFC_energy_2_7_17', // Steam Units
-//         'pghq_PFC_energy_2_7_18', // Steam Amount
-//         'pghq_PFC_energy_2_7_21', // Chilled Water Units
-//         'pghq_PFC_energy_2_7_22', // Chilled Water Amount
-//         'pghq_PFC_energy_2_7_25', // Hot Water Units
-//         'pghq_PFC_energy_2_7_26', // Hot Water Amount
-//         'pghq_PFC_energy_2_7_29', // Diesel Units
-//         'pghq_PFC_energy_2_7_30', // Diesel Amount
-//         'pghq_PFC_energy_2_8_2_3', // Renewable Energy 1 Units
-//         'pghq_PFC_energy_2_8_2_4', // Renewable Energy 1 Amount
-//         'pghq_PFC_energy_2_8_2_8', // Renewable Energy 2 Units
-//         'pghq_PFC_energy_2_8_2_9', // Renewable Energy 2 Amount
-//         'pghq_PFC_energy_2_8_2_13', // Renewable Energy 3 Units
-//         'pghq_PFC_energy_2_8_2_14' // Renewable Energy 3 Amount
+//         'pghq_PFC_energy_2_7_5',    // electricity_units
+//         'pghq_PFC_energy_2_7_6',    // electricity_amount
+//         'pghq_PFC_energy_2_7_9',    // natural_gas_units
+//         'pghq_PFC_energy_2_7_10',   // natural_gas_amount
+//         'pghq_PFC_energy_2_7_13',   // fuel_oil_units
+//         'pghq_PFC_energy_2_7_14',   // fuel_oil_amount
+//         'pghq_PFC_energy_2_7_17',   // steam_units
+//         'pghq_PFC_energy_2_7_18',   // steam_amount
+//         'pghq_PFC_energy_2_7_21',   // chilled_water_units
+//         'pghq_PFC_energy_2_7_22',   // chilled_water_amount
+//         'pghq_PFC_energy_2_7_25',   // hot_water_units
+//         'pghq_PFC_energy_2_7_26',   // hot_water_amount
+//         'pghq_PFC_energy_2_7_29',   // diesel_units
+//         'pghq_PFC_energy_2_7_30',   // diesel_amount
+//         'pghq_PFC_energy_2_8_2_3',  // renewable_1_units
+//         'pghq_PFC_energy_2_8_2_4',  // renewable_1_amount
+//         'pghq_PFC_energy_2_8_2_8',  // renewable_2_units
+//         'pghq_PFC_energy_2_8_2_9',  // renewable_2_amount
+//         'pghq_PFC_energy_2_8_2_13', // renewable_3_units
+//         'pghq_PFC_energy_2_8_2_14'  // renewable_3_amount
 //       ],
-//       'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A) {
-//       	var elecTotal = handlers.convertBTUSimple(elecU, elecA);
-//       	var natGasTotal = handlers.convertNaturalGas(natGasU, natGasA);
-//       	var fuelTotal = handlers.convertFuelOil(fuelU, fuelA);
-//       	var steamTotal = handlers.convertSteam(steamU, steamA);
-//       	var chillTotal = handlers.convertWater(chillU, chillA);
-//       	var hotTotal = handlers.convertWater(hotU, hotA);
-//       	var dieselTotal = handlers.convertDiesel(dieselU, dieselA);
-//       	var renew1Total = handlers.convertBTU(renew1U, renew1A);
-//       	var renew2Total = handlers.convertBTU(renew2U, renew2A);
-//       	var renew3Total = handlers.convertBTU(renew3U, renew3A);
-//       	return elecTotal + natGasTotal + fuelTotal + steamTotal + chillTotal + hotTotal + dieselTotal + renew1Total + renew2Total + renew3Total;
+//       'calculation': function() {
+//         var electricity_units     = arguments[0];
+//         var electricity_amount    = arguments[1];
+//         var natural_gas_units     = arguments[2];
+//         var natural_gas_amount    = arguments[3];
+//         var fuel_oil_units        = arguments[4];
+//         var fuel_oil_amount       = arguments[5];
+//         var steam_units           = arguments[6];
+//         var steam_amount          = arguments[7];
+//         var chilled_water_units   = arguments[8];
+//         var chilled_water_amount  = arguments[9];
+//         var hot_water_units       = arguments[10];
+//         var hot_water_amount      = arguments[11];
+//         var diesel_units          = arguments[12];
+//         var diesel_amount         = arguments[13];
+//         var renewable_1_units     = arguments[14];
+//         var renewable_1_amount    = arguments[15];
+//         var renewable_2_units     = arguments[16];
+//         var renewable_2_amount    = arguments[17];
+//         var renewable_3_units     = arguments[18];
+//         var renewable_3_amount    = arguments[19];
+// 
+//         var sum = 0;
+// 
+//         // TODO: convertBTU handler doesn't support Cubic Meter units.
+// 
+//         sum += handlers.convertBTUSimple(electricity_units, electricity_amount);
+//         sum += handlers.convertBTU(natural_gas_units, natural_gas_amount);
+//         sum += handlers.convertFuelOil(fuel_oil_units, fuel_oil_amount);
+//         sum += handlers.convertSteam(steam_units, steam_amount);
+//         sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
+//         sum += handlers.convertWater(chilled_water_units, chilled_water_amount);
+//         sum += handlers.convertFuelOil(diesel_units, diesel_amount);
+//         sum += handlers.convertBTU(renewable_1_units, renewable_1_amount);
+//         sum += handlers.convertBTU(renewable_2_units, renewable_2_amount);
+//         sum += handlers.convertBTU(renewable_3_units, renewable_3_amount);
+// 
+//         return sum;
 //       }
-//     },
-
+// 
+//      },
+    'pghq_PFC_energy_3_1_1_2': {
+      'args': [
+        'pghq_PFC_energy_2_7_5', // Electricity Units
+        'pghq_PFC_energy_2_11_6', // Electricity Amount
+        'pghq_PFC_energy_2_7_9', // Natural Gas Units
+        'pghq_PFC_energy_2_7_10', // Natural Gas Amount
+        'pghq_PFC_energy_2_7_13', // Fuel Oil Units
+        'pghq_PFC_energy_2_7_14', // Fuel Oil Amount
+        'pghq_PFC_energy_2_7_17', // Steam Units
+        'pghq_PFC_energy_2_7_18', // Steam Amount
+        'pghq_PFC_energy_2_7_21', // Chilled Water Units
+        'pghq_PFC_energy_2_7_22', // Chilled Water Amount
+        'pghq_PFC_energy_2_7_25', // Hot Water Units
+        'pghq_PFC_energy_2_7_26', // Hot Water Amount
+        'pghq_PFC_energy_2_7_29', // Diesel Units
+        'pghq_PFC_energy_2_7_30', // Diesel Amount
+        'pghq_PFC_energy_2_8_2_3', // Renewable Energy 1 Units
+        'pghq_PFC_energy_2_8_2_4', // Renewable Energy 1 Amount
+        'pghq_PFC_energy_2_8_2_8', // Renewable Energy 2 Units
+        'pghq_PFC_energy_2_8_2_9', // Renewable Energy 2 Amount
+        'pghq_PFC_energy_2_8_2_13', // Renewable Energy 3 Units
+        'pghq_PFC_energy_2_8_2_14' // Renewable Energy 3 Amount
+      ],
+      'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A) {
+      	var elecTotal = handlers.convertBTUSimple(elecU, elecA);
+      	var natGasTotal = handlers.convertNaturalGas(natGasU, natGasA);
+      	var fuelTotal = handlers.convertFuelOil(fuelU, fuelA);
+      	var steamTotal = handlers.convertSteam(steamU, steamA);
+      	var chillTotal = handlers.convertWater(chillU, chillA);
+      	var hotTotal = handlers.convertWater(hotU, hotA);
+      	var dieselTotal = handlers.convertDiesel(dieselU, dieselA);
+      	var renew1Total = handlers.convertBTU(renew1U, renew1A);
+      	var renew2Total = handlers.convertBTU(renew2U, renew2A);
+      	var renew3Total = handlers.convertBTU(renew3U, renew3A);
+      	return elecTotal + natGasTotal + fuelTotal + steamTotal + chillTotal + hotTotal + dieselTotal + renew1Total + renew2Total + renew3Total;
+      }
+    },
+    'pghq_PFC_energy_3_1_1_3': {
+      'args': [
+        'pghq_PFC_energy_2_7_5', // Electricity Units
+        'pghq_PFC_energy_2_11_7', // Electricity Amount
+        'pghq_PFC_energy_2_7_9', // Natural Gas Units
+        'pghq_PFC_energy_2_7_11', // Natural Gas Amount
+        'pghq_PFC_energy_2_7_13', // Fuel Oil Units
+        'pghq_PFC_energy_2_7_15', // Fuel Oil Amount
+        'pghq_PFC_energy_2_7_17', // Steam Units
+        'pghq_PFC_energy_2_7_19', // Steam Amount
+        'pghq_PFC_energy_2_7_21', // Chilled Water Units
+        'pghq_PFC_energy_2_7_23', // Chilled Water Amount
+        'pghq_PFC_energy_2_7_25', // Hot Water Units
+        'pghq_PFC_energy_2_7_27', // Hot Water Amount
+        'pghq_PFC_energy_2_7_29', // Diesel Units
+        'pghq_PFC_energy_2_7_31', // Diesel Amount
+        'pghq_PFC_energy_2_8_2_3', // Renewable Energy 1 Units
+        'pghq_PFC_energy_2_8_2_5', // Renewable Energy 1 Amount
+        'pghq_PFC_energy_2_8_2_8', // Renewable Energy 2 Units
+        'pghq_PFC_energy_2_8_2_10', // Renewable Energy 2 Amount
+        'pghq_PFC_energy_2_8_2_13', // Renewable Energy 3 Units
+        'pghq_PFC_energy_2_8_2_15' // Renewable Energy 3 Amount
+      ],
+      'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A) {
+      	var elecTotal = handlers.convertBTUSimple(elecU, elecA);
+      	var natGasTotal = handlers.convertNaturalGas(natGasU, natGasA);
+      	var fuelTotal = handlers.convertFuelOil(fuelU, fuelA);
+      	var steamTotal = handlers.convertSteam(steamU, steamA);
+      	var chillTotal = handlers.convertWater(chillU, chillA);
+      	var hotTotal = handlers.convertWater(hotU, hotA);
+      	var dieselTotal = handlers.convertDiesel(dieselU, dieselA);
+      	var renew1Total = handlers.convertBTU(renew1U, renew1A);
+      	var renew2Total = handlers.convertBTU(renew2U, renew2A);
+      	var renew3Total = handlers.convertBTU(renew3U, renew3A);
+      	return elecTotal + natGasTotal + fuelTotal + steamTotal + chillTotal + hotTotal + dieselTotal + renew1Total + renew2Total + renew3Total;
+      }
+    },
     'pghq_PFC_energy_3_1_1_4': {
       'args': [
         'pghq_PFC_energy_2_11_21',
@@ -1438,6 +1593,111 @@
       'calculation': handlers.sum
     },
 
+//     //
+//     // PFC Appendix A formulas
+//     //
+//     'pghq_PFC_appendixa_1_8t_1': {
+//       'args': [
+//         'pghq_PFC_appendixa_1_7_1t_1', // amount 1
+//         'pghq_PFC_appendixa_1_7_2t_2', // amount 2
+//         'pghq_PFC_appendixa_1_7_3t_1', // amount 3
+//         'pghq_PFC_appendixa_1_7_4t_1', // amount 4
+//         'pghq_PFC_appendixa_1_7_5t_1', // amount 5
+//         'pghq_PFC_appendixa_1_7_6t_1', // amount 6
+//         'pghq_PFC_appendixa_1_7_7t_2', // amount 7
+//         'pghq_PFC_appendixa_1_7_8t_2', // amount 8
+//         'pghq_PFC_appendixa_1_7_9t_1', // amount 9
+//         'pghq_PFC_appendixa_1_7_10t_1', // amount 10
+//         'pghq_PFC_appendixa_1_7_11t_1', // amount 11
+//         'pghq_PFC_appendixa_1_7_12t_1', // amount 12
+//         'pghq_PFC_appendixa_1_7_12t_2', // units 12
+//         'pghq_PFC_appendixa_1_7_13t_1', // amount 13
+//         'pghq_PFC_appendixa_1_7_13t_2', // units 13
+//         'pghq_PFC_appendixa_1_7_14t_2', // amount 14
+//         'pghq_PFC_appendixa_1_7_15t_1', // amount 15
+//         'pghq_PFC_appendixa_1_7_16t_1', // amount 16
+//         'pghq_PFC_appendixa_1_7_17t_1', // amount 17
+//         'pghq_PFC_appendixa_1_7_18t_1', // amount 18
+//         'pghq_PFC_appendixa_1_7_19t_1', // amount 19
+//         'pghq_PFC_appendixa_1_7_20t_1', // amount 20
+//         'pghq_PFC_appendixa_1_7_21t_1', // amount 21
+//         'pghq_PFC_appendixa_1_7_22t_1', // amount 22
+//         'pghq_PFC_appendixa_1_7_23t_1', // amount 23
+//         'pghq_PFC_appendixa_1_7_24t_1', // amount 24
+//         'pghq_PFC_appendixa_1_7_25t_1', // amount 25
+//         'pghq_PFC_appendixa_1_7_26t_1', // amount 26
+//         'pghq_PFC_appendixa_1_7_27t_1', // amount 27
+//         'pghq_PFC_appendixa_1_7_28t_1', // amount 28
+//         'pghq_PFC_appendixa_1_7_29t_1', // amount 29
+//         'pghq_PFC_appendixa_1_7_30t_1', // amount 30
+//         'pghq_PFC_appendixa_1_7_30t_2', // units 30
+//         'pghq_PFC_appendixa_1_7_31t_1', // amount 31
+//         'pghq_PFC_appendixa_1_7_31t_2' // units 31
+//       ],
+//       'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8, amount9, amount10, amount11, amount12, units12, amount13, units13, amount14, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29, amount30, units30, amount31, units31) {
+//       	var converted12 = 0;
+//       	var converted13 = 0;
+//       	var converted30 = 0;
+//       	var converted31 = 0;
+//       	if (units12 === 'Gallons') {
+//       		converted12 = amount12 * 0.004;
+//       	} else {
+//       		converted12 = amount12;
+//       	}
+//       	if (units13 === 'Gallons') {
+//       		converted13 = amount13 * 0.004;
+//       	} else {
+//       		converted13 = amount13;
+//       	}
+//       	if (units30 === 'Gallons') {
+//       		converted30 = amount30 * 0.004;
+//       	} else {
+//       		converted30 = amount30;
+//       	}
+//       	if (units31 === 'Gallons') {
+//       		converted31 = amount31 * 0.004;
+//       	} else {
+//       		converted31 = amount31;
+//       	}
+//       	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+//       }
+//     },
+//     'pghq_PFC_appendixa_1_8t_2': {
+//       'args': [
+//         'pghq_PFC_appendixa_1_7_1t_2',
+//         'pghq_PFC_appendixa_1_7_2t_3',
+//         'pghq_PFC_appendixa_1_7_3t_2',
+//         'pghq_PFC_appendixa_1_7_4t_2',
+//         'pghq_PFC_appendixa_1_7_5t_2',
+//         'pghq_PFC_appendixa_1_7_6t_2',
+//         'pghq_PFC_appendixa_1_7_7t_3',
+//         'pghq_PFC_appendixa_1_7_8t_3',
+//         'pghq_PFC_appendixa_1_7_9t_2',
+//         'pghq_PFC_appendixa_1_7_10t_2',
+//         'pghq_PFC_appendixa_1_7_11t_2',
+//         'pghq_PFC_appendixa_1_7_12t_3',
+//         'pghq_PFC_appendixa_1_7_13t_3',
+//         'pghq_PFC_appendixa_1_7_14t_3',
+//         'pghq_PFC_appendixa_1_7_15t_2',
+//         'pghq_PFC_appendixa_1_7_16t_2',
+//         'pghq_PFC_appendixa_1_7_17t_2',
+//         'pghq_PFC_appendixa_1_7_18t_2',
+//         'pghq_PFC_appendixa_1_7_19t_2',
+//         'pghq_PFC_appendixa_1_7_20t_2',
+//         'pghq_PFC_appendixa_1_7_21t_2',
+//         'pghq_PFC_appendixa_1_7_22t_2',
+//         'pghq_PFC_appendixa_1_7_23t_2',
+//         'pghq_PFC_appendixa_1_7_24t_2',
+//         'pghq_PFC_appendixa_1_7_25t_2',
+//         'pghq_PFC_appendixa_1_7_26t_2',
+//         'pghq_PFC_appendixa_1_7_27t_2',
+//         'pghq_PFC_appendixa_1_7_28t_2',
+//         'pghq_PFC_appendixa_1_7_29t_2',
+//         'pghq_PFC_appendixa_1_7_30t_3',
+//         'pghq_PFC_appendixa_1_7_31t_3'
+//       ],
+//       'calculation': handlers.sum
+//     },
     //
     // PFC Appendix A formulas
     //
@@ -1504,157 +1764,359 @@
       	} else {
       		converted31 = amount31;
       	}
-      	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount14,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
       }
     },
     'pghq_PFC_appendixa_1_8t_2': {
       'args': [
-        'pghq_PFC_appendixa_1_7_1t_2',
-        'pghq_PFC_appendixa_1_7_2t_3',
-        'pghq_PFC_appendixa_1_7_3t_2',
-        'pghq_PFC_appendixa_1_7_4t_2',
-        'pghq_PFC_appendixa_1_7_5t_2',
-        'pghq_PFC_appendixa_1_7_6t_2',
-        'pghq_PFC_appendixa_1_7_7t_3',
-        'pghq_PFC_appendixa_1_7_8t_3',
-        'pghq_PFC_appendixa_1_7_9t_2',
-        'pghq_PFC_appendixa_1_7_10t_2',
-        'pghq_PFC_appendixa_1_7_11t_2',
-        'pghq_PFC_appendixa_1_7_12t_3',
-        'pghq_PFC_appendixa_1_7_13t_3',
-        'pghq_PFC_appendixa_1_7_14t_3',
-        'pghq_PFC_appendixa_1_7_15t_2',
-        'pghq_PFC_appendixa_1_7_16t_2',
-        'pghq_PFC_appendixa_1_7_17t_2',
-        'pghq_PFC_appendixa_1_7_18t_2',
-        'pghq_PFC_appendixa_1_7_19t_2',
-        'pghq_PFC_appendixa_1_7_20t_2',
-        'pghq_PFC_appendixa_1_7_21t_2',
-        'pghq_PFC_appendixa_1_7_22t_2',
-        'pghq_PFC_appendixa_1_7_23t_2',
-        'pghq_PFC_appendixa_1_7_24t_2',
-        'pghq_PFC_appendixa_1_7_25t_2',
-        'pghq_PFC_appendixa_1_7_26t_2',
-        'pghq_PFC_appendixa_1_7_27t_2',
-        'pghq_PFC_appendixa_1_7_28t_2',
-        'pghq_PFC_appendixa_1_7_29t_2',
-        'pghq_PFC_appendixa_1_7_30t_3',
-        'pghq_PFC_appendixa_1_7_31t_3'
+        'pghq_PFC_appendixa_1_7_1t_2', // cost 1
+        'pghq_PFC_appendixa_1_7_2t_3', // cost 2
+        'pghq_PFC_appendixa_1_7_3t_2', // cost 3
+        'pghq_PFC_appendixa_1_7_4t_2', // cost 4
+        'pghq_PFC_appendixa_1_7_5t_2', // cost 5
+        'pghq_PFC_appendixa_1_7_6t_2', // cost 6
+        'pghq_PFC_appendixa_1_7_7t_3', // cost 7
+        'pghq_PFC_appendixa_1_7_8t_3', // cost 8
+        'pghq_PFC_appendixa_1_7_9t_2', // cost 9
+        'pghq_PFC_appendixa_1_7_10t_2', // cost 10
+        'pghq_PFC_appendixa_1_7_11t_2', // cost 11
+        'pghq_PFC_appendixa_1_7_12t_3', // cost 12
+        'pghq_PFC_appendixa_1_7_13t_3', // cost 13
+        'pghq_PFC_appendixa_1_7_14t_3', // cost 14
+        'pghq_PFC_appendixa_1_7_15t_2', // cost 15
+        'pghq_PFC_appendixa_1_7_16t_2', // cost 16
+        'pghq_PFC_appendixa_1_7_17t_2', // cost 17
+        'pghq_PFC_appendixa_1_7_18t_2', // cost 18
+        'pghq_PFC_appendixa_1_7_19t_2', // cost 19
+        'pghq_PFC_appendixa_1_7_20t_2', // cost 20
+        'pghq_PFC_appendixa_1_7_21t_2', // cost 21
+        'pghq_PFC_appendixa_1_7_22t_2', // cost 22
+        'pghq_PFC_appendixa_1_7_23t_2', // cost 23
+        'pghq_PFC_appendixa_1_7_24t_2', // cost 24
+        'pghq_PFC_appendixa_1_7_25t_2', // cost 25
+        'pghq_PFC_appendixa_1_7_26t_2', // cost 26
+        'pghq_PFC_appendixa_1_7_27t_2', // cost 27
+        'pghq_PFC_appendixa_1_7_28t_2', // cost 28
+        'pghq_PFC_appendixa_1_7_29t_2', // cost 29
+        'pghq_PFC_appendixa_1_7_30t_3', // cost 30
+        'pghq_PFC_appendixa_1_7_31t_3', // cost 31
       ],
-      'calculation': handlers.sum
+      'calculation': function (cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10, cost11, cost12, cost13, cost14, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29, cost30, cost31) {
+ 
+        var values = [
+          cost1,
+          cost2,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost7,
+          cost8,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost14,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_PFC_appendixa_1_9t_1': {
-			'args': [
-				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PFC_appendixa_1_7_2t_2', // Amount 1
-				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PFC_appendixa_1_7_7t_2', // Amount 2
-				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PFC_appendixa_1_7_8t_2', // Amount 3
-				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PFC_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PFC_appendixa_1_7_1t_1', // amount 1
+        'pghq_PFC_appendixa_1_7_3t_1', // amount 3
+        'pghq_PFC_appendixa_1_7_4t_1', // amount 4
+        'pghq_PFC_appendixa_1_7_5t_1', // amount 5
+        'pghq_PFC_appendixa_1_7_6t_1', // amount 6
+        'pghq_PFC_appendixa_1_7_9t_1', // amount 9
+        'pghq_PFC_appendixa_1_7_10t_1', // amount 10
+        'pghq_PFC_appendixa_1_7_11t_1', // amount 11
+        'pghq_PFC_appendixa_1_7_12t_1', // amount 12
+        'pghq_PFC_appendixa_1_7_12t_2', // units 12
+        'pghq_PFC_appendixa_1_7_13t_1', // amount 13
+        'pghq_PFC_appendixa_1_7_13t_2', // units 13
+        'pghq_PFC_appendixa_1_7_15t_1', // amount 15
+        'pghq_PFC_appendixa_1_7_16t_1', // amount 16
+        'pghq_PFC_appendixa_1_7_17t_1', // amount 17
+        'pghq_PFC_appendixa_1_7_18t_1', // amount 18
+        'pghq_PFC_appendixa_1_7_19t_1', // amount 19
+        'pghq_PFC_appendixa_1_7_20t_1', // amount 20
+        'pghq_PFC_appendixa_1_7_21t_1', // amount 21
+        'pghq_PFC_appendixa_1_7_22t_1', // amount 22
+        'pghq_PFC_appendixa_1_7_23t_1', // amount 23
+        'pghq_PFC_appendixa_1_7_24t_1', // amount 24
+        'pghq_PFC_appendixa_1_7_25t_1', // amount 25
+        'pghq_PFC_appendixa_1_7_26t_1', // amount 26
+        'pghq_PFC_appendixa_1_7_27t_1', // amount 27
+        'pghq_PFC_appendixa_1_7_28t_1', // amount 28
+        'pghq_PFC_appendixa_1_7_29t_1' // amount 29
+      ],
+      'calculation': function (amount1, amount3, amount4, amount5, amount6, amount9, amount10, amount11, amount12, units12, amount13, units13, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29) {
+
+      	var converted12 = 0;
+      	var converted13 = 0;
+
+      	if (units12 === 'Gallons') {
+      		converted12 = amount12 * 0.004;
+      	} else {
+      		converted12 = amount12;
+      	}
+      	if (units13 === 'Gallons') {
+      		converted13 = amount13 * 0.004;
+      	} else {
+      		converted13 = amount13;
+      	}
+ 
+        var values = [
+          amount1,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_PFC_appendixa_1_9t_2': {
-			'args': [
-				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PFC_appendixa_1_7_2t_3', // Amount 1
-				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PFC_appendixa_1_7_7t_3', // Amount 2
-				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PFC_appendixa_1_7_8t_3', // Amount 3
-				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PFC_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PFC_appendixa_1_7_1t_2', // cost 1
+        'pghq_PFC_appendixa_1_7_3t_2', // cost 3
+        'pghq_PFC_appendixa_1_7_4t_2', // cost 4
+        'pghq_PFC_appendixa_1_7_5t_2', // cost 5
+        'pghq_PFC_appendixa_1_7_6t_2', // cost 6
+        'pghq_PFC_appendixa_1_7_9t_2', // cost 9
+        'pghq_PFC_appendixa_1_7_10t_2', // cost 10
+        'pghq_PFC_appendixa_1_7_11t_2', // cost 11
+        'pghq_PFC_appendixa_1_7_12t_3', // cost 12
+        'pghq_PFC_appendixa_1_7_13t_3', // cost 13
+        'pghq_PFC_appendixa_1_7_15t_2', // cost 15
+        'pghq_PFC_appendixa_1_7_16t_2', // cost 16
+        'pghq_PFC_appendixa_1_7_17t_2', // cost 17
+        'pghq_PFC_appendixa_1_7_18t_2', // cost 18
+        'pghq_PFC_appendixa_1_7_19t_2', // cost 19
+        'pghq_PFC_appendixa_1_7_20t_2', // cost 20
+        'pghq_PFC_appendixa_1_7_21t_2', // cost 21
+        'pghq_PFC_appendixa_1_7_22t_2', // cost 22
+        'pghq_PFC_appendixa_1_7_23t_2', // cost 23
+        'pghq_PFC_appendixa_1_7_24t_2', // cost 24
+        'pghq_PFC_appendixa_1_7_25t_2', // cost 25
+        'pghq_PFC_appendixa_1_7_26t_2', // cost 26
+        'pghq_PFC_appendixa_1_7_27t_2', // cost 27
+        'pghq_PFC_appendixa_1_7_28t_2', // cost 28
+        'pghq_PFC_appendixa_1_7_29t_2' // cost 29
+      ],
+      'calculation': function (cost1, cost3, cost4, cost5, cost6, cost9, cost10, cost11, cost12, cost13, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29) {
+ 
+        var values = [
+          cost1,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_PFC_appendixa_1_10t_1': {
-			'args': [
-				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PFC_appendixa_1_7_2t_2', // Amount 1
-				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PFC_appendixa_1_7_7t_2', // Amount 2
-				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PFC_appendixa_1_7_8t_2', // Amount 3
-				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PFC_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PFC_appendixa_1_7_2t_2', // amount 2
+        'pghq_PFC_appendixa_1_7_7t_2', // amount 7
+        'pghq_PFC_appendixa_1_7_8t_2', // amount 8
+        'pghq_PFC_appendixa_1_7_14t_2', // amount 14
+        'pghq_PFC_appendixa_1_7_30t_1', // amount 30
+        'pghq_PFC_appendixa_1_7_30t_2', // units 30
+        'pghq_PFC_appendixa_1_7_31t_1', // amount 31
+        'pghq_PFC_appendixa_1_7_31t_2' // units 31
+      ],
+      'calculation': function (amount2, amount7, amount8, amount14, amount30, units30, amount31, units31) {
+
+      	var converted30 = 0;
+      	var converted31 = 0;
+
+      	if (units30 === 'Gallons') {
+      		converted30 = amount30 * 0.004;
+      	} else {
+      		converted30 = amount30;
+      	}
+      	if (units31 === 'Gallons') {
+      		converted31 = amount31 * 0.004;
+      	} else {
+      		converted31 = amount31;
+      	}
+ 
+        var values = [
+          amount2,
+          amount7,
+          amount8,
+          amount14,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_PFC_appendixa_1_10t_2': {
-			'args': [
-				'pghq_PFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PFC_appendixa_1_7_2t_3', // Amount 1
-				'pghq_PFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PFC_appendixa_1_7_7t_3', // Amount 2
-				'pghq_PFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PFC_appendixa_1_7_8t_3', // Amount 3
-				'pghq_PFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PFC_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PFC_appendixa_1_7_2t_3', // cost 2
+        'pghq_PFC_appendixa_1_7_7t_3', // cost 7
+        'pghq_PFC_appendixa_1_7_8t_3', // cost 8
+        'pghq_PFC_appendixa_1_7_14t_3', // cost 14
+        'pghq_PFC_appendixa_1_7_30t_3', // cost 30
+        'pghq_PFC_appendixa_1_7_31t_3', // cost 31
+      ],
+      'calculation': function (cost2, cost7, cost8, cost14, cost30, cost31) {
+ 
+        var values = [
+          cost2,
+          cost7,
+          cost8,
+          cost14,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
 
     //
     // PR Waste formulas
@@ -1937,218 +2399,450 @@
       	} else {
       		converted31 = amount31;
       	}
-      	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount14,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
       }
     },
     'pghq_PR_appendixa_1_8t_2': {
       'args': [
-        'pghq_PR_appendixa_1_7_1t_2',
-        'pghq_PR_appendixa_1_7_2t_3',
-        'pghq_PR_appendixa_1_7_3t_2',
-        'pghq_PR_appendixa_1_7_4t_2',
-        'pghq_PR_appendixa_1_7_5t_2',
-        'pghq_PR_appendixa_1_7_6t_2',
-        'pghq_PR_appendixa_1_7_7t_3',
-        'pghq_PR_appendixa_1_7_8t_3',
-        'pghq_PR_appendixa_1_7_9t_2',
-        'pghq_PR_appendixa_1_7_10t_2',
-        'pghq_PR_appendixa_1_7_11t_2',
-        'pghq_PR_appendixa_1_7_12t_3',
-        'pghq_PR_appendixa_1_7_13t_3',
-        'pghq_PR_appendixa_1_7_14t_3',
-        'pghq_PR_appendixa_1_7_15t_2',
-        'pghq_PR_appendixa_1_7_16t_2',
-        'pghq_PR_appendixa_1_7_17t_2',
-        'pghq_PR_appendixa_1_7_18t_2',
-        'pghq_PR_appendixa_1_7_19t_2',
-        'pghq_PR_appendixa_1_7_20t_2',
-        'pghq_PR_appendixa_1_7_21t_2',
-        'pghq_PR_appendixa_1_7_22t_2',
-        'pghq_PR_appendixa_1_7_23t_2',
-        'pghq_PR_appendixa_1_7_24t_2',
-        'pghq_PR_appendixa_1_7_25t_2',
-        'pghq_PR_appendixa_1_7_26t_2',
-        'pghq_PR_appendixa_1_7_27t_2',
-        'pghq_PR_appendixa_1_7_28t_2',
-        'pghq_PR_appendixa_1_7_29t_2',
-        'pghq_PR_appendixa_1_7_30t_3',
-        'pghq_PR_appendixa_1_7_31t_3'
+        'pghq_PR_appendixa_1_7_1t_2', // cost 1
+        'pghq_PR_appendixa_1_7_2t_3', // cost 2
+        'pghq_PR_appendixa_1_7_3t_2', // cost 3
+        'pghq_PR_appendixa_1_7_4t_2', // cost 4
+        'pghq_PR_appendixa_1_7_5t_2', // cost 5
+        'pghq_PR_appendixa_1_7_6t_2', // cost 6
+        'pghq_PR_appendixa_1_7_7t_3', // cost 7
+        'pghq_PR_appendixa_1_7_8t_3', // cost 8
+        'pghq_PR_appendixa_1_7_9t_2', // cost 9
+        'pghq_PR_appendixa_1_7_10t_2', // cost 10
+        'pghq_PR_appendixa_1_7_11t_2', // cost 11
+        'pghq_PR_appendixa_1_7_12t_3', // cost 12
+        'pghq_PR_appendixa_1_7_13t_3', // cost 13
+        'pghq_PR_appendixa_1_7_14t_3', // cost 14
+        'pghq_PR_appendixa_1_7_15t_2', // cost 15
+        'pghq_PR_appendixa_1_7_16t_2', // cost 16
+        'pghq_PR_appendixa_1_7_17t_2', // cost 17
+        'pghq_PR_appendixa_1_7_18t_2', // cost 18
+        'pghq_PR_appendixa_1_7_19t_2', // cost 19
+        'pghq_PR_appendixa_1_7_20t_2', // cost 20
+        'pghq_PR_appendixa_1_7_21t_2', // cost 21
+        'pghq_PR_appendixa_1_7_22t_2', // cost 22
+        'pghq_PR_appendixa_1_7_23t_2', // cost 23
+        'pghq_PR_appendixa_1_7_24t_2', // cost 24
+        'pghq_PR_appendixa_1_7_25t_2', // cost 25
+        'pghq_PR_appendixa_1_7_26t_2', // cost 26
+        'pghq_PR_appendixa_1_7_27t_2', // cost 27
+        'pghq_PR_appendixa_1_7_28t_2', // cost 28
+        'pghq_PR_appendixa_1_7_29t_2', // cost 29
+        'pghq_PR_appendixa_1_7_30t_3', // cost 30
+        'pghq_PR_appendixa_1_7_31t_3', // cost 31
       ],
-      'calculation': handlers.sum
+      'calculation': function (cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10, cost11, cost12, cost13, cost14, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29, cost30, cost31) {
+ 
+        var values = [
+          cost1,
+          cost2,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost7,
+          cost8,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost14,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_PR_appendixa_1_9t_1': {
-			'args': [
-				'pghq_PR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PR_appendixa_1_7_2t_2', // Amount 1
-				'pghq_PR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PR_appendixa_1_7_7t_2', // Amount 2
-				'pghq_PR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PR_appendixa_1_7_8t_2', // Amount 3
-				'pghq_PR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PR_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PR_appendixa_1_7_1t_1', // amount 1
+        'pghq_PR_appendixa_1_7_3t_1', // amount 3
+        'pghq_PR_appendixa_1_7_4t_1', // amount 4
+        'pghq_PR_appendixa_1_7_5t_1', // amount 5
+        'pghq_PR_appendixa_1_7_6t_1', // amount 6
+        'pghq_PR_appendixa_1_7_9t_1', // amount 9
+        'pghq_PR_appendixa_1_7_10t_1', // amount 10
+        'pghq_PR_appendixa_1_7_11t_1', // amount 11
+        'pghq_PR_appendixa_1_7_12t_1', // amount 12
+        'pghq_PR_appendixa_1_7_12t_2', // units 12
+        'pghq_PR_appendixa_1_7_13t_1', // amount 13
+        'pghq_PR_appendixa_1_7_13t_2', // units 13
+        'pghq_PR_appendixa_1_7_15t_1', // amount 15
+        'pghq_PR_appendixa_1_7_16t_1', // amount 16
+        'pghq_PR_appendixa_1_7_17t_1', // amount 17
+        'pghq_PR_appendixa_1_7_18t_1', // amount 18
+        'pghq_PR_appendixa_1_7_19t_1', // amount 19
+        'pghq_PR_appendixa_1_7_20t_1', // amount 20
+        'pghq_PR_appendixa_1_7_21t_1', // amount 21
+        'pghq_PR_appendixa_1_7_22t_1', // amount 22
+        'pghq_PR_appendixa_1_7_23t_1', // amount 23
+        'pghq_PR_appendixa_1_7_24t_1', // amount 24
+        'pghq_PR_appendixa_1_7_25t_1', // amount 25
+        'pghq_PR_appendixa_1_7_26t_1', // amount 26
+        'pghq_PR_appendixa_1_7_27t_1', // amount 27
+        'pghq_PR_appendixa_1_7_28t_1', // amount 28
+        'pghq_PR_appendixa_1_7_29t_1' // amount 29
+      ],
+      'calculation': function (amount1, amount3, amount4, amount5, amount6, amount9, amount10, amount11, amount12, units12, amount13, units13, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29) {
+
+      	var converted12 = 0;
+      	var converted13 = 0;
+
+      	if (units12 === 'Gallons') {
+      		converted12 = amount12 * 0.004;
+      	} else {
+      		converted12 = amount12;
+      	}
+      	if (units13 === 'Gallons') {
+      		converted13 = amount13 * 0.004;
+      	} else {
+      		converted13 = amount13;
+      	}
+ 
+        var values = [
+          amount1,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_PR_appendixa_1_9t_2': {
-			'args': [
-				'pghq_PR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PR_appendixa_1_7_2t_3', // Amount 1
-				'pghq_PR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PR_appendixa_1_7_7t_3', // Amount 2
-				'pghq_PR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PR_appendixa_1_7_8t_3', // Amount 3
-				'pghq_PR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PR_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PR_appendixa_1_7_1t_2', // cost 1
+        'pghq_PR_appendixa_1_7_3t_2', // cost 3
+        'pghq_PR_appendixa_1_7_4t_2', // cost 4
+        'pghq_PR_appendixa_1_7_5t_2', // cost 5
+        'pghq_PR_appendixa_1_7_6t_2', // cost 6
+        'pghq_PR_appendixa_1_7_9t_2', // cost 9
+        'pghq_PR_appendixa_1_7_10t_2', // cost 10
+        'pghq_PR_appendixa_1_7_11t_2', // cost 11
+        'pghq_PR_appendixa_1_7_12t_3', // cost 12
+        'pghq_PR_appendixa_1_7_13t_3', // cost 13
+        'pghq_PR_appendixa_1_7_15t_2', // cost 15
+        'pghq_PR_appendixa_1_7_16t_2', // cost 16
+        'pghq_PR_appendixa_1_7_17t_2', // cost 17
+        'pghq_PR_appendixa_1_7_18t_2', // cost 18
+        'pghq_PR_appendixa_1_7_19t_2', // cost 19
+        'pghq_PR_appendixa_1_7_20t_2', // cost 20
+        'pghq_PR_appendixa_1_7_21t_2', // cost 21
+        'pghq_PR_appendixa_1_7_22t_2', // cost 22
+        'pghq_PR_appendixa_1_7_23t_2', // cost 23
+        'pghq_PR_appendixa_1_7_24t_2', // cost 24
+        'pghq_PR_appendixa_1_7_25t_2', // cost 25
+        'pghq_PR_appendixa_1_7_26t_2', // cost 26
+        'pghq_PR_appendixa_1_7_27t_2', // cost 27
+        'pghq_PR_appendixa_1_7_28t_2', // cost 28
+        'pghq_PR_appendixa_1_7_29t_2' // cost 29
+      ],
+      'calculation': function (cost1, cost3, cost4, cost5, cost6, cost9, cost10, cost11, cost12, cost13, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29) {
+ 
+        var values = [
+          cost1,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_PR_appendixa_1_10t_1': {
-			'args': [
-				'pghq_PR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PR_appendixa_1_7_2t_2', // Amount 1
-				'pghq_PR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PR_appendixa_1_7_7t_2', // Amount 2
-				'pghq_PR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PR_appendixa_1_7_8t_2', // Amount 3
-				'pghq_PR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PR_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PR_appendixa_1_7_2t_2', // amount 2
+        'pghq_PR_appendixa_1_7_7t_2', // amount 7
+        'pghq_PR_appendixa_1_7_8t_2', // amount 8
+        'pghq_PR_appendixa_1_7_14t_2', // amount 14
+        'pghq_PR_appendixa_1_7_30t_1', // amount 30
+        'pghq_PR_appendixa_1_7_30t_2', // units 30
+        'pghq_PR_appendixa_1_7_31t_1', // amount 31
+        'pghq_PR_appendixa_1_7_31t_2' // units 31
+      ],
+      'calculation': function (amount2, amount7, amount8, amount14, amount30, units30, amount31, units31) {
+
+      	var converted30 = 0;
+      	var converted31 = 0;
+
+      	if (units30 === 'Gallons') {
+      		converted30 = amount30 * 0.004;
+      	} else {
+      		converted30 = amount30;
+      	}
+      	if (units31 === 'Gallons') {
+      		converted31 = amount31 * 0.004;
+      	} else {
+      		converted31 = amount31;
+      	}
+ 
+        var values = [
+          amount2,
+          amount7,
+          amount8,
+          amount14,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_PR_appendixa_1_10t_2': {
-			'args': [
-				'pghq_PR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_PR_appendixa_1_7_2t_3', // Amount 1
-				'pghq_PR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_PR_appendixa_1_7_7t_3', // Amount 2
-				'pghq_PR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_PR_appendixa_1_7_8t_3', // Amount 3
-				'pghq_PR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_PR_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_PR_appendixa_1_7_2t_3', // cost 2
+        'pghq_PR_appendixa_1_7_7t_3', // cost 7
+        'pghq_PR_appendixa_1_7_8t_3', // cost 8
+        'pghq_PR_appendixa_1_7_14t_3', // cost 14
+        'pghq_PR_appendixa_1_7_30t_3', // cost 30
+        'pghq_PR_appendixa_1_7_31t_3', // cost 31
+      ],
+      'calculation': function (cost2, cost7, cost8, cost14, cost30, cost31) {
+ 
+        var values = [
+          cost2,
+          cost7,
+          cost8,
+          cost14,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
 
     //
     // LTC Waste formulas
     //
-    'pghq_LTC_waste_4_8_tB_9': {
+    'pghq_LTC_waste_4_8_tB_13': {
       'args': [
         'pghq_LTC_waste_4_8_tB_1',
-        'pghq_LTC_waste_4_8_tB_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_LTC_waste_4_8_tB_10': {
-      'args': [
-        'pghq_LTC_waste_4_8_tB_2',
-        'pghq_LTC_waste_4_8_tB_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_LTC_waste_4_8_tB_11': {
-      'args': [
-        'pghq_LTC_waste_4_8_tB_3',
         'pghq_LTC_waste_4_8_tB_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_LTC_waste_4_8_tB_12': {
+    'pghq_LTC_waste_4_8_tB_14': {
       'args': [
-        'pghq_LTC_waste_4_8_tB_4',
+        'pghq_LTC_waste_4_8_tB_2',
         'pghq_LTC_waste_4_8_tB_8'
       ],
       'calculation': handlers.sum
     },
-    'pghq_LTC_waste_6_2_14': {
+    'pghq_LTC_waste_4_8_tB_15': {
+      'args': [
+        'pghq_LTC_waste_4_8_tB_3',
+        'pghq_LTC_waste_4_8_tB_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_4_8_tB_16': {
+      'args': [
+        'pghq_LTC_waste_4_8_tB_4',
+        'pghq_LTC_waste_4_8_tB_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_4_8_tB_17': {
+      'args': [
+        'pghq_LTC_waste_4_8_tB_5',
+        'pghq_LTC_waste_4_8_tB_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_4_8_tB_18': {
+      'args': [
+        'pghq_LTC_waste_4_8_tB_6',
+        'pghq_LTC_waste_4_8_tB_12'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_6_2_20': {
       'args': [
         'pghq_LTC_waste_6_2_1',
-        'pghq_LTC_waste_6_2_6',
-        'pghq_LTC_waste_6_2_10'
+        'pghq_LTC_waste_6_2_8',
+        'pghq_LTC_waste_6_2_14'
       ],
       'calculation': handlers.sum
     },
-    'pghq_LTC_waste_6_2_15': {
+    'pghq_LTC_waste_6_2_21': {
       'args': [
         'pghq_LTC_waste_6_2_2',
-        'pghq_LTC_waste_6_2_7',
-        'pghq_LTC_waste_6_2_11'
+        'pghq_LTC_waste_6_2_9',
+        'pghq_LTC_waste_6_2_15'
       ],
       'calculation': handlers.sum
     },
-    'pghq_LTC_waste_6_2_16': {
+    'pghq_LTC_waste_6_2_22': {
       'args': [
         'pghq_LTC_waste_6_2_3',
-        'pghq_LTC_waste_6_2_8',
-        'pghq_LTC_waste_6_2_12'
+        'pghq_LTC_waste_6_2_10',
+        'pghq_LTC_waste_6_2_16'
       ],
       'calculation': handlers.sum
     },
-    'pghq_LTC_waste_6_2_17': {
+    'pghq_LTC_waste_6_2_23': {
       'args': [
         'pghq_LTC_waste_6_2_4',
-        'pghq_LTC_waste_6_2_9',
-        'pghq_LTC_waste_6_2_13'
+        'pghq_LTC_waste_6_2_11',
+        'pghq_LTC_waste_6_2_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_6_2_24': {
+      'args': [
+        'pghq_LTC_waste_6_2_5',
+        'pghq_LTC_waste_6_2_12',
+        'pghq_LTC_waste_6_2_18'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_6_2_25': {
+      'args': [
+        'pghq_LTC_waste_6_2_6',
+        'pghq_LTC_waste_6_2_13',
+        'pghq_LTC_waste_6_2_19'
       ],
       'calculation': handlers.sum
     },
@@ -2161,147 +2855,261 @@
         return a * 2000 / b / 365;
       }
     },
-    'pghq_LTC_waste_8_10_1tE_9': {
+    'pghq_LTC_waste_8_10_1tE_13': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_1',
-        'pghq_LTC_waste_8_10_1tE_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_LTC_waste_8_10_1tE_10': {
-      'args': [
-        'pghq_LTC_waste_8_10_1tE_2',
-        'pghq_LTC_waste_8_10_1tE_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_LTC_waste_8_10_1tE_11': {
-      'args': [
-        'pghq_LTC_waste_8_10_1tE_3',
         'pghq_LTC_waste_8_10_1tE_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_LTC_waste_8_10_1tE_12': {
+    'pghq_LTC_waste_8_10_1tE_14': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_2',
+        'pghq_LTC_waste_8_10_1tE_8'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_8_10_1tE_15': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_3',
+        'pghq_LTC_waste_8_10_1tE_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_8_10_1tE_16': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_4',
-        'pghq_LTC_waste_8_10_1tE_8'
+        'pghq_LTC_waste_8_10_1tE_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_8_10_1tE_17': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_5',
+        'pghq_LTC_waste_8_10_1tE_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_8_10_1tE_18': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_6',
+        'pghq_LTC_waste_8_10_1tE_12'
       ],
       'calculation': handlers.sum
     },
     'pghq_LTC_waste_10_1_tG_1': {
       'args': [
         'pghq_LTC_waste_2_3_tA_2',
-        'pghq_LTC_waste_6_2_14',
-        'pghq_LTC_waste_8_10_1tE_9'
+        'pghq_LTC_waste_6_2_20',
+        'pghq_LTC_waste_8_10_1tE_13'
       ],
       'calculation': handlers.sum
     },
     'pghq_LTC_waste_10_1_tG_2': {
       'args': [
         'pghq_LTC_waste_2_3_tA_3',
-        'pghq_LTC_waste_6_2_15',
-        'pghq_LTC_waste_8_10_1tE_10'
+        'pghq_LTC_waste_6_2_21',
+        'pghq_LTC_waste_8_10_1tE_14'
       ],
       'calculation': handlers.sum
     },
     'pghq_LTC_waste_10_1_tG_3': {
       'args': [
         'pghq_LTC_waste_2_3_tA_4',
-        'pghq_LTC_waste_6_2_16',
-        'pghq_LTC_waste_8_10_1tE_11'
+        'pghq_LTC_waste_6_2_22',
+        'pghq_LTC_waste_8_10_1tE_15'
       ],
       'calculation': handlers.sum
     },
     'pghq_LTC_waste_10_1_tG_4': {
       'args': [
         'pghq_LTC_waste_2_3_tA_5',
-        'pghq_LTC_waste_6_2_17',
-        'pghq_LTC_waste_8_10_1tE_12'
+        'pghq_LTC_waste_6_2_23',
+        'pghq_LTC_waste_8_10_1tE_16'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_10_1_tG_5': {
+      'args': [
+        'pghq_LTC_waste_2_3_tA_6',
+        'pghq_LTC_waste_6_2_24',
+        'pghq_LTC_waste_8_10_1tE_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_waste_10_1_tG_6': {
+      'args': [
+        'pghq_LTC_waste_2_3_tA_7',
+        'pghq_LTC_waste_6_2_25',
+        'pghq_LTC_waste_8_10_1tE_18'
       ],
       'calculation': handlers.sum
     },
     'pghq_LTC_waste_10_1_tH_1': {
       'args': [
-        'pghq_LTC_waste_10_1_tG_1',
-        'pghq_LTC_waste_2_3_tA_2'
+        'pghq_LTC_waste_2_3_tA_2',
+        'pghq_LTC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_2': {
       'args': [
-        'pghq_LTC_waste_10_1_tG_2',
-        'pghq_LTC_waste_2_3_tA_4'
+        'pghq_LTC_waste_2_3_tA_3',
+        'pghq_LTC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_3': {
       'args': [
-        'pghq_LTC_waste_10_1_tG_3',
-        'pghq_LTC_waste_2_3_tA_3'
+        'pghq_LTC_waste_2_3_tA_4',
+        'pghq_LTC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_4': {
       'args': [
-        'pghq_LTC_waste_10_1_tG_4',
-        'pghq_LTC_waste_2_3_tA_5'
+        'pghq_LTC_waste_2_3_tA_5',
+        'pghq_LTC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_5': {
       'args': [
-        'pghq_LTC_waste_4_8_tB_9',
-        'pghq_LTC_waste_2_3_tA_2'
+        'pghq_LTC_waste_2_3_tA_6',
+        'pghq_LTC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_6': {
       'args': [
-        'pghq_LTC_waste_4_8_tB_10',
-        'pghq_LTC_waste_2_3_tA_4'
+        'pghq_LTC_waste_2_3_tA_7',
+        'pghq_LTC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_7': {
       'args': [
-        'pghq_LTC_waste_4_8_tB_11',
-        'pghq_LTC_waste_2_3_tA_3'
+        'pghq_LTC_waste_4_8_tB_13',
+        'pghq_LTC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_8': {
       'args': [
-        'pghq_LTC_waste_4_8_tB_12',
-        'pghq_LTC_waste_2_3_tA_5'
+        'pghq_LTC_waste_4_8_tB_14',
+        'pghq_LTC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_9': {
       'args': [
-        'pghq_LTC_waste_6_2_14',
-        'pghq_LTC_waste_2_3_tA_2'
+        'pghq_LTC_waste_4_8_tB_15',
+        'pghq_LTC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_10': {
       'args': [
-        'pghq_LTC_waste_6_2_15',
-        'pghq_LTC_waste_2_3_tA_4'
+        'pghq_LTC_waste_4_8_tB_16',
+        'pghq_LTC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_11': {
       'args': [
-        'pghq_LTC_waste_6_2_16',
-        'pghq_LTC_waste_2_3_tA_3'
+        'pghq_LTC_waste_4_8_tB_17',
+        'pghq_LTC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_LTC_waste_10_1_tH_12': {
       'args': [
-        'pghq_LTC_waste_6_2_17',
-        'pghq_LTC_waste_2_3_tA_5'
+        'pghq_LTC_waste_4_8_tB_18',
+        'pghq_LTC_waste_10_1_tG_6'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_13': {
+      'args': [
+        'pghq_LTC_waste_6_2_20',
+        'pghq_LTC_waste_10_1_tG_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_14': {
+      'args': [
+        'pghq_LTC_waste_6_2_21',
+        'pghq_LTC_waste_10_1_tG_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_15': {
+      'args': [
+        'pghq_LTC_waste_6_2_22',
+        'pghq_LTC_waste_10_1_tG_3'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_16': {
+      'args': [
+        'pghq_LTC_waste_6_2_23',
+        'pghq_LTC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_17': {
+      'args': [
+        'pghq_LTC_waste_6_2_24',
+        'pghq_LTC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_18': {
+      'args': [
+        'pghq_LTC_waste_6_2_25',
+        'pghq_LTC_waste_10_1_tG_6'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_19': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_13',
+        'pghq_LTC_waste_10_1_tG_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_20': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_14',
+        'pghq_LTC_waste_10_1_tG_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_21': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_15',
+        'pghq_LTC_waste_10_1_tG_3'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_22': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_16',
+        'pghq_LTC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_23': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_17',
+        'pghq_LTC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_LTC_waste_10_1_tH_24': {
+      'args': [
+        'pghq_LTC_waste_8_10_1tE_18',
+        'pghq_LTC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
@@ -3131,157 +3939,359 @@
       	} else {
       		converted31 = amount31;
       	}
-      	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount14,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
       }
     },
     'pghq_LTC_appendixa_1_8t_2': {
       'args': [
-        'pghq_LTC_appendixa_1_7_1t_2',
-        'pghq_LTC_appendixa_1_7_2t_3',
-        'pghq_LTC_appendixa_1_7_3t_2',
-        'pghq_LTC_appendixa_1_7_4t_2',
-        'pghq_LTC_appendixa_1_7_5t_2',
-        'pghq_LTC_appendixa_1_7_6t_2',
-        'pghq_LTC_appendixa_1_7_7t_3',
-        'pghq_LTC_appendixa_1_7_8t_3',
-        'pghq_LTC_appendixa_1_7_9t_2',
-        'pghq_LTC_appendixa_1_7_10t_2',
-        'pghq_LTC_appendixa_1_7_11t_2',
-        'pghq_LTC_appendixa_1_7_12t_3',
-        'pghq_LTC_appendixa_1_7_13t_3',
-        'pghq_LTC_appendixa_1_7_14t_3',
-        'pghq_LTC_appendixa_1_7_15t_2',
-        'pghq_LTC_appendixa_1_7_16t_2',
-        'pghq_LTC_appendixa_1_7_17t_2',
-        'pghq_LTC_appendixa_1_7_18t_2',
-        'pghq_LTC_appendixa_1_7_19t_2',
-        'pghq_LTC_appendixa_1_7_20t_2',
-        'pghq_LTC_appendixa_1_7_21t_2',
-        'pghq_LTC_appendixa_1_7_22t_2',
-        'pghq_LTC_appendixa_1_7_23t_2',
-        'pghq_LTC_appendixa_1_7_24t_2',
-        'pghq_LTC_appendixa_1_7_25t_2',
-        'pghq_LTC_appendixa_1_7_26t_2',
-        'pghq_LTC_appendixa_1_7_27t_2',
-        'pghq_LTC_appendixa_1_7_28t_2',
-        'pghq_LTC_appendixa_1_7_29t_2',
-        'pghq_LTC_appendixa_1_7_30t_3',
-        'pghq_LTC_appendixa_1_7_31t_3'
+        'pghq_LTC_appendixa_1_7_1t_2', // cost 1
+        'pghq_LTC_appendixa_1_7_2t_3', // cost 2
+        'pghq_LTC_appendixa_1_7_3t_2', // cost 3
+        'pghq_LTC_appendixa_1_7_4t_2', // cost 4
+        'pghq_LTC_appendixa_1_7_5t_2', // cost 5
+        'pghq_LTC_appendixa_1_7_6t_2', // cost 6
+        'pghq_LTC_appendixa_1_7_7t_3', // cost 7
+        'pghq_LTC_appendixa_1_7_8t_3', // cost 8
+        'pghq_LTC_appendixa_1_7_9t_2', // cost 9
+        'pghq_LTC_appendixa_1_7_10t_2', // cost 10
+        'pghq_LTC_appendixa_1_7_11t_2', // cost 11
+        'pghq_LTC_appendixa_1_7_12t_3', // cost 12
+        'pghq_LTC_appendixa_1_7_13t_3', // cost 13
+        'pghq_LTC_appendixa_1_7_14t_3', // cost 14
+        'pghq_LTC_appendixa_1_7_15t_2', // cost 15
+        'pghq_LTC_appendixa_1_7_16t_2', // cost 16
+        'pghq_LTC_appendixa_1_7_17t_2', // cost 17
+        'pghq_LTC_appendixa_1_7_18t_2', // cost 18
+        'pghq_LTC_appendixa_1_7_19t_2', // cost 19
+        'pghq_LTC_appendixa_1_7_20t_2', // cost 20
+        'pghq_LTC_appendixa_1_7_21t_2', // cost 21
+        'pghq_LTC_appendixa_1_7_22t_2', // cost 22
+        'pghq_LTC_appendixa_1_7_23t_2', // cost 23
+        'pghq_LTC_appendixa_1_7_24t_2', // cost 24
+        'pghq_LTC_appendixa_1_7_25t_2', // cost 25
+        'pghq_LTC_appendixa_1_7_26t_2', // cost 26
+        'pghq_LTC_appendixa_1_7_27t_2', // cost 27
+        'pghq_LTC_appendixa_1_7_28t_2', // cost 28
+        'pghq_LTC_appendixa_1_7_29t_2', // cost 29
+        'pghq_LTC_appendixa_1_7_30t_3', // cost 30
+        'pghq_LTC_appendixa_1_7_31t_3', // cost 31
       ],
-      'calculation': handlers.sum
+      'calculation': function (cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10, cost11, cost12, cost13, cost14, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29, cost30, cost31) {
+ 
+        var values = [
+          cost1,
+          cost2,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost7,
+          cost8,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost14,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_LTC_appendixa_1_9t_1': {
-			'args': [
-				'pghq_LTC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_LTC_appendixa_1_7_2t_2', // Amount 1
-				'pghq_LTC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_LTC_appendixa_1_7_7t_2', // Amount 2
-				'pghq_LTC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_LTC_appendixa_1_7_8t_2', // Amount 3
-				'pghq_LTC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_LTC_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_LTC_appendixa_1_7_1t_1', // amount 1
+        'pghq_LTC_appendixa_1_7_3t_1', // amount 3
+        'pghq_LTC_appendixa_1_7_4t_1', // amount 4
+        'pghq_LTC_appendixa_1_7_5t_1', // amount 5
+        'pghq_LTC_appendixa_1_7_6t_1', // amount 6
+        'pghq_LTC_appendixa_1_7_9t_1', // amount 9
+        'pghq_LTC_appendixa_1_7_10t_1', // amount 10
+        'pghq_LTC_appendixa_1_7_11t_1', // amount 11
+        'pghq_LTC_appendixa_1_7_12t_1', // amount 12
+        'pghq_LTC_appendixa_1_7_12t_2', // units 12
+        'pghq_LTC_appendixa_1_7_13t_1', // amount 13
+        'pghq_LTC_appendixa_1_7_13t_2', // units 13
+        'pghq_LTC_appendixa_1_7_15t_1', // amount 15
+        'pghq_LTC_appendixa_1_7_16t_1', // amount 16
+        'pghq_LTC_appendixa_1_7_17t_1', // amount 17
+        'pghq_LTC_appendixa_1_7_18t_1', // amount 18
+        'pghq_LTC_appendixa_1_7_19t_1', // amount 19
+        'pghq_LTC_appendixa_1_7_20t_1', // amount 20
+        'pghq_LTC_appendixa_1_7_21t_1', // amount 21
+        'pghq_LTC_appendixa_1_7_22t_1', // amount 22
+        'pghq_LTC_appendixa_1_7_23t_1', // amount 23
+        'pghq_LTC_appendixa_1_7_24t_1', // amount 24
+        'pghq_LTC_appendixa_1_7_25t_1', // amount 25
+        'pghq_LTC_appendixa_1_7_26t_1', // amount 26
+        'pghq_LTC_appendixa_1_7_27t_1', // amount 27
+        'pghq_LTC_appendixa_1_7_28t_1', // amount 28
+        'pghq_LTC_appendixa_1_7_29t_1' // amount 29
+      ],
+      'calculation': function (amount1, amount3, amount4, amount5, amount6, amount9, amount10, amount11, amount12, units12, amount13, units13, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29) {
+
+      	var converted12 = 0;
+      	var converted13 = 0;
+
+      	if (units12 === 'Gallons') {
+      		converted12 = amount12 * 0.004;
+      	} else {
+      		converted12 = amount12;
+      	}
+      	if (units13 === 'Gallons') {
+      		converted13 = amount13 * 0.004;
+      	} else {
+      		converted13 = amount13;
+      	}
+ 
+        var values = [
+          amount1,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_LTC_appendixa_1_9t_2': {
-			'args': [
-				'pghq_LTC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_LTC_appendixa_1_7_2t_3', // Amount 1
-				'pghq_LTC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_LTC_appendixa_1_7_7t_3', // Amount 2
-				'pghq_LTC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_LTC_appendixa_1_7_8t_3', // Amount 3
-				'pghq_LTC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_LTC_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_LTC_appendixa_1_7_1t_2', // cost 1
+        'pghq_LTC_appendixa_1_7_3t_2', // cost 3
+        'pghq_LTC_appendixa_1_7_4t_2', // cost 4
+        'pghq_LTC_appendixa_1_7_5t_2', // cost 5
+        'pghq_LTC_appendixa_1_7_6t_2', // cost 6
+        'pghq_LTC_appendixa_1_7_9t_2', // cost 9
+        'pghq_LTC_appendixa_1_7_10t_2', // cost 10
+        'pghq_LTC_appendixa_1_7_11t_2', // cost 11
+        'pghq_LTC_appendixa_1_7_12t_3', // cost 12
+        'pghq_LTC_appendixa_1_7_13t_3', // cost 13
+        'pghq_LTC_appendixa_1_7_15t_2', // cost 15
+        'pghq_LTC_appendixa_1_7_16t_2', // cost 16
+        'pghq_LTC_appendixa_1_7_17t_2', // cost 17
+        'pghq_LTC_appendixa_1_7_18t_2', // cost 18
+        'pghq_LTC_appendixa_1_7_19t_2', // cost 19
+        'pghq_LTC_appendixa_1_7_20t_2', // cost 20
+        'pghq_LTC_appendixa_1_7_21t_2', // cost 21
+        'pghq_LTC_appendixa_1_7_22t_2', // cost 22
+        'pghq_LTC_appendixa_1_7_23t_2', // cost 23
+        'pghq_LTC_appendixa_1_7_24t_2', // cost 24
+        'pghq_LTC_appendixa_1_7_25t_2', // cost 25
+        'pghq_LTC_appendixa_1_7_26t_2', // cost 26
+        'pghq_LTC_appendixa_1_7_27t_2', // cost 27
+        'pghq_LTC_appendixa_1_7_28t_2', // cost 28
+        'pghq_LTC_appendixa_1_7_29t_2' // cost 29
+      ],
+      'calculation': function (cost1, cost3, cost4, cost5, cost6, cost9, cost10, cost11, cost12, cost13, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29) {
+ 
+        var values = [
+          cost1,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_LTC_appendixa_1_10t_1': {
-			'args': [
-				'pghq_LTC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_LTC_appendixa_1_7_2t_2', // Amount 1
-				'pghq_LTC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_LTC_appendixa_1_7_7t_2', // Amount 2
-				'pghq_LTC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_LTC_appendixa_1_7_8t_2', // Amount 3
-				'pghq_LTC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_LTC_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_LTC_appendixa_1_7_2t_2', // amount 2
+        'pghq_LTC_appendixa_1_7_7t_2', // amount 7
+        'pghq_LTC_appendixa_1_7_8t_2', // amount 8
+        'pghq_LTC_appendixa_1_7_14t_2', // amount 14
+        'pghq_LTC_appendixa_1_7_30t_1', // amount 30
+        'pghq_LTC_appendixa_1_7_30t_2', // units 30
+        'pghq_LTC_appendixa_1_7_31t_1', // amount 31
+        'pghq_LTC_appendixa_1_7_31t_2' // units 31
+      ],
+      'calculation': function (amount2, amount7, amount8, amount14, amount30, units30, amount31, units31) {
+
+      	var converted30 = 0;
+      	var converted31 = 0;
+
+      	if (units30 === 'Gallons') {
+      		converted30 = amount30 * 0.004;
+      	} else {
+      		converted30 = amount30;
+      	}
+      	if (units31 === 'Gallons') {
+      		converted31 = amount31 * 0.004;
+      	} else {
+      		converted31 = amount31;
+      	}
+ 
+        var values = [
+          amount2,
+          amount7,
+          amount8,
+          amount14,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_LTC_appendixa_1_10t_2': {
-			'args': [
-				'pghq_LTC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_LTC_appendixa_1_7_2t_3', // Amount 1
-				'pghq_LTC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_LTC_appendixa_1_7_7t_3', // Amount 2
-				'pghq_LTC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_LTC_appendixa_1_7_8t_3', // Amount 3
-				'pghq_LTC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_LTC_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_LTC_appendixa_1_7_2t_3', // cost 2
+        'pghq_LTC_appendixa_1_7_7t_3', // cost 7
+        'pghq_LTC_appendixa_1_7_8t_3', // cost 8
+        'pghq_LTC_appendixa_1_7_14t_3', // cost 14
+        'pghq_LTC_appendixa_1_7_30t_3', // cost 30
+        'pghq_LTC_appendixa_1_7_31t_3', // cost 31
+      ],
+      'calculation': function (cost2, cost7, cost8, cost14, cost30, cost31) {
+ 
+        var values = [
+          cost2,
+          cost7,
+          cost8,
+          cost14,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
 
     //
     // CHCPR Waste formulas
@@ -3564,218 +4574,450 @@
       	} else {
       		converted31 = amount31;
       	}
-      	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount14,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
       }
     },
     'pghq_CHCPR_appendixa_1_8t_2': {
       'args': [
-        'pghq_CHCPR_appendixa_1_7_1t_2',
-        'pghq_CHCPR_appendixa_1_7_2t_3',
-        'pghq_CHCPR_appendixa_1_7_3t_2',
-        'pghq_CHCPR_appendixa_1_7_4t_2',
-        'pghq_CHCPR_appendixa_1_7_5t_2',
-        'pghq_CHCPR_appendixa_1_7_6t_2',
-        'pghq_CHCPR_appendixa_1_7_7t_3',
-        'pghq_CHCPR_appendixa_1_7_8t_3',
-        'pghq_CHCPR_appendixa_1_7_9t_2',
-        'pghq_CHCPR_appendixa_1_7_10t_2',
-        'pghq_CHCPR_appendixa_1_7_11t_2',
-        'pghq_CHCPR_appendixa_1_7_12t_3',
-        'pghq_CHCPR_appendixa_1_7_13t_3',
-        'pghq_CHCPR_appendixa_1_7_14t_3',
-        'pghq_CHCPR_appendixa_1_7_15t_2',
-        'pghq_CHCPR_appendixa_1_7_16t_2',
-        'pghq_CHCPR_appendixa_1_7_17t_2',
-        'pghq_CHCPR_appendixa_1_7_18t_2',
-        'pghq_CHCPR_appendixa_1_7_19t_2',
-        'pghq_CHCPR_appendixa_1_7_20t_2',
-        'pghq_CHCPR_appendixa_1_7_21t_2',
-        'pghq_CHCPR_appendixa_1_7_22t_2',
-        'pghq_CHCPR_appendixa_1_7_23t_2',
-        'pghq_CHCPR_appendixa_1_7_24t_2',
-        'pghq_CHCPR_appendixa_1_7_25t_2',
-        'pghq_CHCPR_appendixa_1_7_26t_2',
-        'pghq_CHCPR_appendixa_1_7_27t_2',
-        'pghq_CHCPR_appendixa_1_7_28t_2',
-        'pghq_CHCPR_appendixa_1_7_29t_2',
-        'pghq_CHCPR_appendixa_1_7_30t_3',
-        'pghq_CHCPR_appendixa_1_7_31t_3'
+        'pghq_CHCPR_appendixa_1_7_1t_2', // cost 1
+        'pghq_CHCPR_appendixa_1_7_2t_3', // cost 2
+        'pghq_CHCPR_appendixa_1_7_3t_2', // cost 3
+        'pghq_CHCPR_appendixa_1_7_4t_2', // cost 4
+        'pghq_CHCPR_appendixa_1_7_5t_2', // cost 5
+        'pghq_CHCPR_appendixa_1_7_6t_2', // cost 6
+        'pghq_CHCPR_appendixa_1_7_7t_3', // cost 7
+        'pghq_CHCPR_appendixa_1_7_8t_3', // cost 8
+        'pghq_CHCPR_appendixa_1_7_9t_2', // cost 9
+        'pghq_CHCPR_appendixa_1_7_10t_2', // cost 10
+        'pghq_CHCPR_appendixa_1_7_11t_2', // cost 11
+        'pghq_CHCPR_appendixa_1_7_12t_3', // cost 12
+        'pghq_CHCPR_appendixa_1_7_13t_3', // cost 13
+        'pghq_CHCPR_appendixa_1_7_14t_3', // cost 14
+        'pghq_CHCPR_appendixa_1_7_15t_2', // cost 15
+        'pghq_CHCPR_appendixa_1_7_16t_2', // cost 16
+        'pghq_CHCPR_appendixa_1_7_17t_2', // cost 17
+        'pghq_CHCPR_appendixa_1_7_18t_2', // cost 18
+        'pghq_CHCPR_appendixa_1_7_19t_2', // cost 19
+        'pghq_CHCPR_appendixa_1_7_20t_2', // cost 20
+        'pghq_CHCPR_appendixa_1_7_21t_2', // cost 21
+        'pghq_CHCPR_appendixa_1_7_22t_2', // cost 22
+        'pghq_CHCPR_appendixa_1_7_23t_2', // cost 23
+        'pghq_CHCPR_appendixa_1_7_24t_2', // cost 24
+        'pghq_CHCPR_appendixa_1_7_25t_2', // cost 25
+        'pghq_CHCPR_appendixa_1_7_26t_2', // cost 26
+        'pghq_CHCPR_appendixa_1_7_27t_2', // cost 27
+        'pghq_CHCPR_appendixa_1_7_28t_2', // cost 28
+        'pghq_CHCPR_appendixa_1_7_29t_2', // cost 29
+        'pghq_CHCPR_appendixa_1_7_30t_3', // cost 30
+        'pghq_CHCPR_appendixa_1_7_31t_3', // cost 31
       ],
-      'calculation': handlers.sum
+      'calculation': function (cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10, cost11, cost12, cost13, cost14, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29, cost30, cost31) {
+ 
+        var values = [
+          cost1,
+          cost2,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost7,
+          cost8,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost14,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_CHCPR_appendixa_1_9t_1': {
-			'args': [
-				'pghq_CHCPR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPR_appendixa_1_7_2t_2', // Amount 1
-				'pghq_CHCPR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPR_appendixa_1_7_7t_2', // Amount 2
-				'pghq_CHCPR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPR_appendixa_1_7_8t_2', // Amount 3
-				'pghq_CHCPR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPR_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_CHCPR_appendixa_1_7_1t_1', // amount 1
+        'pghq_CHCPR_appendixa_1_7_3t_1', // amount 3
+        'pghq_CHCPR_appendixa_1_7_4t_1', // amount 4
+        'pghq_CHCPR_appendixa_1_7_5t_1', // amount 5
+        'pghq_CHCPR_appendixa_1_7_6t_1', // amount 6
+        'pghq_CHCPR_appendixa_1_7_9t_1', // amount 9
+        'pghq_CHCPR_appendixa_1_7_10t_1', // amount 10
+        'pghq_CHCPR_appendixa_1_7_11t_1', // amount 11
+        'pghq_CHCPR_appendixa_1_7_12t_1', // amount 12
+        'pghq_CHCPR_appendixa_1_7_12t_2', // units 12
+        'pghq_CHCPR_appendixa_1_7_13t_1', // amount 13
+        'pghq_CHCPR_appendixa_1_7_13t_2', // units 13
+        'pghq_CHCPR_appendixa_1_7_15t_1', // amount 15
+        'pghq_CHCPR_appendixa_1_7_16t_1', // amount 16
+        'pghq_CHCPR_appendixa_1_7_17t_1', // amount 17
+        'pghq_CHCPR_appendixa_1_7_18t_1', // amount 18
+        'pghq_CHCPR_appendixa_1_7_19t_1', // amount 19
+        'pghq_CHCPR_appendixa_1_7_20t_1', // amount 20
+        'pghq_CHCPR_appendixa_1_7_21t_1', // amount 21
+        'pghq_CHCPR_appendixa_1_7_22t_1', // amount 22
+        'pghq_CHCPR_appendixa_1_7_23t_1', // amount 23
+        'pghq_CHCPR_appendixa_1_7_24t_1', // amount 24
+        'pghq_CHCPR_appendixa_1_7_25t_1', // amount 25
+        'pghq_CHCPR_appendixa_1_7_26t_1', // amount 26
+        'pghq_CHCPR_appendixa_1_7_27t_1', // amount 27
+        'pghq_CHCPR_appendixa_1_7_28t_1', // amount 28
+        'pghq_CHCPR_appendixa_1_7_29t_1' // amount 29
+      ],
+      'calculation': function (amount1, amount3, amount4, amount5, amount6, amount9, amount10, amount11, amount12, units12, amount13, units13, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29) {
+
+      	var converted12 = 0;
+      	var converted13 = 0;
+
+      	if (units12 === 'Gallons') {
+      		converted12 = amount12 * 0.004;
+      	} else {
+      		converted12 = amount12;
+      	}
+      	if (units13 === 'Gallons') {
+      		converted13 = amount13 * 0.004;
+      	} else {
+      		converted13 = amount13;
+      	}
+ 
+        var values = [
+          amount1,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_CHCPR_appendixa_1_9t_2': {
-			'args': [
-				'pghq_CHCPR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPR_appendixa_1_7_2t_3', // Amount 1
-				'pghq_CHCPR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPR_appendixa_1_7_7t_3', // Amount 2
-				'pghq_CHCPR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPR_appendixa_1_7_8t_3', // Amount 3
-				'pghq_CHCPR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPR_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_CHCPR_appendixa_1_7_1t_2', // cost 1
+        'pghq_CHCPR_appendixa_1_7_3t_2', // cost 3
+        'pghq_CHCPR_appendixa_1_7_4t_2', // cost 4
+        'pghq_CHCPR_appendixa_1_7_5t_2', // cost 5
+        'pghq_CHCPR_appendixa_1_7_6t_2', // cost 6
+        'pghq_CHCPR_appendixa_1_7_9t_2', // cost 9
+        'pghq_CHCPR_appendixa_1_7_10t_2', // cost 10
+        'pghq_CHCPR_appendixa_1_7_11t_2', // cost 11
+        'pghq_CHCPR_appendixa_1_7_12t_3', // cost 12
+        'pghq_CHCPR_appendixa_1_7_13t_3', // cost 13
+        'pghq_CHCPR_appendixa_1_7_15t_2', // cost 15
+        'pghq_CHCPR_appendixa_1_7_16t_2', // cost 16
+        'pghq_CHCPR_appendixa_1_7_17t_2', // cost 17
+        'pghq_CHCPR_appendixa_1_7_18t_2', // cost 18
+        'pghq_CHCPR_appendixa_1_7_19t_2', // cost 19
+        'pghq_CHCPR_appendixa_1_7_20t_2', // cost 20
+        'pghq_CHCPR_appendixa_1_7_21t_2', // cost 21
+        'pghq_CHCPR_appendixa_1_7_22t_2', // cost 22
+        'pghq_CHCPR_appendixa_1_7_23t_2', // cost 23
+        'pghq_CHCPR_appendixa_1_7_24t_2', // cost 24
+        'pghq_CHCPR_appendixa_1_7_25t_2', // cost 25
+        'pghq_CHCPR_appendixa_1_7_26t_2', // cost 26
+        'pghq_CHCPR_appendixa_1_7_27t_2', // cost 27
+        'pghq_CHCPR_appendixa_1_7_28t_2', // cost 28
+        'pghq_CHCPR_appendixa_1_7_29t_2' // cost 29
+      ],
+      'calculation': function (cost1, cost3, cost4, cost5, cost6, cost9, cost10, cost11, cost12, cost13, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29) {
+ 
+        var values = [
+          cost1,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_CHCPR_appendixa_1_10t_1': {
-			'args': [
-				'pghq_CHCPR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPR_appendixa_1_7_2t_2', // Amount 1
-				'pghq_CHCPR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPR_appendixa_1_7_7t_2', // Amount 2
-				'pghq_CHCPR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPR_appendixa_1_7_8t_2', // Amount 3
-				'pghq_CHCPR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPR_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_CHCPR_appendixa_1_7_2t_2', // amount 2
+        'pghq_CHCPR_appendixa_1_7_7t_2', // amount 7
+        'pghq_CHCPR_appendixa_1_7_8t_2', // amount 8
+        'pghq_CHCPR_appendixa_1_7_14t_2', // amount 14
+        'pghq_CHCPR_appendixa_1_7_30t_1', // amount 30
+        'pghq_CHCPR_appendixa_1_7_30t_2', // units 30
+        'pghq_CHCPR_appendixa_1_7_31t_1', // amount 31
+        'pghq_CHCPR_appendixa_1_7_31t_2' // units 31
+      ],
+      'calculation': function (amount2, amount7, amount8, amount14, amount30, units30, amount31, units31) {
+
+      	var converted30 = 0;
+      	var converted31 = 0;
+
+      	if (units30 === 'Gallons') {
+      		converted30 = amount30 * 0.004;
+      	} else {
+      		converted30 = amount30;
+      	}
+      	if (units31 === 'Gallons') {
+      		converted31 = amount31 * 0.004;
+      	} else {
+      		converted31 = amount31;
+      	}
+ 
+        var values = [
+          amount2,
+          amount7,
+          amount8,
+          amount14,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_CHCPR_appendixa_1_10t_2': {
-			'args': [
-				'pghq_CHCPR_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPR_appendixa_1_7_2t_3', // Amount 1
-				'pghq_CHCPR_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPR_appendixa_1_7_7t_3', // Amount 2
-				'pghq_CHCPR_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPR_appendixa_1_7_8t_3', // Amount 3
-				'pghq_CHCPR_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPR_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_CHCPR_appendixa_1_7_2t_3', // cost 2
+        'pghq_CHCPR_appendixa_1_7_7t_3', // cost 7
+        'pghq_CHCPR_appendixa_1_7_8t_3', // cost 8
+        'pghq_CHCPR_appendixa_1_7_14t_3', // cost 14
+        'pghq_CHCPR_appendixa_1_7_30t_3', // cost 30
+        'pghq_CHCPR_appendixa_1_7_31t_3', // cost 31
+      ],
+      'calculation': function (cost2, cost7, cost8, cost14, cost30, cost31) {
+ 
+        var values = [
+          cost2,
+          cost7,
+          cost8,
+          cost14,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
 
     //
     // CHCPFC Waste formulas
     //
-    'pghq_CHCPFC_waste_4_8_tB_9': {
+    'pghq_CHCPFC_waste_4_8_tB_13': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_1',
-        'pghq_CHCPFC_waste_4_8_tB_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_CHCPFC_waste_4_8_tB_10': {
-      'args': [
-        'pghq_CHCPFC_waste_4_8_tB_2',
-        'pghq_CHCPFC_waste_4_8_tB_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_CHCPFC_waste_4_8_tB_11': {
-      'args': [
-        'pghq_CHCPFC_waste_4_8_tB_3',
         'pghq_CHCPFC_waste_4_8_tB_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_CHCPFC_waste_4_8_tB_12': {
+    'pghq_CHCPFC_waste_4_8_tB_14': {
       'args': [
-        'pghq_CHCPFC_waste_4_8_tB_4',
+        'pghq_CHCPFC_waste_4_8_tB_2',
         'pghq_CHCPFC_waste_4_8_tB_8'
       ],
       'calculation': handlers.sum
     },
-    'pghq_CHCPFC_waste_6_2_14': {
+    'pghq_CHCPFC_waste_4_8_tB_15': {
+      'args': [
+        'pghq_CHCPFC_waste_4_8_tB_3',
+        'pghq_CHCPFC_waste_4_8_tB_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_4_8_tB_16': {
+      'args': [
+        'pghq_CHCPFC_waste_4_8_tB_4',
+        'pghq_CHCPFC_waste_4_8_tB_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_4_8_tB_17': {
+      'args': [
+        'pghq_CHCPFC_waste_4_8_tB_5',
+        'pghq_CHCPFC_waste_4_8_tB_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_4_8_tB_18': {
+      'args': [
+        'pghq_CHCPFC_waste_4_8_tB_6',
+        'pghq_CHCPFC_waste_4_8_tB_12'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_6_2_20': {
       'args': [
         'pghq_CHCPFC_waste_6_2_1',
-        'pghq_CHCPFC_waste_6_2_6',
-        'pghq_CHCPFC_waste_6_2_10'
+        'pghq_CHCPFC_waste_6_2_8',
+        'pghq_CHCPFC_waste_6_2_14'
       ],
       'calculation': handlers.sum
     },
-    'pghq_CHCPFC_waste_6_2_15': {
+    'pghq_CHCPFC_waste_6_2_21': {
       'args': [
         'pghq_CHCPFC_waste_6_2_2',
-        'pghq_CHCPFC_waste_6_2_7',
-        'pghq_CHCPFC_waste_6_2_11'
+        'pghq_CHCPFC_waste_6_2_9',
+        'pghq_CHCPFC_waste_6_2_15'
       ],
       'calculation': handlers.sum
     },
-    'pghq_CHCPFC_waste_6_2_16': {
+    'pghq_CHCPFC_waste_6_2_22': {
       'args': [
         'pghq_CHCPFC_waste_6_2_3',
-        'pghq_CHCPFC_waste_6_2_8',
-        'pghq_CHCPFC_waste_6_2_12'
+        'pghq_CHCPFC_waste_6_2_10',
+        'pghq_CHCPFC_waste_6_2_16'
       ],
       'calculation': handlers.sum
     },
-    'pghq_CHCPFC_waste_6_2_17': {
+    'pghq_CHCPFC_waste_6_2_23': {
       'args': [
         'pghq_CHCPFC_waste_6_2_4',
-        'pghq_CHCPFC_waste_6_2_9',
-        'pghq_CHCPFC_waste_6_2_13'
+        'pghq_CHCPFC_waste_6_2_11',
+        'pghq_CHCPFC_waste_6_2_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_6_2_24': {
+      'args': [
+        'pghq_CHCPFC_waste_6_2_5',
+        'pghq_CHCPFC_waste_6_2_12',
+        'pghq_CHCPFC_waste_6_2_18'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_6_2_25': {
+      'args': [
+        'pghq_CHCPFC_waste_6_2_6',
+        'pghq_CHCPFC_waste_6_2_13',
+        'pghq_CHCPFC_waste_6_2_19'
       ],
       'calculation': handlers.sum
     },
@@ -3788,31 +5030,45 @@
         return a * 2000 / b / 365;
       }
     },
-    'pghq_CHCPFC_waste_8_10_1tE_9': {
+    'pghq_CHCPFC_waste_8_10_1tE_13': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_1',
-        'pghq_CHCPFC_waste_8_10_1tE_5'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_CHCPFC_waste_8_10_1tE_10': {
-      'args': [
-        'pghq_CHCPFC_waste_8_10_1tE_2',
-        'pghq_CHCPFC_waste_8_10_1tE_6'
-      ],
-      'calculation': handlers.sum
-    },
-    'pghq_CHCPFC_waste_8_10_1tE_11': {
-      'args': [
-        'pghq_CHCPFC_waste_8_10_1tE_3',
         'pghq_CHCPFC_waste_8_10_1tE_7'
       ],
       'calculation': handlers.sum
     },
-    'pghq_CHCPFC_waste_8_10_1tE_12': {
+    'pghq_CHCPFC_waste_8_10_1tE_14': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_2',
+        'pghq_CHCPFC_waste_8_10_1tE_8'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_8_10_1tE_15': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_3',
+        'pghq_CHCPFC_waste_8_10_1tE_9'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_8_10_1tE_16': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_4',
-        'pghq_CHCPFC_waste_8_10_1tE_8'
+        'pghq_CHCPFC_waste_8_10_1tE_10'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_8_10_1tE_17': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_5',
+        'pghq_CHCPFC_waste_8_10_1tE_11'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_8_10_1tE_18': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_6',
+        'pghq_CHCPFC_waste_8_10_1tE_12'
       ],
       'calculation': handlers.sum
     },
@@ -3837,144 +5093,216 @@
     'pghq_CHCPFC_waste_10_1_tG_1': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_2',
-        'pghq_CHCPFC_waste_6_2_14',
-        'pghq_CHCPFC_waste_8_10_1tE_9'
+        'pghq_CHCPFC_waste_6_2_20',
+        'pghq_CHCPFC_waste_8_10_1tE_13'
       ],
       'calculation': handlers.sum
     },
     'pghq_CHCPFC_waste_10_1_tG_2': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_3',
-        'pghq_CHCPFC_waste_6_2_15',
-        'pghq_CHCPFC_waste_8_10_1tE_10'
+        'pghq_CHCPFC_waste_6_2_21',
+        'pghq_CHCPFC_waste_8_10_1tE_14'
       ],
       'calculation': handlers.sum
     },
     'pghq_CHCPFC_waste_10_1_tG_3': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_4',
-        'pghq_CHCPFC_waste_6_2_16',
-        'pghq_CHCPFC_waste_8_10_1tE_11'
+        'pghq_CHCPFC_waste_6_2_22',
+        'pghq_CHCPFC_waste_8_10_1tE_15'
       ],
       'calculation': handlers.sum
     },
     'pghq_CHCPFC_waste_10_1_tG_4': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_5',
-        'pghq_CHCPFC_waste_6_2_17',
-        'pghq_CHCPFC_waste_8_10_1tE_12'
+        'pghq_CHCPFC_waste_6_2_23',
+        'pghq_CHCPFC_waste_8_10_1tE_16'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_10_1_tG_5': {
+      'args': [
+        'pghq_CHCPFC_waste_2_3_tA_6',
+        'pghq_CHCPFC_waste_6_2_24',
+        'pghq_CHCPFC_waste_8_10_1tE_17'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_waste_10_1_tG_6': {
+      'args': [
+        'pghq_CHCPFC_waste_2_3_tA_7',
+        'pghq_CHCPFC_waste_6_2_25',
+        'pghq_CHCPFC_waste_8_10_1tE_18'
       ],
       'calculation': handlers.sum
     },
     'pghq_CHCPFC_waste_10_1_tH_1': {
       'args': [
-        'pghq_CHCPFC_waste_10_1_tG_1',
-        'pghq_CHCPFC_waste_2_3_tA_2'
+        'pghq_CHCPFC_waste_2_3_tA_2',
+        'pghq_CHCPFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_2': {
       'args': [
-        'pghq_CHCPFC_waste_10_1_tG_2',
-        'pghq_CHCPFC_waste_2_3_tA_4'
+        'pghq_CHCPFC_waste_2_3_tA_3',
+        'pghq_CHCPFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_3': {
       'args': [
-        'pghq_CHCPFC_waste_10_1_tG_3',
-        'pghq_CHCPFC_waste_2_3_tA_3'
+        'pghq_CHCPFC_waste_2_3_tA_4',
+        'pghq_CHCPFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_4': {
       'args': [
-        'pghq_CHCPFC_waste_10_1_tG_4',
-        'pghq_CHCPFC_waste_2_3_tA_5'
+        'pghq_CHCPFC_waste_2_3_tA_5',
+        'pghq_CHCPFC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_5': {
       'args': [
-        'pghq_CHCPFC_waste_4_8_tB_9',
-        'pghq_CHCPFC_waste_2_3_tA_2'
+        'pghq_CHCPFC_waste_2_3_tA_6',
+        'pghq_CHCPFC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_6': {
       'args': [
-        'pghq_CHCPFC_waste_4_8_tB_10',
-        'pghq_CHCPFC_waste_2_3_tA_4'
+        'pghq_CHCPFC_waste_2_3_tA_7',
+        'pghq_CHCPFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_7': {
       'args': [
-        'pghq_CHCPFC_waste_4_8_tB_11',
-        'pghq_CHCPFC_waste_2_3_tA_3'
+        'pghq_CHCPFC_waste_4_8_tB_13',
+        'pghq_CHCPFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_8': {
       'args': [
-        'pghq_CHCPFC_waste_4_8_tB_12',
-        'pghq_CHCPFC_waste_2_3_tA_5'
+        'pghq_CHCPFC_waste_4_8_tB_14',
+        'pghq_CHCPFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_9': {
       'args': [
-        'pghq_CHCPFC_waste_6_2_14',
-        'pghq_CHCPFC_waste_2_3_tA_2'
+        'pghq_CHCPFC_waste_4_8_tB_15',
+        'pghq_CHCPFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_10': {
       'args': [
-        'pghq_CHCPFC_waste_6_2_15',
-        'pghq_CHCPFC_waste_2_3_tA_4'
+        'pghq_CHCPFC_waste_4_8_tB_16',
+        'pghq_CHCPFC_waste_10_1_tG_4'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_11': {
       'args': [
-        'pghq_CHCPFC_waste_6_2_16',
-        'pghq_CHCPFC_waste_2_3_tA_3'
+        'pghq_CHCPFC_waste_4_8_tB_17',
+        'pghq_CHCPFC_waste_10_1_tG_5'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_12': {
       'args': [
-        'pghq_CHCPFC_waste_6_2_17',
-        'pghq_CHCPFC_waste_2_3_tA_5'
+        'pghq_CHCPFC_waste_4_8_tB_18',
+        'pghq_CHCPFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_13': {
       'args': [
-        'pghq_CHCPFC_waste_8_10_1tE_9',
-        'pghq_CHCPFC_waste_2_3_tA_2'
+        'pghq_CHCPFC_waste_6_2_20',
+        'pghq_CHCPFC_waste_10_1_tG_1'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_14': {
       'args': [
-        'pghq_CHCPFC_waste_8_10_1tE_10',
-        'pghq_CHCPFC_waste_2_3_tA_4'
+        'pghq_CHCPFC_waste_6_2_21',
+        'pghq_CHCPFC_waste_10_1_tG_2'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_15': {
       'args': [
-        'pghq_CHCPFC_waste_8_10_1tE_11',
-        'pghq_CHCPFC_waste_2_3_tA_3'
+        'pghq_CHCPFC_waste_6_2_22',
+        'pghq_CHCPFC_waste_10_1_tG_3'
       ],
       'calculation': handlers.divide
     },
     'pghq_CHCPFC_waste_10_1_tH_16': {
       'args': [
-        'pghq_CHCPFC_waste_8_10_1tE_12',
-        'pghq_CHCPFC_waste_2_3_tA_5'
+        'pghq_CHCPFC_waste_6_2_23',
+        'pghq_CHCPFC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_17': {
+      'args': [
+        'pghq_CHCPFC_waste_6_2_24',
+        'pghq_CHCPFC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_18': {
+      'args': [
+        'pghq_CHCPFC_waste_6_2_25',
+        'pghq_CHCPFC_waste_10_1_tG_6'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_19': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_13',
+        'pghq_CHCPFC_waste_10_1_tG_1'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_20': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_14',
+        'pghq_CHCPFC_waste_10_1_tG_2'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_21': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_15',
+        'pghq_CHCPFC_waste_10_1_tG_3'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_22': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_16',
+        'pghq_CHCPFC_waste_10_1_tG_4'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_23': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_17',
+        'pghq_CHCPFC_waste_10_1_tG_5'
+      ],
+      'calculation': handlers.divide
+    },
+    'pghq_CHCPFC_waste_10_1_tH_24': {
+      'args': [
+        'pghq_CHCPFC_waste_8_10_1tE_18',
+        'pghq_CHCPFC_waste_10_1_tG_6'
       ],
       'calculation': handlers.divide
     },
@@ -4054,8 +5382,8 @@
     },
     'pghq_CHCPFC_greeningtheOR_2_12_2_tF_3': {
       'args': [
-        'pghq_CHCPFC_greeningtheOR_2_12_2_tF_1',
-        'pghq_CHCPFC_greeningtheOR_2_12_2_tF_2'
+        'pghq_CHCPFC_greeningtheOR_2_12_2_tF_2',
+        'pghq_CHCPFC_greeningtheOR_2_12_2_tF_1'
       ],
       'calculation': handlers.divide
     },
@@ -4935,157 +6263,359 @@
       	} else {
       		converted31 = amount31;
       	}
-      	return amount1 + amount2 + amount3 + amount4 + amount5 + amount6 + amount7 + amount8 + amount9 + amount10 + amount11 + converted12 + converted13 + amount14 + amount15 + amount16 + amount17 + amount18 + amount19 + amount20 + amount21 + amount22 + amount23 + amount24 + amount25 + amount26 + amount27 + amount28 + amount29 + converted30 + converted31;
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount14,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
       }
     },
     'pghq_CHCPFC_appendixa_1_8t_2': {
       'args': [
-        'pghq_CHCPFC_appendixa_1_7_1t_2',
-        'pghq_CHCPFC_appendixa_1_7_2t_3',
-        'pghq_CHCPFC_appendixa_1_7_3t_2',
-        'pghq_CHCPFC_appendixa_1_7_4t_2',
-        'pghq_CHCPFC_appendixa_1_7_5t_2',
-        'pghq_CHCPFC_appendixa_1_7_6t_2',
-        'pghq_CHCPFC_appendixa_1_7_7t_3',
-        'pghq_CHCPFC_appendixa_1_7_8t_3',
-        'pghq_CHCPFC_appendixa_1_7_9t_2',
-        'pghq_CHCPFC_appendixa_1_7_10t_2',
-        'pghq_CHCPFC_appendixa_1_7_11t_2',
-        'pghq_CHCPFC_appendixa_1_7_12t_3',
-        'pghq_CHCPFC_appendixa_1_7_13t_3',
-        'pghq_CHCPFC_appendixa_1_7_14t_3',
-        'pghq_CHCPFC_appendixa_1_7_15t_2',
-        'pghq_CHCPFC_appendixa_1_7_16t_2',
-        'pghq_CHCPFC_appendixa_1_7_17t_2',
-        'pghq_CHCPFC_appendixa_1_7_18t_2',
-        'pghq_CHCPFC_appendixa_1_7_19t_2',
-        'pghq_CHCPFC_appendixa_1_7_20t_2',
-        'pghq_CHCPFC_appendixa_1_7_21t_2',
-        'pghq_CHCPFC_appendixa_1_7_22t_2',
-        'pghq_CHCPFC_appendixa_1_7_23t_2',
-        'pghq_CHCPFC_appendixa_1_7_24t_2',
-        'pghq_CHCPFC_appendixa_1_7_25t_2',
-        'pghq_CHCPFC_appendixa_1_7_26t_2',
-        'pghq_CHCPFC_appendixa_1_7_27t_2',
-        'pghq_CHCPFC_appendixa_1_7_28t_2',
-        'pghq_CHCPFC_appendixa_1_7_29t_2',
-        'pghq_CHCPFC_appendixa_1_7_30t_3',
-        'pghq_CHCPFC_appendixa_1_7_31t_3'
+        'pghq_CHCPFC_appendixa_1_7_1t_2', // cost 1
+        'pghq_CHCPFC_appendixa_1_7_2t_3', // cost 2
+        'pghq_CHCPFC_appendixa_1_7_3t_2', // cost 3
+        'pghq_CHCPFC_appendixa_1_7_4t_2', // cost 4
+        'pghq_CHCPFC_appendixa_1_7_5t_2', // cost 5
+        'pghq_CHCPFC_appendixa_1_7_6t_2', // cost 6
+        'pghq_CHCPFC_appendixa_1_7_7t_3', // cost 7
+        'pghq_CHCPFC_appendixa_1_7_8t_3', // cost 8
+        'pghq_CHCPFC_appendixa_1_7_9t_2', // cost 9
+        'pghq_CHCPFC_appendixa_1_7_10t_2', // cost 10
+        'pghq_CHCPFC_appendixa_1_7_11t_2', // cost 11
+        'pghq_CHCPFC_appendixa_1_7_12t_3', // cost 12
+        'pghq_CHCPFC_appendixa_1_7_13t_3', // cost 13
+        'pghq_CHCPFC_appendixa_1_7_14t_3', // cost 14
+        'pghq_CHCPFC_appendixa_1_7_15t_2', // cost 15
+        'pghq_CHCPFC_appendixa_1_7_16t_2', // cost 16
+        'pghq_CHCPFC_appendixa_1_7_17t_2', // cost 17
+        'pghq_CHCPFC_appendixa_1_7_18t_2', // cost 18
+        'pghq_CHCPFC_appendixa_1_7_19t_2', // cost 19
+        'pghq_CHCPFC_appendixa_1_7_20t_2', // cost 20
+        'pghq_CHCPFC_appendixa_1_7_21t_2', // cost 21
+        'pghq_CHCPFC_appendixa_1_7_22t_2', // cost 22
+        'pghq_CHCPFC_appendixa_1_7_23t_2', // cost 23
+        'pghq_CHCPFC_appendixa_1_7_24t_2', // cost 24
+        'pghq_CHCPFC_appendixa_1_7_25t_2', // cost 25
+        'pghq_CHCPFC_appendixa_1_7_26t_2', // cost 26
+        'pghq_CHCPFC_appendixa_1_7_27t_2', // cost 27
+        'pghq_CHCPFC_appendixa_1_7_28t_2', // cost 28
+        'pghq_CHCPFC_appendixa_1_7_29t_2', // cost 29
+        'pghq_CHCPFC_appendixa_1_7_30t_3', // cost 30
+        'pghq_CHCPFC_appendixa_1_7_31t_3', // cost 31
       ],
-      'calculation': handlers.sum
+      'calculation': function (cost1, cost2, cost3, cost4, cost5, cost6, cost7, cost8, cost9, cost10, cost11, cost12, cost13, cost14, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29, cost30, cost31) {
+ 
+        var values = [
+          cost1,
+          cost2,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost7,
+          cost8,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost14,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_CHCPFC_appendixa_1_9t_1': {
-			'args': [
-				'pghq_CHCPFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPFC_appendixa_1_7_2t_2', // Amount 1
-				'pghq_CHCPFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPFC_appendixa_1_7_7t_2', // Amount 2
-				'pghq_CHCPFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPFC_appendixa_1_7_8t_2', // Amount 3
-				'pghq_CHCPFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPFC_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_CHCPFC_appendixa_1_7_1t_1', // amount 1
+        'pghq_CHCPFC_appendixa_1_7_3t_1', // amount 3
+        'pghq_CHCPFC_appendixa_1_7_4t_1', // amount 4
+        'pghq_CHCPFC_appendixa_1_7_5t_1', // amount 5
+        'pghq_CHCPFC_appendixa_1_7_6t_1', // amount 6
+        'pghq_CHCPFC_appendixa_1_7_9t_1', // amount 9
+        'pghq_CHCPFC_appendixa_1_7_10t_1', // amount 10
+        'pghq_CHCPFC_appendixa_1_7_11t_1', // amount 11
+        'pghq_CHCPFC_appendixa_1_7_12t_1', // amount 12
+        'pghq_CHCPFC_appendixa_1_7_12t_2', // units 12
+        'pghq_CHCPFC_appendixa_1_7_13t_1', // amount 13
+        'pghq_CHCPFC_appendixa_1_7_13t_2', // units 13
+        'pghq_CHCPFC_appendixa_1_7_15t_1', // amount 15
+        'pghq_CHCPFC_appendixa_1_7_16t_1', // amount 16
+        'pghq_CHCPFC_appendixa_1_7_17t_1', // amount 17
+        'pghq_CHCPFC_appendixa_1_7_18t_1', // amount 18
+        'pghq_CHCPFC_appendixa_1_7_19t_1', // amount 19
+        'pghq_CHCPFC_appendixa_1_7_20t_1', // amount 20
+        'pghq_CHCPFC_appendixa_1_7_21t_1', // amount 21
+        'pghq_CHCPFC_appendixa_1_7_22t_1', // amount 22
+        'pghq_CHCPFC_appendixa_1_7_23t_1', // amount 23
+        'pghq_CHCPFC_appendixa_1_7_24t_1', // amount 24
+        'pghq_CHCPFC_appendixa_1_7_25t_1', // amount 25
+        'pghq_CHCPFC_appendixa_1_7_26t_1', // amount 26
+        'pghq_CHCPFC_appendixa_1_7_27t_1', // amount 27
+        'pghq_CHCPFC_appendixa_1_7_28t_1', // amount 28
+        'pghq_CHCPFC_appendixa_1_7_29t_1' // amount 29
+      ],
+      'calculation': function (amount1, amount3, amount4, amount5, amount6, amount9, amount10, amount11, amount12, units12, amount13, units13, amount15, amount16, amount17, amount18, amount19, amount20, amount21, amount22, amount23, amount24, amount25, amount26, amount27, amount28, amount29) {
+
+      	var converted12 = 0;
+      	var converted13 = 0;
+
+      	if (units12 === 'Gallons') {
+      		converted12 = amount12 * 0.004;
+      	} else {
+      		converted12 = amount12;
+      	}
+      	if (units13 === 'Gallons') {
+      		converted13 = amount13 * 0.004;
+      	} else {
+      		converted13 = amount13;
+      	}
+ 
+        var values = [
+          amount1,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount9,
+          amount10,
+          amount11,
+          converted12,
+          converted13,
+          amount15,
+          amount16,
+          amount17,
+          amount18,
+          amount19,
+          amount20,
+          amount21,
+          amount22,
+          amount23,
+          amount24,
+          amount25,
+          amount26,
+          amount27,
+          amount28,
+          amount29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_CHCPFC_appendixa_1_9t_2': {
-			'args': [
-				'pghq_CHCPFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPFC_appendixa_1_7_2t_3', // Amount 1
-				'pghq_CHCPFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPFC_appendixa_1_7_7t_3', // Amount 2
-				'pghq_CHCPFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPFC_appendixa_1_7_8t_3', // Amount 3
-				'pghq_CHCPFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPFC_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'No') {
-					total += b;
-				}
-				if (c === 'No') {
-					total += d;
-				}
-				if (e === 'No') {
-					total += f;
-				}
-				if (g === 'No') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_CHCPFC_appendixa_1_7_1t_2', // cost 1
+        'pghq_CHCPFC_appendixa_1_7_3t_2', // cost 3
+        'pghq_CHCPFC_appendixa_1_7_4t_2', // cost 4
+        'pghq_CHCPFC_appendixa_1_7_5t_2', // cost 5
+        'pghq_CHCPFC_appendixa_1_7_6t_2', // cost 6
+        'pghq_CHCPFC_appendixa_1_7_9t_2', // cost 9
+        'pghq_CHCPFC_appendixa_1_7_10t_2', // cost 10
+        'pghq_CHCPFC_appendixa_1_7_11t_2', // cost 11
+        'pghq_CHCPFC_appendixa_1_7_12t_3', // cost 12
+        'pghq_CHCPFC_appendixa_1_7_13t_3', // cost 13
+        'pghq_CHCPFC_appendixa_1_7_15t_2', // cost 15
+        'pghq_CHCPFC_appendixa_1_7_16t_2', // cost 16
+        'pghq_CHCPFC_appendixa_1_7_17t_2', // cost 17
+        'pghq_CHCPFC_appendixa_1_7_18t_2', // cost 18
+        'pghq_CHCPFC_appendixa_1_7_19t_2', // cost 19
+        'pghq_CHCPFC_appendixa_1_7_20t_2', // cost 20
+        'pghq_CHCPFC_appendixa_1_7_21t_2', // cost 21
+        'pghq_CHCPFC_appendixa_1_7_22t_2', // cost 22
+        'pghq_CHCPFC_appendixa_1_7_23t_2', // cost 23
+        'pghq_CHCPFC_appendixa_1_7_24t_2', // cost 24
+        'pghq_CHCPFC_appendixa_1_7_25t_2', // cost 25
+        'pghq_CHCPFC_appendixa_1_7_26t_2', // cost 26
+        'pghq_CHCPFC_appendixa_1_7_27t_2', // cost 27
+        'pghq_CHCPFC_appendixa_1_7_28t_2', // cost 28
+        'pghq_CHCPFC_appendixa_1_7_29t_2' // cost 29
+      ],
+      'calculation': function (cost1, cost3, cost4, cost5, cost6, cost9, cost10, cost11, cost12, cost13, cost15, cost16, cost17, cost18, cost19, cost20, cost21, cost22, cost23, cost24, cost25, cost26, cost27, cost28, cost29) {
+ 
+        var values = [
+          cost1,
+          cost3,
+          cost4,
+          cost5,
+          cost6,
+          cost9,
+          cost10,
+          cost11,
+          cost12,
+          cost13,
+          cost15,
+          cost16,
+          cost17,
+          cost18,
+          cost19,
+          cost20,
+          cost21,
+          cost22,
+          cost23,
+          cost24,
+          cost25,
+          cost26,
+          cost27,
+          cost28,
+          cost29
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_CHCPFC_appendixa_1_10t_1': {
-			'args': [
-				'pghq_CHCPFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPFC_appendixa_1_7_2t_2', // Amount 1
-				'pghq_CHCPFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPFC_appendixa_1_7_7t_2', // Amount 2
-				'pghq_CHCPFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPFC_appendixa_1_7_8t_2', // Amount 3
-				'pghq_CHCPFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPFC_appendixa_1_7_14t_2' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		},
+      'args': [
+        'pghq_CHCPFC_appendixa_1_7_2t_2', // amount 2
+        'pghq_CHCPFC_appendixa_1_7_7t_2', // amount 7
+        'pghq_CHCPFC_appendixa_1_7_8t_2', // amount 8
+        'pghq_CHCPFC_appendixa_1_7_14t_2', // amount 14
+        'pghq_CHCPFC_appendixa_1_7_30t_1', // amount 30
+        'pghq_CHCPFC_appendixa_1_7_30t_2', // units 30
+        'pghq_CHCPFC_appendixa_1_7_31t_1', // amount 31
+        'pghq_CHCPFC_appendixa_1_7_31t_2' // units 31
+      ],
+      'calculation': function (amount2, amount7, amount8, amount14, amount30, units30, amount31, units31) {
+
+      	var converted30 = 0;
+      	var converted31 = 0;
+
+      	if (units30 === 'Gallons') {
+      		converted30 = amount30 * 0.004;
+      	} else {
+      		converted30 = amount30;
+      	}
+      	if (units31 === 'Gallons') {
+      		converted31 = amount31 * 0.004;
+      	} else {
+      		converted31 = amount31;
+      	}
+ 
+        var values = [
+          amount2,
+          amount7,
+          amount8,
+          amount14,
+          converted30,
+          converted31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    },
     'pghq_CHCPFC_appendixa_1_10t_2': {
-			'args': [
-				'pghq_CHCPFC_appendixa_1_7_2t_1', // Radio 1
-				'pghq_CHCPFC_appendixa_1_7_2t_3', // Amount 1
-				'pghq_CHCPFC_appendixa_1_7_7t_1', // Radio 2
-				'pghq_CHCPFC_appendixa_1_7_7t_3', // Amount 2
-				'pghq_CHCPFC_appendixa_1_7_8t_1', // Radio 3
-				'pghq_CHCPFC_appendixa_1_7_8t_3', // Amount 3
-				'pghq_CHCPFC_appendixa_1_7_14t_1', // Radio 4
-				'pghq_CHCPFC_appendixa_1_7_14t_3' // Amount 4
-			],
-			'calculation': function (a, b, c, d, e, f, g, h) {
-				var total = 0;
-				if (a === 'Yes') {
-					total += b;
-				}
-				if (c === 'Yes') {
-					total += d;
-				}
-				if (e === 'Yes') {
-					total += f;
-				}
-				if (g === 'Yes') {
-					total += h;
-				}
-				return total;
-			}
-		}
+      'args': [
+        'pghq_CHCPFC_appendixa_1_7_2t_3', // cost 2
+        'pghq_CHCPFC_appendixa_1_7_7t_3', // cost 7
+        'pghq_CHCPFC_appendixa_1_7_8t_3', // cost 8
+        'pghq_CHCPFC_appendixa_1_7_14t_3', // cost 14
+        'pghq_CHCPFC_appendixa_1_7_30t_3', // cost 30
+        'pghq_CHCPFC_appendixa_1_7_31t_3', // cost 31
+      ],
+      'calculation': function (cost2, cost7, cost8, cost14, cost30, cost31) {
+ 
+        var values = [
+          cost2,
+          cost7,
+          cost8,
+          cost14,
+          cost30,
+          cost31
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
+    }
   };
 
 })(Drupal);
