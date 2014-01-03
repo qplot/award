@@ -22,7 +22,7 @@ class MigratePGHWorkGroupMigration extends Migration {
 
     // Create a CSV source.
     $columns = array(
-      array('unused-1', 'SF_Contact_Id if member'),
+      array('client_admin_id', 'SF_Contact_Id if member'),
       array('unused-2', 'is member (manual update - disregard)'),
       array('business_unit_sfid', 'salesforce_account_id'),
       array('unused-3', 'year'),
@@ -73,5 +73,7 @@ class MigratePGHWorkGroupMigration extends Migration {
 
     $this->addFieldMapping('field_business_units', 'business_unit_sfid')
          ->sourceMigration('BusinessUnit');
+    $this->addFieldMapping('field_administrators', 'client_admin_id')
+         ->sourceMigration('User');
   }
 }

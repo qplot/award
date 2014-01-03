@@ -60,6 +60,11 @@ function pgh_migrate_migrate_api() {
         'group_name' => 'PGH',
         'soft_dependencies' => array('PreprocessCSV')
       ),
+      'User' => array(
+        'class_name' => 'MigratePGHUserMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV')
+      ),
       'WorkGroup' => array(
         'class_name' => 'MigratePGHWorkGroupMigration',
         'group_name' => 'PGH',

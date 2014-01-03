@@ -16,5 +16,6 @@ files[] = class/category.inc
 files[] = class/apptype.inc
 files[] = class/container.inc
 files[] = class/business_unit.inc
+files[] = class/user.inc
 files[] = class/work_group.inc
 files[] = class/export_xml.inc
