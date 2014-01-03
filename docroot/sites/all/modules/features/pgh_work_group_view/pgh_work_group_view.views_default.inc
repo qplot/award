@@ -102,7 +102,7 @@ function pgh_work_group_view_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/structure/views/view/work_groups';
+  $handler->display->display_options['path'] = 'admin/work-groups';
   $export['work_groups'] = $view;
 
   return $export;
