@@ -83,6 +83,12 @@ function pgh_work_group_business_unit_view_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['content'] = 'This view shows all Work Groups in the system with their contained Business Units.';
+  $handler->display->display_options['header']['area']['format'] = 'filtered_html';
   /* Relationship: Entity Reference: Referenced Entity */
   $handler->display->display_options['relationships']['field_business_units_target_id']['id'] = 'field_business_units_target_id';
   $handler->display->display_options['relationships']['field_business_units_target_id']['table'] = 'field_data_field_business_units';
@@ -147,7 +153,7 @@ function pgh_work_group_business_unit_view_views_default_views() {
   $handler->display->display_options['filters']['title']['operator'] = 'contains';
   $handler->display->display_options['filters']['title']['exposed'] = TRUE;
   $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
-  $handler->display->display_options['filters']['title']['expose']['label'] = 'Name';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Search by Work Group';
   $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
   $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
   $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
