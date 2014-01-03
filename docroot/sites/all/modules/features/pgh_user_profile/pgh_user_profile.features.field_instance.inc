@@ -212,6 +212,40 @@ function pgh_user_profile_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_user_sfid'
+  $field_instances['user-user-field_user_sfid'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 8,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_user_sfid',
+    'label' => 'Salesforce Id',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => -7,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_user_title'
   $field_instances['user-user-field_user_title'] = array(
     'bundle' => 'user',
@@ -250,6 +284,7 @@ function pgh_user_profile_field_default_field_instances() {
   t('Last name');
   t('Phone');
   t('Position Title');
+  t('Salesforce Id');
   t('Title');
 
   return $field_instances;
