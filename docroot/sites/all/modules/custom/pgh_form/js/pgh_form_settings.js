@@ -52,8 +52,10 @@
     convertBTUSimple: function(units, amount) {
       if (units === 'MWh') {
         return amount * 3413;
-      } else {
+      } else if (units === 'kWh') {
         return amount * 3.413;
+      } else {
+      	return 0;
       }
     },
 
@@ -159,8 +161,12 @@
           converted = amount * 7.48;
           break;
 
-        default:
+        case 'Gallons':
           converted = amount;
+          break;
+
+        default:
+          converted = 0;
           break;
       }
 
@@ -185,8 +191,12 @@
           converted = amount * 7.48;
           break;
 
-        default:
+        case 'Gallons':
           converted = amount;
+          break;
+
+        default:
+          converted = 0;
           break;
       }
 
@@ -208,8 +218,12 @@
           converted = amount;
           break;
 
-        default:
+        case 'acres':
           converted = amount * 43560;
+          break;
+
+        default:
+          converted = 0;
           break;
       }
 
@@ -224,8 +238,10 @@
         return amount * 133;
       } else if (units == 'Imp. Gallon') {
         return amount * 1067;
-      } else {
+      } else if (units == 'Liters') {
         return amount * 36.7;
+      } else {
+      	return 0;
       }
     },
 
@@ -237,8 +253,10 @@
         return amount * 154;
       } else if (units == 'Imp. Gallon') {
         return amount * 185;
-      } else {
+      } else if (units == 'Liter') {
         return amount * 40.7;
+      } else {
+      	return 0;
       }
     },
 
@@ -250,8 +268,10 @@
         return amount;
       } else if (units == '1000 pounds') {
         return amount * 1000;
-      } else {
+      } else if (unit == 'Therms') {
         return amount * 100;
+      } else {
+      	return 0;
       }
     },
 
@@ -267,8 +287,10 @@
         return amount * 100;
       } else if (units == 'Cubic Meter') {
         return amount * 36.4;
-      } else {
+      } else if (units == 'Gigajoule') {
         return amount * 947.8;
+      } else {
+      	return 0;
       }
     },
 
@@ -278,8 +300,10 @@
     convertWater: function (units, amount) {
       if (units == 'kBTU') {
         return amount;
-      } else {
+      } else if (units == 'Ton-Hour') {
         return amount * 12;
+      } else {
+      	return 0;
       }
     }
   };
