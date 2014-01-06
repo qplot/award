@@ -61,7 +61,7 @@
           return 0;
         }
 
-        return $form_field.find('option:selected').val().trim();
+        return $form_field.find('option:selected').html().trim();
 
       } else if ($question.hasClass('question-style-radios')) {
         $form_field = $question.find('input:radio:checked');
