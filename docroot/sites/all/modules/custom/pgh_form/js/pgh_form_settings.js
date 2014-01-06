@@ -52,8 +52,10 @@
     convertBTUSimple: function(units, amount) {
       if (units === 'MWh') {
         return amount * 3413;
-      } else {
+      } else if (units === 'kWh') {
         return amount * 3.413;
+      } else {
+      	return 0;
       }
     },
 
@@ -159,8 +161,12 @@
           converted = amount * 7.48;
           break;
 
-        default:
+        case 'Gallons':
           converted = amount;
+          break;
+
+        default:
+          converted = 0;
           break;
       }
 
@@ -185,8 +191,12 @@
           converted = amount * 7.48;
           break;
 
-        default:
+        case 'Gallons':
           converted = amount;
+          break;
+
+        default:
+          converted = 0;
           break;
       }
 
@@ -208,8 +218,12 @@
           converted = amount;
           break;
 
-        default:
+        case 'acres':
           converted = amount * 43560;
+          break;
+
+        default:
+          converted = 0;
           break;
       }
 
@@ -224,8 +238,10 @@
         return amount * 133;
       } else if (units == 'Imp. Gallon') {
         return amount * 1067;
-      } else {
+      } else if (units == 'Liters') {
         return amount * 36.7;
+      } else {
+      	return 0;
       }
     },
 
@@ -237,8 +253,10 @@
         return amount * 154;
       } else if (units == 'Imp. Gallon') {
         return amount * 185;
-      } else {
+      } else if (units == 'Liter') {
         return amount * 40.7;
+      } else {
+      	return 0;
       }
     },
 
@@ -250,8 +268,10 @@
         return amount;
       } else if (units == '1000 pounds') {
         return amount * 1000;
-      } else {
+      } else if (units == 'Therms') {
         return amount * 100;
+      } else {
+      	return 0;
       }
     },
 
@@ -267,8 +287,10 @@
         return amount * 100;
       } else if (units == 'Cubic Meter') {
         return amount * 36.4;
-      } else {
+      } else if (units == 'Gigajoule') {
         return amount * 947.8;
+      } else {
+      	return 0;
       }
     },
 
@@ -278,8 +300,10 @@
     convertWater: function (units, amount) {
       if (units == 'kBTU') {
         return amount;
-      } else {
+      } else if (units == 'Ton-Hour') {
         return amount * 12;
+      } else {
+      	return 0;
       }
     }
   };
@@ -803,18 +827,9 @@
     'pghq_PFC_energy_2_11_2': {
       'args': [
         'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_3': {
       'args': [
@@ -826,18 +841,9 @@
     'pghq_PFC_energy_2_11_4': {
       'args': [
         'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_5': {
       'args': [
@@ -849,18 +855,9 @@
     'pghq_PFC_energy_2_11_6': {
       'args': [
         'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_7': {
       'args': [
@@ -872,18 +869,9 @@
     'pghq_PFC_energy_2_11_8': {
       'args': [
         'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_9': {
       'args': [
@@ -895,18 +883,9 @@
     'pghq_PFC_energy_2_11_10': {
       'args': [
         'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_11': {
       'args': [
@@ -918,18 +897,9 @@
     'pghq_PFC_energy_2_11_12': {
       'args': [
         'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_13': {
       'args': [
@@ -941,18 +911,9 @@
     'pghq_PFC_energy_2_11_14': {
       'args': [
         'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
 		'pghq_PFC_energy_2_11_17': {
 			'args': [
@@ -973,19 +934,9 @@
     'pghq_PFC_energy_2_11_18': {
       'args': [
         'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_15',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_19': {
       'args': [
@@ -997,44 +948,77 @@
     'pghq_PFC_energy_2_11_20': {
       'args': [
         'pghq_PFC_energy_2_11_19',
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17',
-        'pghq_PFC_energy_2_11_19',
         'pghq_PFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_PFC_energy_2_11_21': {
       'args': [
-        'pghq_PFC_energy_2_11_1',
-        'pghq_PFC_energy_2_11_3',
-        'pghq_PFC_energy_2_11_5',
-        'pghq_PFC_energy_2_11_7',
-        'pghq_PFC_energy_2_11_9',
-        'pghq_PFC_energy_2_11_11',
-        'pghq_PFC_energy_2_11_13',
-        'pghq_PFC_energy_2_11_17'
+        'pghq_PFC_energy_2_11_1', // amount 1
+        'pghq_PFC_energy_2_11_3', // amount 2
+        'pghq_PFC_energy_2_11_5', // amount 3
+        'pghq_PFC_energy_2_11_7', // amount 4
+        'pghq_PFC_energy_2_11_9', // amount 5
+        'pghq_PFC_energy_2_11_11', // amount 6
+        'pghq_PFC_energy_2_11_13', // amount 7
+        'pghq_PFC_energy_2_11_17' // amount 8
       ],
-      'calculation': handlers.sum
+      'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8) {
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_PFC_energy_2_11_22': {
       'args': [
-        'pghq_PFC_energy_2_11_2',
-        'pghq_PFC_energy_2_11_4',
-        'pghq_PFC_energy_2_11_6',
-        'pghq_PFC_energy_2_11_8',
-        'pghq_PFC_energy_2_11_10',
-        'pghq_PFC_energy_2_11_12',
-        'pghq_PFC_energy_2_11_14',
-        'pghq_PFC_energy_2_11_18'
+        'pghq_PFC_energy_2_11_2', // amount 1
+        'pghq_PFC_energy_2_11_3', // amount 2
+        'pghq_PFC_energy_2_11_4', // amount 3
+        'pghq_PFC_energy_2_11_5', // amount 4
+        'pghq_PFC_energy_2_11_10', // amount 5
+        'pghq_PFC_energy_2_11_12', // amount 6
+        'pghq_PFC_energy_2_11_14', // amount 7
+        'pghq_PFC_energy_2_11_18' // amount 8
       ],
-      'calculation': handlers.sum
+      'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8) {
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_PFC_energy_2_12': {
       'args': [
@@ -5437,25 +5421,16 @@
     'pghq_CHCPFC_energy_2_11_1': {
       'args': [
         'pghq_CHCPFC_energy_2_7_5',
-        'pghq_CHCPFC_energy_2_7_4',
+        'pghq_CHCPFC_energy_2_7_4'
       ],
       'calculation': handlers.convertBTUSimple
     },
     'pghq_CHCPFC_energy_2_11_2': {
       'args': [
         'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_3': {
       'args': [
@@ -5467,18 +5442,9 @@
     'pghq_CHCPFC_energy_2_11_4': {
       'args': [
         'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_5': {
       'args': [
@@ -5490,18 +5456,9 @@
     'pghq_CHCPFC_energy_2_11_6': {
       'args': [
         'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_7': {
       'args': [
@@ -5513,18 +5470,9 @@
     'pghq_CHCPFC_energy_2_11_8': {
       'args': [
         'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_9': {
       'args': [
@@ -5536,18 +5484,9 @@
     'pghq_CHCPFC_energy_2_11_10': {
       'args': [
         'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_11': {
       'args': [
@@ -5559,18 +5498,9 @@
     'pghq_CHCPFC_energy_2_11_12': {
       'args': [
         'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_13': {
       'args': [
@@ -5582,18 +5512,9 @@
     'pghq_CHCPFC_energy_2_11_14': {
       'args': [
         'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
 		'pghq_CHCPFC_energy_2_11_17': {
 			'args': [
@@ -5614,67 +5535,91 @@
     'pghq_CHCPFC_energy_2_11_18': {
       'args': [
         'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_19': {
       'args': [
-        'pghq_CHCPFC_energy_2_8_2_3', // Units
-        'pghq_CHCPFC_energy_2_8_2_2' // Amount
+        'pghq_CHCPFC_energy_2_8_2_18', // Units
+        'pghq_CHCPFC_energy_2_8_2_17' // Amount
       ],
       'calculation': handlers.convertBTU
     },
     'pghq_CHCPFC_energy_2_11_20': {
       'args': [
         'pghq_CHCPFC_energy_2_11_19',
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17',
-        'pghq_CHCPFC_energy_2_11_19',
         'pghq_CHCPFC_energy_2_11_21'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': handlers.divide
     },
     'pghq_CHCPFC_energy_2_11_21': {
       'args': [
-        'pghq_CHCPFC_energy_2_11_1',
-        'pghq_CHCPFC_energy_2_11_3',
-        'pghq_CHCPFC_energy_2_11_5',
-        'pghq_CHCPFC_energy_2_11_7',
-        'pghq_CHCPFC_energy_2_11_9',
-        'pghq_CHCPFC_energy_2_11_11',
-        'pghq_CHCPFC_energy_2_11_13',
-        'pghq_CHCPFC_energy_2_11_17'
+        'pghq_CHCPFC_energy_2_11_1', // amount 1
+        'pghq_CHCPFC_energy_2_11_3', // amount 2
+        'pghq_CHCPFC_energy_2_11_5', // amount 3
+        'pghq_CHCPFC_energy_2_11_7', // amount 4
+        'pghq_CHCPFC_energy_2_11_9', // amount 5
+        'pghq_CHCPFC_energy_2_11_11', // amount 6
+        'pghq_CHCPFC_energy_2_11_13', // amount 7
+        'pghq_CHCPFC_energy_2_11_17' // amount 8
       ],
-      'calculation': handlers.sum
+      'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8) {
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_CHCPFC_energy_2_11_22': {
       'args': [
-        'pghq_CHCPFC_energy_2_11_2',
-        'pghq_CHCPFC_energy_2_11_4',
-        'pghq_CHCPFC_energy_2_11_6',
-        'pghq_CHCPFC_energy_2_11_8',
-        'pghq_CHCPFC_energy_2_11_10',
-        'pghq_CHCPFC_energy_2_11_12',
-        'pghq_CHCPFC_energy_2_11_14',
-        'pghq_CHCPFC_energy_2_11_18'
+        'pghq_CHCPFC_energy_2_11_2', // amount 1
+        'pghq_CHCPFC_energy_2_11_3', // amount 2
+        'pghq_CHCPFC_energy_2_11_4', // amount 3
+        'pghq_CHCPFC_energy_2_11_5', // amount 4
+        'pghq_CHCPFC_energy_2_11_10', // amount 5
+        'pghq_CHCPFC_energy_2_11_12', // amount 6
+        'pghq_CHCPFC_energy_2_11_14', // amount 7
+        'pghq_CHCPFC_energy_2_11_18' // amount 8
       ],
-      'calculation': handlers.sum
+      'calculation': function (amount1, amount2, amount3, amount4, amount5, amount6, amount7, amount8) {
+ 
+        var values = [
+          amount1,
+          amount2,
+          amount3,
+          amount4,
+          amount5,
+          amount6,
+          amount7,
+          amount8
+        ];
+ 
+        var sum = 0;
+        for (var index = 0; index < values.length; index++) {
+          if (!isNaN(values[index])) {
+            sum += values[index];
+          }
+        }
+ 
+      	return sum;
+      }
     },
     'pghq_CHCPFC_energy_2_12': {
       'args': [
