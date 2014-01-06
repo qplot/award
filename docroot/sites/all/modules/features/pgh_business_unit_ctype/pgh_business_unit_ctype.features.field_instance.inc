@@ -51,7 +51,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 1,
+      'weight' => 2,
     ),
   );
 
@@ -94,7 +94,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -338,6 +338,46 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-business_unit-field_business_unit_name'
+  $field_instances['node-business_unit-field_business_unit_name'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The "Name of Institution" field should be the formal name of the institution that you want to see on an award plaque.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 22,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_business_unit_name',
+    'label' => 'Name of Institution',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 1,
+    ),
+  );
+
   // Exported field_instance: 'node-business_unit-field_business_unit_sfid'
   $field_instances['node-business_unit-field_business_unit_sfid'] = array(
     'bundle' => 'business_unit',
@@ -374,7 +414,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -411,7 +451,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -451,7 +491,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -897,7 +937,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -967,6 +1007,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Business unit type');
   t('Description / Notes');
   t('Facility users');
+  t('Name of Institution');
   t('Number of Beds');
   t('Number of ORs');
   t('Phone');
@@ -980,6 +1021,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Shipping city');
   t('Shipping state');
   t('Shipping zip code');
+  t('The "Name of Institution" field should be the formal name of the institution that you want to see on an award plaque.');
   t('Users');
   t('Website URL');
 
