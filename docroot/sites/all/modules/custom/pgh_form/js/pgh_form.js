@@ -237,6 +237,11 @@
 
   // Array of letters for dependent question labeling.
   var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  for (var index = 0; index < 26; index++) {
+    letters.push('a' + letters[index]);
+  }
+
+  console.log(letters);
 
   Drupal.behaviors.pghApplicationNumbering = {
     attach: function (context, settings) {
