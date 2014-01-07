@@ -111,6 +111,10 @@ html.lt-ie8 {
     }
   }
 
+  a.glossify-link {
+    @include ie7-inline-block();
+  }
+
 }
 
 
