@@ -1418,7 +1418,7 @@ h3 {
                 &:hover, &.active { background-position: -#{$icon-spacing + 988}px 0; }
               }
 
-              &.#{$awardTypeMenu}-demogrphic { background-position: -#{$icon-spacing + 1064}px -70px;
+              &.#{$awardTypeMenu}-demographic { background-position: -#{$icon-spacing + 1064}px -70px;
                 &:hover, &.active { background-position: -#{$icon-spacing + 1064}px 0; }
               }
             }
@@ -1532,7 +1532,7 @@ h3 {
         span { background-position: -990px 0; }
       }
 
-      &.#{$awardTypeh1}-demogrphic {
+      &.#{$awardTypeh1}-demographic {
         color: $category_other_color;
         span { background-position: -1066px 0; }
       }
