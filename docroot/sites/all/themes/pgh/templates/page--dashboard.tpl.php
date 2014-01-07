@@ -118,7 +118,7 @@
   <?php if ($business_units): ?>
 
   <?php // Used below to check if user has correct role to create applications.
-    $create_application_role = array_intersect(array('administrator', 'PGH Administrator', 'Client Administrator'), array_values($user->roles))
+    $create_application_role = array_intersect(array('administrator', 'PGH Administrator', 'Client Administrator'), array_values($user->roles));
   ?>
 
     <div id="business-unit-content" class="column">
