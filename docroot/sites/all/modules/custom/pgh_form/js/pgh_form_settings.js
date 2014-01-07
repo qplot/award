@@ -50,9 +50,9 @@
     // conversion use convertBTU().
     //
     convertBTUSimple: function(units, amount) {
-      if (units === 'MWh') {
+      if (units == 'MWh') {
         return amount * 3413;
-      } else if (units === 'kWh') {
+      } else if (units == 'kWh') {
         return amount * 3.413;
       } else {
       	return 0;
@@ -476,6 +476,7 @@
     'pghq_PFC_waste_10_1_tG_1': {
       'args': [
         'pghq_PFC_waste_2_3_tA_2',
+        'pghq_PFC_waste_4_8_tB_13',
         'pghq_PFC_waste_6_2_20',
         'pghq_PFC_waste_8_10_1tE_13'
       ],
@@ -484,6 +485,7 @@
     'pghq_PFC_waste_10_1_tG_2': {
       'args': [
         'pghq_PFC_waste_2_3_tA_3',
+        'pghq_PFC_waste_4_8_tB_14',
         'pghq_PFC_waste_6_2_21',
         'pghq_PFC_waste_8_10_1tE_14'
       ],
@@ -492,6 +494,7 @@
     'pghq_PFC_waste_10_1_tG_3': {
       'args': [
         'pghq_PFC_waste_2_3_tA_4',
+        'pghq_PFC_waste_4_8_tB_15',
         'pghq_PFC_waste_6_2_22',
         'pghq_PFC_waste_8_10_1tE_15'
       ],
@@ -500,6 +503,7 @@
     'pghq_PFC_waste_10_1_tG_4': {
       'args': [
         'pghq_PFC_waste_2_3_tA_5',
+        'pghq_PFC_waste_4_8_tB_16',
         'pghq_PFC_waste_6_2_23',
         'pghq_PFC_waste_8_10_1tE_16'
       ],
@@ -508,6 +512,7 @@
     'pghq_PFC_waste_10_1_tG_5': {
       'args': [
         'pghq_PFC_waste_2_3_tA_6',
+        'pghq_PFC_waste_4_8_tB_17',
         'pghq_PFC_waste_6_2_24',
         'pghq_PFC_waste_8_10_1tE_17'
       ],
@@ -516,6 +521,7 @@
     'pghq_PFC_waste_10_1_tG_6': {
       'args': [
         'pghq_PFC_waste_2_3_tA_7',
+        'pghq_PFC_waste_4_8_tB_18',
         'pghq_PFC_waste_6_2_25',
         'pghq_PFC_waste_8_10_1tE_18'
       ],
@@ -5423,7 +5429,7 @@
         'pghq_CHCPFC_energy_2_7_5',
         'pghq_CHCPFC_energy_2_7_4'
       ],
-      'calculation': handlers.convertBTUSimple
+      'calculation': handlers.convertBTU
     },
     'pghq_CHCPFC_energy_2_11_2': {
       'args': [
