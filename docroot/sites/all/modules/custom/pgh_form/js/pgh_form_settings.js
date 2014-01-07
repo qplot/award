@@ -771,8 +771,8 @@
     },
     'pghq_PFC_greeningtheOR_2_12_2_tF_3': {
       'args': [
-        'pghq_PFC_greeningtheOR_2_12_2_tF_1',
-        'pghq_PFC_greeningtheOR_2_12_2_tF_2'
+        'pghq_PFC_greeningtheOR_2_12_2_tF_2',
+        'pghq_PFC_greeningtheOR_2_12_2_tF_1'
       ],
       'calculation': handlers.divide
     },
