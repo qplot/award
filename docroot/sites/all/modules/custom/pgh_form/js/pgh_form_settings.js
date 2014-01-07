@@ -801,7 +801,7 @@
             d === 0) {
           return 0;
         } else {
-          return a / b / c / d;
+          return Math.floor(1 - (((c / d) / (a / b)) * 100));
         }
       }
     },
@@ -810,14 +810,18 @@
         'pghq_PFC_food_2_1_2',
         'pghq_PFC_food_2_1_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_PFC_food_3_1_4': {
       'args': [
         'pghq_PFC_food_3_1_2',
         'pghq_PFC_food_3_1_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 
     //
