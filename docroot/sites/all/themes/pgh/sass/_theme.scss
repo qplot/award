@@ -1418,7 +1418,7 @@ h3 {
                 &:hover, &.active { background-position: -#{$icon-spacing + 988}px 0; }
               }
 
-              &.#{$awardTypeMenu}-demogrphic { background-position: -#{$icon-spacing + 1064}px -70px;
+              &.#{$awardTypeMenu}-demographic { background-position: -#{$icon-spacing + 1064}px -70px;
                 &:hover, &.active { background-position: -#{$icon-spacing + 1064}px 0; }
               }
             }
@@ -1532,7 +1532,7 @@ h3 {
         span { background-position: -990px 0; }
       }
 
-      &.#{$awardTypeh1}-demogrphic {
+      &.#{$awardTypeh1}-demographic {
         color: $category_other_color;
         span { background-position: -1066px 0; }
       }
@@ -1605,7 +1605,8 @@ h3 {
       border: 1px solid #d3d3d3;
       @include border-radius(2px);
       @include box-shadow(inset 0 0 8px rgba(0,0,0,0.1));
-      padding: 7px;
+      width: 90%;
+      padding: 7px 3%;
     }
 
     input.form-submit {
@@ -2034,10 +2035,10 @@ h3 {
       }
 
       &.user-login {
-        border-right: 1px solid #67a697;
       }
 
       &.user-register {
+        border-left: 1px solid #67a697;
       }
     }
   }
@@ -2416,6 +2417,7 @@ form.node-form {
 a.glossify-link {
   color: $green;
   background: transparent url(../images/global/icon-glossary.png) no-repeat right center;
+  display: inline-block;
   padding-right: 20px;
   cursor: help;
   position: relative;
