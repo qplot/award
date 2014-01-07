@@ -4913,9 +4913,9 @@ h3 {
   color: white;
   background-color: #67a697;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\000032037}}
-.custom-user-login.block p a.user-login {
-  border-right: 1px solid #67a697;
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\000032040}}
+.custom-user-login.block p a.user-register {
+  border-left: 1px solid #67a697;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/frank\/Sites\/dh-git\/practice_greenhealth\/pgh-awards\/docroot\/sites\/all\/themes\/pgh\/sass\/_theme\.scss}line{font-family:\000032049}}
