@@ -22,25 +22,8 @@ class MigratePGHWorkGroupMigration extends Migration {
 
     // Create a CSV source.
     $columns = array(
-      array('client_admin_id', 'SF_Contact_Id if member'),
-      array('unused-2', 'is member (manual update - disregard)'),
-      array('business_unit_sfid', 'salesforce_account_id'),
-      array('unused-3', 'year'),
-      array('unused-4', ''),
-      array('unused-5', 'org query ->'),
-      array('unused-6', 'Organization Name'),
-      array('unused-7', 'Health System'),
-      array('name', 'workgroup'),
-      array('unused-8', 'Street Address '),
-      array('unused-9', 'City'),
-      array('unused-10', 'State'),
-      array('unused-11', 'Postal Code'),
-      array('unused-12', 'Primary Contact - First Name'),
-      array('unused-13', 'Primary Contact- Last Name'),
-      array('unused-14', 'Title'),
-      array('unused-15', 'Department'),
-      array('unused-16', 'Phone'),
-      array('unused-17', 'E-Mail'),
+      array('author', 'FET'),
+      array('name', 'workgroup name'),
     );
 
     // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
@@ -70,10 +53,28 @@ class MigratePGHWorkGroupMigration extends Migration {
     );
 
     $this->addFieldMapping('title', 'name');
+    $this->addFieldMapping('uid', 'author_uid');
+  }
 
-    $this->addFieldMapping('field_business_units', 'business_unit_sfid')
-         ->sourceMigration('BusinessUnit');
-    $this->addFieldMapping('field_administrators', 'client_admin_id')
-         ->sourceMigration('User');
+  /**
+   * Loads existing users to map as authors for Work Groups. These users will be responsible for setting up the work group.
+   *
+   * @param object $row
+   *   An object for the row about to be imported. Passed by reference.
+   */
+  public function prepareRow($row) {
+    static $seen = array();
+    $author = user_load_by_mail($row->author);
+    if ($author->uid) {
+      $row->author_uid = $author->uid;
+    }
+    else {
+      if (!$seen[$row->author]) {
+        $seen[$row->author] = TRUE;
+        dsm('No user for ' . $row->author);
+      }
+
+      $row->author_uid = 1;
+    }
   }
 }
