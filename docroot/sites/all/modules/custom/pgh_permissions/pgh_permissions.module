@@ -390,7 +390,6 @@ function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
     if (!user_access('administer awards system')) {
       $form['title']['#access'] = FALSE;
     }
-    dsm($form);
   }
 }
 
