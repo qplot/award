@@ -695,14 +695,14 @@ function pgh_api_valid_application_types_for_business_unit($business_unit) {
 
     case 'long_term_care':
       $types = array(
-        'long_term_care' => 'Partner for Change LTC',
+        'long_term_care' => 'Partner for Change - Beds',
         'mmmf' => 'Making Medicine Mercury Free',
       );
       return $types;
 
     case 'clinic':
       $types = array(
-        'chc_partner_for_change' => 'CHC Partner for Change',
+        'chc_partner_for_change' => 'Partner for Change - No beds',
         'chc_partner_recognition' => 'CHC Partner Recognition',
       );
       return $types;
