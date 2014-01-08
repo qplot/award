@@ -117,10 +117,6 @@
 
   <?php if ($business_units): ?>
 
-  <?php // Used below to check if user has correct role to create applications.
-    $create_application_role = array_intersect(array('administrator', 'PGH Administrator', 'Client Administrator'), array_values($user->roles));
-  ?>
-
     <div id="business-unit-content" class="column">
 
     <?php foreach ($business_units as $business_unit): ?>
@@ -232,7 +228,7 @@
                   'class' => 'start-application',
                 ),
               );
-              if (empty($create_application_role) ? FALSE : TRUE) {
+              if (node_access('create', 'application')) {
                 print l(t('Start a new application'), 'node/add/application', $options);
               }
             } else {
@@ -244,7 +240,7 @@
                   'class' => 'start-application',
                 ),
               );
-              if (empty($create_application_role) ? FALSE : TRUE) {
+              if (node_access('create', 'application')) {
                 print '<p>No current applications.</p> ' . l(t('Start a new application'), 'node/add/application', $options);
               }
             }
