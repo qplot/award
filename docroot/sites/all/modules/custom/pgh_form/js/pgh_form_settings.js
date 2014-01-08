@@ -2894,6 +2894,7 @@
     'pghq_LTC_waste_10_1_tG_1': {
       'args': [
         'pghq_LTC_waste_2_3_tA_2',
+        'pghq_LTC_waste_4_8_tB_13',
         'pghq_LTC_waste_6_2_20',
         'pghq_LTC_waste_8_10_1tE_13'
       ],
@@ -2902,6 +2903,7 @@
     'pghq_LTC_waste_10_1_tG_2': {
       'args': [
         'pghq_LTC_waste_2_3_tA_3',
+        'pghq_LTC_waste_4_8_tB_14',
         'pghq_LTC_waste_6_2_21',
         'pghq_LTC_waste_8_10_1tE_14'
       ],
@@ -2910,6 +2912,7 @@
     'pghq_LTC_waste_10_1_tG_3': {
       'args': [
         'pghq_LTC_waste_2_3_tA_4',
+        'pghq_LTC_waste_4_8_tB_15',
         'pghq_LTC_waste_6_2_22',
         'pghq_LTC_waste_8_10_1tE_15'
       ],
@@ -2918,6 +2921,7 @@
     'pghq_LTC_waste_10_1_tG_4': {
       'args': [
         'pghq_LTC_waste_2_3_tA_5',
+        'pghq_LTC_waste_4_8_tB_16',
         'pghq_LTC_waste_6_2_23',
         'pghq_LTC_waste_8_10_1tE_16'
       ],
@@ -2926,6 +2930,7 @@
     'pghq_LTC_waste_10_1_tG_5': {
       'args': [
         'pghq_LTC_waste_2_3_tA_6',
+        'pghq_LTC_waste_4_8_tB_17',
         'pghq_LTC_waste_6_2_24',
         'pghq_LTC_waste_8_10_1tE_17'
       ],
@@ -2934,6 +2939,7 @@
     'pghq_LTC_waste_10_1_tG_6': {
       'args': [
         'pghq_LTC_waste_2_3_tA_7',
+        'pghq_LTC_waste_4_8_tB_18',
         'pghq_LTC_waste_6_2_25',
         'pghq_LTC_waste_8_10_1tE_18'
       ],
@@ -3177,7 +3183,7 @@
             d === 0) {
           return 0;
         } else {
-          return a / b / c / d;
+          return Math.floor(1 - (((c / d) / (a / b)) * 100));
         }
       }
     },
@@ -3186,14 +3192,18 @@
         'pghq_LTC_food_2_1_2',
         'pghq_LTC_food_2_1_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_LTC_food_3_1_4': {
       'args': [
         'pghq_LTC_food_3_1_2',
         'pghq_LTC_food_3_1_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 
     //
@@ -5087,6 +5097,7 @@
     'pghq_CHCPFC_waste_10_1_tG_1': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_2',
+        'pghq_CHCPFC_waste_4_8_tB_13',
         'pghq_CHCPFC_waste_6_2_20',
         'pghq_CHCPFC_waste_8_10_1tE_13'
       ],
@@ -5095,6 +5106,7 @@
     'pghq_CHCPFC_waste_10_1_tG_2': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_3',
+        'pghq_CHCPFC_waste_4_8_tB_14',
         'pghq_CHCPFC_waste_6_2_21',
         'pghq_CHCPFC_waste_8_10_1tE_14'
       ],
@@ -5103,6 +5115,7 @@
     'pghq_CHCPFC_waste_10_1_tG_3': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_4',
+        'pghq_CHCPFC_waste_4_8_tB_15',
         'pghq_CHCPFC_waste_6_2_22',
         'pghq_CHCPFC_waste_8_10_1tE_15'
       ],
@@ -5111,6 +5124,7 @@
     'pghq_CHCPFC_waste_10_1_tG_4': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_5',
+        'pghq_CHCPFC_waste_4_8_tB_16',
         'pghq_CHCPFC_waste_6_2_23',
         'pghq_CHCPFC_waste_8_10_1tE_16'
       ],
@@ -5119,6 +5133,7 @@
     'pghq_CHCPFC_waste_10_1_tG_5': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_6',
+        'pghq_CHCPFC_waste_4_8_tB_17',
         'pghq_CHCPFC_waste_6_2_24',
         'pghq_CHCPFC_waste_8_10_1tE_17'
       ],
@@ -5127,6 +5142,7 @@
     'pghq_CHCPFC_waste_10_1_tG_6': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_7',
+        'pghq_CHCPFC_waste_4_8_tB_18',
         'pghq_CHCPFC_waste_6_2_25',
         'pghq_CHCPFC_waste_8_10_1tE_18'
       ],
@@ -5406,7 +5422,7 @@
             d === 0) {
           return 0;
         } else {
-          return a / b / c / d;
+          return Math.floor(1 - (((c / d) / (a / b)) * 100));
         }
       }
     },
@@ -5415,14 +5431,18 @@
         'pghq_CHCPFC_food_2_1_2',
         'pghq_CHCPFC_food_2_1_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_CHCPFC_food_3_1_4': {
       'args': [
         'pghq_CHCPFC_food_3_1_2',
         'pghq_CHCPFC_food_3_1_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 
     //
