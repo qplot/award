@@ -64,7 +64,7 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
 
     $form['field_application_status'] = array(
       '#type' => 'hidden',
-      '#value' => 'new',
+      '#value' => array('new'),
     );
 
     // Redirect to dashboard after saving node.
