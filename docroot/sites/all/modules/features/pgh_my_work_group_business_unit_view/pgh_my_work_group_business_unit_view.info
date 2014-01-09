@@ -1,0 +1,11 @@
+name = My Work Group Business Unit View
+description = Displays Business Units grouped by Work Group filtered by the current user.
+core = 7.x
+package = PGH Admin Views
+version = 7.x-0.1
+project = pgh_my_work_group_business_unit_view
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = my_work_groups_and_business_units
+features_exclude[dependencies][ctools] = ctools
