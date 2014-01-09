@@ -304,7 +304,6 @@ h3 {
 
     .user-links .dashboard-user a {
       color: #8cc8b9;
-      //background-color: #005a44;
     }
   }
 
@@ -840,6 +839,10 @@ h3 {
         content: ",";
       }
     }
+  }
+
+  .other-info {
+    width: 340px;
   }
 }
 
@@ -2468,6 +2471,24 @@ a.glossify-link {
       width: 900px;
       height: auto;
     }
+  }
+}
+
+
+// !---------------------------- */
+// !-- Old browser message ----- */
+// !---------------------------- */
+
+p.browser-message {
+  color: $white;
+  font-size: 16px;
+  text-align: center;
+  background-color: red;
+  margin-top: 0;
+  padding: 1.2em 0;
+
+  a {
+    color: $white;
   }
 }
 
