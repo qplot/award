@@ -94,6 +94,21 @@ function pgh_work_group_business_unit_view_views_default_views() {
   $handler->display->display_options['relationships']['field_business_units_target_id']['table'] = 'field_data_field_business_units';
   $handler->display->display_options['relationships']['field_business_units_target_id']['field'] = 'field_business_units_target_id';
   $handler->display->display_options['relationships']['field_business_units_target_id']['label'] = 'Business Unit';
+  /* Relationship: Content: Author */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['relationship'] = 'field_business_units_target_id';
+  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
+  /* Field: Content: Salesforce Id */
+  $handler->display->display_options['fields']['field_business_unit_sfid']['id'] = 'field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['table'] = 'field_data_field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['field'] = 'field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['relationship'] = 'field_business_units_target_id';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -101,12 +116,6 @@ function pgh_work_group_business_unit_view_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  /* Field: Content: Nid */
-  $handler->display->display_options['fields']['nid']['id'] = 'nid';
-  $handler->display->display_options['fields']['nid']['table'] = 'node';
-  $handler->display->display_options['fields']['nid']['field'] = 'nid';
-  $handler->display->display_options['fields']['nid']['relationship'] = 'field_business_units_target_id';
-  $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
   $handler->display->display_options['fields']['title_1']['table'] = 'node';
@@ -157,6 +166,25 @@ function pgh_work_group_business_unit_view_views_default_views() {
   $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
   $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
   $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: User: Name */
+  $handler->display->display_options['filters']['uid']['id'] = 'uid';
+  $handler->display->display_options['filters']['uid']['table'] = 'users';
+  $handler->display->display_options['filters']['uid']['field'] = 'uid';
+  $handler->display->display_options['filters']['uid']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['uid']['value'] = '';
+  $handler->display->display_options['filters']['uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['operator_id'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['label'] = 'Author';
+  $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
+  $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     6 => 0,
