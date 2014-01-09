@@ -1,0 +1,11 @@
+name = Work Group Administrators View
+description = Displays Users who are assigned as Administrators of one or more Work Groups.
+core = 7.x
+package = PGH Admin Views
+version = 7.x-0.1
+project = pgh_work_group_administrators_view
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = work_group_administrators
+features_exclude[dependencies][ctools] = ctools
