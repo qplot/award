@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Work Group Administrators View feature.
+ */
+
+include_once 'pgh_work_group_administrators_view.features.inc';
