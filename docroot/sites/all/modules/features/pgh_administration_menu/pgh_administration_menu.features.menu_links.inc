@@ -110,26 +110,6 @@ function pgh_administration_menu_menu_default_menu_links() {
     'weight' => -46,
     'customized' => 1,
   );
-  // Exported menu link: menu-awards-administration_work-groups:admin/work-groups
-  $menu_links['menu-awards-administration_work-groups:admin/work-groups'] = array(
-    'menu_name' => 'menu-awards-administration',
-    'link_path' => 'admin/work-groups',
-    'router_path' => 'admin',
-    'link_title' => 'Work Groups',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-      'identifier' => 'menu-awards-administration_work-groups:admin/work-groups',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -49,
-    'customized' => 1,
-  );
   // Translatables
   // Included for use with string extractors like potx.
   t('All Work Groups');
@@ -137,7 +117,6 @@ function pgh_administration_menu_menu_default_menu_links() {
   t('Business Units by Work Group');
   t('My PGH Admin Work Groups');
   t('Work Group Administrators');
-  t('Work Groups');
 
 
   return $menu_links;
