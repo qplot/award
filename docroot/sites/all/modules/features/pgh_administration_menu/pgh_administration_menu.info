@@ -8,5 +8,7 @@ dependencies[] = features
 dependencies[] = menu
 features[features_api][] = api:2
 features[menu_custom][] = menu-awards-administration
+features[menu_links][] = menu-awards-administration_all-work-groups:admin/work-groups
 features[menu_links][] = menu-awards-administration_applications:admin/applications
 features[menu_links][] = menu-awards-administration_business-units-by-work-group:admin/work-groups-and-business-units
+features[menu_links][] = menu-awards-administration_my-pgh-admin-work-groups:admin/my-pgh-work-groups
