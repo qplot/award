@@ -779,6 +779,12 @@ function pgh_form_question_states($question) {
 
   $name = $parent_wrapper->getIdentifier();
   $value = $wrapper->field_question_parent_value->value();
+
+  if ($value === NULL) {
+    drupal_set_message(t('Question %qid specifies parent %pid but does not specify a parent required value.', array('%qid' => $wrapper->title->value(), '%pid' => $parent_qid)), 'error');
+    return array();
+  }
+
   $condition = '';
   switch ($parent_type) {
     case 'selection':
