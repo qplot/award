@@ -1,3 +1,7 @@
+//
+// Used to change multiple award logo files for each new award year.
+$awards_year: 2014;
+
 // !---------------------------- */
 // !-- Body -------------------- */
 // !---------------------------- */
@@ -48,10 +52,10 @@ h3 {
 
   a#logo {
     text-indent: -1000000px;
-    background: transparent url(../images/global/pgh-awards-logo.png) no-repeat 0 0;
+    background: transparent url(../images/award-logos/#{$awards_year}/pgh-awards.png) no-repeat 0 0;
     display: block;
     margin-left: 10px;
-    width: 197px;
+    width: 250px;
     height: 108px;
   }
 
@@ -859,8 +863,39 @@ h3 {
 
   #header {
 
-    a#logo {
-      background-image: url(../images/award-logos/practice-for-change.png);
+    a#logo { // $awards_year
+      background-image: url(../logo.png);
+
+      &.dehp_free {
+        background-image: url(../images/award-logos/#{$awards_year}/dehp-free.png);
+      }
+
+      &.champion_for_change,
+      &.champion_for_change_nongpo,
+      &.champion_for_change_gpo {
+        background-image: url(../images/award-logos/#{$awards_year}/cfc.png);
+      }
+
+      &.greening_the_or {
+        background-image: url(../images/award-logos/#{$awards_year}/gor.png);
+      }
+
+      &.mmmf {
+        background-image: url(../images/award-logos/#{$awards_year}/mmmf.png);
+      }
+
+      &.partner_for_change,
+      &.long_term_care {
+        background-image: url(../images/award-logos/#{$awards_year}/pfc.png);
+      }
+
+      &.partner_recognition {
+        background-image: url(../images/award-logos/#{$awards_year}/pr.png);
+      }
+
+      &.system_for_change {
+        background-image: url(../images/award-logos/#{$awards_year}/sfc.png);
+      }
     }
   }
 
