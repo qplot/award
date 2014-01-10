@@ -461,7 +461,7 @@ h3 { font-size: 1.1em; font-weight: normal; }
 .field-name-body div.field-item { margin: 1.4em 0; }
 
 #header { padding: 18px 0; }
-#header a#logo { text-indent: -1000000px; background: transparent url(../images/global/pgh-awards-logo.png) no-repeat 0 0; display: block; margin-left: 10px; width: 197px; height: 108px; }
+#header a#logo { text-indent: -1000000px; background: transparent url(../images/award-logos/2014/pgh-awards.png) no-repeat 0 0; display: block; margin-left: 10px; width: 250px; height: 108px; }
 #header #name-and-slogan { color: white; font-family: "Cabin", Helvetica, Arial, sans-serif; font-size: 1.05em; padding: 43px 0 0 30px; }
 
 #breadcrumb-wrap { background-color: #005a44; border-top: 1px solid #00543f; }
@@ -599,7 +599,14 @@ h3 { font-size: 1.1em; font-weight: normal; }
 #business-unit .other-info, .node-type-business-unit .other-info { width: 340px; }
 
 .page-application #header-wrap { background-color: white; }
-.page-application #header a#logo { background-image: url(../images/award-logos/practice-for-change.png); }
+.page-application #header a#logo { background-image: url(../logo.png); }
+.page-application #header a#logo.dehp_free { background-image: url(../images/award-logos/2014/dehp-free.png); }
+.page-application #header a#logo.champion_for_change, .page-application #header a#logo.champion_for_change_nongpo, .page-application #header a#logo.champion_for_change_gpo { background-image: url(../images/award-logos/2014/cfc.png); }
+.page-application #header a#logo.greening_the_or { background-image: url(../images/award-logos/2014/gor.png); }
+.page-application #header a#logo.mmmf { background-image: url(../images/award-logos/2014/mmmf.png); }
+.page-application #header a#logo.partner_for_change, .page-application #header a#logo.long_term_care { background-image: url(../images/award-logos/2014/pfc.png); }
+.page-application #header a#logo.partner_recognition { background-image: url(../images/award-logos/2014/pr.png); }
+.page-application #header a#logo.system_for_change { background-image: url(../images/award-logos/2014/sfc.png); }
 .page-application #block-pgh-user-info-pgh-user-info .user-picture-wrap { border: none; }
 .page-application #block-pgh-user-info-pgh-user-info .users-name { color: #00674e; }
 .page-application #block-pgh-user-info-pgh-user-info .users-name a { color: #00674e; text-decoration: none; }
@@ -1109,6 +1116,8 @@ form.node-form input.form-submit.working { text-align: left; background: #ffba4e
 form.node-form input.form-submit#edit-delete { background-color: #ea4539; border-color: #ea4539; }
 form.node-form input.form-submit:hover, form.node-form input.form-submit#edit-delete:hover { background-color: #ffba4e; border-color: #ffb043; -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); }
 form.node-form select { font-size: 90%; }
+form.node-form .form-field-name-field-application-type .description { color: #555555; }
+form.node-form .form-field-name-field-application-type .description b { color: #c00; padding: 0 2px; }
 form.node-form .field-multiple-table { width: 100%; }
 form.node-form .field-multiple-table tr, form.node-form .field-multiple-table th, form.node-form .field-multiple-table tbody, form.node-form .field-multiple-table td { border: none; }
 form.node-form .field-multiple-table tbody { border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }

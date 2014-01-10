@@ -241,8 +241,6 @@
     letters.push('a' + letters[index]);
   }
 
-  console.log(letters);
-
   Drupal.behaviors.pghApplicationNumbering = {
     attach: function (context, settings) {
       // Remove any existing number markup.
