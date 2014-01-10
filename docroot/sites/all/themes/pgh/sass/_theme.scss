@@ -2422,6 +2422,18 @@ form.node-form {
     font-size: 90%;
   }
 
+  .form-field-name-field-application-type {
+
+    .description {
+      color: $gray;
+
+      b {
+        color: #c00;
+        padding: 0 2px;
+      }
+    }
+  }
+
   .field-multiple-table {
     width: 100%;
 

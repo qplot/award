@@ -1116,6 +1116,8 @@ form.node-form input.form-submit.working { text-align: left; background: #ffba4e
 form.node-form input.form-submit#edit-delete { background-color: #ea4539; border-color: #ea4539; }
 form.node-form input.form-submit:hover, form.node-form input.form-submit#edit-delete:hover { background-color: #ffba4e; border-color: #ffb043; -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); }
 form.node-form select { font-size: 90%; }
+form.node-form .form-field-name-field-application-type .description { color: #555555; }
+form.node-form .form-field-name-field-application-type .description b { color: #c00; padding: 0 2px; }
 form.node-form .field-multiple-table { width: 100%; }
 form.node-form .field-multiple-table tr, form.node-form .field-multiple-table th, form.node-form .field-multiple-table tbody, form.node-form .field-multiple-table td { border: none; }
 form.node-form .field-multiple-table tbody { border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }
