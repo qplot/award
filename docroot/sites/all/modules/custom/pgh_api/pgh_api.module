@@ -500,7 +500,7 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   $parent_response = node_load(pgh_api_find_response_id($application_nid, $parent_nid));
 
   if (!$parent_response) {
-    watchdog('pgh_api', 'Tried to load invalid parent response $id in pgh_api_question_is_active', array('%id' => $parent_nid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Tried to load invalid parent response %id in pgh_api_question_is_active', array('%id' => $parent_nid), WATCHDOG_ERROR);
     return FALSE;
   }
 
