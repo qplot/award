@@ -157,7 +157,7 @@
     });
 
     // Add date pickers. If there are no date style questions in the form the UI component might not be available.
-    if ($.isFunction($.datepicker)) {
+    if (typeof $.datepicker !== 'undefined') {
       $('.question-style-date input').datepicker({
         dateFormat: 'yy-mm-dd'
       });
