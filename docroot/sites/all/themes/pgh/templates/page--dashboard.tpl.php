@@ -188,7 +188,11 @@
         <?php else: ?>
 
         <div class="applications">
-          <a class="application-archive" href="#">View application archive</a>
+          <?php
+            /* Hiding archive link till it's needed.
+            <a class="application-archive" href="#">View application archive</a>
+            */
+          ?>
           <h3>Applications</h3>
           <?php
             // @codingStandardsIgnoreStart

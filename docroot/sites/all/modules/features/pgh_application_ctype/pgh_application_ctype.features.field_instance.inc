@@ -101,7 +101,7 @@ function pgh_application_ctype_field_default_field_instances() {
     'bundle' => 'application',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => '(<b>*</b>) denotes that this pull-down is required.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -175,6 +175,7 @@ function pgh_application_ctype_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('(<b>*</b>) denotes that this pull-down is required.');
   t('Application Type');
   t('Body');
   t('Category Progress');
