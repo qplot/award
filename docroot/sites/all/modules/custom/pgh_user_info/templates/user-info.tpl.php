@@ -39,7 +39,15 @@
     ?>
   </div>
   <div class="user-links">
-    <span class="edit-user"><a href="/user/<?php print $variables['user']->uid; ?>/edit">Edit</a></span>
+    <span class="edit-user">
+      <?php 
+        print l(
+          'Edit', 
+          'user/' . $variables['user']->uid . '/edit',
+          array('query' => drupal_get_destination())
+        );
+      ?>
+    </span>
     <span class="logout-user"><a href="/user/logout">Log out</a></span>
     <span class="dashboard-user"><a href="/dashboard">Dashboard</a></span>
   </div>
