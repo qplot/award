@@ -293,7 +293,9 @@
             ?>
           </ul>
 
-          <p class="user-message">Please contact a PGH Administrator if you need help with a user account.</p>
+          <p class="user-message">
+            <?php print t('Please contact a PGH Administrator if you need help with a user account.'); ?>
+          </p>
         </div>
 
         <?php endif; ?>
