@@ -6738,6 +6738,19 @@
  
       	return sum;
       }
+    },
+
+		//
+		// System for Change formulas
+		//
+    'pghq_SFC_2_6': {
+      'args': [
+        'pghq_SFC_2_5',
+        'pghq_SFC_2_1'
+      ],
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     }
   };
 
