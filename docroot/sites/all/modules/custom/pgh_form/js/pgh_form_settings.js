@@ -3682,19 +3682,17 @@
     },
     'pghq_LTC_water_2_1tB_3': {
       'args': [
-        'pghq_LTC_water_2_1tB_2',
         'pghq_LTC_water_2_1tB_1',
         'pghq_LTC_water_2_1tB_7'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': handlers.divide
     },
     'pghq_LTC_water_2_1tB_6': {
       'args': [
-        'pghq_LTC_water_2_1tB_5',
         'pghq_LTC_water_2_1tB_4',
         'pghq_LTC_water_2_1tB_7'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': handlers.divide
     },
     'pghq_LTC_water_2_1tB_7': {
       'args': [
@@ -5470,7 +5468,7 @@
             d === 0) {
           return 0;
         } else {
-          return Math.floor(1 - (((c / d) / (a / b)) * 100));
+          return (1- ((c / d) / (a / b))) * 100;
         }
       }
     },
@@ -5608,47 +5606,47 @@
 	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
       }
     },
-// 		'pghq_CHCPFC_energy_2_11_17': {
-// 			'args': [
-// 				'pghq_CHCPFC_energy_2_8_2_3', // Units 1
-// 				'pghq_CHCPFC_energy_2_8_2_2', // Amount 1
-// 				'pghq_CHCPFC_energy_2_8_2_8', // Units 2
-// 				'pghq_CHCPFC_energy_2_8_2_7', // Amount 2
-// 				'pghq_CHCPFC_energy_2_8_2_13', // Units 3
-// 				'pghq_CHCPFC_energy_2_8_2_12' // Amount 3
-// 			],
-// 			'calculation': function (a, b, c, d, e, f) {
-// 				var x = handlers.convertBTU(a, b);
-// 				var y = handlers.convertBTU(c, d);
-// 				var z = handlers.convertBTU(e, f);
-// 				return x + y + z;
-// 			}
-// 		},
-//     'pghq_CHCPFC_energy_2_11_18': {
-//       'args': [
-//         'pghq_CHCPFC_energy_2_11_17',
-//         'pghq_CHCPFC_energy_2_11_21'
-//       ],
-//       'calculation': function() {
-// 	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
-//       }
-//     },
-//     'pghq_CHCPFC_energy_2_11_19': {
-//       'args': [
-//         'pghq_CHCPFC_energy_2_8_2_18', // Units
-//         'pghq_CHCPFC_energy_2_8_2_17' // Amount
-//       ],
-//       'calculation': handlers.convertBTU
-//     },
-//     'pghq_CHCPFC_energy_2_11_20': {
-//       'args': [
-//         'pghq_CHCPFC_energy_2_11_19',
-//         'pghq_CHCPFC_energy_2_11_21'
-//       ],
-//       'calculation': function() {
-// 	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
-//       }
-//     },
+		'pghq_CHCPFC_energy_2_11_17': {
+			'args': [
+				'pghq_CHCPFC_energy_2_8_2_3', // Units 1
+				'pghq_CHCPFC_energy_2_8_2_2', // Amount 1
+				'pghq_CHCPFC_energy_2_8_2_8', // Units 2
+				'pghq_CHCPFC_energy_2_8_2_7', // Amount 2
+				'pghq_CHCPFC_energy_2_8_2_13', // Units 3
+				'pghq_CHCPFC_energy_2_8_2_12' // Amount 3
+			],
+			'calculation': function (a, b, c, d, e, f) {
+				var x = handlers.convertBTU(a, b);
+				var y = handlers.convertBTU(c, d);
+				var z = handlers.convertBTU(e, f);
+				return x + y + z;
+			}
+		},
+    'pghq_CHCPFC_energy_2_11_18': {
+      'args': [
+        'pghq_CHCPFC_energy_2_11_17',
+        'pghq_CHCPFC_energy_2_11_21'
+      ],
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
+    },
+    'pghq_CHCPFC_energy_2_11_19': {
+      'args': [
+        'pghq_CHCPFC_energy_2_8_2_18', // Units
+        'pghq_CHCPFC_energy_2_8_2_17' // Amount
+      ],
+      'calculation': handlers.convertBTU
+    },
+    'pghq_CHCPFC_energy_2_11_20': {
+      'args': [
+        'pghq_CHCPFC_energy_2_11_19',
+        'pghq_CHCPFC_energy_2_11_21'
+      ],
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
+    },
     'pghq_CHCPFC_energy_2_11_21': {
       'args': [
         'pghq_CHCPFC_energy_2_11_1', // amount 1
@@ -5688,9 +5686,9 @@
     'pghq_CHCPFC_energy_2_11_22': {
       'args': [
         'pghq_CHCPFC_energy_2_11_2', // amount 1
-        'pghq_CHCPFC_energy_2_11_3', // amount 2
-        'pghq_CHCPFC_energy_2_11_4', // amount 3
-        'pghq_CHCPFC_energy_2_11_5', // amount 4
+        'pghq_CHCPFC_energy_2_11_4', // amount 2
+        'pghq_CHCPFC_energy_2_11_6', // amount 3
+        'pghq_CHCPFC_energy_2_11_8', // amount 4
         'pghq_CHCPFC_energy_2_11_10', // amount 5
         'pghq_CHCPFC_energy_2_11_12', // amount 6
         'pghq_CHCPFC_energy_2_11_14', // amount 7
@@ -5721,13 +5719,13 @@
       	return sum;
       }
     },
-//     'pghq_CHCPFC_energy_2_12': {
-//       'args': [
-//         'pghq_CHCPFC_energy_2_11_18',
-//         'pghq_CHCPFC_energy_2_11_20'
-//       ],
-//       'calculation': handlers.sum
-//     },
+    'pghq_CHCPFC_energy_2_12': {
+      'args': [
+        'pghq_CHCPFC_energy_2_11_18',
+        'pghq_CHCPFC_energy_2_11_20'
+      ],
+      'calculation': handlers.sum
+    },
     'pghq_CHCPFC_energy_3_1_1_1': {
       'args': [
         'pghq_CHCPFC_energy_2_11_1', // amount 1
@@ -5764,132 +5762,132 @@
       	return sum;
       }
     },   
-    'pghq_CHCPFC_energy_3_1_1_2': {
-      'args': [
-        'pghq_CHCPFC_energy_2_7_5', // Electricity Units
-        'pghq_CHCPFC_energy_2_7_6', // Electricity Amount
-        'pghq_CHCPFC_energy_2_7_9', // Natural Gas Units
-        'pghq_CHCPFC_energy_2_7_10', // Natural Gas Amount
-        'pghq_CHCPFC_energy_2_7_13', // Fuel Oil Units
-        'pghq_CHCPFC_energy_2_7_14', // Fuel Oil Amount
-        'pghq_CHCPFC_energy_2_7_17', // Steam Units
-        'pghq_CHCPFC_energy_2_7_18', // Steam Amount
-        'pghq_CHCPFC_energy_2_7_21', // Chilled Water Units
-        'pghq_CHCPFC_energy_2_7_22', // Chilled Water Amount
-        'pghq_CHCPFC_energy_2_7_25', // Hot Water Units
-        'pghq_CHCPFC_energy_2_7_26', // Hot Water Amount
-        'pghq_CHCPFC_energy_2_7_29', // Diesel Units
-        'pghq_CHCPFC_energy_2_7_30', // Diesel Amount
-        'pghq_CHCPFC_energy_2_8_2_3', // Renewable Energy 1 Units
-        'pghq_CHCPFC_energy_2_8_2_4', // Renewable Energy 1 Amount
-        'pghq_CHCPFC_energy_2_8_2_8', // Renewable Energy 2 Units
-        'pghq_CHCPFC_energy_2_8_2_9', // Renewable Energy 2 Amount
-        'pghq_CHCPFC_energy_2_8_2_13', // Renewable Energy 3 Units
-        'pghq_CHCPFC_energy_2_8_2_14', // Renewable Energy 3 Amount
-        'pghq_CHCPFC_energy_2_8_2_18', // Renewable Energy 4 Units
-        'pghq_CHCPFC_energy_2_8_2_19' // Renewable Energy 4 Amount
-      ],
-      'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A, renew4U, renew4A) {
-
-      	var elecTotal = handlers.convertBTUSimple(elecU, elecA);
-      	var natGasTotal = handlers.convertNaturalGas(natGasU, natGasA);
-      	var fuelTotal = handlers.convertFuelOil(fuelU, fuelA);
-      	var steamTotal = handlers.convertSteam(steamU, steamA);
-      	var chillTotal = handlers.convertWater(chillU, chillA);
-      	var hotTotal = handlers.convertWater(hotU, hotA);
-      	var dieselTotal = handlers.convertDiesel(dieselU, dieselA);
-      	var renew1Total = handlers.convertBTU(renew1U, renew1A);
-      	var renew2Total = handlers.convertBTU(renew2U, renew2A);
-      	var renew3Total = handlers.convertBTU(renew3U, renew3A);
-      	var renew4Total = handlers.convertBTU(renew4U, renew4A);
-      	
-        var values = [
-          elecTotal, 
-					natGasTotal,
-					fuelTotal,
-					steamTotal,
-					chillTotal,
-					hotTotal,
-					dieselTotal,
-					renew1Total,
-					renew2Total,
-					renew3Total,
-					renew4Total
-        ];
- 
-        var sum = 0;
-        for (var index = 0; index < values.length; index++) {
-          if (!isNaN(values[index])) {
-            sum += values[index];
-          }
-        }
- 
-      	return sum;
-      }
-    },
-    'pghq_CHCPFC_energy_3_1_1_3': {
-      'args': [
-        'pghq_CHCPFC_energy_2_7_5', // Electricity Units
-        'pghq_CHCPFC_energy_2_7_7', // Electricity Amount
-        'pghq_CHCPFC_energy_2_7_9', // Natural Gas Units
-        'pghq_CHCPFC_energy_2_7_11', // Natural Gas Amount
-        'pghq_CHCPFC_energy_2_7_13', // Fuel Oil Units
-        'pghq_CHCPFC_energy_2_7_15', // Fuel Oil Amount
-        'pghq_CHCPFC_energy_2_7_17', // Steam Units
-        'pghq_CHCPFC_energy_2_7_19', // Steam Amount
-        'pghq_CHCPFC_energy_2_7_21', // Chilled Water Units
-        'pghq_CHCPFC_energy_2_7_23', // Chilled Water Amount
-        'pghq_CHCPFC_energy_2_7_25', // Hot Water Units
-        'pghq_CHCPFC_energy_2_7_27', // Hot Water Amount
-        'pghq_CHCPFC_energy_2_7_29', // Diesel Units
-        'pghq_CHCPFC_energy_2_7_31', // Diesel Amount
-        'pghq_CHCPFC_energy_2_8_2_3', // Renewable Energy 1 Units
-        'pghq_CHCPFC_energy_2_8_2_5', // Renewable Energy 1 Amount
-        'pghq_CHCPFC_energy_2_8_2_8', // Renewable Energy 2 Units
-        'pghq_CHCPFC_energy_2_8_2_10', // Renewable Energy 2 Amount
-        'pghq_CHCPFC_energy_2_8_2_13', // Renewable Energy 3 Units
-        'pghq_CHCPFC_energy_2_8_2_15', // Renewable Energy 3 Amount
-        'pghq_CHCPFC_energy_2_8_2_18', // Renewable Energy 4 Units
-        'pghq_CHCPFC_energy_2_8_2_20' // Renewable Energy 4 Amount
-      ],
-      'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A, renew4U, renew4A) {
-
-      	var elecTotal = handlers.convertBTUSimple(elecU, elecA);
-      	var natGasTotal = handlers.convertNaturalGas(natGasU, natGasA);
-      	var fuelTotal = handlers.convertFuelOil(fuelU, fuelA);
-      	var steamTotal = handlers.convertSteam(steamU, steamA);
-      	var chillTotal = handlers.convertWater(chillU, chillA);
-      	var hotTotal = handlers.convertWater(hotU, hotA);
-      	var dieselTotal = handlers.convertDiesel(dieselU, dieselA);
-      	var renew1Total = handlers.convertBTU(renew1U, renew1A);
-      	var renew2Total = handlers.convertBTU(renew2U, renew2A);
-      	var renew3Total = handlers.convertBTU(renew3U, renew3A);
-      	var renew4Total = handlers.convertBTU(renew4U, renew4A);
-
-        var values = [
-          elecTotal, 
-					natGasTotal,
-					fuelTotal,
-					steamTotal,
-					chillTotal,
-					hotTotal,
-					dieselTotal,
-					renew1Total,
-					renew2Total,
-					renew3Total,
-					renew4Total
-        ];
- 
-        var sum = 0;
-        for (var index = 0; index < values.length; index++) {
-          if (!isNaN(values[index])) {
-            sum += values[index];
-          }
-        }
- 
-      	return sum;
-      }
-    },
+//     'pghq_CHCPFC_energy_3_1_1_2': {
+//       'args': [
+//         'pghq_CHCPFC_energy_2_7_5', // Electricity Units
+//         'pghq_CHCPFC_energy_2_7_6', // Electricity Amount
+//         'pghq_CHCPFC_energy_2_7_9', // Natural Gas Units
+//         'pghq_CHCPFC_energy_2_7_10', // Natural Gas Amount
+//         'pghq_CHCPFC_energy_2_7_13', // Fuel Oil Units
+//         'pghq_CHCPFC_energy_2_7_14', // Fuel Oil Amount
+//         'pghq_CHCPFC_energy_2_7_17', // Steam Units
+//         'pghq_CHCPFC_energy_2_7_18', // Steam Amount
+//         'pghq_CHCPFC_energy_2_7_21', // Chilled Water Units
+//         'pghq_CHCPFC_energy_2_7_22', // Chilled Water Amount
+//         'pghq_CHCPFC_energy_2_7_25', // Hot Water Units
+//         'pghq_CHCPFC_energy_2_7_26', // Hot Water Amount
+//         'pghq_CHCPFC_energy_2_7_29', // Diesel Units
+//         'pghq_CHCPFC_energy_2_7_30', // Diesel Amount
+//         'pghq_CHCPFC_energy_2_8_2_3', // Renewable Energy 1 Units
+//         'pghq_CHCPFC_energy_2_8_2_4', // Renewable Energy 1 Amount
+//         'pghq_CHCPFC_energy_2_8_2_8', // Renewable Energy 2 Units
+//         'pghq_CHCPFC_energy_2_8_2_9', // Renewable Energy 2 Amount
+//         'pghq_CHCPFC_energy_2_8_2_13', // Renewable Energy 3 Units
+//         'pghq_CHCPFC_energy_2_8_2_14', // Renewable Energy 3 Amount
+//         'pghq_CHCPFC_energy_2_8_2_18', // Renewable Energy 4 Units
+//         'pghq_CHCPFC_energy_2_8_2_19' // Renewable Energy 4 Amount
+//       ],
+//       'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A, renew4U, renew4A) {
+// 
+//       	var elecTotal = handlers.convertBTUSimple(elecU, elecA);
+//       	var natGasTotal = handlers.convertNaturalGas(natGasU, natGasA);
+//       	var fuelTotal = handlers.convertFuelOil(fuelU, fuelA);
+//       	var steamTotal = handlers.convertSteam(steamU, steamA);
+//       	var chillTotal = handlers.convertWater(chillU, chillA);
+//       	var hotTotal = handlers.convertWater(hotU, hotA);
+//       	var dieselTotal = handlers.convertDiesel(dieselU, dieselA);
+//       	var renew1Total = handlers.convertBTU(renew1U, renew1A);
+// //       	var renew2Total = handlers.convertBTU(renew2U, renew2A);
+// //       	var renew3Total = handlers.convertBTU(renew3U, renew3A);
+//       	var renew4Total = handlers.convertBTU(renew4U, renew4A);
+//       	
+//         var values = [
+//           elecTotal, 
+// 					natGasTotal,
+// 					fuelTotal,
+// 					steamTotal,
+// 					chillTotal,
+// 					hotTotal,
+// 					dieselTotal,
+// 					renew1Total,
+// // 					renew2Total,
+// // 					renew3Total,
+// 					renew4Total
+//         ];
+//  
+//         var sum = 0;
+//         for (var index = 0; index < values.length; index++) {
+//           if (!isNaN(values[index])) {
+//             sum += values[index];
+//           }
+//         }
+//  
+//       	return sum;
+//       }
+//     },
+//     'pghq_CHCPFC_energy_3_1_1_3': {
+//       'args': [
+//         'pghq_CHCPFC_energy_2_7_5', // Electricity Units
+//         'pghq_CHCPFC_energy_2_7_7', // Electricity Amount
+//         'pghq_CHCPFC_energy_2_7_9', // Natural Gas Units
+//         'pghq_CHCPFC_energy_2_7_11', // Natural Gas Amount
+//         'pghq_CHCPFC_energy_2_7_13', // Fuel Oil Units
+//         'pghq_CHCPFC_energy_2_7_15', // Fuel Oil Amount
+//         'pghq_CHCPFC_energy_2_7_17', // Steam Units
+//         'pghq_CHCPFC_energy_2_7_19', // Steam Amount
+//         'pghq_CHCPFC_energy_2_7_21', // Chilled Water Units
+//         'pghq_CHCPFC_energy_2_7_23', // Chilled Water Amount
+//         'pghq_CHCPFC_energy_2_7_25', // Hot Water Units
+//         'pghq_CHCPFC_energy_2_7_27', // Hot Water Amount
+//         'pghq_CHCPFC_energy_2_7_29', // Diesel Units
+//         'pghq_CHCPFC_energy_2_7_31', // Diesel Amount
+//         'pghq_CHCPFC_energy_2_8_2_3', // Renewable Energy 1 Units
+//         'pghq_CHCPFC_energy_2_8_2_5', // Renewable Energy 1 Amount
+//         'pghq_CHCPFC_energy_2_8_2_8', // Renewable Energy 2 Units
+//         'pghq_CHCPFC_energy_2_8_2_10', // Renewable Energy 2 Amount
+//         'pghq_CHCPFC_energy_2_8_2_13', // Renewable Energy 3 Units
+//         'pghq_CHCPFC_energy_2_8_2_15', // Renewable Energy 3 Amount
+//         'pghq_CHCPFC_energy_2_8_2_18', // Renewable Energy 4 Units
+//         'pghq_CHCPFC_energy_2_8_2_20' // Renewable Energy 4 Amount
+//       ],
+//       'calculation': function (elecU, elecA, natGasU, natGasA, fuelU, fuelA, steamU, steamA, chillU, chillA, hotU, hotA, dieselU, dieselA, renew1U, renew1A, renew2U, renew2A, renew3U, renew3A, renew4U, renew4A) {
+// 
+//       	var elecTotal = handlers.convertBTUSimple(elecU, elecA);
+//       	var natGasTotal = handlers.convertNaturalGas(natGasU, natGasA);
+//       	var fuelTotal = handlers.convertFuelOil(fuelU, fuelA);
+//       	var steamTotal = handlers.convertSteam(steamU, steamA);
+//       	var chillTotal = handlers.convertWater(chillU, chillA);
+//       	var hotTotal = handlers.convertWater(hotU, hotA);
+//       	var dieselTotal = handlers.convertDiesel(dieselU, dieselA);
+//       	var renew1Total = handlers.convertBTU(renew1U, renew1A);
+// //       	var renew2Total = handlers.convertBTU(renew2U, renew2A);
+// //       	var renew3Total = handlers.convertBTU(renew3U, renew3A);
+//       	var renew4Total = handlers.convertBTU(renew4U, renew4A);
+// 
+//         var values = [
+//           elecTotal, 
+// 					natGasTotal,
+// 					fuelTotal,
+// 					steamTotal,
+// 					chillTotal,
+// 					hotTotal,
+// 					dieselTotal,
+// 					renew1Total,
+// // 					renew2Total,
+// // 					renew3Total,
+// 					renew4Total
+//         ];
+//  
+//         var sum = 0;
+//         for (var index = 0; index < values.length; index++) {
+//           if (!isNaN(values[index])) {
+//             sum += values[index];
+//           }
+//         }
+//  
+//       	return sum;
+//       }
+//     },
     'pghq_CHCPFC_energy_3_1_1_4': {
       'args': [
         'pghq_CHCPFC_energy_2_11_21',
@@ -6063,19 +6061,21 @@
     },
     'pghq_CHCPFC_water_2_1tB_3': {
       'args': [
-        'pghq_CHCPFC_water_2_1tB_2',
         'pghq_CHCPFC_water_2_1tB_1',
         'pghq_CHCPFC_water_2_1tB_7'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_CHCPFC_water_2_1tB_6': {
       'args': [
-        'pghq_CHCPFC_water_2_1tB_5',
         'pghq_CHCPFC_water_2_1tB_4',
         'pghq_CHCPFC_water_2_1tB_7'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_CHCPFC_water_2_1tB_7': {
       'args': [
@@ -6084,114 +6084,104 @@
       ],
       'calculation': handlers.sum
     },
-    'pghq_CHCPFC_water_2_3_tC_3': {
+    'pghq_CHCPFC_water_2_3_tC_4': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_2', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_1', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_3', // Units 1
+        'pghq_CHCPFC_water_2_3_tC_2', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15' // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
-    'pghq_CHCPFC_water_2_3_tC_6': {
+    'pghq_CHCPFC_water_2_3_tC_8': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_5', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_4', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_7', // Units
+        'pghq_CHCPFC_water_2_3_tC_6', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
-      }
-    },
-    'pghq_CHCPFC_water_2_3_tC_9': {
-      'args': [
-        'pghq_CHCPFC_water_2_3_tC_8', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_7', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
-      ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
     'pghq_CHCPFC_water_2_3_tC_12': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_11', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_10', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_11', // Units
+        'pghq_CHCPFC_water_2_3_tC_10', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
-    'pghq_CHCPFC_water_2_3_tC_15': {
+    'pghq_CHCPFC_water_2_3_tC_16': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_14', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_13', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_15', // Units
+        'pghq_CHCPFC_water_2_3_tC_14', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
-    'pghq_CHCPFC_water_2_3_tC_18': {
+    'pghq_CHCPFC_water_2_3_tC_20': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_17', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_16', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_19', // Units
+        'pghq_CHCPFC_water_2_3_tC_18', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
-      }
-    },
-    'pghq_CHCPFC_water_2_3_tC_21': {
-      'args': [
-        'pghq_CHCPFC_water_2_3_tC_20', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_19', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
-      ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
     'pghq_CHCPFC_water_2_3_tC_24': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_23', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_22', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_23', // Units
+        'pghq_CHCPFC_water_2_3_tC_22', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
-    'pghq_CHCPFC_water_2_3_tC_27': {
+    'pghq_CHCPFC_water_2_3_tC_28': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_26', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_25', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_27', // Units
+        'pghq_CHCPFC_water_2_3_tC_26', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
-    'pghq_CHCPFC_water_2_3_tC_30': {
+    'pghq_CHCPFC_water_2_3_tC_32': {
       'args': [
-        'pghq_CHCPFC_water_2_3_tC_29', // Units 1
-        'pghq_CHCPFC_water_2_3_tC_28', // Amount 1
-        'pghq_CHCPFC_water_1_5_1_16', // Units 2
-        'pghq_CHCPFC_water_1_5_1_15', // Amount 2
+        'pghq_CHCPFC_water_2_3_tC_31', // Units
+        'pghq_CHCPFC_water_2_3_tC_30', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
+      }
+    },
+    'pghq_CHCPFC_water_2_3_tC_36': {
+      'args': [
+        'pghq_CHCPFC_water_2_3_tC_35', // Units
+        'pghq_CHCPFC_water_2_3_tC_34', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
+      ],
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
+      }
+    },
+    'pghq_CHCPFC_water_2_3_tC_40': {
+      'args': [
+        'pghq_CHCPFC_water_2_3_tC_39', // Units
+        'pghq_CHCPFC_water_2_3_tC_38', // Meter Amount
+        'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
+      ],
+      'calculation': function (a, b, c) {
+      	return handlers.convertGallons(a, b) / c;
       }
     },
     'pghq_CHCPFC_water_2_5': {
@@ -6280,16 +6270,20 @@
     'pghq_CHCPFC_greenbuilding_4_2_tC_3': {
       'args': [
         'pghq_CHCPFC_greenbuilding_4_2_tC_1',
-        'pghq_CHCPFC_greenbuilding_4_2_tC_2'
+        'pghq_CHCPFC_greenbuilding_4_2_tC_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 	  'pghq_CHCPFC_greenbuilding_4_2_tC_6': {
       'args': [
         'pghq_CHCPFC_greenbuilding_4_2_tC_4',
-        'pghq_CHCPFC_greenbuilding_4_2_tC_5'
+        'pghq_CHCPFC_greenbuilding_4_2_tC_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_CHCPFC_greenbuilding_4_2_tC_7': {
       'args': [
