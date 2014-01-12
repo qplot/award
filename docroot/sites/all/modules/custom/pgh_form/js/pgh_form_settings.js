@@ -5417,6 +5417,26 @@
       ],
       'calculation': handlers.divideBySum
     },
+    'pghq_CHCPFC_chemicals_2_4_2_16': {
+      'args': [
+        'pghq_CHCPFC_chemicals_2_4_2_1',
+        'pghq_CHCPFC_chemicals_2_4_2_4',
+        'pghq_CHCPFC_chemicals_2_4_2_7',
+        'pghq_CHCPFC_chemicals_2_4_2_10',
+        'pghq_CHCPFC_chemicals_2_4_2_13'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_CHCPFC_chemicals_2_4_2_17': {
+      'args': [
+        'pghq_CHCPFC_chemicals_2_4_2_2',
+        'pghq_CHCPFC_chemicals_2_4_2_5',
+        'pghq_CHCPFC_chemicals_2_4_2_8',
+        'pghq_CHCPFC_chemicals_2_4_2_11',
+        'pghq_CHCPFC_chemicals_2_4_2_14'
+      ],
+      'calculation': handlers.sum
+    },
     'pghq_CHCPFC_chemicals_2_4_2_18': {
       'args': [
         'pghq_CHCPFC_chemicals_2_4_2_16',
@@ -5424,7 +5444,7 @@
         'pghq_CHCPFC_chemicals_2_4_2_17'
       ],
       'calculation': handlers.divideBySum
-    },
+    },    
 
     //
     // CHCPFC Greening the OR formulas
