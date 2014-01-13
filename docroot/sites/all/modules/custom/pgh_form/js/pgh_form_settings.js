@@ -829,7 +829,9 @@
         'pghq_PFC_chemicals_2_4_2_1',
         'pghq_PFC_chemicals_2_4_2_2'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_chemicals_2_4_2_6': {
       'args': [
@@ -837,7 +839,9 @@
         'pghq_PFC_chemicals_2_4_2_4',
         'pghq_PFC_chemicals_2_4_2_5'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_chemicals_2_4_2_9': {
       'args': [
@@ -845,7 +849,9 @@
         'pghq_PFC_chemicals_2_4_2_7',
         'pghq_PFC_chemicals_2_4_2_8'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_chemicals_2_4_2_12': {
       'args': [
@@ -853,7 +859,9 @@
         'pghq_PFC_chemicals_2_4_2_10',
         'pghq_PFC_chemicals_2_4_2_11'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_chemicals_2_4_2_15': {
       'args': [
@@ -861,7 +869,9 @@
         'pghq_PFC_chemicals_2_4_2_13',
         'pghq_PFC_chemicals_2_4_2_14'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_chemicals_2_4_2_18': {
       'args': [
@@ -869,7 +879,9 @@
         'pghq_PFC_chemicals_2_4_2_16',
         'pghq_PFC_chemicals_2_4_2_17'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
 
     //
@@ -880,7 +892,9 @@
         'pghq_PFC_greeningtheOR_2_3_tB_2',
         'pghq_PFC_greeningtheOR_2_3_tB_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_greeningtheOR_2_12_2_tF_3': {
       'args': [
@@ -3345,7 +3359,9 @@
         'pghq_LTC_chemicals_2_4_2_1',
         'pghq_LTC_chemicals_2_4_2_2'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_chemicals_2_4_2_6': {
       'args': [
@@ -3353,7 +3369,9 @@
         'pghq_LTC_chemicals_2_4_2_4',
         'pghq_LTC_chemicals_2_4_2_5'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_chemicals_2_4_2_9': {
       'args': [
@@ -3361,7 +3379,9 @@
         'pghq_LTC_chemicals_2_4_2_7',
         'pghq_LTC_chemicals_2_4_2_8'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_chemicals_2_4_2_12': {
       'args': [
@@ -3369,7 +3389,9 @@
         'pghq_LTC_chemicals_2_4_2_10',
         'pghq_LTC_chemicals_2_4_2_11'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_chemicals_2_4_2_15': {
       'args': [
@@ -3377,7 +3399,9 @@
         'pghq_LTC_chemicals_2_4_2_13',
         'pghq_LTC_chemicals_2_4_2_14'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_chemicals_2_4_2_18': {
       'args': [
@@ -3385,7 +3409,9 @@
         'pghq_LTC_chemicals_2_4_2_16',
         'pghq_LTC_chemicals_2_4_2_17'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
 
     //
