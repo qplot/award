@@ -597,168 +597,216 @@
         'pghq_PFC_waste_2_3_tA_2',
         'pghq_PFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_2': {
       'args': [
         'pghq_PFC_waste_2_3_tA_3',
         'pghq_PFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_3': {
       'args': [
         'pghq_PFC_waste_2_3_tA_4',
         'pghq_PFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_4': {
       'args': [
         'pghq_PFC_waste_2_3_tA_5',
         'pghq_PFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_5': {
       'args': [
         'pghq_PFC_waste_2_3_tA_6',
         'pghq_PFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_6': {
       'args': [
         'pghq_PFC_waste_2_3_tA_7',
         'pghq_PFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_7': {
       'args': [
         'pghq_PFC_waste_4_8_tB_13',
         'pghq_PFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_8': {
       'args': [
         'pghq_PFC_waste_4_8_tB_14',
         'pghq_PFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_9': {
       'args': [
         'pghq_PFC_waste_4_8_tB_15',
         'pghq_PFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_10': {
       'args': [
         'pghq_PFC_waste_4_8_tB_16',
         'pghq_PFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_11': {
       'args': [
         'pghq_PFC_waste_4_8_tB_17',
         'pghq_PFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_12': {
       'args': [
         'pghq_PFC_waste_4_8_tB_18',
         'pghq_PFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_13': {
       'args': [
         'pghq_PFC_waste_6_2_20',
         'pghq_PFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_14': {
       'args': [
         'pghq_PFC_waste_6_2_21',
         'pghq_PFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_15': {
       'args': [
         'pghq_PFC_waste_6_2_22',
         'pghq_PFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_16': {
       'args': [
         'pghq_PFC_waste_6_2_23',
         'pghq_PFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_17': {
       'args': [
         'pghq_PFC_waste_6_2_24',
         'pghq_PFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_18': {
       'args': [
         'pghq_PFC_waste_6_2_25',
         'pghq_PFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_19': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_13',
         'pghq_PFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_20': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_14',
         'pghq_PFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_21': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_15',
         'pghq_PFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_22': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_16',
         'pghq_PFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_23': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_17',
         'pghq_PFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_10_1_tH_24': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_18',
         'pghq_PFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_PFC_waste_9_29_1tF_13': {
       'args': [
@@ -866,7 +914,7 @@
             d === 0) {
           return 0;
         } else {
-          return (1- ((c / d) / (a / b))) * 100;
+          return toFixed((1- ((c / d) / (a / b))) * 100, 1);
         }
       }
     },
@@ -3072,168 +3120,216 @@
         'pghq_LTC_waste_2_3_tA_2',
         'pghq_LTC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_2': {
       'args': [
         'pghq_LTC_waste_2_3_tA_3',
         'pghq_LTC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_3': {
       'args': [
         'pghq_LTC_waste_2_3_tA_4',
         'pghq_LTC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_4': {
       'args': [
         'pghq_LTC_waste_2_3_tA_5',
         'pghq_LTC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_5': {
       'args': [
         'pghq_LTC_waste_2_3_tA_6',
         'pghq_LTC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_6': {
       'args': [
         'pghq_LTC_waste_2_3_tA_7',
         'pghq_LTC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_7': {
       'args': [
         'pghq_LTC_waste_4_8_tB_13',
         'pghq_LTC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_8': {
       'args': [
         'pghq_LTC_waste_4_8_tB_14',
         'pghq_LTC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_9': {
       'args': [
         'pghq_LTC_waste_4_8_tB_15',
         'pghq_LTC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_10': {
       'args': [
         'pghq_LTC_waste_4_8_tB_16',
         'pghq_LTC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_11': {
       'args': [
         'pghq_LTC_waste_4_8_tB_17',
         'pghq_LTC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_12': {
       'args': [
         'pghq_LTC_waste_4_8_tB_18',
         'pghq_LTC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_13': {
       'args': [
         'pghq_LTC_waste_6_2_20',
         'pghq_LTC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_14': {
       'args': [
         'pghq_LTC_waste_6_2_21',
         'pghq_LTC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_15': {
       'args': [
         'pghq_LTC_waste_6_2_22',
         'pghq_LTC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_16': {
       'args': [
         'pghq_LTC_waste_6_2_23',
         'pghq_LTC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_17': {
       'args': [
         'pghq_LTC_waste_6_2_24',
         'pghq_LTC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_18': {
       'args': [
         'pghq_LTC_waste_6_2_25',
         'pghq_LTC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_19': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_13',
         'pghq_LTC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_20': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_14',
         'pghq_LTC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_21': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_15',
         'pghq_LTC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_22': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_16',
         'pghq_LTC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_23': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_17',
         'pghq_LTC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_LTC_waste_10_1_tH_24': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_18',
         'pghq_LTC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
 
     //
@@ -3305,7 +3401,7 @@
             d === 0) {
           return 0;
         } else {
-          return (1- ((c / d) / (a / b))) * 100;
+          return toFixed((1- ((c / d) / (a / b))) * 100, 1);
         }
       }
     },
@@ -5422,168 +5518,216 @@
         'pghq_CHCPFC_waste_2_3_tA_2',
         'pghq_CHCPFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_2': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_3',
         'pghq_CHCPFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_3': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_4',
         'pghq_CHCPFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_4': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_5',
         'pghq_CHCPFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_5': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_6',
         'pghq_CHCPFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_6': {
       'args': [
         'pghq_CHCPFC_waste_2_3_tA_7',
         'pghq_CHCPFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_7': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_13',
         'pghq_CHCPFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_8': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_14',
         'pghq_CHCPFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_9': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_15',
         'pghq_CHCPFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_10': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_16',
         'pghq_CHCPFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_11': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_17',
         'pghq_CHCPFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_12': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_18',
         'pghq_CHCPFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_13': {
       'args': [
         'pghq_CHCPFC_waste_6_2_20',
         'pghq_CHCPFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_14': {
       'args': [
         'pghq_CHCPFC_waste_6_2_21',
         'pghq_CHCPFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_15': {
       'args': [
         'pghq_CHCPFC_waste_6_2_22',
         'pghq_CHCPFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_16': {
       'args': [
         'pghq_CHCPFC_waste_6_2_23',
         'pghq_CHCPFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_17': {
       'args': [
         'pghq_CHCPFC_waste_6_2_24',
         'pghq_CHCPFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_18': {
       'args': [
         'pghq_CHCPFC_waste_6_2_25',
         'pghq_CHCPFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_19': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_13',
         'pghq_CHCPFC_waste_10_1_tG_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_20': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_14',
         'pghq_CHCPFC_waste_10_1_tG_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_21': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_15',
         'pghq_CHCPFC_waste_10_1_tG_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_22': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_16',
         'pghq_CHCPFC_waste_10_1_tG_4'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_23': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_17',
         'pghq_CHCPFC_waste_10_1_tG_5'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_10_1_tH_24': {
       'args': [
         'pghq_CHCPFC_waste_8_10_1tE_18',
         'pghq_CHCPFC_waste_10_1_tG_6'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_waste_9_29_1tF_13': {
       'args': [
@@ -5711,7 +5855,7 @@
             d === 0) {
           return 0;
         } else {
-          return (1- ((c / d) / (a / b))) * 100;
+          return toFixed((1- ((c / d) / (a / b))) * 100, 1);
         }
       }
     },
@@ -5721,7 +5865,7 @@
         'pghq_CHCPFC_food_2_1_3'
       ],
       'calculation': function() {
-	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 2);
       }
     },
     'pghq_CHCPFC_food_3_1_4': {
@@ -5730,7 +5874,7 @@
         'pghq_CHCPFC_food_3_1_3'
       ],
       'calculation': function() {
-	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 2);
       }
     },
 
