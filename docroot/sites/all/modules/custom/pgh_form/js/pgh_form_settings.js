@@ -849,7 +849,7 @@
             d === 0) {
           return 0;
         } else {
-          return Math.floor(1 - (((c / d) / (a / b)) * 100));
+          return (1- ((c / d) / (a / b))) * 100;
         }
       }
     },
@@ -3281,7 +3281,7 @@
             d === 0) {
           return 0;
         } else {
-          return Math.floor(1 - (((c / d) / (a / b)) * 100));
+          return (1- ((c / d) / (a / b))) * 100;
         }
       }
     },
