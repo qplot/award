@@ -511,6 +511,12 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   $parent_qid = $parent[0]['value'];
   $parent_nid = pgh_api_find_nid($parent_qid, 'question');
 
+  // Check for questions qhich specify themselves as their own parent. This causes a recursion loop if we don't exit here.
+  if ($parent_nid == $question_nid) {
+    drupal_set_message(t('Question %qid specifies itself as parent question id.', array('%qid' => $parent_qid)), 'error');
+    return FALSE;
+  }
+
   $question_parent_required_value = field_get_items('node', $question, 'field_question_parent_value');
 
   // Unbox the required value.
