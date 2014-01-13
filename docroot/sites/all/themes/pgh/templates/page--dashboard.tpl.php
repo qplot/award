@@ -293,7 +293,9 @@
             ?>
           </ul>
 
-          <p class="user-message">Please contact a PGH Administrator if you need help with a user account.</p>
+          <p class="user-message">
+            <?php print t('Please contact a PGH Administrator if you need help with a user account.'); ?>
+          </p>
         </div>
 
         <?php endif; ?>
@@ -334,8 +336,9 @@
 
       <article class="node clearfix">
 
-        <p>You are currently not an administrator of any Work Group or Business Unit.<br />
-        Please contact a Practice Greenhealth administrator for help.</p>
+        <p><?php print t('You are currently not an administrator of any Work Group or Business Unit.'); ?></p>
+        <br />
+        <p><?php print t('Please contact a Practice Greenhealth administrator for help.'); ?></p>
 
       </article>
 

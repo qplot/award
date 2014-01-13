@@ -227,15 +227,36 @@ function pgh_application_node_delete($node) {
     return;
   }
 
-  $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+  // $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
 
   // Remove the deleted Application from the parent Business Unit.
-  for ($i = 0; $i < count($business_unit_wrapper->field_applications->value()); $i++) {
-    if ($business_unit_wrapper->field_applications[$i]->value()->nid == $node->nid) {
-      $business_unit_wrapper->field_applications[$i]->set(NULL);
-      $business_unit_wrapper->save();
-      break;
+  // for ($i = 0; $i < count($business_unit_wrapper->field_applications->value()); $i++) {
+  //   if ($business_unit_wrapper->field_applications[$i]->value()->nid == $node->nid) {
+  //     $business_unit_wrapper->field_applications[$i]->set(NULL);
+  //     $business_unit_wrapper->save();
+  //     break;
+  //   }
+  // }
+
+  // Remove deleted application from the parent business unit
+  // The reason i have to do the following way is to make sure
+  // We don't get a hole in the multiple value field after deletion
+  // And I don't know how to do wrapper way
+  if (!empty($business_unit->field_applications['und'])) {
+    $applications = &$business_unit->field_applications['und'];
+    foreach ($applications as $id => $value) {
+      if ($value['target_id'] == $node->nid) {
+        array_splice($applications, $id, 1);
+        node_save($business_unit);
+        break;
+      }
     }
+  }
+
+  // Remove all response from this application
+  $responses = pgh_api_responses_ids_for_application($node->nid);
+  if ($responses) {
+    node_delete_multiple($responses);
   }
 }
 
