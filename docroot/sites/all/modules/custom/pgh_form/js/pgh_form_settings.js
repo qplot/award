@@ -3,6 +3,23 @@
 
   Drupal.settings.pghForm = {};
 
+  //
+  // This implementation ensures that values match across browsers.
+  // http://stackoverflow.com/questions/2221167/javascript-formatting-a-rounded-number-to-n-decimals/2909252#2909252
+  // http://www.codingforums.com/showthread.php?t=102421
+  //
+  var toFixed = function(val, prec) {
+    var precision = prec || 0,
+    neg = value < 0,
+    power = Math.pow(10, precision),
+    value = Math.round(val * power),
+    integral = String((neg ? Math.ceil : Math.floor)(value / power)),
+    fraction = String((neg ? -value : value) % power),
+    padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
+
+    return precision ? integral + '.' +  padding + fraction : integral;
+  };
+
   var handlers = {
     //
     // Takes one or more sets of numbers as arguments and returns their sum.
@@ -2402,16 +2419,20 @@
     'pghq_PR_greenbuilding_4_2_t_3': {
       'args': [
         'pghq_PR_greenbuilding_4_2_t_1',
-        'pghq_PR_greenbuilding_4_2_t_2'
+        'pghq_PR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 	  'pghq_PR_greenbuilding_4_2_t_6': {
       'args': [
         'pghq_PR_greenbuilding_4_2_t_4',
-        'pghq_PR_greenbuilding_4_2_t_5'
+        'pghq_PR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_PR_greenbuilding_4_2_t_7': {
       'args': [
@@ -4730,16 +4751,20 @@
     'pghq_CHCPR_greenbuilding_4_2_t_3': {
       'args': [
         'pghq_CHCPR_greenbuilding_4_2_t_1',
-        'pghq_CHCPR_greenbuilding_4_2_t_2'
+        'pghq_CHCPR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 	  'pghq_CHCPR_greenbuilding_4_2_t_6': {
       'args': [
         'pghq_CHCPR_greenbuilding_4_2_t_4',
-        'pghq_CHCPR_greenbuilding_4_2_t_5'
+        'pghq_CHCPR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_CHCPR_greenbuilding_4_2_t_7': {
       'args': [
@@ -6946,7 +6971,7 @@
         'pghq_SFC_2_1'
       ],
       'calculation': function() {
-	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 2);
       }
     }
   };
