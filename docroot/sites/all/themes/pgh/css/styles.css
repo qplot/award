@@ -457,6 +457,7 @@ h1 { color: #00674e; font-family: "Cabin", Helvetica, Arial, sans-serif; font-si
 h2 { color: #00674e; font-family: "Cabin", Helvetica, Arial, sans-serif; font-size: 1.2em; font-weight: normal; }
 
 h3 { font-size: 1.1em; font-weight: normal; }
+h3.legend { font-weight: bold; }
 
 .field-name-body div.field-item { margin: 1.4em 0; }
 

@@ -481,7 +481,7 @@ function pgh_permissions_node_delete($node) {
 
   // If the Business Unit doesn't have any Work Groups (maybe it was migrated or created manually)
   // do nothing.
-  if (!$work_group) {
+  if (!$work_groups) {
     return;
   }
 
