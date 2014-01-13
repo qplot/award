@@ -1614,13 +1614,12 @@
         'pghq_PFC_climate_1_5_5',
         'pghq_PFC_climate_1_5_6',
         'pghq_PFC_climate_1_5_7',
-        'pghq_PFC_climate_1_5_8',
         'pghq_PFC_climate_1_5_9',
         'pghq_PFC_climate_1_5_10',
         'pghq_PFC_climate_1_5_11',
         'pghq_PFC_climate_1_5_12',
         'pghq_PFC_climate_1_5_13',
-        'pghq_PFC_climate_1_5_15',
+        'pghq_PFC_climate_1_5_14',
         'pghq_PFC_climate_1_5_16',
         'pghq_PFC_climate_1_5_17',
         'pghq_PFC_climate_1_5_18',
@@ -1628,7 +1627,7 @@
         'pghq_PFC_climate_1_5_20',
         'pghq_PFC_climate_1_5_21',
         'pghq_PFC_climate_1_5_22',
-        'pghq_PFC_climate_1_5_23'
+        'pghq_PFC_climate_1_5_24'
       ],
       'calculation': handlers.sum
     },
@@ -1659,16 +1658,20 @@
     'pghq_PFC_greenbuilding_4_2_tC_3': {
       'args': [
         'pghq_PFC_greenbuilding_4_2_tC_1',
-        'pghq_PFC_greenbuilding_4_2_tC_2'
+        'pghq_PFC_greenbuilding_4_2_tC_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 	  'pghq_PFC_greenbuilding_4_2_tC_6': {
       'args': [
         'pghq_PFC_greenbuilding_4_2_tC_4',
-        'pghq_PFC_greenbuilding_4_2_tC_5'
+        'pghq_PFC_greenbuilding_4_2_tC_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_PFC_greenbuilding_4_2_tC_7': {
       'args': [
@@ -4044,13 +4047,12 @@
         'pghq_LTC_climate_1_5_5',
         'pghq_LTC_climate_1_5_6',
         'pghq_LTC_climate_1_5_7',
-        'pghq_LTC_climate_1_5_8',
         'pghq_LTC_climate_1_5_9',
         'pghq_LTC_climate_1_5_10',
         'pghq_LTC_climate_1_5_11',
         'pghq_LTC_climate_1_5_12',
         'pghq_LTC_climate_1_5_13',
-        'pghq_LTC_climate_1_5_15',
+        'pghq_LTC_climate_1_5_14',
         'pghq_LTC_climate_1_5_16',
         'pghq_LTC_climate_1_5_17',
         'pghq_LTC_climate_1_5_18',
@@ -4058,7 +4060,7 @@
         'pghq_LTC_climate_1_5_20',
         'pghq_LTC_climate_1_5_21',
         'pghq_LTC_climate_1_5_22',
-        'pghq_LTC_climate_1_5_23'
+        'pghq_LTC_climate_1_5_24'
       ],
       'calculation': handlers.sum
     },
@@ -4089,16 +4091,20 @@
     'pghq_LTC_greenbuilding_4_2_tC_3': {
       'args': [
         'pghq_LTC_greenbuilding_4_2_tC_1',
-        'pghq_LTC_greenbuilding_4_2_tC_2'
+        'pghq_LTC_greenbuilding_4_2_tC_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 	  'pghq_LTC_greenbuilding_4_2_tC_6': {
       'args': [
         'pghq_LTC_greenbuilding_4_2_tC_4',
-        'pghq_LTC_greenbuilding_4_2_tC_5'
+        'pghq_LTC_greenbuilding_4_2_tC_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_LTC_greenbuilding_4_2_tC_7': {
       'args': [
@@ -6437,13 +6443,12 @@
         'pghq_CHCPFC_climate_1_5_5',
         'pghq_CHCPFC_climate_1_5_6',
         'pghq_CHCPFC_climate_1_5_7',
-        'pghq_CHCPFC_climate_1_5_8',
         'pghq_CHCPFC_climate_1_5_9',
         'pghq_CHCPFC_climate_1_5_10',
         'pghq_CHCPFC_climate_1_5_11',
         'pghq_CHCPFC_climate_1_5_12',
         'pghq_CHCPFC_climate_1_5_13',
-        'pghq_CHCPFC_climate_1_5_15',
+        'pghq_CHCPFC_climate_1_5_14',
         'pghq_CHCPFC_climate_1_5_16',
         'pghq_CHCPFC_climate_1_5_17',
         'pghq_CHCPFC_climate_1_5_18',
@@ -6451,7 +6456,7 @@
         'pghq_CHCPFC_climate_1_5_20',
         'pghq_CHCPFC_climate_1_5_21',
         'pghq_CHCPFC_climate_1_5_22',
-        'pghq_CHCPFC_climate_1_5_23'
+        'pghq_CHCPFC_climate_1_5_24'
       ],
       'calculation': handlers.sum
     },
