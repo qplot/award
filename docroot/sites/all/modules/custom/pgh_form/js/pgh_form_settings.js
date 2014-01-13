@@ -2402,16 +2402,20 @@
     'pghq_PR_greenbuilding_4_2_t_3': {
       'args': [
         'pghq_PR_greenbuilding_4_2_t_1',
-        'pghq_PR_greenbuilding_4_2_t_2'
+        'pghq_PR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 	  'pghq_PR_greenbuilding_4_2_t_6': {
       'args': [
         'pghq_PR_greenbuilding_4_2_t_4',
-        'pghq_PR_greenbuilding_4_2_t_5'
+        'pghq_PR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_PR_greenbuilding_4_2_t_7': {
       'args': [
@@ -4730,16 +4734,20 @@
     'pghq_CHCPR_greenbuilding_4_2_t_3': {
       'args': [
         'pghq_CHCPR_greenbuilding_4_2_t_1',
-        'pghq_CHCPR_greenbuilding_4_2_t_2'
+        'pghq_CHCPR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
 	  'pghq_CHCPR_greenbuilding_4_2_t_6': {
       'args': [
         'pghq_CHCPR_greenbuilding_4_2_t_4',
-        'pghq_CHCPR_greenbuilding_4_2_t_5'
+        'pghq_CHCPR_greenbuilding_4_2_t_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_CHCPR_greenbuilding_4_2_t_7': {
       'args': [
