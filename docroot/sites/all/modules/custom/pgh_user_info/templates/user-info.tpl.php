@@ -17,7 +17,7 @@
       array(
         'style_name' => 'thumbnail',
         'path' => $user->picture->uri,
-        'attributes' => array('class' => 'avatar')
+        'attributes' => array('class' => 'avatar', 'width' => '72', 'height' => '72')
       )
     );
 ?>
