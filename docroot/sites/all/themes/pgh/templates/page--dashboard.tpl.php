@@ -14,7 +14,7 @@
   <header class="header" id="header" role="banner">
 
     <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image" /></a>
+      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image" width="250" height="108"></a>
     <?php endif; ?>
 
     <?php if ($site_name || $site_slogan): ?>
@@ -293,7 +293,9 @@
             ?>
           </ul>
 
-          <p class="user-message">Please contact a PGH Administrator if you need help with a user account.</p>
+          <p class="user-message">
+            <?php print t('Please contact a PGH Administrator if you need help with a user account.'); ?>
+          </p>
         </div>
 
         <?php endif; ?>
@@ -334,8 +336,9 @@
 
       <article class="node clearfix">
 
-        <p>You are currently not an administrator of any Work Group or Business Unit.<br />
-        Please contact a Practice Greenhealth administrator for help.</p>
+        <p><?php print t('You are currently not an administrator of any Work Group or Business Unit.'); ?></p>
+        <br />
+        <p><?php print t('Please contact a Practice Greenhealth administrator for help.'); ?></p>
 
       </article>
 

@@ -308,6 +308,31 @@ function pgh_api_validate_question_value($validations, $value) {
 }
 
 /**
+ * Returns all NIDs of responses for one application
+ *
+ * @param int $app_id
+ *   NID for a specific application instance.
+ *
+ * @return array of int
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_api_responses_ids_for_application($app_id) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'response')
+                  ->fieldCondition('field_response_application', 'target_id', $app_id)
+                  ->execute();
+  if (!empty($result['node'])) {
+    $keys = array_keys($result['node']);
+    return $keys;
+  }
+  else {
+    return 0;
+  }
+}
+
+/**
  * Returns the NID for a response based on a supplied application NID and question NID.
  *
  * @param int $app_id
@@ -485,6 +510,12 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   // Unbox the field value.
   $parent_qid = $parent[0]['value'];
   $parent_nid = pgh_api_find_nid($parent_qid, 'question');
+
+  // Check for questions qhich specify themselves as their own parent. This causes a recursion loop if we don't exit here.
+  if ($parent_nid == $question_nid) {
+    drupal_set_message(t('Question %qid specifies itself as parent question id.', array('%qid' => $parent_qid)), 'error');
+    return FALSE;
+  }
 
   $question_parent_required_value = field_get_items('node', $question, 'field_question_parent_value');
 
