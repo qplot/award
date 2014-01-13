@@ -15,7 +15,7 @@
 
     <?php $application_type = $node->field_application_type['und'][0]['value']; ?>
     <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo <?php print $application_type; ?>" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image"></a>
+      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo <?php print $application_type; ?>" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image" width="250" height="108"></a>
     <?php endif; ?>
 
     <?php if ($site_name || $site_slogan): ?>
