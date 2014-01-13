@@ -32,6 +32,10 @@ h2 {
 h3 {
   font-size: 1.1em;
   font-weight: normal;
+
+  &.legend {
+    font-weight: bold;
+  }
 }
 
 .field-name-body div.field-item { // replaces the P tag margin

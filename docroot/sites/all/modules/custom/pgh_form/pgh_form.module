@@ -221,7 +221,7 @@ function pgh_form_category_page($application, $category_id) {
 
     drupal_set_title($application_title . ': ' . $category_title);
 
-    return drupal_get_form('pgh_application_form', $application->nid, $category_id);;
+    return drupal_get_form('pgh_application_form', $application->nid, $category_id);
   }
   else {
     drupal_not_found();
