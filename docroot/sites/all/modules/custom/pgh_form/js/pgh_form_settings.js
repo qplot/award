@@ -951,7 +951,9 @@
             c === 0 ||
             d === 0) {
           return 0;
-        } else {
+        } else if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)){
+      		return 0;
+      	} else {
           return toFixed((1- ((c / d) / (a / b))) * 100, 1);
         }
       }
@@ -3445,7 +3447,9 @@
             c === 0 ||
             d === 0) {
           return 0;
-        } else {
+        } else if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)){
+      		return 0;
+      	} else {
           return toFixed((1- ((c / d) / (a / b))) * 100, 1);
         }
       }
@@ -5896,7 +5900,9 @@
             c === 0 ||
             d === 0) {
           return 0;
-        } else {
+        } else if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)){
+      		return 0;
+      	} else {
           return toFixed((1- ((c / d) / (a / b))) * 100, 1);
         }
       }
