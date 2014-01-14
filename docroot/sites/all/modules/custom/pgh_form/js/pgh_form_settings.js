@@ -873,6 +873,26 @@
 	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
       }
     },
+    'pghq_PFC_chemicals_2_4_2_16': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_1',
+        'pghq_PFC_chemicals_2_4_2_4',
+        'pghq_PFC_chemicals_2_4_2_14'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PFC_chemicals_2_4_2_17': {
+      'args': [
+        'pghq_PFC_chemicals_2_4_2_13',
+        'pghq_PFC_chemicals_2_4_2_13',
+        'pghq_PFC_chemicals_2_4_2_14'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
+    },
     'pghq_PFC_chemicals_2_4_2_18': {
       'args': [
         'pghq_PFC_chemicals_2_4_2_16',
@@ -1514,7 +1534,7 @@
         'pghq_PFC_water_1_5_1_3' // Divisor 2
       ],
       'calculation': function (a, b, c, d, e, f) {
-      	return handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f);
+      	return toFixed(handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f), 1);
       }
     },
     'pghq_PFC_water_1_12': {
@@ -1527,19 +1547,21 @@
     },
     'pghq_PFC_water_2_1tB_3': {
       'args': [
-        'pghq_PFC_water_2_1tB_2',
         'pghq_PFC_water_2_1tB_1',
         'pghq_PFC_water_2_1tB_7'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_PFC_water_2_1tB_6': {
       'args': [
-        'pghq_PFC_water_2_1tB_5',
         'pghq_PFC_water_2_1tB_4',
         'pghq_PFC_water_2_1tB_7'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_PFC_water_2_1tB_7': {
       'args': [
@@ -1551,111 +1573,101 @@
     'pghq_PFC_water_2_3_tC_4': {
       'args': [
         'pghq_PFC_water_2_3_tC_3', // Units 1
-        'pghq_PFC_water_2_3_tC_2', // Amount 1
-        'pghq_PFC_water_1_5_1_16', // Units 2
-        'pghq_PFC_water_1_5_1_15', // Amount 2
+        'pghq_PFC_water_2_3_tC_2', // Meter Amount
+        'pghq_PFC_water_1_5_1_15' // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_8': {
       'args': [
-        'pghq_PFC_water_2_3_tC_7', // Units 1
-        'pghq_PFC_water_2_3_tC_6', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_7', // Units
+        'pghq_PFC_water_2_3_tC_6', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_12': {
       'args': [
-        'pghq_PFC_water_2_3_tC_11', // Units 1
-        'pghq_PFC_water_2_3_tC_10', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_11', // Units
+        'pghq_PFC_water_2_3_tC_10', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_16': {
       'args': [
-        'pghq_PFC_water_2_3_tC_15', // Units 1
-        'pghq_PFC_water_2_3_tC_14', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_15', // Units
+        'pghq_PFC_water_2_3_tC_14', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_20': {
       'args': [
-        'pghq_PFC_water_2_3_tC_19', // Units 1
-        'pghq_PFC_water_2_3_tC_18', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_19', // Units
+        'pghq_PFC_water_2_3_tC_18', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_24': {
       'args': [
-        'pghq_PFC_water_2_3_tC_23', // Units 1
-        'pghq_PFC_water_2_3_tC_22', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_23', // Units
+        'pghq_PFC_water_2_3_tC_22', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_28': {
       'args': [
-        'pghq_PFC_water_2_3_tC_27', // Units 1
-        'pghq_PFC_water_2_3_tC_26', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_27', // Units
+        'pghq_PFC_water_2_3_tC_26', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_32': {
       'args': [
-        'pghq_PFC_water_2_3_tC_31', // Units 1
-        'pghq_PFC_water_2_3_tC_30', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_31', // Units
+        'pghq_PFC_water_2_3_tC_30', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_36': {
       'args': [
-        'pghq_PFC_water_2_3_tC_35', // Units 1
-        'pghq_PFC_water_2_3_tC_34', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_35', // Units
+        'pghq_PFC_water_2_3_tC_34', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_3_tC_40': {
       'args': [
-        'pghq_PFC_water_2_3_tC_39', // Units 1
-        'pghq_PFC_water_2_3_tC_38', // Amount 1
-        'pghq_PFC_water_1_5_1_14', // Units 2
-        'pghq_PFC_water_1_5_1_13', // Amount 2
+        'pghq_PFC_water_2_3_tC_39', // Units
+        'pghq_PFC_water_2_3_tC_38', // Meter Amount
+        'pghq_PFC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_PFC_water_2_5': {
@@ -4015,7 +4027,7 @@
         'pghq_LTC_water_1_5_1_3' // Divisor 2
       ],
       'calculation': function (a, b, c, d, e, f) {
-      	return handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f);
+      	return toFixed(handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f), 1);
       }
     },
     'pghq_LTC_water_1_12': {
@@ -4031,14 +4043,18 @@
         'pghq_LTC_water_2_1tB_1',
         'pghq_LTC_water_2_1tB_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_LTC_water_2_1tB_6': {
       'args': [
         'pghq_LTC_water_2_1tB_4',
         'pghq_LTC_water_2_1tB_7'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+      }
     },
     'pghq_LTC_water_2_1tB_7': {
       'args': [
@@ -4047,114 +4063,104 @@
       ],
       'calculation': handlers.sum
     },
-    'pghq_LTC_water_2_3_tC_3': {
+    'pghq_LTC_water_2_3_tC_4': {
       'args': [
-        'pghq_LTC_water_2_3_tC_2', // Units 1
-        'pghq_LTC_water_2_3_tC_1', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_3', // Units 1
+        'pghq_LTC_water_2_3_tC_2', // Meter Amount
+        'pghq_LTC_water_1_5_1_15' // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
-    'pghq_LTC_water_2_3_tC_6': {
+    'pghq_LTC_water_2_3_tC_8': {
       'args': [
-        'pghq_LTC_water_2_3_tC_5', // Units 1
-        'pghq_LTC_water_2_3_tC_4', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_7', // Units
+        'pghq_LTC_water_2_3_tC_6', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
-      }
-    },
-    'pghq_LTC_water_2_3_tC_9': {
-      'args': [
-        'pghq_LTC_water_2_3_tC_8', // Units 1
-        'pghq_LTC_water_2_3_tC_7', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
-      ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_LTC_water_2_3_tC_12': {
       'args': [
-        'pghq_LTC_water_2_3_tC_11', // Units 1
-        'pghq_LTC_water_2_3_tC_10', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_11', // Units
+        'pghq_LTC_water_2_3_tC_10', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
-    'pghq_LTC_water_2_3_tC_15': {
+    'pghq_LTC_water_2_3_tC_16': {
       'args': [
-        'pghq_LTC_water_2_3_tC_14', // Units 1
-        'pghq_LTC_water_2_3_tC_13', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_15', // Units
+        'pghq_LTC_water_2_3_tC_14', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
-    'pghq_LTC_water_2_3_tC_18': {
+    'pghq_LTC_water_2_3_tC_20': {
       'args': [
-        'pghq_LTC_water_2_3_tC_17', // Units 1
-        'pghq_LTC_water_2_3_tC_16', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_19', // Units
+        'pghq_LTC_water_2_3_tC_18', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
-      }
-    },
-    'pghq_LTC_water_2_3_tC_21': {
-      'args': [
-        'pghq_LTC_water_2_3_tC_20', // Units 1
-        'pghq_LTC_water_2_3_tC_19', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
-      ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_LTC_water_2_3_tC_24': {
       'args': [
-        'pghq_LTC_water_2_3_tC_23', // Units 1
-        'pghq_LTC_water_2_3_tC_22', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_23', // Units
+        'pghq_LTC_water_2_3_tC_22', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
-    'pghq_LTC_water_2_3_tC_27': {
+    'pghq_LTC_water_2_3_tC_28': {
       'args': [
-        'pghq_LTC_water_2_3_tC_26', // Units 1
-        'pghq_LTC_water_2_3_tC_25', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_27', // Units
+        'pghq_LTC_water_2_3_tC_26', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
-    'pghq_LTC_water_2_3_tC_30': {
+    'pghq_LTC_water_2_3_tC_32': {
       'args': [
-        'pghq_LTC_water_2_3_tC_29', // Units 1
-        'pghq_LTC_water_2_3_tC_28', // Amount 1
-        'pghq_LTC_water_1_5_1_16', // Units 2
-        'pghq_LTC_water_1_5_1_15', // Amount 2
+        'pghq_LTC_water_2_3_tC_31', // Units
+        'pghq_LTC_water_2_3_tC_30', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
       ],
-      'calculation': function (a, b, c, d) {
-      	return handlers.convertGallons(a, b) / handlers.convertGallons(c, d);
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
+      }
+    },
+    'pghq_LTC_water_2_3_tC_36': {
+      'args': [
+        'pghq_LTC_water_2_3_tC_35', // Units
+        'pghq_LTC_water_2_3_tC_34', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
+      ],
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
+      }
+    },
+    'pghq_LTC_water_2_3_tC_40': {
+      'args': [
+        'pghq_LTC_water_2_3_tC_39', // Units
+        'pghq_LTC_water_2_3_tC_38', // Meter Amount
+        'pghq_LTC_water_1_5_1_15', // Annual Amount
+      ],
+      'calculation': function (a, b, c) {
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_LTC_water_2_5': {
@@ -6471,7 +6477,7 @@
         'pghq_CHCPFC_water_1_5_1_3' // Divisor 2
       ],
       'calculation': function (a, b, c, d, e, f) {
-      	return handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f);
+      	return toFixed(handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f), 1);
       }
     },
     'pghq_CHCPFC_water_1_12': {
@@ -6514,7 +6520,7 @@
         'pghq_CHCPFC_water_1_5_1_15' // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_8': {
@@ -6524,7 +6530,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_12': {
@@ -6534,7 +6540,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_16': {
@@ -6544,7 +6550,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_20': {
@@ -6554,7 +6560,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_24': {
@@ -6564,7 +6570,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_28': {
@@ -6574,7 +6580,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_32': {
@@ -6584,7 +6590,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_36': {
@@ -6594,7 +6600,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_3_tC_40': {
@@ -6604,7 +6610,7 @@
         'pghq_CHCPFC_water_1_5_1_15', // Annual Amount
       ],
       'calculation': function (a, b, c) {
-      	return handlers.convertGallons(a, b) / c;
+      	return toFixed (handlers.convertGallons(a, b) / c, 1);
       }
     },
     'pghq_CHCPFC_water_2_5': {
