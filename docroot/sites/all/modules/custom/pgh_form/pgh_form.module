@@ -196,6 +196,15 @@ function pgh_form_application_page($application) {
 function pgh_form_category_page($application, $category_id) {
   // Load the app by app_id.
   if ($application) {
+    // See: https://ac.designhammer.net/projects/practice-greenhealth-phase-1/tasks/237
+    // for discussion about this shim.
+    $shim_options = array(
+      'group' => JS_LIBRARY,
+      'weight' => -30,
+      'scope' => 'header'
+    );
+    drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/shim_function_prototype_name.js', $shim_options);
+
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form_settings.js', array('weight' => 2, 'scope' => 'footer'));
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form.js', array('weight' => 2, 'scope' => 'footer'));
 
