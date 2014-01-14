@@ -1180,7 +1180,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_PFC_energy_2_12': {
@@ -1188,7 +1188,9 @@
         'pghq_PFC_energy_2_11_18',
         'pghq_PFC_energy_2_11_20'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 1);
+      }
     },
     'pghq_PFC_energy_3_1_1_1': {
       'args': [
@@ -3679,7 +3681,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_LTC_energy_2_12': {
@@ -3687,7 +3689,9 @@
         'pghq_LTC_energy_2_11_18',
         'pghq_LTC_energy_2_11_20'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 1);
+      }
     },
     'pghq_LTC_energy_3_1_1_1': {
       'args': [
@@ -6133,7 +6137,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_CHCPFC_energy_2_12': {
@@ -6141,7 +6145,9 @@
         'pghq_CHCPFC_energy_2_11_18',
         'pghq_CHCPFC_energy_2_11_20'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 1);
+      }
     },
     'pghq_CHCPFC_energy_3_1_1_1': {
       'args': [
