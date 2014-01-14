@@ -1702,7 +1702,7 @@
     //
     // PFC Climate formulas
     //
-    'pghq_PFC_climate_1_5_24': {
+    'pghq_PFC_climate_1_5_25': {
       'args': [
         'pghq_PFC_climate_1_5_1',
         'pghq_PFC_climate_1_5_2',
@@ -4196,7 +4196,7 @@
     //
     // LTC Climate formulas
     //
-    'pghq_LTC_climate_1_5_24': {
+    'pghq_LTC_climate_1_5_25': {
       'args': [
         'pghq_LTC_climate_1_5_1',
         'pghq_LTC_climate_1_5_2',
@@ -6647,7 +6647,7 @@
     //
     // CHCPFC Climate formulas
     //
-    'pghq_CHCPFC_climate_1_5_24': {
+    'pghq_CHCPFC_climate_1_5_25': {
       'args': [
         'pghq_CHCPFC_climate_1_5_1',
         'pghq_CHCPFC_climate_1_5_2',
