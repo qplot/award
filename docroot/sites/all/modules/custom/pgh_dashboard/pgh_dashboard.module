@@ -35,3 +35,26 @@ function pgh_dashboard_menu() {
 function pgh_dashboard_page() {
   return '';
 }
+
+/**
+ * Make view tab disappear when editing workgroup
+ *
+ * @author Fang Jin <fang@designhammer.com>
+*/
+function pgh_dashboard_menu_alter(&$items) {
+  $items['node/%node/view']['access callback'] = 'pgh_dashboard_disable_node_view_tab';
+  $items['node/%node/view']['access arguments'] = array(1);
+  // dsm($items);
+}
+
+/**
+ * Access control function to just alter node view tab
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_dashboard_disable_node_view_tab($node) {
+  if ($node->type == 'business_unit') {
+    return false;
+  }
+  return true;
+}
