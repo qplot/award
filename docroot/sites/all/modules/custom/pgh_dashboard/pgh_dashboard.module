@@ -8,7 +8,7 @@
  */
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function pgh_dashboard_menu() {
   $items = array();
@@ -26,7 +26,8 @@ function pgh_dashboard_menu() {
 /**
  * Page callback for the dashboard.
  *
- * Currently no additional processing occurs here. We define the menu link so that the Drupal menu system returns
+ * Currently no additional processing occurs here. 
+ * We define the menu link so that the Drupal menu system returns
  * 200 instead of 404 for our page__dashboard.tpl.php template.
  *
  * @return string
@@ -37,24 +38,23 @@ function pgh_dashboard_page() {
 }
 
 /**
- * Make view tab disappear when editing workgroup
+ * Make view tab disappear when editing workgroup.
  *
  * @author Fang Jin <fang@designhammer.com>
-*/
+ */
 function pgh_dashboard_menu_alter(&$items) {
   $items['node/%node/view']['access callback'] = 'pgh_dashboard_disable_node_view_tab';
   $items['node/%node/view']['access arguments'] = array(1);
-  // dsm($items);
 }
 
 /**
- * Access control function to just alter node view tab
+ * Access control function to just alter node view tab.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_dashboard_disable_node_view_tab($node) {
   if ($node->type == 'business_unit') {
-    return false;
+    return FALSE;
   }
-  return true;
+  return TRUE;
 }
