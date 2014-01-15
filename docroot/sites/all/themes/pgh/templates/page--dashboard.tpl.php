@@ -78,7 +78,6 @@
     <?php endif; ?>
   </div></div>
 
-
   <?php
     // Check if user is part of a work group.
     if ($work_group):
@@ -86,6 +85,8 @@
 
   <div id="workgroup-wrap"><div id="workgroup-wrap-inner">
   <div id="workgroup">
+
+    <?php print render($page['content_top']); ?>
 
     <div id="workgroup-content" class="column">
       <p class="dashboard-label">Work Group</p>
@@ -108,6 +109,8 @@
       ?>
     <?php endif; ?>
     </div>
+
+    <?php print render($page['content_bottom']); ?>
 
   </div><!-- /#workgroup -->
   </div></div>
