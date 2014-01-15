@@ -47,7 +47,9 @@
     hide($content['field_website_url']);
     hide($content['field_phone']);
 
+    print render($content_top);
     print render($content);
+    print render($content_bottom);
   ?>
 
   <div class="info-block">

@@ -877,21 +877,21 @@
       'args': [
         'pghq_PFC_chemicals_2_4_2_1',
         'pghq_PFC_chemicals_2_4_2_4',
-        'pghq_PFC_chemicals_2_4_2_14'
+        'pghq_PFC_chemicals_2_4_2_7',
+        'pghq_PFC_chemicals_2_4_2_10',
+        'pghq_PFC_chemicals_2_4_2_13'
       ],
-      'calculation': function() {
-	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
-      }
+      'calculation': handlers.sum
     },
     'pghq_PFC_chemicals_2_4_2_17': {
       'args': [
-        'pghq_PFC_chemicals_2_4_2_13',
-        'pghq_PFC_chemicals_2_4_2_13',
+        'pghq_PFC_chemicals_2_4_2_2',
+        'pghq_PFC_chemicals_2_4_2_5',
+        'pghq_PFC_chemicals_2_4_2_8',
+        'pghq_PFC_chemicals_2_4_2_11',
         'pghq_PFC_chemicals_2_4_2_14'
       ],
-      'calculation': function() {
-	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
-      }
+      'calculation': handlers.sum
     },
     'pghq_PFC_chemicals_2_4_2_18': {
       'args': [
@@ -3420,6 +3420,26 @@
 	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
       }
     },
+    'pghq_LTC_chemicals_2_4_2_16': {
+      'args': [
+        'pghq_LTC_chemicals_2_4_2_1',
+        'pghq_LTC_chemicals_2_4_2_4',
+        'pghq_LTC_chemicals_2_4_2_7',
+        'pghq_LTC_chemicals_2_4_2_10',
+        'pghq_LTC_chemicals_2_4_2_13'
+      ],
+      'calculation': handlers.sum
+    },
+    'pghq_LTC_chemicals_2_4_2_17': {
+      'args': [
+        'pghq_LTC_chemicals_2_4_2_2',
+        'pghq_LTC_chemicals_2_4_2_5',
+        'pghq_LTC_chemicals_2_4_2_8',
+        'pghq_LTC_chemicals_2_4_2_11',
+        'pghq_LTC_chemicals_2_4_2_14'
+      ],
+      'calculation': handlers.sum
+    },
     'pghq_LTC_chemicals_2_4_2_18': {
       'args': [
         'pghq_LTC_chemicals_2_4_2_16',
@@ -5796,7 +5816,9 @@
         'pghq_CHCPFC_chemicals_2_4_2_1',
         'pghq_CHCPFC_chemicals_2_4_2_2'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_chemicals_2_4_2_6': {
       'args': [
@@ -5804,7 +5826,9 @@
         'pghq_CHCPFC_chemicals_2_4_2_4',
         'pghq_CHCPFC_chemicals_2_4_2_5'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_chemicals_2_4_2_9': {
       'args': [
@@ -5812,7 +5836,9 @@
         'pghq_CHCPFC_chemicals_2_4_2_7',
         'pghq_CHCPFC_chemicals_2_4_2_8'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_chemicals_2_4_2_12': {
       'args': [
@@ -5820,7 +5846,9 @@
         'pghq_CHCPFC_chemicals_2_4_2_10',
         'pghq_CHCPFC_chemicals_2_4_2_11'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_chemicals_2_4_2_15': {
       'args': [
@@ -5828,7 +5856,9 @@
         'pghq_CHCPFC_chemicals_2_4_2_13',
         'pghq_CHCPFC_chemicals_2_4_2_14'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },
     'pghq_CHCPFC_chemicals_2_4_2_16': {
       'args': [
@@ -5856,7 +5886,9 @@
         'pghq_CHCPFC_chemicals_2_4_2_16',
         'pghq_CHCPFC_chemicals_2_4_2_17'
       ],
-      'calculation': handlers.divideBySum
+      'calculation': function() {
+	      return toFixed(handlers.divideBySum.apply(this, arguments) * 100, 1);
+      }
     },    
 
     //
