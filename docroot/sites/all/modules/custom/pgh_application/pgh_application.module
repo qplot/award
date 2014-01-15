@@ -241,7 +241,7 @@ function pgh_application_node_delete($node) {
   // Remove deleted application from the parent business unit
   // The reason i have to do the following way is to make sure
   // We don't get a hole in the multiple value field after deletion
-  // And I don't know how to do wrapper way
+  // And I don't know how to do wrapper way.
   if (!empty($business_unit->field_applications['und'])) {
     $applications = &$business_unit->field_applications['und'];
     foreach ($applications as $id => $value) {
@@ -253,7 +253,7 @@ function pgh_application_node_delete($node) {
     }
   }
 
-  // Remove all response from this application
+  // Remove all response from this application.
   $responses = pgh_api_responses_ids_for_application($node->nid);
   if ($responses) {
     node_delete_multiple($responses);
