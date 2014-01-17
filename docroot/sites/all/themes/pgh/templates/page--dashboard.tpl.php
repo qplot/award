@@ -91,7 +91,15 @@
     <div id="workgroup-content" class="column">
       <p class="dashboard-label">Work Group</p>
       <?php if (entity_access('update', 'node', $work_group)): ?>
-        <span class="edit-content"><a href="/node/<?php print $work_group->vid; ?>/edit">Edit</a></span>
+        <span class="edit-content">
+          <?php 
+            print l(
+              'Edit', 
+              'node/' . $work_group->vid . '/edit',
+              array('query' => drupal_get_destination())
+            );
+          ?>          
+        </span>
       <?php endif; ?>
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
 
