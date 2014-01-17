@@ -4307,7 +4307,7 @@
     //
     // LTC Appendix A formulas
     //
-    'pghq_LTC_appendixa_1_8t_1': {
+    'pghq_LTC_appendixa_1_8t_2': {
       'args': [
         'pghq_LTC_appendixa_1_7_1t_1', // amount 1
         'pghq_LTC_appendixa_1_7_2t_2', // amount 2
@@ -4415,7 +4415,7 @@
       	return sum;
       }
     },
-    'pghq_LTC_appendixa_1_8t_2': {
+    'pghq_LTC_appendixa_1_8t_1': {
       'args': [
         'pghq_LTC_appendixa_1_7_1t_2', // cost 1
         'pghq_LTC_appendixa_1_7_2t_3', // cost 2

@@ -308,12 +308,13 @@ function pgh_api_validate_question_value($validations, $value) {
 }
 
 /**
- * Returns all NIDs of responses for one application
+ * Returns all NIDs of responses for one application.
  *
  * @param int $app_id
  *   NID for a specific application instance.
  *
- * @return array of int
+ * @return array
+ *   Array of int
  *
  * @author Fang Jin <fang@designhammer.com>
  */
