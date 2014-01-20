@@ -2412,7 +2412,7 @@ form.node-form {
     @include border-radius(3px);
     margin-right: 10px;
     padding: 7px 0;
-    width: 84px;
+    width: 105px;
     @include transition(all 0.4s ease-out);
 
     &.working {
@@ -2421,6 +2421,10 @@ form.node-form {
       border-color: #ffb043;
       padding-left: 38px;
       width: 132px;
+    }
+
+    &.field-add-more-submit {
+      width: 220px;
     }
 
     &#edit-delete {
