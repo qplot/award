@@ -268,9 +268,9 @@ table { /* Remove most spacing between table cells. */ border-collapse: collapse
 .tabs-primary:before, .tabs-secondary:before, .tabs-primary:after, .tabs-secondary:after { display: table; content: ""; line-height: 0; }
 .tabs-primary:after, .tabs-secondary:after { clear: both; }
 
-.tabs-primary__tab, .tabs-primary__tab.is-active, .tabs-secondary__tab, .tabs-secondary__tab.is-active { float: left; /* LTR */ margin: 0 3px; }
+.tabs-primary__tab, .tabs-secondary__tab, .tabs-secondary__tab.is-active { float: left; /* LTR */ margin: 0 3px; }
 
-a.tabs-primary__tab-link, a.tabs-primary__tab-link.is-active, a.tabs-secondary__tab-link, a.tabs-secondary__tab-link.is-active { border: 1px solid #e9e9e9; border-right: 0; border-bottom: 0; display: block; line-height: 1.4em; text-decoration: none; }
+a.tabs-primary__tab-link, a.tabs-secondary__tab-link { border: 1px solid #e9e9e9; border-right: 0; border-bottom: 0; display: block; line-height: 1.4em; text-decoration: none; }
 
 /* Primary tabs. */
 .tabs-primary__tab, .tabs-primary__tab.is-active { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; border-top-left-radius: 4px; -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; border-top-right-radius: 4px; text-shadow: 1px 1px 0 white; border: 1px solid #bbbbbb; border-bottom-color: transparent; /* IE 9 and earlier don't understand gradients. */ border-bottom: 0 \0/ie; }
@@ -1037,10 +1037,10 @@ h3.legend { font-weight: bold; }
 .page-application table .error-list { color: #bc9906; background-color: #fefdf8; border: 1px solid #faeeb0; margin: 5px 0 0; padding: 9px 3%; width: 93.3%; float: right; }
 .page-application table .error-list p { font-size: 1em; line-height: 1.2em; padding-bottom: 5px; }
 
-.page-application .pgh-form-status-container { margin: 0 auto; width: 960px; }
-.page-application .pgh-form-status { color: white; font-size: 12px; line-height: 27px; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1); background: #29aa8b url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px; border: 1px solid #229f7e; -webkit-border-radius: 0 0 3px 3px; -moz-border-radius: 0 0 3px 3px; -ms-border-radius: 0 0 3px 3px; -o-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; margin-bottom: -29px; padding-left: 40px; width: 130px; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; -webkit-transition: opacity 0.4s ease-in-out; -moz-transition: opacity 0.4s ease-in-out; -o-transition: opacity 0.4s ease-in-out; transition: opacity 0.4s ease-in-out; float: right; }
-.page-application .pgh-form-status.saving { background-color: #ffba4e; background-image: url(../images/pgh-form/icon-page-saving.gif?=yellow); border-color: #ffb043; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100); opacity: 1; }
-.page-application .pgh-form-status.saved { filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100); opacity: 1; }
+.page-application .pgh-form-status-container { margin: 0 auto; width: 960px; position: relative; z-index: 1; }
+.page-application .pgh-form-status { color: white; font-size: 12px; line-height: 27px; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1); background: #29aa8b url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px; border: 1px solid #229f7e; -webkit-border-radius: 0 0 3px 3px; -moz-border-radius: 0 0 3px 3px; -ms-border-radius: 0 0 3px 3px; -o-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; padding-left: 40px; width: 130px; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; -webkit-transition: opacity 0.4s ease-in-out; -moz-transition: opacity 0.4s ease-in-out; -o-transition: opacity 0.4s ease-in-out; transition: opacity 0.4s ease-in-out; position: absolute; top: -9999px; right: 0; bottom: auto; z-index: 1; }
+.page-application .pgh-form-status.saving { background-color: #ffba4e; background-image: url(../images/pgh-form/icon-page-saving.gif?=yellow); border-color: #ffb043; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100); opacity: 1; top: auto; bottom: -29px; }
+.page-application .pgh-form-status.saved { filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100); opacity: 1; top: auto; bottom: -29px; }
 
 .page-application .submission_message, .page-application .submission_warning { color: #bc9906; text-shadow: 0 1px #fdfbee; font-size: 0.9em; line-height: 1.1em; background: #faf3d0 url(../images/global/icon-warning-content.png) no-repeat 9px 45%; border: 1px solid #f5e9ac; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; display: inline-block; *display: inline; /* IE7 inline-block hack */ *zoom: 1; margin: 5px 0 1em; padding: 9px 9px 9px 34px; width: auto; }
 .page-application .submission_warning { color: #c01730; text-shadow: 0 1px 0 white; background: #fadbe1 url(../images/global/icon-error-content.png) no-repeat 9px 45%; border-color: #f5bcc7; }

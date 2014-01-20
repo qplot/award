@@ -1902,6 +1902,8 @@ h3 {
   .pgh-form-status-container {
     margin: 0 auto;
     width: 960px;
+    position: relative;
+    z-index: 1;
   }
 
   .pgh-form-status {
@@ -1913,22 +1915,29 @@ h3 {
     border: 1px solid #229f7e;
     @include border-radius(0 0 3px 3px);
     //@include box-shadow(0 1px 3px rgba(0,0,0,0.1));
-    margin-bottom: -29px;
     padding-left: 40px;
     width: 130px;
     @include opacity(0);
     @include transition(opacity 0.4s ease-in-out);
-    float: right;
+    position: absolute;
+    top: -9999px;
+    right: 0;
+    bottom: auto;
+    z-index: 1;
 
     &.saving {
       background-color: #ffba4e;
       background-image: url(../images/pgh-form/icon-page-saving.gif?=yellow);
       border-color: #ffb043;
       @include opacity(1);
+      top: auto;
+      bottom: -29px;
     }
 
     &.saved {
       @include opacity(1);
+      top: auto;
+      bottom: -29px;
     }
   }
 }
