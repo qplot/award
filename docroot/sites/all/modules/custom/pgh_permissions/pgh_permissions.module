@@ -287,6 +287,11 @@ function pgh_permissions_node_access_application($application, $op, $account) {
 
       $business_unit = pgh_api_business_unit_for_application($application->nid);
 
+      if (!$business_unit) {
+        // Non-admins should not be able to update orphan applications.
+        return NODE_ACCESS_DENY;
+      }
+
       // Work Group administrators can update.
       $work_groups = pgh_api_work_groups_for_business_unit($business_unit->nid);
       foreach ($work_groups as $work_group) {
@@ -315,6 +320,11 @@ function pgh_permissions_node_access_application($application, $op, $account) {
       }
 
       $business_unit = pgh_api_business_unit_for_application($application->nid);
+
+      if (!$business_unit) {
+        // Non-admins should not be able to view orphan applications.
+        return NODE_ACCESS_DENY;
+      }
 
       // Work Group administrators can view.
       $work_groups = pgh_api_work_groups_for_business_unit($business_unit->nid);

@@ -7,10 +7,10 @@
 #
 
 # Fix for error "Compass: Invalid US-ASCII character xE2"
-Encoding.default_external = "utf-8"
+# Encoding.default_external = "utf-8"
 
 # Change this to :production when ready to deploy the CSS to the live server.
-#environment = :development
+# environment = :development
 environment = :production
 
 # In development, we can turn on the FireSass-compatible debug_info.
