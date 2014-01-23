@@ -53,7 +53,7 @@ function pgh_dashboard_menu_alter(&$items) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_dashboard_disable_node_view_tab($node) {
-  if ($node->type == 'business_unit') {
+  if (($node->type == 'business_unit') || ($node->type == 'work_group')) {
     return FALSE;
   }
   return TRUE;
