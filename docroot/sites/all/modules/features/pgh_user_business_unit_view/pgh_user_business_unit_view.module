@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the User Business Unit feature.
+ */
+
+include_once 'pgh_user_business_unit_view.features.inc';

@@ -2001,7 +2001,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_PFC_appendixa_1_8t_2': {
@@ -2165,7 +2165,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_PFC_appendixa_1_9t_2': {
@@ -2279,7 +2279,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_PFC_appendixa_1_10t_2': {
@@ -2640,7 +2640,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_PR_appendixa_1_8t_2': {
@@ -2804,7 +2804,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_PR_appendixa_1_9t_2': {
@@ -2918,7 +2918,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_PR_appendixa_1_10t_2': {
@@ -4412,7 +4412,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_LTC_appendixa_1_8t_1': {
@@ -4576,7 +4576,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_LTC_appendixa_1_9t_2': {
@@ -4690,7 +4690,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_LTC_appendixa_1_10t_2': {
@@ -5051,7 +5051,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_CHCPR_appendixa_1_8t_2': {
@@ -5215,7 +5215,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_CHCPR_appendixa_1_9t_2': {
@@ -5329,7 +5329,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_CHCPR_appendixa_1_10t_2': {
@@ -6877,7 +6877,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_CHCPFC_appendixa_1_8t_2': {
@@ -7041,7 +7041,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_CHCPFC_appendixa_1_9t_2': {
@@ -7155,7 +7155,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 1);
       }
     },
     'pghq_CHCPFC_appendixa_1_10t_2': {
