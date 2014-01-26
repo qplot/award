@@ -1202,7 +1202,7 @@ function _node_mass_operation_batch_process($nodes, $op, $updates, $context) {
 
       case 'delete':
         // Store result for post-processing in the finished callback.
-        $context['results'][] = t('Deleted '. $node->title);
+        $context['results'][] = t('Deleted ' . $node->title);
         break;
     }
 
