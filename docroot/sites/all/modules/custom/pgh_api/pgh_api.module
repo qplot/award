@@ -1103,3 +1103,134 @@ function pgh_api_add_user_to_business_unit($user, $business_unit) {
   $business_unit_wrapper->field_users[] = $user->uid;
   $business_unit_wrapper->save();
 }
+
+/**
+ * Perform a mass operation on nodes, switching based on the specified
+ * operation. Currently supports updating and deleting, utilizing the atch
+ * API for large numbers of updates.
+ *
+ * IMPORTANT NOTE: This function is intended to work when called
+ * from a form submit handler. Calling it outside of the form submission
+ * process may not work correctly.
+ *
+ * @param array $nodes
+ *   Array of node nids to update.
+ * @param string $op
+ *   The operation to be performed (Currently either 'delete' or 'update')
+ * @param array $updates
+ *   Array of key/value pairs with node field names and the
+ *   value to update that field to.
+ *
+ * @author Drupal Patch <noname@drupal.org>
+ */
+function node_mass_operation($nodes, $op, $updates = array()) {
+  // We use batch processing to prevent timeout when updating a large umber
+  // of nodes.
+  if (count($nodes) > 10) {
+    $batch = array(
+      'operations' => array(
+        array('_node_mass_operation_batch_process', array($nodes, $op, 'updates'))
+      ),
+      'finished' => '_node_mass_operation_batch_finished',
+      'title' => t('Processing'),
+      // We use a single multi-pass operation, so the default
+      // 'Remaining x of y operations' message will be confusing here.
+      'progress_message' => '',
+      'error_message' => t('The %op has encountered an error.', array('%op' => $op)),
+    );
+    batch_set($batch);
+  }
+  else {
+    foreach ($nodes as $nid) {
+      _node_mass_operation_helper($nid, $op, $updates);
+    }
+    drupal_set_message(t('The %op has been performed.', array('%op' => op)));
+  }
+}
+
+/**
+ * Node Mass Operation - helper function.
+ *
+ * @author Drupal Patch <noname@drupal.org>
+ */
+function _node_mass_operation_helper($nid, $op, $updates) {
+  $node = node_load($nid, NULL, TRUE);
+
+  switch ($op) {
+    case 'update':
+      foreach ($updates as $name => $value) {
+        $node->$name = $value;
+      }
+      node_save($node);
+      break;
+
+    case 'delete':
+      node_delete($nid);
+      $node->nid = NULL;
+      break;
+  }
+
+  return $node;
+
+}
+
+/**
+ * Node Mass Operation Batch operation
+ *
+ * @author Drupal Patch <noname@drupal.org>
+ */
+function _node_mass_operation_batch_process($nodes, $op, $updates, $context) {
+  if (!isset($context['sandbox']['progress'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['max'] = count($nodes);
+    $context['sandbox']['nodes'] = $nodes;
+  }
+
+  // Process nodes by groups of 5.
+  $count = min(5, count($context['sandbox']['nodes']));
+  for ($i = 1; $i <= $count; $i++) {
+    // For each nid, call the opertion helper
+    $nid = array_shift($context['sandbox']['nodes']);
+
+    $node = _node_mass_operation_helper($nid, $op, $updates);
+
+    switch ($op) {
+      case 'update':
+        // Store result for post-processing in the finished callback.
+        $context['results'][] = l($node->title, 'node/' . $node->nid);
+        break;
+
+      case 'delete':
+        // Store result for post-processing in the finished callback.
+        $context['results'][] = t('Deleted '. $node->title);
+        break;
+    }
+
+
+    // Update our progress information.
+    $context['sandbox']['progress']++;
+  }
+
+  // Inform the batch engine that we are not finished,
+  // and provide an estimation of the completion level we reached.
+  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+}
+
+/**
+ * Node Mass Update Batch 'finished' callback.
+ *
+ * @author Drupal Patch <noname@drupal.org>
+ */
+function _node_mass_operation_batch_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('The update has been performed.'));
+  }
+  else {
+    drupal_set_message(t('An error occurred and processing did not complete.'), 'error');
+    $message = format_plural(count($results), '1 item successfully processed:', '@count items successfully processed:');
+    $message .= theme('item_list', $results);
+    drupal_set_message($message);
+  }
+}
