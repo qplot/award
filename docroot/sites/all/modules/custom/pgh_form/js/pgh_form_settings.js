@@ -475,7 +475,7 @@
         'pghq_PFC_waste_6_3_5_0'
       ],
       'calculation': function (a, b) {
-        return a * 2000 / b / 365;
+        return toFixed((a * 2000 / b / 365), 2);
       }
     },
     'pghq_PFC_waste_8_10_1tE_13': {
@@ -2382,7 +2382,7 @@
         'pghq_PR_waste_6_3_5_0'
       ],
       'calculation': function (a, b) {
-        return a * 2000 / b / 365;
+        return toFixed((a * 2000 / b / 365), 2);
       }
     },
     'pghq_PR_waste_8_10_1tE_9': {
@@ -3051,7 +3051,7 @@
         'pghq_LTC_waste_6_3_5_0'
       ],
       'calculation': function (a, b) {
-        return a * 2000 / b / 365;
+        return toFixed((a * 2000 / b / 365), 2);
       }
     },
     'pghq_LTC_waste_8_10_1tE_13': {
@@ -4793,7 +4793,7 @@
         'pghq_CHCPR_waste_6_3_5_0'
       ],
       'calculation': function (a, b) {
-        return a * 2000 / b;
+        return toFixed ((a * 2000 / b), 2);
       }
     },
     'pghq_CHCPR_waste_8_10_1tE_9': {
@@ -5462,7 +5462,7 @@
         'pghq_CHCPFC_waste_6_3_5_0'
       ],
       'calculation': function (a, b) {
-        return a * 2000 / b;
+        return toFixed ((a * 2000 / b), 2);
       }
     },
     'pghq_CHCPFC_waste_8_10_1tE_13': {

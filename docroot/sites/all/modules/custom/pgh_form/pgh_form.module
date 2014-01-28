@@ -449,6 +449,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   $question_wrapper = entity_metadata_wrapper('node', $question);
   $type = $question_wrapper->field_question_type->value();
   $style = $question_wrapper->field_question_style->value();
+  $default_formula = $question_wrapper->field_question_formula->value();
 
   if ($style == 'date') {
     drupal_add_library('system', 'ui.datepicker');
@@ -640,6 +641,11 @@ function pgh_form_render_question($question, $app_id = NULL) {
         $form_item['#default_value'] = $answer['value'];
       }
     }
+  }
+
+  // Disable this question if has default formula
+  if ($default_formula) {
+    $form_item['#disabled'] = TRUE;
   }
 
   // Mark this question as processed.
