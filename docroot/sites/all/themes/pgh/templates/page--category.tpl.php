@@ -157,6 +157,7 @@
 
     </div>
 
+    <div class="print-page"><span class="icon">Print this page</span></div>
     <div class="back-top"><a href="#page">↑ Back to top</a></div>
 
     <?php

@@ -263,9 +263,9 @@ h3 {
 }
 
 
-// !------------------------------ */
-// !-- Dashboard ---------------- */
-// !------------------------------ */
+// !---------------------------- */
+// !-- Dashboard --------------- */
+// !---------------------------- */
 
 .page-dashboard {
 
@@ -974,6 +974,37 @@ h3 {
       background-color: #67a697;
     }
   }
+
+  // print
+  .print-page {
+    color: #528dc9;
+    font-size: 11px;
+    line-height: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid #9cf;
+    @include border-radius(2px);
+    margin: 3px 0 0 15px;
+    padding: 5px 10px;
+    float: right;
+    cursor: pointer;
+
+    .icon {
+      background: transparent url(../images/global/print-icon.png) no-repeat 0 0;
+      margin-top: -2px;
+      padding: 2px 0 2px 20px;
+    }
+
+    &:hover {
+      color: $white;
+      background-color: #9cf;
+
+      .icon {
+        background-position: 0 -43px;
+      }
+    }
+  }
 }
 
 
@@ -1595,11 +1626,11 @@ h3 {
 
   form {
 
-    fieldset {
+    fieldset,
+    .fieldset-div {
       border: none;
       margin: 0;
-      padding-right: 0;
-      padding-left: 0;
+      padding: 5px 0 11px;
     }
 
     .question-number {
@@ -1652,8 +1683,7 @@ h3 {
       border: 1px solid #d3d3d3;
       @include border-radius(2px);
       @include box-shadow(inset 0 0 8px rgba(0,0,0,0.1));
-      width: 90%;
-      padding: 7px 3%;
+      padding: 7px;
     }
 
     input.form-submit {
@@ -1823,6 +1853,11 @@ h3 {
 
         &:last-child {
           border-right: none;
+        }
+
+        input.form-text {
+          width: 90%;
+          padding: 7px 3%;
         }
       }
 
@@ -2358,12 +2393,12 @@ form#user-pass {
 form.node-form {
 
   fieldset,
-  fieldset.filter-wrapper {
+  fieldset.filter-wrapper,
+  .fieldset-div {
     border: none;
     border-bottom: 1px solid #e0e0e0;
     margin: 0;
-    padding-right: 0;
-    padding-left: 0;
+    padding: 5px 0 11px;
   }
 
   #edit-field-business-unit-type {
@@ -2548,7 +2583,7 @@ a.glossify-link {
 // !-- Old browser message ----- */
 // !---------------------------- */
 
-p.browser-message {
+p#browser-message {
   color: $white;
   font-size: 16px;
   text-align: center;
@@ -2558,6 +2593,69 @@ p.browser-message {
 
   a {
     color: $white;
+  }
+}
+
+#browser-message-modal-bg {
+  background-color: #222;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+
+#browser-message-modal {
+  color: $white;
+  background-color: red;
+  padding: 30px 40px;
+  margin-left: -392px;
+  width: 704px;
+  position: fixed;
+  z-index: 1100;
+  top: 94px;
+  left: 50%;
+
+  a {
+    color: $white;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  h1 {
+    color: $white;
+    font-size: 32px;
+    font-family: Arial;
+    margin-top: 0;
+  }
+
+  p.confirm {
+    border-top: 1px solid #f66;
+    padding-top: 30px;
+    margin: 3em 0 0;
+
+    span {
+      color: red;
+      text-align: center;
+      background-color: $white;
+      border: 1px solid $white;
+      display: block;
+      margin: 0 auto;
+      padding: 10px 0;
+      width: 230px;
+      cursor: pointer;
+
+      &:hover {
+        color: $white;
+        background-color: red;
+      }
+    }
   }
 }
 

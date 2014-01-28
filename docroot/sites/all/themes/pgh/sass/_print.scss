@@ -11,6 +11,16 @@
  */
 @media print {
 
+  table {
+    border-right: none !important;
+    border-left: none !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+    border-radius: 0 !important;
+  }
+
   /* Underline all links. */
   a:link,
   a:visited {
@@ -23,23 +33,23 @@
   }
 
   #content {
-    /* Add visible URL after links. */
-    a[href]:after {
-      content: " (" attr(href) ")";
-      font-weight: normal;
-      font-size: $base-font-size;
-    }
-
-    /* Only display useful links. */
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after {
-      content: "";
-    }
-
-    /* Add visible title after abbreviations. */
-    abbr[title]:after {
-      content: " (" attr(title) ")";
-    }
+    // /* Add visible URL after links. */
+    // a[href]:after {
+    //   content: " (" attr(href) ")";
+    //   font-weight: normal;
+    //   font-size: $base-font-size;
+    // }
+    //
+    // /* Only display useful links. */
+    // a[href^="javascript:"]:after,
+    // a[href^="#"]:after {
+    //   content: "";
+    // }
+    //
+    // /* Add visible title after abbreviations. */
+    // abbr[title]:after {
+    //   content: " (" attr(title) ")";
+    // }
   }
 
   /* Un-float the content. */
@@ -60,6 +70,50 @@
     background-image: none !important;
   }
 
+  #header {
+
+    a#logo {
+      text-indent: 0 !important;
+      background-image: none;
+    }
+  }
+
+  .page-application {
+
+    #review-submit-wrap {
+      border-top: 1px solid #ededed;
+
+      .bu-info,
+      .cat-progress {
+        border-right: none !important;
+      }
+    }
+
+    #sponsor-wrap {
+      border-top: 1px solid #e4e4e4;
+    }
+
+    &.page-application-category {
+
+      h1#page-title {
+        padding-left: 0 !important;
+
+        span {
+          visibility: hidden;
+          display: none;
+        }
+      }
+    }
+
+    form {
+
+      .media-widget a.button,
+      input.form-submit {
+        background-image: none !important;
+      }
+    }
+  }
+
   /* Hide sidebars and nav elements. */
   #skip-link,
   #toolbar,
@@ -74,7 +128,16 @@
   .book-navigation,
   .forum-topic-navigation,
   .pager,
-  .feed-icons {
+  .feed-icons,
+  // application
+  #block-pgh-user-info-pgh-user-info,
+  .sticky-wrapper,
+  a.review-btn,
+  .bar-container,
+  .grippie,
+  .print-page,
+  .back-top
+  {
     visibility: hidden;
     display: none;
   }
