@@ -307,20 +307,24 @@ function pgh_user_invite_form_process($form, &$form_state) {
         language_default(),
         array('account' => $invite_user),
         variable_get('site_mail', ini_get('sendmail_from')));
+
+      // Grant the Business Unit role to this user if not already granted.
+      if ($role = user_role_load_by_name('Business Unit User')) {
+        user_multiple_role_edit(array($invite_user->uid), 'add_role', $role->rid);
+      }
+
+      // Fetch owner (the Business Unit that the new users will be added to).
+      $owner = node_load($form_state['values']['owner']);
+
+      // Add the user to the owner Business Unit.
+      pgh_api_add_user_to_business_unit($invite_user, $owner);
+
+      drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
+
+    } else {
+      // User account exists.
+      drupal_set_message(t('An invitation to %email is pending.', array('%email' => $email)));
     }
-
-    // Grant the Business Unit role to this user if not already granted.
-    if ($role = user_role_load_by_name('Business Unit User')) {
-      user_multiple_role_edit(array($invite_user->uid), 'add_role', $role->rid);
-    }
-
-    // Fetch owner (the Business Unit that the new users will be added to).
-    $owner = node_load($form_state['values']['owner']);
-
-    // Add the user to the owner Business Unit.
-    pgh_api_add_user_to_business_unit($invite_user, $owner);
-
-    drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
   }
 
   drupal_goto('dashboard');
