@@ -179,6 +179,17 @@
         $button.attr('disabled', 'disabled').addClass('working').val('Working...');
       });
 
+
+      // Disable fieldsets on print.
+      // https://support.mozilla.org/en-US/questions/936857
+      // ======================================================================
+      $('.page-application .print-page').click(function() {
+        $('fieldset').each(function() {
+          $(this).replaceWith('<div class="fieldset-div">' + $(this).html() + '</div>');
+        });
+        window.print();
+      });
+
   });
 
 })(jQuery, Drupal, this, this.document);

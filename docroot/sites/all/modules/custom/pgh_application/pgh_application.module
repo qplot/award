@@ -11,6 +11,25 @@
  */
 
 /**
+ * Implements hook_menu().
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_application_menu() {
+  $items = array();
+
+  $items['application/%/delete'] = array(
+    'title' => 'Delete Application',
+    'description' => 'Delete application and its associated entities, ex. Responses etc.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pgh_application_delete_form', 1),
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
  * Implementation of hook_form_node_form_alter().
  *
  * Allows a user to specify a Business Unit nid in the query string when adding a new application node. This
@@ -252,12 +271,6 @@ function pgh_application_node_delete($node) {
       }
     }
   }
-
-  // Remove all response from this application.
-  $responses = pgh_api_responses_ids_for_application($node->nid);
-  if ($responses) {
-    node_delete_multiple($responses);
-  }
 }
 
 /**
@@ -406,4 +419,67 @@ function pgh_application_category_links($application_nid) {
   }
 
   return $items;
+}
+
+/**
+ * Form callback for deleteing a specific application.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @param id $app_id
+ *   Application node.
+ *
+ * @return array
+ *   A Drupal form array ready to be rendered.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_application_delete_form($form, &$form_state, $app_id) {
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Delete',
+  );
+
+  $form['application'] = array(
+    '#type' => 'hidden',
+    '#value' => $app_id
+  );
+
+  return $form;
+}
+
+/**
+ * Form submission handler for application deletion.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @return array
+ *   A form array.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_application_delete_form_submit($form, &$form_state) {
+  $nid = &$form_state['values']['application'];
+
+  // Remove all response from this application.
+  $responses = pgh_api_responses_ids_for_application($nid);
+  if ($responses) {
+    // This is one time operation.
+    // node_delete_multiple($responses); .
+    // Here is batch operation.
+    node_mass_operation($responses, 'delete');
+  }
+
+  // Remove the application
+  // We should remove the application when the batch is finished
+  // However I found it hard to send $nid to the batch api
+  node_delete($nid);
 }
