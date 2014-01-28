@@ -47,6 +47,8 @@
       </nav>
     <?php endif; ?>
 
+    <![if gt IE 9]>
+
     <?php if ($logged_in): ?>
 
       <?php
@@ -63,6 +65,8 @@
       </div>
 
     <?php endif; ?>
+
+    <![endif]>
 
     <?php print render($page['header']); ?>
 

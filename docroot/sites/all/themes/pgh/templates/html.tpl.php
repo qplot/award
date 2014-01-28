@@ -43,9 +43,30 @@
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <!--[if lt IE 9]>
-  <p class="browser-message">
+  <p class="browser-message" style="display:none;">
     <?php print t('This website uses features that are not supported by your browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.'); ?>
   </p>
+  <div id="browser-message-modal">
+    <h3>
+    <?php print t('Your browser is not compatible with this website!'); ?>
+    <h3>
+    <h4>
+    <?php print t('This PGH Awards system is accessible through Internet Explorer (Version 9 or above), Firefox, Chrome, or Safari. '); ?>
+    </h4>
+    <p>
+    <?php print t('If you are using Internet Explorer 7 or 8, you will need to upgrade your browser to utilize this website. Check your browser here: whatbrowser.org and <a href="http://browsehappy.com/">download an alternative browser</a> if necessary.'); ?>
+    </p>
+    <a class="confirm">Ok</a>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#browser-message-modal .confirm').click(function() {
+        $(this).hide();
+        $('.browser-message').show();
+      });
+    });
+  </script>r
   <![endif]-->
 
   <?php if ($skip_link_text && $skip_link_anchor): ?>
