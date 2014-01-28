@@ -282,6 +282,13 @@ function pgh_user_invite_form_submit($form, &$form_state) {
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_user_invite_form_process($form, &$form_state) {
+  global $user;
+
+  // Fetch owner (the Business Unit that the new users will be added to).
+  $owner = node_load($form_state['values']['owner']);
+  $invited_users = array();
+  $pending_users = array();
+
   foreach ($form_state['storage']['valid_emails'] as $email) {
     $invite_user = user_load_by_mail($email);
     if (!$invite_user) {
@@ -313,19 +320,45 @@ function pgh_user_invite_form_process($form, &$form_state) {
         user_multiple_role_edit(array($invite_user->uid), 'add_role', $role->rid);
       }
 
-      // Fetch owner (the Business Unit that the new users will be added to).
-      $owner = node_load($form_state['values']['owner']);
-
       // Add the user to the owner Business Unit.
       pgh_api_add_user_to_business_unit($invite_user, $owner);
+
+      $invited_users[] = $invite_user;
 
       drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
 
     } else {
+      $pending_users[] = $invite_user;
+
       // User account exists.
       drupal_set_message(t('An invitation to %email is pending.', array('%email' => $email)));
     }
   }
 
+  $work_group = NULL;
+
+  rules_invoke_event('pgh_user_invite_invitations_sent', $user, $work_group, $owner, $invited_users, $pending_users);
+
   drupal_goto('dashboard');
+}
+
+
+/**
+* Implementation of hook_rules_event_info().
+*/
+function pgh_user_invite_rules_event_info() {
+  return array(
+    'pgh_user_invite_invitations_sent' => array(
+      'group' => t('PGH User Invite'),
+      'label' => t('Users were invited by a Client Admin'),
+      'module' => 'pgh_user_invite',
+      'arguments' => array(
+        'inviting_user' => array('type' => 'user', 'label' => t('The user who sent the invites.')),
+        'work_group' => array('type' => 'entity', 'label' => t('The Work Group.')),
+        'business_unit' => array('type' => 'entity', 'label' => t('The Business Unit.')),
+        'invited_users' => array('type' => 'list<user>', 'label' => t('Any new users who were invited.')),
+        'pending_users' => array('type' => 'list<user>', 'label' => t('Any existing users who need to be processed.')),
+      ),
+    ),
+  );
 }
