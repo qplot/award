@@ -2583,7 +2583,7 @@ a.glossify-link {
 // !-- Old browser message ----- */
 // !---------------------------- */
 
-p.browser-message {
+p#browser-message {
   color: $white;
   font-size: 16px;
   text-align: center;
@@ -2593,6 +2593,69 @@ p.browser-message {
 
   a {
     color: $white;
+  }
+}
+
+#browser-message-modal-bg {
+  background-color: #222;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+
+#browser-message-modal {
+  color: $white;
+  background-color: red;
+  padding: 30px 40px;
+  margin-left: -392px;
+  width: 704px;
+  position: fixed;
+  z-index: 1100;
+  top: 94px;
+  left: 50%;
+
+  a {
+    color: $white;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  h1 {
+    color: $white;
+    font-size: 32px;
+    font-family: Arial;
+    margin-top: 0;
+  }
+
+  p.confirm {
+    border-top: 1px solid #f66;
+    padding-top: 30px;
+    margin: 3em 0 0;
+
+    span {
+      color: red;
+      text-align: center;
+      background-color: $white;
+      border: 1px solid $white;
+      display: block;
+      margin: 0 auto;
+      padding: 10px 0;
+      width: 230px;
+      cursor: pointer;
+
+      &:hover {
+        color: $white;
+        background-color: red;
+      }
+    }
   }
 }
 

@@ -1145,8 +1145,18 @@ a.glossify-link:hover .glossify-tooltip { padding-bottom: 20px; max-height: 45em
 a.glossify-link .glossify-tooltip { font-size: 13px; line-height: 17px; display: block; margin-left: 30px; padding-bottom: 0; width: 922px; max-height: 0; overflow: hidden; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; position: absolute; bottom: 0; z-index: 1; -webkit-transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; -moz-transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; -o-transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; }
 a.glossify-link .glossify-tooltip em { color: #00674e; font-weight: normal; font-style: normal; text-decoration: none; background-color: #e4f7f2; border: 1px solid #3bbe9e; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.15); -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.15); box-shadow: 0 1px 7px rgba(0, 0, 0, 0.15); display: block; padding: 10px; width: 900px; height: auto; }
 
-p.browser-message { color: white; font-size: 16px; text-align: center; background-color: red; margin-top: 0; padding: 1.2em 0; }
-p.browser-message a { color: white; }
+p#browser-message { color: white; font-size: 16px; text-align: center; background-color: red; margin-top: 0; padding: 1.2em 0; }
+p#browser-message a { color: white; }
+
+#browser-message-modal-bg { background-color: #222; opacity: 0.5; filter: alpha(opacity=50); width: 100%; height: 100%; position: fixed; z-index: 1000; top: 0; left: 0; }
+
+#browser-message-modal { color: white; background-color: red; padding: 30px 40px; margin-left: -392px; width: 704px; position: fixed; z-index: 1100; top: 94px; left: 50%; }
+#browser-message-modal a { color: white; text-decoration: underline; }
+#browser-message-modal a:hover { text-decoration: none; }
+#browser-message-modal h1 { color: white; font-size: 32px; font-family: Arial; margin-top: 0; }
+#browser-message-modal p.confirm { border-top: 1px solid #f66; padding-top: 30px; margin: 3em 0 0; }
+#browser-message-modal p.confirm span { color: red; text-align: center; background-color: white; border: 1px solid white; display: block; margin: 0 auto; padding: 10px 0; width: 230px; cursor: pointer; }
+#browser-message-modal p.confirm span:hover { color: white; background-color: red; }
 
 body.admin-menu #admin-menu { border-bottom: none; -webkit-box-shadow: 0 0 0 transparent; -moz-box-shadow: 0 0 0 transparent; box-shadow: 0 0 0 transparent; margin: 0; padding: 0; }
 
