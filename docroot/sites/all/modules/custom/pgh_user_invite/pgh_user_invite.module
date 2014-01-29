@@ -335,9 +335,25 @@ function pgh_user_invite_form_process($form, &$form_state) {
     }
   }
 
-  $work_group = NULL;
+  $invited_users_output = '';
+  if ($invited_users) {
+    foreach ($invited_users as $invited_user) {
+      $invited_users_output .= $invited_user->mail . ' ' . url('user/' . $invited_user->uid, array('absolute' => TRUE)) . "\n";
+    }
+  } else {
+    $invited_users_output = 'No users were invited';
+  }
 
-  rules_invoke_event('pgh_user_invite_invitations_sent', $user, $work_group, $owner, $invited_users, $pending_users);
+  $pending_users_output = '';
+  if ($pending_users) {
+    foreach ($pending_users as $pending_user) {
+      $pending_users_output .= $pending_user->realname . ' ' . $pending_user->mail . ' ' . url('user/' . $pending_user->uid, array('absolute' => TRUE)) . "\n";
+    }
+  } else {
+    $pending_users_output = 'No pending users to review';
+  }
+
+  rules_invoke_event('pgh_user_invite_invitations_sent', $user, $owner, $invited_users_output, $pending_users_output);
 
   drupal_goto('dashboard');
 }
@@ -352,12 +368,11 @@ function pgh_user_invite_rules_event_info() {
       'group' => t('PGH User Invite'),
       'label' => t('Users were invited by a Client Admin'),
       'module' => 'pgh_user_invite',
-      'arguments' => array(
+      'variables' => array(
         'inviting_user' => array('type' => 'user', 'label' => t('The user who sent the invites.')),
-        'work_group' => array('type' => 'entity', 'label' => t('The Work Group.')),
-        'business_unit' => array('type' => 'entity', 'label' => t('The Business Unit.')),
-        'invited_users' => array('type' => 'list<user>', 'label' => t('Any new users who were invited.')),
-        'pending_users' => array('type' => 'list<user>', 'label' => t('Any existing users who need to be processed.')),
+        'business_unit' => array('type' => 'node', 'label' => t('The Business Unit.')),
+        'invited_users' => array('type' => 'text', 'label' => t('List of new users who were invited.')),
+        'pending_users' => array('type' => 'text', 'label' => t('List of users who need to be processed.')),
       ),
     ),
   );
