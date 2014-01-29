@@ -347,7 +347,10 @@ function pgh_user_invite_form_process($form, &$form_state) {
   $pending_users_output = '';
   if ($pending_users) {
     foreach ($pending_users as $pending_user) {
-      $pending_users_output .= $pending_user->realname . ' ' . $pending_user->mail . ' ' . url('user/' . $pending_user->uid, array('absolute' => TRUE)) . "\n";
+      $pending_users_output .= $pending_user->realname . ' ' .
+                               $pending_user->mail . ' ' .
+                               url('user/' . $pending_user->uid, array('absolute' => TRUE)) . ' ' .
+                               'View Work Groups: ' . url('admin/user-work-groups', array('absolute' => TRUE, 'query' => array('mail' => $pending_user->mail))) . "\n";
     }
   } else {
     $pending_users_output = 'No pending users to review';
