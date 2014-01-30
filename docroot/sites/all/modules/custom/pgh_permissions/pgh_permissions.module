@@ -376,7 +376,7 @@ function pgh_permissions_form_node_form_alter(&$form, &$form_state, $form_id) {
       );
 
     }
-    elseif (user_access('administer awards system')) {
+    elseif (user_access('administer awards system') && !($form['nid']['#value'])) {
       $form['work_group'] = array(
         '#type' => 'select',
         '#options' => pgh_api_all_work_groups_options(),
