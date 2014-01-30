@@ -18,12 +18,13 @@
 function pgh_application_menu() {
   $items = array();
 
-  $items['application/%/delete'] = array(
+  $items['application/%node/delete'] = array(
     'title' => 'Delete Application',
     'description' => 'Delete application and its associated entities, ex. Responses etc.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pgh_application_delete_form', 1),
-    'access callback' => TRUE,
+    'access callback' => 'node_access',
+    'access arguments' => array('delete', 1),
   );
 
   return $items;
