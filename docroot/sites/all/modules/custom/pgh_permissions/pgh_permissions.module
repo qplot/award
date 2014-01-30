@@ -256,13 +256,8 @@ function pgh_permissions_node_access_application($application, $op, $account) {
       return NODE_ACCESS_DENY;
 
     case 'delete':
-      if (user_access('administer awards system', $account)) {
-        return NODE_ACCESS_ALLOW;
-      }
-      else {
-        return NODE_ACCESS_DENY;
-      }
-      break;
+      // This is controlled by content permissions as it is very destructive.
+      return NODE_ACCESS_IGNORE;
 
     case 'update':
       // - If user has 'administer awards system', return NODE_ACCESS_ALLOW
