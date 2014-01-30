@@ -2441,18 +2441,22 @@ form.node-form {
     font-family: $arial;
     font-weight: normal;
     text-align: center;
-    background-color: $green;
-    background-position: 10px 8px;
+    background: $green url(../images/pgh-form/icon-page-saving.gif?=yellow) no-repeat -100px 8px;
     border: 1px solid $green;
     @include border-radius(3px);
     margin-right: 10px;
     padding: 7px 0;
     width: 105px;
-    @include transition(all 0.4s ease-out);
+    @include transition(
+      background-color 0.4s ease-out,
+      border-color 0.4s ease-out,
+      width 0.4s ease-out
+    );
 
     &.working {
       text-align: left;
-      background: #ffba4e url(../images/pgh-form/icon-page-saving.gif?=yellow) no-repeat 10px 8px;
+      background-color: #ffba4e;
+      background-position: 10px 8px;
       border-color: #ffb043;
       padding-left: 38px;
       width: 132px;

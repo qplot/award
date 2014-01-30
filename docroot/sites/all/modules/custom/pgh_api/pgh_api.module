@@ -11,7 +11,8 @@
  * Returns an array of Work Group nodes for the current user.
  *
  * @return array
- *   An array of Work Group nodes owned by the current user or an empty array if none found.
+ *   An array of Work Group nodes which the user is related to either directly or by being in
+ *   a child Business Unit.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
