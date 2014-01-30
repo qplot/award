@@ -118,7 +118,10 @@
   <div id="review-submit-wrap"><div id="review-submit-wrap-inner">
     <div class="progress-wrap">
 
-    <div class="bu-info"><span class="bu-name"><?php print $business_unit->title; ?></span> — no.<?php print arg(1); ?></div>
+    <div class="bu-info">
+    <?php if (isset($business_unit->title) && $business_unit->title != ''): ?>
+      <span class="bu-name"><?php print $business_unit->title; ?></span> —
+    <?php endif; ?>no.<?php print arg(1); ?></div>
 
     <div class="cat-progress">
       <span class="label">Category Progress:</span>

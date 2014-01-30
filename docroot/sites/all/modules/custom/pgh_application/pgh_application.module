@@ -18,12 +18,13 @@
 function pgh_application_menu() {
   $items = array();
 
-  $items['application/%/delete'] = array(
+  $items['application/%node/delete'] = array(
     'title' => 'Delete Application',
     'description' => 'Delete application and its associated entities, ex. Responses etc.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pgh_application_delete_form', 1),
-    'access callback' => TRUE,
+    'access callback' => 'node_access',
+    'access arguments' => array('delete', 1),
   );
 
   return $items;
@@ -430,15 +431,22 @@ function pgh_application_category_links($application_nid) {
  * @param array $form_state
  *   Form state array.
  *
- * @param id $app_id
- *   Application node.
+ * @param id $application
+ *   The Application to be deleted.
  *
  * @return array
  *   A Drupal form array ready to be rendered.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_application_delete_form($form, &$form_state, $app_id) {
+function pgh_application_delete_form($form, &$form_state, $application) {
+  drupal_set_title(t('Delete Application #!application_id', array('!application_id' => $application->nid)));
+
+  $form['warning'] = array(
+    '#type' => 'item',
+    '#markup' => t('You are about to remove the application node and all associated responses permanently. This operation cannot be undone.'),
+  );
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Delete',
@@ -446,7 +454,7 @@ function pgh_application_delete_form($form, &$form_state, $app_id) {
 
   $form['application'] = array(
     '#type' => 'hidden',
-    '#value' => $app_id
+    '#value' => $application->nid,
   );
 
   return $form;
