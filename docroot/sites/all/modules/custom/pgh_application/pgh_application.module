@@ -477,17 +477,13 @@ function pgh_application_delete_form($form, &$form_state, $application) {
 function pgh_application_delete_form_submit($form, &$form_state) {
   $nid = &$form_state['values']['application'];
 
-  // Remove all response from this application.
+  // Remove all responses from this application first.
   $responses = pgh_api_responses_ids_for_application($nid);
   if ($responses) {
-    // This is one time operation.
-    // node_delete_multiple($responses); .
-    // Here is batch operation.
     node_mass_operation($responses, 'delete');
   }
 
-  // Remove the application
-  // We should remove the application when the batch is finished
-  // However I found it hard to send $nid to the batch api
   node_delete($nid);
+
+  $form_state['redirect'] = 'dashboard';
 }
