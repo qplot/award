@@ -52,6 +52,15 @@ function pgh_form_menu() {
     'access arguments' => array('update', 1),
   );
 
+  $items['question/comment/reply/%'] = array(
+    'page callback' => 'pgh_form_quesiton_comment_reply',
+    'page arguments' => array(3),
+    'access callback' => 'node_access',
+    'access arguments' => array('view', 3),
+    'delivery callback' => 'ajax_deliver',
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -1077,6 +1086,9 @@ function pgh_form_mail($key, &$message, $params) {
 /**
  * Render comment form for question.
  *
+ * @param int $qid
+ *   Question node id.
+ *
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_form_render_question_comment($qid) {
@@ -1088,19 +1100,41 @@ function pgh_form_render_question_comment($qid) {
   $form['body'] = array(
     '#type' => 'textarea',
     '#size' => 3,
+    '#prefix' => '<div id="comment_' . $qid . '">',
+    '#suffix' => '</div>',
   );
 
   $links['comment-add'] = array(
     'title' => t('Add comment'),
-    'href' => "application/question/reply/" . $qid,
-    'attributes' => array('title' => t('Add a new comment to this page.')),
+    'href' => "question/comment/reply/" . $qid,
+    'attributes' => array(
+      'title' => t('Add a new comment to this question.'),
+      'class' => 'use-ajax',
+    ),
     // 'fragment' => 'comment-form',
   );
   $form['links'] = array(
     '#theme' => 'links__node__comment',
     '#links' => $links,
-    '#attributes' => array('class' => array('links', 'inline', 'use-ajax')),
-  );  
+    '#attributes' => array('class' => array('links', 'inline')),
+  );
 
   return $form;
+}
+
+/**
+ * Question comment reply ajax callback.
+ *
+ * @param int $qid
+ *   Question node id.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_quesiton_comment_reply($qid) {
+  // Add comment to this question.
+
+  $form = 'Comments has been submitted.';
+  $commands[] = ajax_command_replace('#comment_' . $qid, $form);
+
+  return array('#type' => 'ajax', '#commands' => $commands);
 }
