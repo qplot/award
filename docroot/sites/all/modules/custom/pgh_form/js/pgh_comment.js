@@ -11,7 +11,19 @@
   $(document).ready(function () {
 
     $('.use-custom-ajax').click(function(event) {
-      alert('123');
+      // get link
+      var link = $(this).attr('href');
+      // find question id
+      var id = link.split("/").pop();
+      // find corresponding body
+      var body = $('#comment_' + id + ' .form-textarea').val();
+      // submit the value
+      $.post(link, {'body': body}, function(data) {
+        console.log(data);
+      });
+
+      // call submission
+
       event.preventDefault();
     });
 

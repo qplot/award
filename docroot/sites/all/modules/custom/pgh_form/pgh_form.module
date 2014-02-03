@@ -57,7 +57,7 @@ function pgh_form_menu() {
     'page arguments' => array(3),
     'access callback' => 'node_access',
     'access arguments' => array('view', 3),
-    'delivery callback' => 'ajax_deliver',
+    // 'delivery callback' => 'ajax_deliver',
     'type' => MENU_CALLBACK,
   );
 
@@ -1135,9 +1135,39 @@ function pgh_form_render_question_comment($qid) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_form_quesiton_comment_reply($qid) {
-  // Add comment to this question.
-  $form = 'Comments has been submitted.';
-  $commands[] = ajax_command_replace('#comment_' . $qid, $form);
+  $body = $_POST['body'];
 
-  return array('#type' => 'ajax', '#commands' => $commands);
+  // Add comment to this question.
+  $comment = (object) array(
+    'nid' => $qid,
+    'cid' => 0,
+    'pid' => 0,
+    'uid' => 1,
+    'mail' => '',
+    'is_anonymous' => 0,
+    'homepage' => '',
+    'status' => COMMENT_PUBLISHED,
+    'subject' => 'question comment',
+    'language' => LANGUAGE_NONE,
+    'comment_body' => array(
+      LANGUAGE_NONE => array(
+        0 => array (
+          'value' => $body,
+          'format' => 'filtered_html'
+        )
+      )
+    ),
+  );
+  comment_submit($comment);
+  comment_save($comment);    
+
+  $form = 'Comments has been submitted.';
+  return drupal_json_output(array(
+    'response' => $form, 
+    // 'data' => $_POST
+  ));
+
+  // Drupal ajax response
+  // $commands[] = ajax_command_replace('#comment_' . $qid, $form);
+  // return array('#type' => 'ajax', '#commands' => $commands);
 }
