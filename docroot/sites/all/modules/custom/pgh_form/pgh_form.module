@@ -1129,6 +1129,7 @@ function pgh_form_render_question_comment($rid) {
     '#size' => 3,
     '#prefix' => '<div id="comment_' . $rid . '">',
     '#suffix' => '</div>',
+    '#default_value' => pgh_form_get_question_comment($rid),
   );
 
   $links['comment-add'] = array(
@@ -1219,28 +1220,32 @@ function pgh_form_set_question_comment($rid, $body) {
     )
   );
   $wrapper->save();
+}
 
-  // Add comment to this question.
-  // $comment = (object) array(
-  //   'nid' => $rid,
-  //   'cid' => 0,
-  //   'pid' => 0,
-  //   'uid' => 1,
-  //   'mail' => '',
-  //   'is_anonymous' => 0,
-  //   'homepage' => '',
-  //   'status' => COMMENT_PUBLISHED,
-  //   'subject' => 'question comment',
-  //   'language' => LANGUAGE_NONE,
-  //   'comment_body' => array(
-  //     LANGUAGE_NONE => array(
-  //       0 => array (
-  //         'value' => $body,
-  //         'format' => 'filtered_html'
-  //       )
-  //     )
-  //   ),
-  // );
-  // comment_submit($comment);
-  // comment_save($comment);
+/**
+ * Get comment per response per user.
+ *
+ * @param int $rid
+ *   Response node id.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_get_question_comment($rid) {
+  global $user;
+  $cid = 0;
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'comment');
+  $query->propertyCondition('nid', $rid);
+  $query->propertyCondition('uid', $user->uid);
+  $result = $query->execute();
+  if (!empty($result['comment'])) {
+    $keys = array_keys($result['comment']);
+    $cid = $keys[0];
+  };
+  if ($cid) {
+    $comment = comment_load($cid);
+    $wrapper = entity_metadata_wrapper('comment', $comment);
+    return $wrapper->comment_body->value->raw();
+  }
+  return '';
 }
