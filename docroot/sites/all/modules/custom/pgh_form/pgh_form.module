@@ -58,7 +58,7 @@ function pgh_form_menu() {
     'access callback' => 'node_access',
     'access arguments' => array('view', 3),
     // 'delivery callback' => 'ajax_deliver',
-    'type' => MENU_CALLBACK,
+    // 'type' => MENU_CALLBACK,
   );
 
   return $items;
@@ -1163,31 +1163,7 @@ function pgh_form_render_question_comment($rid) {
  */
 function pgh_form_quesiton_comment_reply($rid) {
   $body = $_POST['body'];
-
-  // Add comment to this question.
-  $comment = (object) array(
-    'nid' => $rid,
-    'cid' => 0,
-    'pid' => 0,
-    'uid' => 1,
-    'mail' => '',
-    'is_anonymous' => 0,
-    'homepage' => '',
-    'status' => COMMENT_PUBLISHED,
-    'subject' => 'question comment',
-    'language' => LANGUAGE_NONE,
-    'comment_body' => array(
-      LANGUAGE_NONE => array(
-        0 => array (
-          'value' => $body,
-          'format' => 'filtered_html'
-        )
-      )
-    ),
-  );
-  comment_submit($comment);
-  comment_save($comment);
-
+  pgh_form_set_question_comment($rid, $body);
   $form = 'Comments has been submitted.';
   return drupal_json_output(array(
     'response' => $form,
@@ -1197,4 +1173,74 @@ function pgh_form_quesiton_comment_reply($rid) {
   // Drupal ajax response
   // $commands[] = ajax_command_replace('#comment_' . $qid, $form);
   // return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+/**
+ * Save comment per response per user.
+ *
+ * @param int $rid
+ *   Response node id.
+ * @param string $body
+ *   Response comment body.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_set_question_comment($rid, $body) {
+  // Should be merged using pgh_api_node_ids
+  // But this function is outdated and can be upgraded
+  // For now use EntityFieldQuery() manually.
+
+  // Find if the comment already exist
+  global $user;
+  $cid = 0;
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'comment');
+  $query->propertyCondition('nid', $rid);
+  $query->propertyCondition('uid', $user->uid);
+  $result = $query->execute();
+  if (!empty($result['comment'])) {
+    $keys = array_keys($result['comment']);
+    $cid = $keys[0];
+  };
+  $wrapper = NULL;
+  if ($cid) {
+    $comment = comment_load($cid);
+    $wrapper = entity_metadata_wrapper('comment', $comment);
+  } else {
+    // add a new comment
+    $comment = entity_create('comment');
+    $wrapper = entity_metadata_wrapper('comment', $comment);
+    $wrapper->uid = $user->uid;
+  }
+  $wrapper->comment_body->set(
+    array(
+      'value' => $body,
+      'format' => 'filtered_html',
+    )
+  );
+  $wrapper->save();
+
+  // Add comment to this question.
+  // $comment = (object) array(
+  //   'nid' => $rid,
+  //   'cid' => 0,
+  //   'pid' => 0,
+  //   'uid' => 1,
+  //   'mail' => '',
+  //   'is_anonymous' => 0,
+  //   'homepage' => '',
+  //   'status' => COMMENT_PUBLISHED,
+  //   'subject' => 'question comment',
+  //   'language' => LANGUAGE_NONE,
+  //   'comment_body' => array(
+  //     LANGUAGE_NONE => array(
+  //       0 => array (
+  //         'value' => $body,
+  //         'format' => 'filtered_html'
+  //       )
+  //     )
+  //   ),
+  // );
+  // comment_submit($comment);
+  // comment_save($comment);
 }
