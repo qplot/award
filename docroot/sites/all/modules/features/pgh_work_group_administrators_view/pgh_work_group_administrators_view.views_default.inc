@@ -35,9 +35,12 @@ function pgh_work_group_administrators_view_views_default_views() {
     'views_bulk_operations' => 'views_bulk_operations',
     'name' => 'name',
     'mail' => 'mail',
+    'status' => 'status',
     'title' => 'title',
+    'created' => 'created',
+    'access' => 'access',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'created';
   $handler->display->display_options['style_options']['info'] = array(
     'views_bulk_operations' => array(
       'align' => '',
@@ -45,13 +48,20 @@ function pgh_work_group_administrators_view_views_default_views() {
       'empty_column' => 0,
     ),
     'name' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'mail' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -59,13 +69,31 @@ function pgh_work_group_administrators_view_views_default_views() {
       'empty_column' => 0,
     ),
     'title' => array(
-      'sortable' => 0,
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'access' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
   );
+  /* Header: Global: Result summary */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
   /* Relationship: Entity Reference: Referencing entity */
   $handler->display->display_options['relationships']['reverse_field_administrators_node']['id'] = 'reverse_field_administrators_node';
   $handler->display->display_options['relationships']['reverse_field_administrators_node']['table'] = 'users';
@@ -155,6 +183,19 @@ function pgh_work_group_administrators_view_views_default_views() {
       'label' => '',
     ),
   );
+  /* Field: User: Salesforce Id */
+  $handler->display->display_options['fields']['field_user_sfid']['id'] = 'field_user_sfid';
+  $handler->display->display_options['fields']['field_user_sfid']['table'] = 'field_data_field_user_sfid';
+  $handler->display->display_options['fields']['field_user_sfid']['field'] = 'field_user_sfid';
+  $handler->display->display_options['fields']['field_user_sfid']['label'] = 'Salesforce';
+  /* Field: User: Active */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'users';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = 'Status';
+  $handler->display->display_options['fields']['status']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['status']['type'] = 'active-blocked';
+  $handler->display->display_options['fields']['status']['not'] = 0;
   /* Field: User: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
@@ -169,14 +210,6 @@ function pgh_work_group_administrators_view_views_default_views() {
   $handler->display->display_options['fields']['mail']['field'] = 'mail';
   $handler->display->display_options['fields']['mail']['label'] = 'Email';
   $handler->display->display_options['fields']['mail']['element_label_colon'] = FALSE;
-  /* Field: User: Active */
-  $handler->display->display_options['fields']['status']['id'] = 'status';
-  $handler->display->display_options['fields']['status']['table'] = 'users';
-  $handler->display->display_options['fields']['status']['field'] = 'status';
-  $handler->display->display_options['fields']['status']['label'] = 'Status';
-  $handler->display->display_options['fields']['status']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['status']['type'] = 'active-blocked';
-  $handler->display->display_options['fields']['status']['not'] = 0;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -184,6 +217,26 @@ function pgh_work_group_administrators_view_views_default_views() {
   $handler->display->display_options['fields']['title']['relationship'] = 'reverse_field_administrators_node';
   $handler->display->display_options['fields']['title']['label'] = 'Work Group';
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: User: Created date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'users';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Created';
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'm/d/Y H:i:s';
+  /* Field: User: Last login */
+  $handler->display->display_options['fields']['login']['id'] = 'login';
+  $handler->display->display_options['fields']['login']['table'] = 'users';
+  $handler->display->display_options['fields']['login']['field'] = 'login';
+  $handler->display->display_options['fields']['login']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['login']['custom_date_format'] = 'm/d/Y H:i:s';
+  /* Field: User: Last access */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['label'] = 'Accessed';
+  $handler->display->display_options['fields']['access']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['access']['custom_date_format'] = 'm/d/Y H:i:s';
   /* Sort criterion: User: Created date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'users';
@@ -193,6 +246,7 @@ function pgh_work_group_administrators_view_views_default_views() {
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
   $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 'All';
   $handler->display->display_options['filters']['status']['exposed'] = TRUE;
   $handler->display->display_options['filters']['status']['expose']['operator_id'] = '';
   $handler->display->display_options['filters']['status']['expose']['label'] = 'Active';
@@ -217,6 +271,60 @@ function pgh_work_group_administrators_view_views_default_views() {
   $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
   $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
   $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: User: Last access */
+  $handler->display->display_options['filters']['access']['id'] = 'access';
+  $handler->display->display_options['filters']['access']['table'] = 'users';
+  $handler->display->display_options['filters']['access']['field'] = 'access';
+  $handler->display->display_options['filters']['access']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['access']['expose']['operator_id'] = 'access_op';
+  $handler->display->display_options['filters']['access']['expose']['label'] = 'Last access';
+  $handler->display->display_options['filters']['access']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['access']['expose']['operator'] = 'access_op';
+  $handler->display->display_options['filters']['access']['expose']['identifier'] = 'access';
+  $handler->display->display_options['filters']['access']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: User: Last login */
+  $handler->display->display_options['filters']['login']['id'] = 'login';
+  $handler->display->display_options['filters']['login']['table'] = 'users';
+  $handler->display->display_options['filters']['login']['field'] = 'login';
+  $handler->display->display_options['filters']['login']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['login']['expose']['operator_id'] = 'login_op';
+  $handler->display->display_options['filters']['login']['expose']['label'] = 'Last login';
+  $handler->display->display_options['filters']['login']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['login']['expose']['operator'] = 'login_op';
+  $handler->display->display_options['filters']['login']['expose']['identifier'] = 'login';
+  $handler->display->display_options['filters']['login']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: User: Created date */
+  $handler->display->display_options['filters']['created']['id'] = 'created';
+  $handler->display->display_options['filters']['created']['table'] = 'users';
+  $handler->display->display_options['filters']['created']['field'] = 'created';
+  $handler->display->display_options['filters']['created']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator_id'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['label'] = 'Created date';
+  $handler->display->display_options['filters']['created']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
+  $handler->display->display_options['filters']['created']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     6 => 0,
