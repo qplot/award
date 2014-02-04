@@ -384,42 +384,54 @@
         'pghq_PFC_waste_4_8_tB_1',
         'pghq_PFC_waste_4_8_tB_7'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_4_8_tB_14': {
       'args': [
         'pghq_PFC_waste_4_8_tB_2',
         'pghq_PFC_waste_4_8_tB_8'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_4_8_tB_15': {
       'args': [
         'pghq_PFC_waste_4_8_tB_3',
         'pghq_PFC_waste_4_8_tB_9'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_4_8_tB_16': {
       'args': [
         'pghq_PFC_waste_4_8_tB_4',
         'pghq_PFC_waste_4_8_tB_10'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_4_8_tB_17': {
       'args': [
         'pghq_PFC_waste_4_8_tB_5',
         'pghq_PFC_waste_4_8_tB_11'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_4_8_tB_18': {
       'args': [
         'pghq_PFC_waste_4_8_tB_6',
         'pghq_PFC_waste_4_8_tB_12'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_6_2_20': {
       'args': [
@@ -427,7 +439,9 @@
         'pghq_PFC_waste_6_2_8',
         'pghq_PFC_waste_6_2_14'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_6_2_21': {
       'args': [
@@ -435,7 +449,9 @@
         'pghq_PFC_waste_6_2_9',
         'pghq_PFC_waste_6_2_15'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_6_2_22': {
       'args': [
@@ -443,7 +459,9 @@
         'pghq_PFC_waste_6_2_10',
         'pghq_PFC_waste_6_2_16'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_6_2_23': {
       'args': [
@@ -451,7 +469,9 @@
         'pghq_PFC_waste_6_2_11',
         'pghq_PFC_waste_6_2_17'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_6_2_24': {
       'args': [
@@ -459,7 +479,9 @@
         'pghq_PFC_waste_6_2_12',
         'pghq_PFC_waste_6_2_18'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_6_2_25': {
       'args': [
@@ -467,7 +489,9 @@
         'pghq_PFC_waste_6_2_13',
         'pghq_PFC_waste_6_2_19'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_6_3_5': {
       'args': [
@@ -483,21 +507,27 @@
         'pghq_PFC_waste_8_10_1tE_1',
         'pghq_PFC_waste_8_10_1tE_7'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_8_10_1tE_14': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_2',
         'pghq_PFC_waste_8_10_1tE_8'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_8_10_1tE_15': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_3',
         'pghq_PFC_waste_8_10_1tE_9'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_8_10_1tE_16': {
       'args': [
@@ -511,14 +541,18 @@
         'pghq_PFC_waste_8_10_1tE_5',
         'pghq_PFC_waste_8_10_1tE_11'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_8_10_1tE_18': {
       'args': [
         'pghq_PFC_waste_8_10_1tE_6',
         'pghq_PFC_waste_8_10_1tE_12'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_9_29_1tF_14': {
       'args': [
@@ -527,7 +561,9 @@
         'pghq_PFC_waste_9_29_1tF_8',
         'pghq_PFC_waste_9_29_1tF_11'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_9_29_1tF_15': {
       'args': [
@@ -536,7 +572,9 @@
         'pghq_PFC_waste_9_29_1tF_9',
         'pghq_PFC_waste_9_29_1tF_12'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_10_1_tG_1': {
       'args': [
@@ -545,7 +583,9 @@
         'pghq_PFC_waste_6_2_20',
         'pghq_PFC_waste_8_10_1tE_13'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_10_1_tG_2': {
       'args': [
@@ -554,7 +594,9 @@
         'pghq_PFC_waste_6_2_21',
         'pghq_PFC_waste_8_10_1tE_14'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_10_1_tG_3': {
       'args': [
@@ -563,7 +605,9 @@
         'pghq_PFC_waste_6_2_22',
         'pghq_PFC_waste_8_10_1tE_15'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_PFC_waste_10_1_tG_4': {
       'args': [
@@ -572,7 +616,9 @@
         'pghq_PFC_waste_6_2_23',
         'pghq_PFC_waste_8_10_1tE_16'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_10_1_tG_5': {
       'args': [
@@ -581,7 +627,9 @@
         'pghq_PFC_waste_6_2_24',
         'pghq_PFC_waste_8_10_1tE_17'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_10_1_tG_6': {
       'args': [
@@ -590,7 +638,9 @@
         'pghq_PFC_waste_6_2_25',
         'pghq_PFC_waste_8_10_1tE_18'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_PFC_waste_10_1_tH_1': {
       'args': [
@@ -816,7 +866,19 @@
         'pghq_PFC_waste_9_29_1tF_10'
       ],
       'calculation': function(a, b, c, d) {
-      	return (a + b + c + d) * 8.5 / 2000;
+      	if (isNaN(a)){
+      		a = 0;
+      	}
+      	if (isNaN(b)){
+      		b = 0;
+      	}
+      	if (isNaN(c)){
+      		c = 0;
+      	}
+      	if (isNaN(d)){
+      		d = 0;
+      	}
+      	return toFixed((a + b + c + d) * 8.5 / 2000, 2);
       }
     },
 
