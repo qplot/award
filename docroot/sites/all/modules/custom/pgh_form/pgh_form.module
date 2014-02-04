@@ -479,7 +479,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $question_wrapper->getIdentifier() . '/edit') . '</small>';
 
   // Prepare response for question expecting a response.
-  if (!in_array($type, array('html', 'container'))) {
+  // if (!in_array($type, array('html', 'container'))) {
     $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
     if (!$rid) {
       $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
@@ -493,7 +493,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
     if ($answer['updated']) {
       $form_item['#default_value'] = $answer['value'];
     }
-  }
+  // }
 
   $form_item['#title'] = '<div class="question-desc">' . check_markup($question_wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
 
