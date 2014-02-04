@@ -618,6 +618,9 @@ function pgh_form_render_question($question, $app_id = NULL) {
     'question-type-' . $type,
     'question-style-' . $style,
   );
+  if ($default_formula) {
+    $classes[] = 'question-readonly';
+  }
 
   if ($parent_qid) {
     $classes[] = 'question-dependent';
