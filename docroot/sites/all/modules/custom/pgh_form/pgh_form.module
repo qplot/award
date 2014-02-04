@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Module file for PGH Form. 
+ * Module file for PGH Form.
  * Handles displaying a form for filling out an application.
  *
  * @author Fang Jin <fang@designhammer.com>
@@ -329,9 +329,15 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
           $major = 'question_' . $q_wrapper->label();
 
-          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = pgh_form_render_question_layout($q_wrapper->value(), $app_id);
+          $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id);
+          // dsm($question_form);
 
-          $form[$fieldset][$major]['comment'] = pgh_form_render_question_comment($q_wrapper->getIdentifier());
+          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = $question_form;
+
+          // Add comment for question for each response.
+          if (!empty($question_form['#response_id'])) {
+            $form[$fieldset][$major]['comment'] = pgh_form_render_question_comment($question_form['#response_id']);
+          }
 
           $debug = $debug + 1;
           if ($debug == $total) {
@@ -408,7 +414,7 @@ function pgh_application_form_element_callback($form, &$form_state) {
 /**
  * Application form submit handler. Handles submission of the fields in a single category of the application.
  *
- * Determines the value to be stored and calculates the points for each question. 
+ * Determines the value to be stored and calculates the points for each question.
  * Stores this information in the appropriate response node.
  *
  * @param array $form
@@ -498,7 +504,8 @@ function pgh_form_render_question($question, $app_id = NULL) {
   // Make sure the flat return.
   $form_item['#tree'] = FALSE;
 
-  $form_item['#question_id'] = $question_wrapper->getIdentifier();
+  $form_item['#question_id'] = intval($question_wrapper->getIdentifier());
+  $form_item['#response_id'] = !empty($rid) ? $rid : '';
 
   // Dependency display.
   if ($parent_qid = $question_wrapper->field_question_parent_qid->value()) {
@@ -1086,12 +1093,12 @@ function pgh_form_mail($key, &$message, $params) {
 /**
  * Render comment form for question.
  *
- * @param int $qid
- *   Question node id.
+ * @param int $rid
+ *   Response node id.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question_comment($qid) {
+function pgh_form_render_question_comment($rid) {
   $form = array(
     '#type' => 'container',
     '#title' => 'comment',
@@ -1100,13 +1107,13 @@ function pgh_form_render_question_comment($qid) {
   $form['body'] = array(
     '#type' => 'textarea',
     '#size' => 3,
-    '#prefix' => '<div id="comment_' . $qid . '">',
+    '#prefix' => '<div id="comment_' . $rid . '">',
     '#suffix' => '</div>',
   );
 
   $links['comment-add'] = array(
     'title' => t('Add comment'),
-    'href' => "question/comment/reply/" . $qid,
+    'href' => "question/comment/reply/" . $rid,
     'attributes' => array(
       'title' => t('Add a new comment to this question.'),
       'class' => 'use-custom-ajax',
@@ -1129,17 +1136,17 @@ function pgh_form_render_question_comment($qid) {
 /**
  * Question comment reply ajax callback.
  *
- * @param int $qid
- *   Question node id.
+ * @param int $rid
+ *   Response node id.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_quesiton_comment_reply($qid) {
+function pgh_form_quesiton_comment_reply($rid) {
   $body = $_POST['body'];
 
   // Add comment to this question.
   $comment = (object) array(
-    'nid' => $qid,
+    'nid' => $rid,
     'cid' => 0,
     'pid' => 0,
     'uid' => 1,
@@ -1159,11 +1166,11 @@ function pgh_form_quesiton_comment_reply($qid) {
     ),
   );
   comment_submit($comment);
-  comment_save($comment);    
+  comment_save($comment);
 
   $form = 'Comments has been submitted.';
   return drupal_json_output(array(
-    'response' => $form, 
+    'response' => $form,
     // 'data' => $_POST
   ));
 
