@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Module file for PGH Form. 
+ * Module file for PGH Form.
  * Handles displaying a form for filling out an application.
  *
  * @author Fang Jin <fang@designhammer.com>
@@ -296,10 +296,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
         if (!empty($caption)) {
           $fieldset = 'fieldset_' . $sec_wrapper->title->value();
           $form[$fieldset] = array(
-            '#type' => 'fieldset',
-            '#title' => t($caption),
-            '#collapsible' => FALSE,
-            '#collapsed' => FALSE,
+            '#prefix' => '<div><h3 class="legend">' . t($caption) . '</h3>',
+            '#suffix' => '</div>',
           );
         }
         else {
@@ -397,7 +395,7 @@ function pgh_application_form_element_callback($form, &$form_state) {
 /**
  * Application form submit handler. Handles submission of the fields in a single category of the application.
  *
- * Determines the value to be stored and calculates the points for each question. 
+ * Determines the value to be stored and calculates the points for each question.
  * Stores this information in the appropriate response node.
  *
  * @param array $form
