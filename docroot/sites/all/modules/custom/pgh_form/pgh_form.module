@@ -336,7 +336,13 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
           // Add comment for question for each response.
           if (!empty($question_form['#response_id'])) {
-            $form[$fieldset][$major]['comment'] = pgh_form_render_question_comment($question_form['#response_id']);
+            $form_item = pgh_form_render_question_comment($question_form['#response_id']);
+
+            // Respect the visibility of this question
+            if ($q_wrapper->field_question_parent_qid->value()) {
+              $form_item['#states'] = pgh_form_question_states($q_wrapper->value());
+            }
+            $form[$fieldset][$major]['comment'] = $form_item;
           }
 
           $debug = $debug + 1;
