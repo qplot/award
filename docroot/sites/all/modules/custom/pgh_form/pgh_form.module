@@ -480,6 +480,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
 
   // Prepare response for question expecting a response.
   // if (!in_array($type, array('html', 'container'))) {
+  if (!in_array($type, array('html'))) {
     $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
     if (!$rid) {
       $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
@@ -493,7 +494,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
     if ($answer['updated']) {
       $form_item['#default_value'] = $answer['value'];
     }
-  // }
+  }
 
   $form_item['#title'] = '<div class="question-desc">' . check_markup($question_wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
 
@@ -713,6 +714,19 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
   $form_item = array();
 
   if (!empty($layout) && ($type == 'container')) {
+    // Container needs to have a response as well.
+    $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
+    if (!$rid) {
+      $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
+    }
+
+    $answer = pgh_api_get_response($app_id, $question_wrapper->getIdentifier());
+    $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
+    $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
+
+    $form_item['#question_id'] = intval($question_wrapper->getIdentifier());
+    $form_item['#response_id'] = !empty($rid) ? $rid : '';
+
     // Print the container parent element.
     $parse = pgh_parse_layout($layout);
 
