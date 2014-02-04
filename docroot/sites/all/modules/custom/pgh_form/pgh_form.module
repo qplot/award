@@ -618,6 +618,9 @@ function pgh_form_render_question($question, $app_id = NULL) {
     'question-type-' . $type,
     'question-style-' . $style,
   );
+  if ($default_formula) {
+    $classes[] = 'question-readonly';
+  }
 
   if ($parent_qid) {
     $classes[] = 'question-dependent';
@@ -645,7 +648,8 @@ function pgh_form_render_question($question, $app_id = NULL) {
 
   // Disable this question if has default formula
   if ($default_formula) {
-    $form_item['#disabled'] = TRUE;
+    // $form_item['#disabled'] = TRUE;
+    $form_item['#attributes'] = array('readonly' => 'readonly');
   }
 
   // Mark this question as processed.

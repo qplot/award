@@ -282,6 +282,13 @@ function pgh_user_invite_form_submit($form, &$form_state) {
  * @author Jay Roberts <jay@designhammer.com>
  */
 function pgh_user_invite_form_process($form, &$form_state) {
+  global $user;
+
+  // Fetch owner (the Business Unit that the new users will be added to).
+  $owner = node_load($form_state['values']['owner']);
+  $invited_users = array();
+  $pending_users = array();
+
   foreach ($form_state['storage']['valid_emails'] as $email) {
     $invite_user = user_load_by_mail($email);
     if (!$invite_user) {
@@ -307,21 +314,69 @@ function pgh_user_invite_form_process($form, &$form_state) {
         language_default(),
         array('account' => $invite_user),
         variable_get('site_mail', ini_get('sendmail_from')));
+
+      // Grant the Business Unit role to this user if not already granted.
+      if ($role = user_role_load_by_name('Business Unit User')) {
+        user_multiple_role_edit(array($invite_user->uid), 'add_role', $role->rid);
+      }
+
+      // Add the user to the owner Business Unit.
+      pgh_api_add_user_to_business_unit($invite_user, $owner);
+
+      $invited_users[] = $invite_user;
+
+      drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
+
+    } else {
+      $pending_users[] = $invite_user;
+
+      // User account exists.
+      drupal_set_message(t('An invitation to %email is pending.', array('%email' => $email)));
     }
-
-    // Grant the Business Unit role to this user if not already granted.
-    if ($role = user_role_load_by_name('Business Unit User')) {
-      user_multiple_role_edit(array($invite_user->uid), 'add_role', $role->rid);
-    }
-
-    // Fetch owner (the Business Unit that the new users will be added to).
-    $owner = node_load($form_state['values']['owner']);
-
-    // Add the user to the owner Business Unit.
-    pgh_api_add_user_to_business_unit($invite_user, $owner);
-
-    drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
   }
 
+  $invited_users_output = '';
+  if ($invited_users) {
+    foreach ($invited_users as $invited_user) {
+      $invited_users_output .= $invited_user->mail . ' ' . url('user/' . $invited_user->uid, array('absolute' => TRUE)) . "\n";
+    }
+  } else {
+    $invited_users_output = 'No users were invited';
+  }
+
+  $pending_users_output = '';
+  if ($pending_users) {
+    foreach ($pending_users as $pending_user) {
+      $pending_users_output .= $pending_user->realname . ' ' .
+                               $pending_user->mail . ' ' .
+                               url('user/' . $pending_user->uid, array('absolute' => TRUE)) . ' ' .
+                               'View Work Groups: ' . url('admin/user-work-groups', array('absolute' => TRUE, 'query' => array('mail' => $pending_user->mail))) . "\n";
+    }
+  } else {
+    $pending_users_output = 'No pending users to review';
+  }
+
+  rules_invoke_event('pgh_user_invite_invitations_sent', $user, $owner, $invited_users_output, $pending_users_output);
+
   drupal_goto('dashboard');
+}
+
+
+/**
+* Implementation of hook_rules_event_info().
+*/
+function pgh_user_invite_rules_event_info() {
+  return array(
+    'pgh_user_invite_invitations_sent' => array(
+      'group' => t('PGH User Invite'),
+      'label' => t('Users were invited by a Client Admin'),
+      'module' => 'pgh_user_invite',
+      'variables' => array(
+        'inviting_user' => array('type' => 'user', 'label' => t('The user who sent the invites.')),
+        'business_unit' => array('type' => 'node', 'label' => t('The Business Unit.')),
+        'invited_users' => array('type' => 'text', 'label' => t('List of new users who were invited.')),
+        'pending_users' => array('type' => 'text', 'label' => t('List of users who need to be processed.')),
+      ),
+    ),
+  );
 }

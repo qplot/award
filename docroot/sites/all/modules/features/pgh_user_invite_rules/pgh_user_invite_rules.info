@@ -1,0 +1,11 @@
+name = PGH User Invite Rules
+description = Rules to run when when the user invite form is submitted.
+core = 7.x
+package = PGH Rules
+version = 7.x-0.1
+project = pgh_user_invite_rules
+dependencies[] = entity
+dependencies[] = pgh_user_invite
+dependencies[] = rules
+features[features_api][] = api:2
+features[rules_config][] = rules_user_invite_admin_notification
