@@ -188,13 +188,9 @@ function pgh_permissions_node_access_business_unit($business_unit, $op, $account
         }
       }
 
-      // Business Unit users can update.
-      $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
-      foreach ($business_unit_wrapper->field_users->getIterator() as $business_unit_user) {
-        if ($business_unit_user->uid->value() == $account->uid) {
-          return NODE_ACCESS_ALLOW;
-        }
-      }
+      // Per https://ac.designhammer.net/projects/practice-greenhealth-phase-1/tasks/154
+      // Business Unit users cannot update Business Units.
+
       break;
 
     case 'view':
