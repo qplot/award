@@ -1,0 +1,12 @@
+name = Media Content Type
+description = PGH media related fields and content type
+core = 7.x
+package = PGH Content Type
+version = 7.x-1.0
+project = pgh_media_ctype
+dependencies[] = features
+dependencies[] = list
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_media_description
+features[field_base][] = field_media_sharing
