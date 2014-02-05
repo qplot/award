@@ -3005,42 +3005,54 @@
         'pghq_LTC_waste_4_8_tB_1',
         'pghq_LTC_waste_4_8_tB_7'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_4_8_tB_14': {
       'args': [
         'pghq_LTC_waste_4_8_tB_2',
         'pghq_LTC_waste_4_8_tB_8'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_4_8_tB_15': {
       'args': [
         'pghq_LTC_waste_4_8_tB_3',
         'pghq_LTC_waste_4_8_tB_9'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_4_8_tB_16': {
       'args': [
         'pghq_LTC_waste_4_8_tB_4',
         'pghq_LTC_waste_4_8_tB_10'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_4_8_tB_17': {
       'args': [
         'pghq_LTC_waste_4_8_tB_5',
         'pghq_LTC_waste_4_8_tB_11'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_4_8_tB_18': {
       'args': [
         'pghq_LTC_waste_4_8_tB_6',
         'pghq_LTC_waste_4_8_tB_12'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_6_2_20': {
       'args': [
@@ -3048,7 +3060,9 @@
         'pghq_LTC_waste_6_2_8',
         'pghq_LTC_waste_6_2_14'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_6_2_21': {
       'args': [
@@ -3056,7 +3070,9 @@
         'pghq_LTC_waste_6_2_9',
         'pghq_LTC_waste_6_2_15'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_6_2_22': {
       'args': [
@@ -3064,7 +3080,9 @@
         'pghq_LTC_waste_6_2_10',
         'pghq_LTC_waste_6_2_16'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_6_2_23': {
       'args': [
@@ -3072,7 +3090,9 @@
         'pghq_LTC_waste_6_2_11',
         'pghq_LTC_waste_6_2_17'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_6_2_24': {
       'args': [
@@ -3080,7 +3100,9 @@
         'pghq_LTC_waste_6_2_12',
         'pghq_LTC_waste_6_2_18'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_6_2_25': {
       'args': [
@@ -3088,7 +3110,9 @@
         'pghq_LTC_waste_6_2_13',
         'pghq_LTC_waste_6_2_19'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_6_3_5': {
       'args': [
@@ -3104,42 +3128,54 @@
         'pghq_LTC_waste_8_10_1tE_1',
         'pghq_LTC_waste_8_10_1tE_7'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_8_10_1tE_14': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_2',
         'pghq_LTC_waste_8_10_1tE_8'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_8_10_1tE_15': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_3',
         'pghq_LTC_waste_8_10_1tE_9'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_8_10_1tE_16': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_4',
         'pghq_LTC_waste_8_10_1tE_10'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_8_10_1tE_17': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_5',
         'pghq_LTC_waste_8_10_1tE_11'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_8_10_1tE_18': {
       'args': [
         'pghq_LTC_waste_8_10_1tE_6',
         'pghq_LTC_waste_8_10_1tE_12'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_10_1_tG_1': {
       'args': [
@@ -3148,7 +3184,9 @@
         'pghq_LTC_waste_6_2_20',
         'pghq_LTC_waste_8_10_1tE_13'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_10_1_tG_2': {
       'args': [
@@ -3157,7 +3195,9 @@
         'pghq_LTC_waste_6_2_21',
         'pghq_LTC_waste_8_10_1tE_14'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_10_1_tG_3': {
       'args': [
@@ -3166,7 +3206,9 @@
         'pghq_LTC_waste_6_2_22',
         'pghq_LTC_waste_8_10_1tE_15'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_waste_10_1_tG_4': {
       'args': [
@@ -3175,7 +3217,9 @@
         'pghq_LTC_waste_6_2_23',
         'pghq_LTC_waste_8_10_1tE_16'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_10_1_tG_5': {
       'args': [
@@ -3184,7 +3228,9 @@
         'pghq_LTC_waste_6_2_24',
         'pghq_LTC_waste_8_10_1tE_17'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_10_1_tG_6': {
       'args': [
@@ -3193,7 +3239,9 @@
         'pghq_LTC_waste_6_2_25',
         'pghq_LTC_waste_8_10_1tE_18'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_waste_10_1_tH_1': {
       'args': [
@@ -3473,7 +3521,9 @@
         'pghq_LTC_chemicals_2_4_2_10',
         'pghq_LTC_chemicals_2_4_2_13'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 1);
+      }
     },
     'pghq_LTC_chemicals_2_4_2_17': {
       'args': [
@@ -3483,7 +3533,9 @@
         'pghq_LTC_chemicals_2_4_2_11',
         'pghq_LTC_chemicals_2_4_2_14'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 1);
+      }
     },
     'pghq_LTC_chemicals_2_4_2_18': {
       'args': [
@@ -3525,7 +3577,7 @@
         'pghq_LTC_food_2_1_3'
       ],
       'calculation': function() {
-	      return toFixed(handlers.divide.apply(this, arguments) * 100, 2);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
       }
     },
     'pghq_LTC_food_3_1_4': {
@@ -3534,7 +3586,7 @@
         'pghq_LTC_food_3_1_3'
       ],
       'calculation': function() {
-	      return toFixed(handlers.divide.apply(this, arguments) * 100, 2);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
       }
     },
 
@@ -3546,7 +3598,9 @@
         'pghq_LTC_energy_2_7_5',
         'pghq_LTC_energy_2_7_4'
       ],
-      'calculation': handlers.convertBTUSimple
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUSimple.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_2': {
       'args': [
@@ -3562,7 +3616,9 @@
         'pghq_LTC_energy_2_7_9',
         'pghq_LTC_energy_2_7_8'
       ],
-      'calculation': handlers.convertNaturalGas
+      'calculation': function() {
+	      return toFixed(handlers.convertNaturalGas.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_4': {
       'args': [
@@ -3578,7 +3634,9 @@
         'pghq_LTC_energy_2_7_13',
         'pghq_LTC_energy_2_7_12'
       ],
-      'calculation': handlers.convertFuelOil
+      'calculation': function() {
+	      return toFixed(handlers.convertFuelOil.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_6': {
       'args': [
@@ -3594,7 +3652,9 @@
         'pghq_LTC_energy_2_7_17',
         'pghq_LTC_energy_2_7_16'
       ],
-      'calculation': handlers.convertSteam
+      'calculation': function() {
+	      return toFixed(handlers.convertSteam.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_8': {
       'args': [
@@ -3610,7 +3670,9 @@
         'pghq_LTC_energy_2_7_21',
         'pghq_LTC_energy_2_7_20'
       ],
-      'calculation': handlers.convertWater
+      'calculation': function() {
+	      return toFixed(handlers.convertWater.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_10': {
       'args': [
@@ -3626,7 +3688,9 @@
         'pghq_LTC_energy_2_7_25',
         'pghq_LTC_energy_2_7_24'
       ],
-      'calculation': handlers.convertWater
+      'calculation': function() {
+	      return toFixed(handlers.convertWater.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_12': {
       'args': [
@@ -3642,7 +3706,9 @@
         'pghq_LTC_energy_2_7_29',
         'pghq_LTC_energy_2_7_28'
       ],
-      'calculation': handlers.convertDiesel
+      'calculation': function() {
+	      return toFixed(handlers.convertDiesel.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_14': {
       'args': [
@@ -3666,7 +3732,7 @@
 				var x = handlers.convertBTU(a, b);
 				var y = handlers.convertBTU(c, d);
 				var z = handlers.convertBTU(e, f);
-				return x + y + z;
+				return toFixed(x + y + z, 0);
 			}
 		},
     'pghq_LTC_energy_2_11_18': {
@@ -3683,7 +3749,9 @@
         'pghq_LTC_energy_2_8_2_18', // Units
         'pghq_LTC_energy_2_8_2_17' // Amount
       ],
-      'calculation': handlers.convertBTU
+      'calculation': function() {
+	      return toFixed(handlers.convertBTU.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_2_11_20': {
       'args': [
@@ -3727,7 +3795,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 0);
       }
     },
     'pghq_LTC_energy_2_11_22': {
@@ -3808,7 +3876,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 0);
       }
     },   
     'pghq_LTC_energy_3_1_1_2': {
@@ -3871,7 +3939,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 0);
       }
     },
     'pghq_LTC_energy_3_1_1_3': {
@@ -3934,7 +4002,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 0);
       }
     },
     'pghq_LTC_energy_3_1_1_4': {
@@ -3960,21 +4028,27 @@
         'pghq_LTC_energy_3_1_1_1',
         'pghq_LTC_energy_2_7_1'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_3_1_1_7': {
       'args': [
         'pghq_LTC_energy_3_1_1_2',
         'pghq_LTC_energy_2_7_2'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_3_1_1_8': {
       'args': [
         'pghq_LTC_energy_3_1_1_3',
         'pghq_LTC_energy_2_7_3'
       ],
-      'calculation': handlers.divide
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_3_1_1_9': {
       'args': [
@@ -3999,45 +4073,45 @@
         'pghq_LTC_energy_4_4_4',
         'pghq_LTC_energy_4_4_3'
       ],
-      'calculation': handlers.convertBTUComplex
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_4_4_11': {
       'args': [
         'pghq_LTC_energy_4_4_10',
         'pghq_LTC_energy_4_4_9'
       ],
-      'calculation': handlers.convertBTUComplex
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_4_4_17': {
       'args': [
         'pghq_LTC_energy_4_4_16',
         'pghq_LTC_energy_4_4_15'
       ],
-      'calculation': handlers.convertBTUComplex
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_4_4_23': {
       'args': [
         'pghq_LTC_energy_4_4_22',
         'pghq_LTC_energy_4_4_21'
       ],
-      'calculation': handlers.convertBTUComplex
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_4_4_29': {
       'args': [
         'pghq_LTC_energy_4_4_28',
         'pghq_LTC_energy_4_4_27'
       ],
-      'calculation': handlers.convertBTUComplex
-    },
-    'pghq_LTC_energy_4_4_31': {
-      'args': [
-        'pghq_LTC_energy_4_4_3',
-        'pghq_LTC_energy_4_4_9',
-        'pghq_LTC_energy_4_4_15',
-        'pghq_LTC_energy_4_4_21',
-        'pghq_LTC_energy_4_4_27'
-      ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_4_4_32': {
       'args': [
@@ -4047,7 +4121,9 @@
         'pghq_LTC_energy_4_4_23',
         'pghq_LTC_energy_4_4_29'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_energy_4_4_33': {
       'args': [
@@ -4057,7 +4133,9 @@
         'pghq_LTC_energy_4_4_24',
         'pghq_LTC_energy_4_4_30'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
 
     //
@@ -4069,7 +4147,9 @@
         'pghq_LTC_water_1_5_1_13',
         'pghq_LTC_water_1_5_1_1'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_water_1_8': {
       'args': [
@@ -4077,7 +4157,9 @@
         'pghq_LTC_water_1_5_1_13',
         'pghq_LTC_water_1_8_0'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_water_1_9': {
       'args': [
@@ -4085,7 +4167,9 @@
         'pghq_LTC_water_1_5_1_13',
         'pghq_LTC_water_1_9_0'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_water_1_11': {
       'args': [
@@ -4106,7 +4190,9 @@
         'pghq_LTC_water_1_5_1_13',
         'pghq_LTC_water_1_5_1_7'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 1);
+      }
     },
     'pghq_LTC_water_2_1tB_3': {
       'args': [
@@ -4114,7 +4200,7 @@
         'pghq_LTC_water_2_1tB_7'
       ],
       'calculation': function() {
-	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
       }
     },
     'pghq_LTC_water_2_1tB_6': {
@@ -4123,7 +4209,7 @@
         'pghq_LTC_water_2_1tB_7'
       ],
       'calculation': function() {
-	      return Math.floor(handlers.divide.apply(this, arguments) * 100);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
       }
     },
     'pghq_LTC_water_2_1tB_7': {
@@ -4131,7 +4217,9 @@
         'pghq_LTC_water_2_1tB_1',
         'pghq_LTC_water_2_1tB_4'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_water_2_3_tC_4': {
       'args': [
@@ -4239,7 +4327,9 @@
         'pghq_LTC_water_1_5_1_13',
         'pghq_LTC_water_2_4_1'
       ],
-      'calculation': handlers.convertGallonsAndDivide
+      'calculation': function() {
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_water_3_1tE_21': {
       'args': [
@@ -4249,7 +4339,9 @@
         'pghq_LTC_water_3_1tE_15',
         'pghq_LTC_water_3_1tE_19'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_water_3_1tE_22': {
       'args': [
@@ -4259,7 +4351,9 @@
         'pghq_LTC_water_3_1tE_16',
         'pghq_LTC_water_3_1tE_20'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
 
     //
@@ -4290,7 +4384,9 @@
         'pghq_LTC_climate_1_5_22',
         'pghq_LTC_climate_1_5_24'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_climate_3_2_6_21': {
       'args': [
@@ -4300,7 +4396,9 @@
         'pghq_LTC_climate_3_2_6_15',
         'pghq_LTC_climate_3_2_6_19'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
     'pghq_LTC_climate_3_2_6_22': {
       'args': [
@@ -4310,7 +4408,9 @@
         'pghq_LTC_climate_3_2_6_16',
         'pghq_LTC_climate_3_2_6_20'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
     },
 
     //
@@ -4339,14 +4439,18 @@
         'pghq_LTC_greenbuilding_4_2_tC_1',
         'pghq_LTC_greenbuilding_4_2_tC_4'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
     'pghq_LTC_greenbuilding_4_2_tC_8': {
       'args': [
         'pghq_LTC_greenbuilding_4_2_tC_2',
         'pghq_LTC_greenbuilding_4_2_tC_5'
       ],
-      'calculation': handlers.sum
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
     },
 
     //
@@ -4457,7 +4561,7 @@
           }
         }
  
-      	return toFixed(sum, 1);
+      	return toFixed(sum, 2);
       }
     },
     'pghq_LTC_appendixa_1_8t_1': {
@@ -4537,7 +4641,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 0);
       }
     },
     'pghq_LTC_appendixa_1_9t_1': {
@@ -4621,7 +4725,7 @@
           }
         }
  
-      	return toFixed(sum, 1);
+      	return toFixed(sum, 2);
       }
     },
     'pghq_LTC_appendixa_1_9t_2': {
@@ -4689,7 +4793,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 0);
       }
     },
     'pghq_LTC_appendixa_1_10t_1': {
@@ -4735,7 +4839,7 @@
           }
         }
  
-      	return toFixed(sum, 1);
+      	return toFixed(sum, 2);
       }
     },
     'pghq_LTC_appendixa_1_10t_2': {
@@ -4765,7 +4869,7 @@
           }
         }
  
-      	return sum;
+      	return toFixed(sum, 0);
       }
     },
 
