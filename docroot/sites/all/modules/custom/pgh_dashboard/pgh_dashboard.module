@@ -24,7 +24,8 @@ function pgh_dashboard_menu() {
     'title' => 'Dashboard',
     'description' => 'Node Dashboard Shortcut',
     'page callback' => 'pgh_dashboard_redirect',
-    'access callback' => TRUE,
+    'access callback' => 'pgh_dashboard_redirect_access',
+    'access arguments' => array(1),
     'type' => MENU_LOCAL_TASK,
   );
 
@@ -34,7 +35,7 @@ function pgh_dashboard_menu() {
 /**
  * Page callback for the dashboard.
  *
- * Currently no additional processing occurs here. 
+ * Currently no additional processing occurs here.
  * We define the menu link so that the Drupal menu system returns
  * 200 instead of 404 for our page__dashboard.tpl.php template.
  *
@@ -74,4 +75,16 @@ function pgh_dashboard_disable_node_view_tab($node) {
  */
 function pgh_dashboard_redirect() {
   drupal_goto('dashboard');
+}
+
+/**
+ * Access for redirect to dashboard page.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_dashboard_redirect_access($node) {
+  if (($node->type == 'business_unit') || ($node->type == 'work_group')) {
+    return TRUE;
+  }
+  return FALSE;
 }
