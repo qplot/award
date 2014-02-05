@@ -20,6 +20,14 @@ function pgh_dashboard_menu() {
     'access callback' => TRUE,
   );
 
+  $items['node/%node/dashboard'] = array(
+    'title' => 'Dashboard',
+    'description' => 'Node Dashboard Shortcut',
+    'page callback' => 'pgh_dashboard_redirect',
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
+  );
+
   return $items;
 }
 
@@ -57,4 +65,13 @@ function pgh_dashboard_disable_node_view_tab($node) {
     return FALSE;
   }
   return TRUE;
+}
+
+/**
+ * Redirect to dashboard page.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_dashboard_redirect() {
+  drupal_goto('dashboard');
 }
