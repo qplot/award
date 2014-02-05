@@ -1206,13 +1206,17 @@ function pgh_form_set_question_comment($rid, $body) {
   $wrapper = NULL;
   if ($cid) {
     $comment = comment_load($cid);
-    $wrapper = entity_metadata_wrapper('comment', $comment);
   } else {
     // add a new comment
-    $comment = entity_create('comment');
-    $wrapper = entity_metadata_wrapper('comment', $comment);
-    $wrapper->uid = $user->uid;
+    $comment = entity_create('comment', array(
+      'type' => 'comment',
+      'node_type' => 'comment_node_response',
+      'uid' => $user->uid,
+      'nid' => $rid,
+    ));
   }
+  $wrapper = entity_metadata_wrapper('comment', $comment);
+  $wrapper->subject = $rid;
   $wrapper->comment_body->set(
     array(
       'value' => $body,
