@@ -22,6 +22,15 @@ function pgh_user_invite_menu() {
     'access arguments' => array('invite users business unit'),
   );
 
+  $items['remind'] = array(
+    'title' => 'Remind Users',
+    'description' => 'Remind users in the Business Unit',
+    'page callback' => 'pgh_user_remind_page',
+    'access callback' => TRUE,
+    // 'access callback' => 'user_access',
+    // 'access arguments' => array('invite users business unit'),
+  );
+
   return $items;
 }
 
@@ -361,7 +370,6 @@ function pgh_user_invite_form_process($form, &$form_state) {
   drupal_goto('dashboard');
 }
 
-
 /**
 * Implementation of hook_rules_event_info().
 */
@@ -379,4 +387,131 @@ function pgh_user_invite_rules_event_info() {
       ),
     ),
   );
+}
+
+/**
+ * Page callback for the user remind page.
+ *
+ * @return string
+ *   Page content.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_user_remind_page() {
+  if (isset($_GET['bid'])) {
+    $business_unit = node_load($_GET['bid']);
+
+    if (!$business_unit) {
+      return MENU_NOT_FOUND;
+    }
+
+    if (!entity_access('update', 'node', $business_unit)) {
+      return MENU_ACCESS_DENIED;
+    }
+
+    drupal_set_title('Send email to users in ' . $business_unit->title);
+
+    return drupal_get_form('pgh_user_remind_form', $business_unit);
+  }
+
+  return MENU_NOT_FOUND;
+}
+
+/**
+ * Form callback for the user reminder form.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @return array $bnode
+ *   Business unit node.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_user_remind_form($form, &$form_state, $business_unit) {
+  $form = array();
+
+  $form['owner'] = array(
+    '#type' => 'hidden',
+    '#value' => $business_unit->nid,
+  );
+
+  // Get all users in this business unit
+  $options = array();
+  $users = array();
+  $bwrapper = entity_metadata_wrapper('node', $business_unit);
+  foreach ($bwrapper->field_users->getIterator() as $wrapper) {
+    $id = $wrapper->getIdentifier();
+    $username = $wrapper->name->value();
+    $name = $wrapper->field_user_first_name->value() . ' ' . $wrapper->field_user_last_name->value();
+    $email =$wrapper->mail->value();
+    $options[$id] = $name . "($email)";
+    $users[$id] = array(
+      'uid' => $wrapper->getIdentifier(),
+      'username' => $username,
+      'name' => $name,
+      'email' => $email,
+    );
+  }
+
+  $form['users'] = array(
+    '#type' => 'checkboxes',
+    '#options' => $options,
+    '#default_value' => array_keys($options),
+    '#title' => 'Business unit users',
+    '#description' => 'Select all users that you want to send reminder emails to.'
+  );
+  $form['users_info'] = array(
+    '#type' => 'hidden',
+    '#value' => serialize($users),
+  );
+
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#description' => 'Email title',
+  );
+
+  $form['body'] = array(
+    '#type' => 'textarea',
+    '#description' => 'Email body',
+    '#default_value' => '',
+    '#rows' => 3,
+    '#required' => TRUE,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Send reminders'),
+  );
+
+  return $form;
+}
+
+/**
+ * Reminder page submit.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_user_remind_form_submit($form, &$form_state) {
+  // dsm($form_state['values']);
+  $users = unserialize($form_state['values']['users_info']);
+  dsm($users);
+
+      // drupal_mail('user',
+      //   'register_no_approval_required',
+      //   $invite_user->mail,
+      //   language_default(),
+      //   array('account' => $invite_user),
+      //   variable_get('site_mail', ini_get('sendmail_from')));
+
+
 }
