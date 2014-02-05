@@ -1626,11 +1626,11 @@ h3 {
 
   form {
 
-    // fieldset {
-    //   border: none;
-    //   margin: 0;
-    //   padding: 5px 0 11px;
-    // }
+    fieldset {
+      border: none;
+      margin: 0;
+      padding: 5px 0 11px;
+    }
 
     .question-number {
       font-weight: bold;
@@ -1707,7 +1707,7 @@ h3 {
     }
 
     // disabled form elements
-    .question .form-item.form-disabled {
+    .question.question-readonly {
 
       a,
       label,
@@ -1720,10 +1720,10 @@ h3 {
         background-color: #f0f0f0;
         border: 1px solid #f0f0f0;
         @include box-shadow(none);
+        cursor: default;
       }
 
       .description {
-        display: none;
       }
     }
 
