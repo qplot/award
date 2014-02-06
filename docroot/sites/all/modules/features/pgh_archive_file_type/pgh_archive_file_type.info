@@ -1,0 +1,16 @@
+name = Archive File Type
+description = Allows users to attach archive files such as zip and rar.
+core = 7.x
+package = PGH Content Type
+version = 7.x-1.1
+project = pgh_archive_file_type
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = file_entity
+dependencies[] = text
+features[ctools][] = file_entity:file_type:1
+features[features_api][] = api:2
+features[field_base][] = field_media_description
+features[field_instance][] = file-archive-field_media_description
+features[field_instance][] = file-document-field_media_description
+features[file_type][] = archive
