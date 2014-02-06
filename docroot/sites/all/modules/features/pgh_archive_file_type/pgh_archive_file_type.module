@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Archive File Type feature.
+ */
+
+include_once 'pgh_archive_file_type.features.inc';
