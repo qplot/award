@@ -39,13 +39,13 @@ function pgh_media_ctype_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_media_sharing'
-  $field_bases['field_media_sharing'] = array(
+  // Exported field_base: 'field_media_shared'
+  $field_bases['field_media_shared'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_media_sharing',
+    'field_name' => 'field_media_shared',
     'field_permissions' => array(
       'type' => 0,
     ),
