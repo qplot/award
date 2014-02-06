@@ -1642,16 +1642,22 @@ h3 {
     .question {
 
       .form-item {
-        border-bottom: 1px solid #ededed;
-        margin-bottom: 25px;
-        padding-bottom: 25px;
+        border-top: 1px solid #ededed;
+        margin-top: 25px;
+        padding-top: 25px;
         padding-left: 40px;
 
         .form-item {
           border: none;
-          margin-bottom: 0;
-          padding-bottom: 0;
+          margin-top: 0;
+          padding-top: 0;
         }
+      }
+
+      &:first-child .form-item {
+        border: none;
+        margin-top: 0;
+        padding-top: 0;
       }
 
       .question-post-prompt {
@@ -1707,6 +1713,19 @@ h3 {
       }
     }
 
+    .form-textarea-wrapper {
+      padding-bottom: 1em;
+
+      textarea {
+      }
+    }
+  }
+}
+
+.page-application {
+
+  form {
+
     .launcher {
 
       .media-item {
@@ -1755,11 +1774,6 @@ h3 {
           @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
         }
       }
-
-      // a.button.remove {
-      //   @include gradient(#ea4539, darken(#ea4539, 5%));
-      //   border-color: darken(#ea4539, 5%);
-      // }
     }
 
     input.input-incorrect {
@@ -1781,6 +1795,116 @@ h3 {
       margin: 5px 0 1em;
       padding: 5px 5px 4px 20px;
       width: auto;
+    }
+  }
+}
+
+// comment
+.page-application {
+
+  form .comment-form {
+    position: relative;
+    z-index: 1;
+
+    .comment-wrapper {
+      border: 1px solid #ccc;
+      background-color: $white;
+      @include border-radius(2px);
+      @include box-shadow(0 1px 7px rgba(0,0,0,0.2));
+      display: none;
+      padding: 8px;
+      width: 440px;
+      position: absolute;
+      right: 0;
+      bottom: 32px;
+      z-index: 2;
+    }
+
+    .form-type-textarea.form-item {
+      margin: 0;
+
+      textarea {
+        color: #333;
+        border: none;
+        border-bottom: 1px solid #eee;
+        resize: none;
+      }
+    }
+
+    .description {
+      color: #b0b0b0;
+      font-size: 11px;
+      line-height: 14px;
+      background: transparent url(../images/pgh-form/icon-warning-gray.png) no-repeat left center;
+      padding-top: 5px;
+      padding-left: 20px;
+      width: 280px;
+      float: right;
+    }
+
+    ul.links.inline {
+      margin: 0;
+
+      li.comment-add {
+        padding: 0;
+
+        a {
+          color: $white;
+          font-size: 11px;
+          line-height: 18px;
+          text-transform: uppercase;
+          text-decoration: none;
+          text-align: center;
+          background-color: $green;
+          @include border-radius(2px);
+          display: block;
+          margin-top: 5px;
+          padding: 5px 0;
+          width: 127px;
+          @include transition(background-color 0.2s ease-out);
+
+          &:hover {
+            background-color: lighten($green, 10%);
+          }
+
+          &.saving {
+            background-color: $orange;
+          }
+        }
+      }
+    }
+
+    .add-comment {
+      font-size: 11px;
+      line-height: 18px;
+      color: #00674e;
+      text-transform: uppercase;
+      background: transparent url(../images/pgh-form/icon-comment.png) no-repeat 9px 6px;
+      @include border-radius(2px);
+      margin: 0 0 1px;
+      padding: 4px 9px 4px 28px;
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      //@include transition(background-color 0.1s ease-out);
+
+      &:hover {
+        color: $white;
+        background-color: #00664d;
+        background-position: 9px -34px;
+      }
+
+      &.opened-comment {
+        color: $white;
+        background-color: #c3c3c3;
+        background-position: 9px -78px;
+
+        &:hover {
+          background-color: darken(#c3c3c3, 14%);
+        }
+      }
     }
   }
 }

@@ -1122,18 +1122,21 @@ function pgh_form_render_question_comment($rid) {
   $form = array(
     '#type' => 'container',
     '#title' => 'comment',
+    '#attributes' => array('class' => array('comment-form')),
   );
 
   $form['body'] = array(
     '#type' => 'textarea',
     '#size' => 3,
-    '#prefix' => '<div id="comment_' . $rid . '">',
+    '#prefix' => '<div class="comment-wrapper"><div id="comment_' . $rid . '">',
     '#suffix' => '</div>',
+    '#description' => t('Please use the Comment feature only where necessary for clarification. No points are awarded for comments.'),
+    '#resizable' => false,
     '#default_value' => pgh_form_get_question_comment($rid),
   );
 
   $links['comment-add'] = array(
-    'title' => t('Add comment'),
+    'title' => t('Save comment'),
     'href' => "question/comment/reply/" . $rid,
     'attributes' => array(
       'title' => t('Add a new comment to this question.'),
@@ -1143,6 +1146,7 @@ function pgh_form_render_question_comment($rid) {
   $form['links'] = array(
     '#theme' => 'links__node__comment',
     '#links' => $links,
+    '#suffix' => '</div><div class="add-comment">Add Comment</div>',
     '#attributes' => array('class' => array('links', 'inline')),
   );
 

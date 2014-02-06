@@ -187,6 +187,33 @@
         window.print();
       });
 
+
+      // Comments
+      // ======================================================================
+      var app_comment = '.page-application form .comment-form';
+
+      $(app_comment + ' .add-comment').addClass('closed-comment');
+
+      $(app_comment + ' .add-comment').click(function() {
+        if ($(this).hasClass('closed-comment')) {
+          $(this).siblings('.comment-wrapper').show();
+          $(this).text('Close comment').removeClass('closed-comment').addClass('opened-comment');
+        } else {
+          $(this).siblings('.comment-wrapper').hide();
+          $(this).text('Add comment').removeClass('opened-comment').addClass('closed-comment');
+        }
+      });
+
+      var app_comment_submit = '.page-application form .comment-form ul li.comment-add a';
+
+      $(app_comment_submit).click(function() {
+        $(this).text('Saving...').addClass('saving');
+        setTimeout(function() {
+          $(app_comment_submit).text('Save comment').removeClass('saving');
+        }, 1000);
+      });
+
+
   });
 
 })(jQuery, Drupal, this, this.document);
