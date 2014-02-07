@@ -78,7 +78,7 @@ function pgh_user_reminder_page() {
  * @param array $form_state
  *   Form state array.
  *
- * @return array $bnode
+ * @return array
  *   Business unit node.
  *
  * @author Fang Jin <fang@designhammer.com>
@@ -91,7 +91,7 @@ function pgh_user_reminder_form($form, &$form_state, $business_unit) {
     '#value' => $business_unit->nid,
   );
 
-  // Get all users in this business unit
+  // Get all users in this business unit.
   $options = array();
   $users = array();
   $bwrapper = entity_metadata_wrapper('node', $business_unit);
@@ -99,7 +99,7 @@ function pgh_user_reminder_form($form, &$form_state, $business_unit) {
     $id = $wrapper->getIdentifier();
     $username = $wrapper->name->value();
     $name = $wrapper->field_user_first_name->value() . ' ' . $wrapper->field_user_last_name->value();
-    $mail =$wrapper->mail->value();
+    $mail = $wrapper->mail->value();
     $options[$id] = $name . "($mail)";
     $users[$id] = $wrapper->value();
   }
@@ -162,7 +162,7 @@ function pgh_user_reminder_form_submit($form, &$form_state) {
         language_default(),
         array(
           'account' => $user,
-          'body' =>$form_state['values']['body']
+          'body' => $form_state['values']['body']
         )
       );
     }
@@ -178,7 +178,7 @@ function pgh_user_reminder_form_submit($form, &$form_state) {
  * @param array $form_state
  *   Form state array.
  *
- * @return array $bnode
+ * @return array
  *   Business unit node.
  *
  * @author Fang Jin <fang@designhammer.com>
@@ -201,7 +201,7 @@ function pgh_user_reminder_workgroup_form($form, &$form_state, $workgroup) {
       $id = $wrapper->getIdentifier();
       $username = $wrapper->name->value();
       $name = $wrapper->field_user_first_name->value() . ' ' . $wrapper->field_user_last_name->value();
-      $mail =$wrapper->mail->value();
+      $mail = $wrapper->mail->value();
       $options[$id] = $name . "($mail)";
       $users[$id] = $wrapper->value();
     }
@@ -257,7 +257,7 @@ function pgh_user_reminder_workgroup_form_submit($form, &$form_state) {
 
   $users_sent = array();
   foreach ($form_state['values'] as $key => $options) {
-    // for each options list.
+    // For each options list.
     if (is_numeric($key)) {
       foreach ($options as $uid => $value) {
         if ($value && empty($users_sent[$uid])) {
@@ -269,7 +269,7 @@ function pgh_user_reminder_workgroup_form_submit($form, &$form_state) {
             array(
               'workgroup' => unserialize($form_state['values']['workgroup']),
               'account' => $user,
-              'body' =>$form_state['values']['body']
+              'body' => $form_state['values']['body']
             )
           );
           $users_sent[$uid] = 1;
