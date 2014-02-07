@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Media Content Type feature.
+ */
+
+include_once 'pgh_media_ctype.features.inc';
