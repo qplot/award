@@ -659,7 +659,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   // If no default value is set and a default question id is given,
   // set it to default question response value.
   $form_item['#default_question_id'] = $question_wrapper->field_question_formula->value();
-  if (empty($form_item['#default_value']) && !empty($form_item['#default_question_id'])) {
+  if (!empty($form_item['#default_question_id'])) {
     // Fetch question.
     if ($fid = pgh_find_question_id($form_item['#default_question_id'])) {
       // Fetch the question response.
@@ -670,7 +670,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
     }
   }
 
-  // Disable this question if has default formula
+  // Disable this question if it has a default formula.
   if ($default_formula) {
     // $form_item['#disabled'] = TRUE;
     $form_item['#attributes'] = array('readonly' => 'readonly');
