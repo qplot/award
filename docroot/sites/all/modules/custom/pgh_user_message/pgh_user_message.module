@@ -163,6 +163,7 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_user_message_work_group_form_submit($form, &$form_state) {
+  global $user;
   $users = unserialize($form_state['values']['users_info']);
 
   $users_sent = array();
@@ -180,16 +181,16 @@ function pgh_user_message_work_group_form_submit($form, &$form_state) {
             array(
               'workgroup' => unserialize($form_state['values']['workgroup']),
               'account' => $user,
-              'body' => $form_state['values']['body']
+              'body' => $form_state['values']['body'],
+              'sender' => $user,
             )
           );
           $users_sent[$uid] = 1;
-
-          // TODO: drupal_set_message();
         }
       }
     }
   }
+  drupal_set_message('Your message has been sent to %count users.', array('%count' => count(array_keys($users_sent))));
 }
 
 /**
@@ -198,8 +199,8 @@ function pgh_user_message_work_group_form_submit($form, &$form_state) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_user_message_mail($key, &$message, $params) {
-  $message['subject'] = t('Message from ');
-  $message['body'][] = t($params['body']);
+  $message['subject'] = t('Message from %user via Practice Greenhealth Awards', $params['sender']->realname);
+  $message['body'][] = $params['body'];
 }
 
 // TODO: Add a Rules event.
