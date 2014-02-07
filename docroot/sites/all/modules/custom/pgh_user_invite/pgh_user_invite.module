@@ -22,15 +22,6 @@ function pgh_user_invite_menu() {
     'access arguments' => array('invite users business unit'),
   );
 
-  $items['remind'] = array(
-    'title' => 'Remind Users',
-    'description' => 'Remind users in the Business Unit',
-    'page callback' => 'pgh_user_remind_page',
-    'access callback' => TRUE,
-    // 'access callback' => 'user_access',
-    // 'access arguments' => array('invite users business unit'),
-  );
-
   return $items;
 }
 
@@ -336,7 +327,8 @@ function pgh_user_invite_form_process($form, &$form_state) {
 
       drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
 
-    } else {
+    }
+    else {
       $pending_users[] = $invite_user;
 
       // User account exists.
@@ -349,7 +341,8 @@ function pgh_user_invite_form_process($form, &$form_state) {
     foreach ($invited_users as $invited_user) {
       $invited_users_output .= $invited_user->mail . ' ' . url('user/' . $invited_user->uid, array('absolute' => TRUE)) . "\n";
     }
-  } else {
+  }
+  else {
     $invited_users_output = 'No users were invited';
   }
 
@@ -361,7 +354,8 @@ function pgh_user_invite_form_process($form, &$form_state) {
                                url('user/' . $pending_user->uid, array('absolute' => TRUE)) . ' ' .
                                'View Work Groups: ' . url('admin/user-work-groups', array('absolute' => TRUE, 'query' => array('mail' => $pending_user->mail))) . "\n";
     }
-  } else {
+  }
+  else {
     $pending_users_output = 'No pending users to review';
   }
 
@@ -371,8 +365,8 @@ function pgh_user_invite_form_process($form, &$form_state) {
 }
 
 /**
-* Implementation of hook_rules_event_info().
-*/
+ * Implementation of hook_rules_event_info().
+ */
 function pgh_user_invite_rules_event_info() {
   return array(
     'pgh_user_invite_invitations_sent' => array(
