@@ -190,7 +190,9 @@ function pgh_user_message_work_group_form_submit($form, &$form_state) {
       }
     }
   }
+
   drupal_set_message('Your message has been sent to %count users.', array('%count' => count(array_keys($users_sent))));
+  rules_invoke_event('pgh_user_invite_invitations_sent', $user);
 }
 
 /**
@@ -203,4 +205,18 @@ function pgh_user_message_mail($key, &$message, $params) {
   $message['body'][] = $params['body'];
 }
 
-// TODO: Add a Rules event.
+/**
+ * Implementation of hook_rules_event_info().
+ */
+function pgh_user_message_rules_event_info() {
+  return array(
+    'pgh_user_message_message_sent' => array(
+      'group' => t('PGH User Message'),
+      'label' => t('Users were messaged by a Client Admin'),
+      'module' => 'pgh_user_message',
+      'variables' => array(
+        'messaging_user' => array('type' => 'user', 'label' => t('The user who sent the message.')),
+      ),
+    ),
+  );
+}
