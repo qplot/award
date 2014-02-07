@@ -1008,7 +1008,7 @@ h3.legend { font-weight: bold; }
 .page-application.page-application-category h1#page-title.chcpr-demographic { color: #b58148; }
 .page-application.page-application-category h1#page-title.chcpr-demographic span { background-position: -1066px 0; }
 
-.page-application form .fieldset { border: none; margin: 0; padding: 5px 0 11px; }
+.page-application form fieldset { border: none; margin: 0; padding: 5px 0 11px; }
 .page-application form .question-number { font-weight: bold; margin-left: -40px; float: left; }
 .page-application form .question .form-item { border-top: 1px solid #ededed; margin-top: 25px; padding-top: 25px; padding-left: 40px; }
 .page-application form .question .form-item .form-item { border: none; margin-top: 0; padding-top: 0; }
