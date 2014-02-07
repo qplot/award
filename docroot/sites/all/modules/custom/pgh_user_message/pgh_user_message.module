@@ -47,6 +47,7 @@ function pgh_user_message_permission() {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_user_message_page() {
+  drupal_add_js(drupal_get_path('module', 'pgh_user_message') . '/js/pgh_user_message.js', array('weight' => 2, 'scope' => 'footer'));
 
   if (isset($_GET['wid'])) {
     $workgroup = node_load($_GET['wid']);
