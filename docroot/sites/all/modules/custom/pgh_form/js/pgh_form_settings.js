@@ -1589,7 +1589,7 @@
         'pghq_PFC_water_1_5_1_1'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_water_1_8': {
@@ -1599,7 +1599,7 @@
         'pghq_PFC_water_1_8_0'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_water_1_9': {
@@ -1609,7 +1609,7 @@
         'pghq_PFC_water_1_9_0'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_water_1_11': {
@@ -1622,7 +1622,7 @@
         'pghq_PFC_water_1_5_1_3' // Divisor 2
       ],
       'calculation': function (a, b, c, d, e, f) {
-      	return toFixed(handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f), 1);
+      	return toFixed((handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f)) * 100, 1);
       }
     },
     'pghq_PFC_water_1_12': {
@@ -1632,7 +1632,7 @@
         'pghq_PFC_water_1_5_1_7'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments) * 100, 1);
+	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 1);
       }
     },
     'pghq_PFC_water_2_1tB_3': {
@@ -4169,7 +4169,7 @@
         'pghq_LTC_water_1_5_1_3' // Divisor 2
       ],
       'calculation': function (a, b, c, d, e, f) {
-      	return toFixed(handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f), 1);
+      	return toFixed((handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f)) * 100, 1);
       }
     },
     'pghq_LTC_water_1_12': {
@@ -6780,7 +6780,7 @@
         'pghq_CHCPFC_water_1_5_1_3' // Divisor 2
       ],
       'calculation': function (a, b, c, d, e, f) {
-      	return toFixed(handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f), 1);
+      	return toFixed((handlers.convertGallonsAndDivide(a, b, c) / handlers.convertGallonsAndDivide(d, e, f)) * 100, 1);
       }
     },
     'pghq_CHCPFC_water_1_12': {
