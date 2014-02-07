@@ -47,21 +47,7 @@ function pgh_user_message_permission() {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_user_message_page() {
-  if (isset($_GET['bid'])) {
-    $business_unit = node_load($_GET['bid']);
 
-    if (!$business_unit) {
-      return MENU_NOT_FOUND;
-    }
-
-    if (!entity_access('update', 'node', $business_unit)) {
-      return MENU_ACCESS_DENIED;
-    }
-
-    drupal_set_title('Send email to users in ' . $business_unit->title);
-
-    return drupal_get_form('pgh_user_message_business_unit_form', $business_unit);
-  }
   if (isset($_GET['wid'])) {
     $workgroup = node_load($_GET['wid']);
 
@@ -69,11 +55,11 @@ function pgh_user_message_page() {
       return MENU_NOT_FOUND;
     }
 
-    if (!entity_access('update', 'node', $workgroup)) {
+    if (!entity_access('view', 'node', $workgroup)) {
       return MENU_ACCESS_DENIED;
     }
 
-    drupal_set_title('Send email to users in ' . $workgroup->title);
+    drupal_set_title('Send a message to users in ' . $workgroup->title);
 
     return drupal_get_form('pgh_user_message_work_group_form', $workgroup);
   }
@@ -82,7 +68,7 @@ function pgh_user_message_page() {
 }
 
 /**
- * Form callback for the user reminder form.
+ * Form callback for the user message form for Work Groups.
  *
  * @param array $form
  *   Form array.
@@ -91,107 +77,7 @@ function pgh_user_message_page() {
  *   Form state array.
  *
  * @return array
- *   Business unit node.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_user_message_business_unit_form($form, &$form_state, $business_unit) {
-  $form = array();
-
-  $form['owner'] = array(
-    '#type' => 'hidden',
-    '#value' => $business_unit->nid,
-  );
-
-  // Get all users in this business unit.
-  $options = array();
-  $users = array();
-  $bwrapper = entity_metadata_wrapper('node', $business_unit);
-  foreach ($bwrapper->field_users->getIterator() as $wrapper) {
-    $id = $wrapper->getIdentifier();
-    $username = $wrapper->name->value();
-    $name = $wrapper->field_user_first_name->value() . ' ' . $wrapper->field_user_last_name->value();
-    $mail = $wrapper->mail->value();
-    $options[$id] = $name . "($mail)";
-    $users[$id] = $wrapper->value();
-  }
-
-  $form['users'] = array(
-    '#type' => 'checkboxes',
-    '#options' => $options,
-    '#default_value' => array_keys($options),
-    '#title' => 'Business unit users',
-    '#description' => 'Select all users that you want to send reminder emails to.'
-  );
-  $form['users_info'] = array(
-    '#type' => 'hidden',
-    '#value' => serialize($users),
-  );
-
-  $form['title'] = array(
-    '#type' => 'textfield',
-    '#description' => 'Email title',
-  );
-
-  $form['body'] = array(
-    '#type' => 'textarea',
-    '#description' => 'Email body',
-    '#default_value' => '',
-    '#rows' => 3,
-    '#required' => TRUE,
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Send reminders'),
-  );
-
-  return $form;
-}
-
-/**
- * Reminder page submit.
- *
- * @param array $form
- *   Form array.
- *
- * @param array $form_state
- *   Form state array.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_user_message_business_unit_form_submit($form, &$form_state) {
-  // dsm($form_state['values']);
-  $users = unserialize($form_state['values']['users_info']);
-  // dsm($form_state['values']['users']);
-
-  foreach ($form_state['values']['users'] as $uid => $value) {
-    if ($value) {
-      $user = $users[$uid];
-      drupal_mail('pgh_user_message',
-        'remind',
-        $user->mail,
-        language_default(),
-        array(
-          'account' => $user,
-          'body' => $form_state['values']['body']
-        )
-      );
-    }
-  }
-}
-
-/**
- * Form callback for the user reminder form for workgroup.
- *
- * @param array $form
- *   Form array.
- *
- * @param array $form_state
- *   Form state array.
- *
- * @return array
- *   Business unit node.
+ *   Work Group node.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -203,27 +89,36 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
     '#value' => serialize($workgroup),
   );
 
-  // Get all business units in this workgroup.
+  // Get all business units in this Work Group.
   $users = array();
-  $wwrapper = entity_metadata_wrapper('node', $workgroup);
-  foreach ($wwrapper->field_business_units->getIterator() as $bwrapper) {
+  $work_group_wrapper = entity_metadata_wrapper('node', $workgroup);
+
+  foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit_wrapper) {
     // Get all users in this business unit.
     $options = array();
-    foreach ($bwrapper->field_users->getIterator() as $wrapper) {
-      $id = $wrapper->getIdentifier();
-      $username = $wrapper->name->value();
-      $name = $wrapper->field_user_first_name->value() . ' ' . $wrapper->field_user_last_name->value();
-      $mail = $wrapper->mail->value();
+
+    foreach ($business_unit_wrapper->field_users->getIterator() as $user_wrapper) {
+      $id = $user_wrapper->getIdentifier();
+      $username = $user_wrapper->name->value();
+      $name = $user_wrapper->field_user_first_name->value() . ' ' . $user_wrapper->field_user_last_name->value();
+      $mail = $user_wrapper->mail->value();
       $options[$id] = $name . "($mail)";
-      $users[$id] = $wrapper->value();
+      $users[$id] = $user_wrapper->value();
     }
-    $form['users'][$bwrapper->getIdentifier()] = array(
+
+    // Add a set of checkboxes for all of the users in the Business Unit.
+    $form['users'][$business_unit_wrapper->getIdentifier()] = array(
       '#type' => 'checkboxes',
       '#options' => $options,
       '#default_value' => array_keys($options),
-      '#title' => 'Users in ' . $bwrapper->title->value(),
-      // '#description' => 'Select all users that you want to send reminder emails to this business unit'
+      '#title' => $business_unit_wrapper->title->value(),
     );
+
+    // Add a message if the Business Unit has no users.
+    if (!$options) {
+      $form['users'][$business_unit_wrapper->getIdentifier()]['#disabled'] = TRUE;
+      $form['users'][$business_unit_wrapper->getIdentifier()]['#description'] = t('There are no users in this Business Unit.');
+    }
   }
 
   $form['users_info'] = array(
@@ -232,13 +127,13 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
   );
 
   $form['title'] = array(
+    '#title' => t('Email title'),
     '#type' => 'textfield',
-    '#description' => 'Email title',
   );
 
   $form['body'] = array(
+    '#title' => t('Email body'),
     '#type' => 'textarea',
-    '#description' => 'Email body',
     '#default_value' => '',
     '#rows' => 3,
     '#required' => TRUE,
@@ -246,14 +141,14 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
 
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Send reminders'),
+    '#value' => t('Send message'),
   );
 
   return $form;
 }
 
 /**
- * Reminder page submit.
+ * Submit handler for message form.
  *
  * @param array $form
  *   Form array.
