@@ -83,6 +83,8 @@ function pgh_user_message_page() {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
+  global $user;
+
   $form = array();
 
   $form['workgroup'] = array(
@@ -90,12 +92,34 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
     '#value' => serialize($workgroup),
   );
 
-  // TODO: Add other Client Admins.
-
-  // Get all business units in this Work Group.
   $users = array();
   $work_group_wrapper = entity_metadata_wrapper('node', $workgroup);
 
+  // Add other Client Admins from this Work Group.
+  $options = array();
+  $form['users'] = array();
+
+  foreach ($work_group_wrapper->field_administrators->getIterator() as $client_admin_wrapper) {
+    // Skip the current user.
+    if ($client_admin_wrapper->mail->value() == $user->mail) {
+      continue;
+    }
+    $id = $client_admin_wrapper->getIdentifier();
+    $username = $client_admin_wrapper->name->value();
+    $name = $client_admin_wrapper->field_user_first_name->value() . ' ' . $client_admin_wrapper->field_user_last_name->value();
+    $mail = $client_admin_wrapper->mail->value();
+    $options[$id] = $name . "($mail)";
+    $users[$id] = $client_admin_wrapper->value();
+  }
+
+  $form['users']['client_admins'] = array(
+    '#type' => 'checkboxes',
+    '#options' => $options,
+    '#default_value' => array_keys($options),
+    '#title' => t('Client Admins'),
+  );
+
+  // Add users from all of the Business Units in this Work Group.
   foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit_wrapper) {
     // Get all users in this business unit.
     $options = array();
@@ -127,12 +151,6 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
   $form['users_info'] = array(
     '#type' => 'hidden',
     '#value' => serialize($users),
-  );
-
-  $form['title'] = array(
-    '#title' => t('Email title'),
-    '#type' => 'textfield',
-    '#required' => TRUE,
   );
 
   $form['body'] = array(
@@ -173,14 +191,14 @@ function pgh_user_message_work_group_form_submit($form, &$form_state) {
     if (is_numeric($key)) {
       foreach ($options as $uid => $value) {
         if ($value && empty($users_sent[$uid])) {
-          $user = $users[$uid];
+          $recipient = $users[$uid];
           drupal_mail('pgh_user_message',
             'message',
             $user->mail,
             language_default(),
             array(
               'workgroup' => unserialize($form_state['values']['workgroup']),
-              'account' => $user,
+              'account' => $recipient,
               'body' => $form_state['values']['body'],
               'sender' => $user,
             )
@@ -201,7 +219,7 @@ function pgh_user_message_work_group_form_submit($form, &$form_state) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_user_message_mail($key, &$message, $params) {
-  $message['subject'] = t('Message from %user via Practice Greenhealth Awards', $params['sender']->realname);
+  $message['subject'] = t('Message from %user via Practice Greenhealth Awards', array('%user' => $params['sender']->realname));
   $message['body'][] = $params['body'];
 }
 
