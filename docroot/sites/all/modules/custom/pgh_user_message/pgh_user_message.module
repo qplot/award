@@ -209,7 +209,7 @@ function pgh_user_message_work_group_form_submit($form, &$form_state) {
     }
   }
 
-  drupal_set_message('Your message has been sent to %count users.', array('%count' => count(array_keys($users_sent))));
+  drupal_set_message(t('Your message has been sent to %count users.', array('%count' => count(array_keys($users_sent)))), 'status');
   rules_invoke_event('pgh_user_invite_invitations_sent', $user);
 }
 
@@ -219,7 +219,10 @@ function pgh_user_message_work_group_form_submit($form, &$form_state) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_user_message_mail($key, &$message, $params) {
-  $message['subject'] = t('Message from %user via Practice Greenhealth Awards', array('%user' => $params['sender']->realname));
+  $user_full = user_load($params['sender']->uid);
+  $name = isset($user_full->realname) ? $user_full->realname : $user->name;
+
+  $message['subject'] = t('Message from %user via Practice Greenhealth Awards', array('%user' => $name));
   $message['body'][] = $params['body'];
 }
 
