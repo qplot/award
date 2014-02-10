@@ -87,6 +87,13 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
 
   $form = array();
 
+  $form['instructions'] = array(
+    '#type' => 'item',
+    '#prefix' => '<p>',
+    '#markup' => t('Select which users should receive the message.'),
+    '#suffix' => '</p>',
+  );
+
   $form['workgroup'] = array(
     '#type' => 'hidden',
     '#value' => serialize($workgroup),
