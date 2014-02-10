@@ -236,5 +236,13 @@ function pgh_glossify_links($vars) {
  * @author  Jay Roberts <jay@designhammer.com>
  */
 function pgh_sort_users_by_last_access($a, $b) {
+  if (!$a) {
+    return -1;
+  }
+
+  if (!$b) {
+    return 1;
+  }
+
   return $a->last_access->value() > $b->last_access->value() ? -1 : 1;
 }
