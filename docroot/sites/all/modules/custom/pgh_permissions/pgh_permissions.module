@@ -520,3 +520,69 @@ function pgh_permissions_form_node_form_submit($form, &$form_state) {
     $form_state['redirect'] = 'dashboard';
   }
 }
+
+
+/**
+ * Implementation of hook_user_delete().
+ *
+ * Remove user references from Work groups and Business Units upon deletion.
+ *
+ * @param object $account
+ *   The account that is being deleted.
+ */
+function pgh_permissions_user_delete($account) {
+
+  // Get Work Groups that the user is an administrator of.
+  $nids = array();
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'work_group')
+                  ->fieldCondition('field_administrators', 'target_id', $account->uid)
+                  ->execute();
+
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+  }
+
+  foreach ($nids as $nid) {
+    $work_group = node_load($nid);
+
+    $work_group_wrapper = entity_metadata_wrapper('node', $work_group);
+
+    // Remove the user from the parent Work Group.
+    for ($i = 0; $i < count($work_group_wrapper->field_administrators->value()); $i++) {
+      if ($work_group_wrapper->field_administrators[$i]->value()->uid == $account->uid) {
+        $work_group_wrapper->field_administrators[$i]->set(NULL);
+        $work_group_wrapper->save();
+        break;
+      }
+    }
+  }
+
+  // Get Business Units that the user is a user of.
+  unset($nids);
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'node')
+                  ->propertyCondition('type', 'business_unit')
+                  ->fieldCondition('field_users', 'target_id', $account->uid)
+                  ->execute();
+
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+  }
+
+  foreach ($nids as $nid) {
+    $business_unit = node_load($nid);
+
+    $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
+
+    // Remove the user from the parent Business Unit.
+    for ($i = 0; $i < count($business_unit_wrapper->field_users->value()); $i++) {
+      if ($business_unit_wrapper->field_users[$i]->value()->uid == $account->uid) {
+        $business_unit_wrapper->field_users[$i]->set(NULL);
+        $business_unit_wrapper->save();
+        break;
+      }
+    }
+  }
+}

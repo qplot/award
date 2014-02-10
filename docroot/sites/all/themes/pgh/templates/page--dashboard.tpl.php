@@ -92,13 +92,13 @@
       <p class="dashboard-label">Work Group</p>
       <?php if (entity_access('update', 'node', $work_group)): ?>
         <span class="edit-content">
-          <?php 
+          <?php
             print l(
-              'Edit', 
+              'Edit',
               'node/' . $work_group->vid . '/edit',
               array('query' => drupal_get_destination())
             );
-          ?>          
+          ?>
         </span>
       <?php endif; ?>
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
@@ -285,13 +285,17 @@
               // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
               $users = array();
               foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
-                $users[] = $user;
+                if ($user) {
+                  $users[] = $user;
+                }
               }
+
+              dsm($users);
               usort($users, 'pgh_sort_users_by_last_access');
 
               foreach ($users as $user) {
                 $last_access = 'Never logged in';
-                if ($user->last_access->value()) {
+                if ($user && $user->last_access->value()) {
                   $last_access = format_date($user->last_access->value(), 'short');
                 }
 
