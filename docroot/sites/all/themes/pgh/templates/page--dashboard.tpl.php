@@ -92,13 +92,13 @@
       <p class="dashboard-label">Work Group</p>
       <?php if (entity_access('update', 'node', $work_group)): ?>
         <span class="edit-content">
-          <?php 
+          <?php
             print l(
-              'Edit', 
+              'Edit',
               'node/' . $work_group->vid . '/edit',
               array('query' => drupal_get_destination())
             );
-          ?>          
+          ?>
         </span>
       <?php endif; ?>
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
@@ -364,8 +364,8 @@
   ?>
 
   <div id="footer-wrap"><div id="footer-wrap-inner">
-    <p>&copy;<?php print date('Y'); ?> Practice Greenhealth Environmental Excellence Awards</p>
     <?php print render($page['footer']); ?>
+    <p class="footer-year">&copy;<?php print date('Y'); ?> Practice Greenhealth Environmental Excellence Awards</p>
   </div></div>
 
 </div><!-- /#page -->
