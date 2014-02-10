@@ -1,0 +1,252 @@
+<?php
+
+/**
+ * @file
+ * User messaging module.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ * @author Jay Roberts <jay@designhammer.com>
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function pgh_user_message_menu() {
+  $items = array();
+
+  $items['message'] = array(
+    'title' => 'Message Users',
+    'description' => 'Send a message to multiple users in a work group.',
+    'page callback' => 'pgh_user_message_page',
+    'access callback' => 'user_access',
+    'access arguments' => array('mass email users'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implementation of hook_permission().
+ */
+function pgh_user_message_permission() {
+  return array(
+    'mass email users' => array(
+      'title' => t('Mass email users'),
+      'description' => t('Send mass emails to users in a Work Group via the Work Group email form.'),
+      'restrict access' => FALSE,
+    ),
+  );
+}
+
+/**
+ * Page callback for the user remind page.
+ *
+ * @return string
+ *   Page content.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_user_message_page() {
+  drupal_add_js(drupal_get_path('module', 'pgh_user_message') . '/js/pgh_user_message.js', array('weight' => 2, 'scope' => 'footer'));
+
+  if (isset($_GET['wid'])) {
+    $workgroup = node_load($_GET['wid']);
+
+    if (!$workgroup) {
+      return MENU_NOT_FOUND;
+    }
+
+    if (!entity_access('view', 'node', $workgroup)) {
+      return MENU_ACCESS_DENIED;
+    }
+
+    drupal_set_title('Send a message to users in ' . $workgroup->title);
+
+    return drupal_get_form('pgh_user_message_work_group_form', $workgroup);
+  }
+
+  return MENU_NOT_FOUND;
+}
+
+/**
+ * Form callback for the user message form for Work Groups.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @return array
+ *   Work Group node.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
+  global $user;
+
+  $form = array();
+
+  $form['instructions'] = array(
+    '#type' => 'item',
+    '#prefix' => '<div class="select-users-wrap"><p>',
+    '#markup' => t('Select which users should receive the message.'),
+    '#suffix' => '</p>',
+  );
+
+  $form['workgroup'] = array(
+    '#type' => 'hidden',
+    '#value' => serialize($workgroup),
+  );
+
+  $users = array();
+  $work_group_wrapper = entity_metadata_wrapper('node', $workgroup);
+
+  // Add other Client Admins from this Work Group.
+  $options = array();
+  $form['users'] = array();
+
+  foreach ($work_group_wrapper->field_administrators->getIterator() as $client_admin_wrapper) {
+    // Skip the current user.
+    if ($client_admin_wrapper->mail->value() == $user->mail) {
+      continue;
+    }
+    $id = $client_admin_wrapper->getIdentifier();
+    $username = $client_admin_wrapper->name->value();
+    $name = $client_admin_wrapper->field_user_first_name->value() . ' ' . $client_admin_wrapper->field_user_last_name->value();
+    $mail = $client_admin_wrapper->mail->value();
+    $options[$id] = $name . "($mail)";
+    $users[$id] = $client_admin_wrapper->value();
+  }
+
+  $form['users']['client_admins'] = array(
+    '#type' => 'checkboxes',
+    '#options' => $options,
+    '#default_value' => array_keys($options),
+    '#title' => t('Client Admins'),
+  );
+
+  // Add users from all of the Business Units in this Work Group.
+  foreach ($work_group_wrapper->field_business_units->getIterator() as $business_unit_wrapper) {
+    // Get all users in this business unit.
+    $options = array();
+
+    foreach ($business_unit_wrapper->field_users->getIterator() as $user_wrapper) {
+      $id = $user_wrapper->getIdentifier();
+      $username = $user_wrapper->name->value();
+      $name = $user_wrapper->field_user_first_name->value() . ' ' . $user_wrapper->field_user_last_name->value();
+      $mail = $user_wrapper->mail->value();
+      $options[$id] = $name . "($mail)";
+      $users[$id] = $user_wrapper->value();
+    }
+
+    // Add a set of checkboxes for all of the users in the Business Unit.
+    $form['users'][$business_unit_wrapper->getIdentifier()] = array(
+      '#type' => 'checkboxes',
+      '#options' => $options,
+      '#default_value' => array_keys($options),
+      '#title' => $business_unit_wrapper->title->value(),
+    );
+
+    // Add a message if the Business Unit has no users.
+    if (!$options) {
+      $form['users'][$business_unit_wrapper->getIdentifier()]['#disabled'] = TRUE;
+      $form['users'][$business_unit_wrapper->getIdentifier()]['#description'] = t('There are no users in this Business Unit.');
+    }
+  }
+
+  $form['users_info'] = array(
+    '#type' => 'hidden',
+    '#value' => serialize($users),
+  );
+
+  $form['body'] = array(
+    '#title' => t('Email body'),
+    '#prefix' => '</div><div class="form-wrapper">',
+    '#type' => 'textarea',
+    '#default_value' => '',
+    '#rows' => 3,
+    '#required' => TRUE,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Send message'),
+    '#suffix' => '</div>',
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for message form.
+ *
+ * @param array $form
+ *   Form array.
+ *
+ * @param array $form_state
+ *   Form state array.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_user_message_work_group_form_submit($form, &$form_state) {
+  global $user;
+  $users = unserialize($form_state['values']['users_info']);
+
+  $users_sent = array();
+
+  foreach ($form_state['values'] as $key => $options) {
+    // For each options list.
+    if (is_numeric($key)) {
+      foreach ($options as $uid => $value) {
+        if ($value && empty($users_sent[$uid])) {
+          $recipient = $users[$uid];
+          drupal_mail('pgh_user_message',
+            'message',
+            $user->mail,
+            language_default(),
+            array(
+              'workgroup' => unserialize($form_state['values']['workgroup']),
+              'account' => $recipient,
+              'body' => $form_state['values']['body'],
+              'sender' => $user,
+            )
+          );
+          $users_sent[$uid] = 1;
+        }
+      }
+    }
+  }
+
+  drupal_set_message(t('Your message has been sent to %count users.', array('%count' => count(array_keys($users_sent)))), 'status');
+  rules_invoke_event('pgh_user_invite_invitations_sent', $user);
+}
+
+/**
+ * Implements hook_mail().
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_user_message_mail($key, &$message, $params) {
+  $user_full = user_load($params['sender']->uid);
+  $name = isset($user_full->realname) ? $user_full->realname : $user->name;
+
+  $message['subject'] = t('Message from %user via Practice Greenhealth Awards', array('%user' => $name));
+  $message['body'][] = $params['body'];
+}
+
+/**
+ * Implementation of hook_rules_event_info().
+ */
+function pgh_user_message_rules_event_info() {
+  return array(
+    'pgh_user_message_message_sent' => array(
+      'group' => t('PGH User Message'),
+      'label' => t('Users were messaged by a Client Admin'),
+      'module' => 'pgh_user_message',
+      'variables' => array(
+        'messaging_user' => array('type' => 'user', 'label' => t('The user who sent the message.')),
+      ),
+    ),
+  );
+}

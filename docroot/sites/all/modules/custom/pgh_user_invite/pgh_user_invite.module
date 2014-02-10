@@ -384,7 +384,6 @@ function pgh_user_invite_form_process($form, &$form_state) {
   drupal_goto('dashboard');
 }
 
-
 /**
  * Implementation of hook_rules_event_info().
  */
