@@ -106,7 +106,7 @@
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
 
       <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
-
+      <div class="add-mesasge-bu-links">
       <?php if (user_access('mass email users')): ?>
       <?php
         $options = array(
@@ -128,6 +128,7 @@
         );
         print l(t('Add a new Business Unit'), 'node/add/business-unit', $options);
       ?>
+    </div>
     <?php endif; ?>
     </div>
 

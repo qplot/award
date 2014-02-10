@@ -89,7 +89,7 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
 
   $form['instructions'] = array(
     '#type' => 'item',
-    '#prefix' => '<p>',
+    '#prefix' => '<div class="select-users-wrap"><p>',
     '#markup' => t('Select which users should receive the message.'),
     '#suffix' => '</p>',
   );
@@ -162,6 +162,7 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
 
   $form['body'] = array(
     '#title' => t('Email body'),
+    '#prefix' => '</div><div class="form-wrapper">',
     '#type' => 'textarea',
     '#default_value' => '',
     '#rows' => 3,
@@ -171,6 +172,7 @@ function pgh_user_message_work_group_form($form, &$form_state, $workgroup) {
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Send message'),
+    '#suffix' => '</div>',
   );
 
   return $form;
