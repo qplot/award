@@ -382,7 +382,6 @@
 
   <div id="footer-wrap"><div id="footer-wrap-inner">
     <?php print render($page['footer']); ?>
-    <p class="footer-year">&copy;<?php print date('Y'); ?> Practice Greenhealth Environmental Excellence Awards</p>
   </div></div>
 
 </div><!-- /#page -->
