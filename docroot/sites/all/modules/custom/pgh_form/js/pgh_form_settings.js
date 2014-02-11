@@ -865,20 +865,8 @@
         'pghq_PFC_waste_9_29_1tF_7',
         'pghq_PFC_waste_9_29_1tF_10'
       ],
-      'calculation': function(a, b, c, d) {
-      	if (isNaN(a)){
-      		a = 0;
-      	}
-      	if (isNaN(b)){
-      		b = 0;
-      	}
-      	if (isNaN(c)){
-      		c = 0;
-      	}
-      	if (isNaN(d)){
-      		d = 0;
-      	}
-      	return toFixed((a + b + c + d) * 8.5 / 2000, 2);
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
       }
     },
 
@@ -6035,20 +6023,8 @@
         'pghq_CHCPFC_waste_9_29_1tF_7',
         'pghq_CHCPFC_waste_9_29_1tF_10'
       ],
-      'calculation': function(a, b, c, d) {
-      	if (isNaN(a)){
-      		a = 0;
-      	}
-      	if (isNaN(b)){
-      		b = 0;
-      	}
-      	if (isNaN(c)){
-      		c = 0;
-      	}
-      	if (isNaN(d)){
-      		d = 0;
-      	}
-      	return toFixed((a + b + c + d) * 8.5 / 2000, 2);
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
       }
     },
 
