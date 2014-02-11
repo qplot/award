@@ -303,7 +303,7 @@ function pgh_api_validate_question_value($validations, $value) {
     $non_empty_validated = $non_validated && !(($value === '' || $value === NULL));
     // To display error, you need to be either empty&&required or non-empty&&non-validated.
     if ($required_empty || $non_empty_validated) {
-      $errors[] = $error . intval($required_empty) . intval($non_empty_validated) .intval($validated);
+      $errors[] = $error;
     }
   }
 
