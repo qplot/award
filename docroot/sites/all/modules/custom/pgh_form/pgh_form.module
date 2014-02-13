@@ -796,25 +796,34 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
 }
 
 /**
- * Returns markup for a div containing an error message for a specific question.
+ * Returns markup for a div containing error messages for a specific question.
  *
  * @param string $question_id
  *   A question identifier.
  *
- * @param array $messages
- *   An array of messages to display to the end user.
+ * @param array $errors
+ *   An array of errors to display to the end user. See pgh_api_validate_question_value() for details.
  *
  * @return string
  *   An html string with a properly formatted error message.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
-function pgh_form_error_html($question_id, $messages) {
-  $output = '<div id="error-' . $question_id . '" class="content-incorrect">';
-  foreach ($messages as $message) {
-    $output .= '<span>' . $message . '</span>';
+function pgh_form_error_html($question_id, $errors) {
+  $most_severe_type = 'warning';
+  $messages = '';
+
+  foreach ($errors as $error) {
+    if ($error['type'] == 'error') {
+      $most_severe_type = 'error';
+    }
+    $messages .= '<span class="validation-message-' . $error['type'] . '">' . $error['message'] . '</span>';
   }
+
+  $output = '<div id="error-' . $question_id . '" class="validation-messages validation-' . $error['type'] . '">';
+  $output .= $messages;
   $output .= '</div><!-- #error -->';
+
   return $output;
 }
 
@@ -983,8 +992,11 @@ function pgh_form_application_submit_page($application) {
         foreach ($question_errors as $error) {
           $options = array(
             'fragment' => 'question-' . $qid,
+            'attributes' => array(
+              'class' => array('validation-link-' . $error['type']),
+            ),
           );
-          $validation .= l($error, 'application/' . $application->nid . '/category/' . $category->title, $options) . '<br />';
+          $validation .= l($error['message'], 'application/' . $application->nid . '/category/' . $category->title, $options) . '<br />';
         }
       }
 
