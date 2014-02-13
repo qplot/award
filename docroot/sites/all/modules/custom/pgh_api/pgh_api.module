@@ -233,6 +233,9 @@ function pgh_api_node_ids($property_conds = array(), $field_conds = array(), $al
 /**
  * Validate question based on validation rules and value.
  *
+ * For additional context regarding validation behavior, see:
+ * https://ac.designhammer.net/projects/practice-greenhealth-phase-1/tasks/301
+ *
  * @param string $validations
  *   Validation rules string delimited by comma
  *
@@ -256,44 +259,45 @@ function pgh_api_validate_question_value($validations, $value) {
   // Go through each rule
   foreach ($rules as $rule) {
     $validated = FALSE;
-    $error = 'Unsupported validation rule: ' . $rule;
+    $error = t('Unsupported validation rule: %rule', array('%rule' => $rule));
+
     switch ($rule) {
       case 'nonnegative':
         $non_validated = (!is_numeric($value) || $value < 0);
-        $error = 'The item value needs to be a positive number.';
+        $error = t('This value must be a positive number or zero.');
         break;
 
       case 'integer':
         // Check if $value is an integer or string representation of an integer.
         // is_int() will fail on the string values presented by the Form API.
         $non_validated = !(((string) (int) $value) == $value);
-        $error = 'The item value needs to be an integer.';
+        $error = t('This value must be a whole number or zero.');
         break;
 
       case 'nonzero':
         $non_validated = (!is_numeric($value) || $value == 0);
-        $error = 'The item value must be a non-zero number.';
+        $error = t('This value must be a non-zero number.');
         break;
 
       case 'percentage':
         $is_int = (((string) (int) $value) == $value);
         $non_validated = (!$is_int || $value < 0 || $value > 100);
-        $error = 'The item value needs to be integer in the range 0 - 100';
+        $error = t('This value must be a whole number between 0 and 100.');
         break;
 
       case 'date':
         $non_validated = (!preg_match('/^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/', $value));
-        $error = 'The item value must be a date in the format YYYY-MM-DD.';
+        $error = t('This value must be a date in format YYYY-MM-DD.');
         break;
 
       case 'currency':
         $non_validated = (filter_var($value, FILTER_VALIDATE_FLOAT, array('flags' => FILTER_FLAG_ALLOW_THOUSAND, 'decimal' => 2)) === FALSE);
-        $error = 'The item value must be a currency value in USD with no leading $.';
+        $error = t('This value must be in US currency with no $ sign.');
         break;
 
       case 'required':
         $non_validated = ($value === '' || $value === NULL);
-        $error = 'This field is required.';
+        $error = t('This field is required.');
         break;
 
       default:
