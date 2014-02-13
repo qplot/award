@@ -961,12 +961,15 @@ function pgh_form_application_submit_page($application) {
             ),
           );
           $validation .= l($error['message'], 'application/' . $application->nid . '/category/' . $category->title, $options) . '<br />';
+
+          // Only errors of type 'error' (not 'warning') should prevent application submission.
+          if ($error['type'] == 'error') {
+            $invalid_categories = TRUE;
+          }
         }
       }
 
       $validation .= '</div>';
-
-      $invalid_categories = TRUE;
     }
 
     $category_name = $category_wrapper->body->value() ? $category_wrapper->body->value->raw() : 'Missing title for category ' . $category->nid;
