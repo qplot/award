@@ -820,7 +820,7 @@ function pgh_form_error_html($question_id, $errors) {
     $messages .= '<span class="validation-message-' . $error['type'] . '">' . $error['message'] . '</span>';
   }
 
-  $output = '<div id="error-' . $question_id . '" class="validation-messages validation-' . $error['type'] . '">';
+  $output = '<div id="error-' . $question_id . '" class="validation-messages validation-' . $most_severe_type . '">';
   $output .= $messages;
   $output .= '</div><!-- #error -->';
 
