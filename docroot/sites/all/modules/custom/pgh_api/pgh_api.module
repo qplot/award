@@ -243,7 +243,8 @@ function pgh_api_node_ids($property_conds = array(), $field_conds = array(), $al
  *   Value needs to be validated
  *
  * @return array
- *   Array of string of error messages
+ *   An array containing zero or more error arrays. Each error array has a 'type' and 'message' property. These are strings.
+ *   Type can be 'warning' or 'error'. 'message' is a user-facing validation message.
  *
  * @author Fang Jin <fang@designhammer.com>
  * @author Jay Roberts <jay@designhammer.com>
@@ -263,45 +264,69 @@ function pgh_api_validate_question_value($validations, $value) {
     switch ($rule) {
       case 'nonnegative':
         $invalid = (!is_numeric($value) || $value < 0);
-        $error = t('This value must be a positive number or zero.');
+        $error = array(
+          'type' => 'warning',
+          'message' => t('This value must be a positive number or zero.'),
+        );
         break;
 
       case 'integer':
         // Check if $value is an integer or string representation of an integer.
         // is_int() will fail on the string values presented by the Form API.
         $invalid = !(((string) (int) $value) == $value);
-        $error = t('This value must be a whole number or zero.');
+        $error = array(
+          'type' => 'warning',
+          'message' => t('This value must be a whole number or zero.'),
+        );
         break;
 
       case 'nonzero':
         $invalid = (!is_numeric($value) || $value == 0);
-        $error = t('This value must be a non-zero number.');
+        $error = array(
+          'type' => 'warning',
+          'message' => t('This value must be a non-zero number.'),
+        );
         break;
 
       case 'percentage':
         $is_int = (((string) (int) $value) == $value);
         $invalid = (!$is_int || $value < 0 || $value > 100);
-        $error = t('This value must be a whole number between 0 and 100.');
+        $error = array(
+          'type' => 'warning',
+          'message' => t('This value must be a whole number between 0 and 100.'),
+        );
         break;
 
       case 'date':
         $invalid = (!preg_match('/^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/', $value));
-        $error = t('This value must be a date in format YYYY-MM-DD.');
+        $error = array(
+          'type' => 'warning',
+          'message' => t('This value must be a date in format YYYY-MM-DD.'),
+        );
         break;
 
       case 'currency':
         $invalid = (filter_var($value, FILTER_VALIDATE_FLOAT, array('flags' => FILTER_FLAG_ALLOW_THOUSAND, 'decimal' => 2)) === FALSE);
-        $error = t('This value must be in US currency with no $ sign.');
+        $error = array(
+          'type' => 'warning',
+          'message' => t('This value must be in US currency with no $ sign.'),
+        );
         break;
 
       case 'required':
         $invalid = ($value === '' || $value === NULL);
-        $error = t('This field is required.');
+        $error = array(
+          'type' => 'error',
+          'message' => t('This field is required.'),
+        );
         break;
 
       default:
         $invalid = TRUE;
-        $error = t('Unsupported validation rule: %rule', array('%rule' => $rule));
+        $error = array(
+          'type' => 'warning',
+          'message' => t('Unsupported validation rule: %rule', array('%rule' => $rule)),
+        );
         break;
     }
 
