@@ -252,61 +252,64 @@ function pgh_api_validate_question_value($validations, $value) {
   if (!trim($validations)) {
     return array();
   }
+
   $errors = array();
   $rules = array_map('trim', explode(',', $validations));
-  // Required and empty is the possible condition to display error.
-  $required_empty = in_array('required', $rules) && (($value === '' || $value === NULL));
-  // Go through each rule
+
+  // Process specified rules.
   foreach ($rules as $rule) {
-    $validated = FALSE;
-    $error = t('Unsupported validation rule: %rule', array('%rule' => $rule));
+    $invalid = FALSE;
 
     switch ($rule) {
       case 'nonnegative':
-        $non_validated = (!is_numeric($value) || $value < 0);
+        $invalid = (!is_numeric($value) || $value < 0);
         $error = t('This value must be a positive number or zero.');
         break;
 
       case 'integer':
         // Check if $value is an integer or string representation of an integer.
         // is_int() will fail on the string values presented by the Form API.
-        $non_validated = !(((string) (int) $value) == $value);
+        $invalid = !(((string) (int) $value) == $value);
         $error = t('This value must be a whole number or zero.');
         break;
 
       case 'nonzero':
-        $non_validated = (!is_numeric($value) || $value == 0);
+        $invalid = (!is_numeric($value) || $value == 0);
         $error = t('This value must be a non-zero number.');
         break;
 
       case 'percentage':
         $is_int = (((string) (int) $value) == $value);
-        $non_validated = (!$is_int || $value < 0 || $value > 100);
+        $invalid = (!$is_int || $value < 0 || $value > 100);
         $error = t('This value must be a whole number between 0 and 100.');
         break;
 
       case 'date':
-        $non_validated = (!preg_match('/^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/', $value));
+        $invalid = (!preg_match('/^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/', $value));
         $error = t('This value must be a date in format YYYY-MM-DD.');
         break;
 
       case 'currency':
-        $non_validated = (filter_var($value, FILTER_VALIDATE_FLOAT, array('flags' => FILTER_FLAG_ALLOW_THOUSAND, 'decimal' => 2)) === FALSE);
+        $invalid = (filter_var($value, FILTER_VALIDATE_FLOAT, array('flags' => FILTER_FLAG_ALLOW_THOUSAND, 'decimal' => 2)) === FALSE);
         $error = t('This value must be in US currency with no $ sign.');
         break;
 
       case 'required':
-        $non_validated = ($value === '' || $value === NULL);
+        $invalid = ($value === '' || $value === NULL);
         $error = t('This field is required.');
         break;
 
       default:
+        $invalid = TRUE;
+        $error = t('Unsupported validation rule: %rule', array('%rule' => $rule));
         break;
     }
-    // Non-empty and not validated is another possible condition to display error.
-    $non_empty_validated = $non_validated && !(($value === '' || $value === NULL));
-    // To display error, you need to be either empty&&required or non-empty&&non-validated.
-    if ($required_empty || $non_empty_validated) {
+
+    $required = in_array('required', $rules);
+    $empty = $value === '' || $value === NULL;
+
+    // To display error, you need to be either empty && required or non-empty && invalid.
+    if ($required && $empty || !$empty && $invalid) {
       $errors[] = $error;
     }
   }
