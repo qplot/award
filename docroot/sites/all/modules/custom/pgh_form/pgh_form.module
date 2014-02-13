@@ -204,6 +204,7 @@ function pgh_form_category_page($application, $category_id) {
     );
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/shim_function_prototype_name.js', $shim_options);
 
+    drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/jquery.scrollto.min.js', array('weight' => 2, 'scope' => 'footer'));
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form_settings.js', array('weight' => 2, 'scope' => 'footer'));
     drupal_add_js(drupal_get_path('module', 'pgh_form') . '/js/pgh_form.js', array('weight' => 2, 'scope' => 'footer'));
 

@@ -122,6 +122,22 @@
     });
   };
 
+  // Parses the hash from the location.
+  var getHash = function() {
+    return window.location.href.split('#')[1] || '';
+  };
+
+  // Adjusts the scroll position so that the current anchor (if any) is in view below the sticky header..
+  var scrollToAnchor = function() {
+    var hash = getHash();
+
+    // If we have a hash then our destination is the anchor for that hash.
+    // Otherwise, it's the top of the window (0). Include extra height to account for
+    // fixed header.
+    var scrollDestination = hash !== '' ? $('#' + hash).offset().top - 180 : 0;
+    $.scrollTo(scrollDestination, 300, {easing: 'swing'});
+  };
+
   $(document).ready(function() {
     // Add AJAX save status message.
     $('#application-menu-container').append('<div class="pgh-form-status-container"><div class="pgh-form-status">All changes saved</div></div>');
@@ -165,6 +181,8 @@
 
     // Add currency prefix.
     $('.question-style-currency input').before('<span class="currency-prefix">$</span> ');
+
+    scrollToAnchor();
   });
 
   Drupal.pghApplicationForm = {
