@@ -562,6 +562,7 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
     $question_parent_required_value = $question_parent_required_value[0]['value'];
   }
 
+
   // Convert the value to its internal representation.
   $question_parent_required_value = pgh_api_internal_value($parent_nid, $question_parent_required_value);
 
@@ -580,6 +581,14 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   if ($parent_question_wrapper->field_question_type->value() == 'selection' &&
       $parent_question_wrapper->field_question_style->value() == 'checkboxes') {
 
+    // The required value does not get converted to its internal representation.
+    $question_parent_required_value = field_get_items('node', $question, 'field_question_parent_value');
+
+    // Unbox the required value.
+    if ($question_parent_required_value) {
+      $question_parent_required_value = $question_parent_required_value[0]['value'];
+    }
+
     $checkbox_options = unserialize($parent_response_value);
 
     if (!is_array($checkbox_options)) {
@@ -592,6 +601,7 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
         $selected_options[] = $name;
       }
     }
+
     if (!in_array($question_parent_required_value, $selected_options)) {
       return FALSE;
     }
