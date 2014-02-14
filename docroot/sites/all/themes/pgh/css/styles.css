@@ -1,5 +1,5 @@
-@import "//fonts.googleapis.com/css?family=Cabin:400,500,600,700";
 /** @file Styles are organized using the SMACSS technique. @see http://smacss.com/book/  When you turn on CSS aggregation at admin/config/development/performance, all of these @include files will be combined into a single file. */
+@import "//fonts.googleapis.com/css?family=Cabin:400,500,600,700";
 /* Import Sass mixins, variables, Compass modules, etc. */
 /* HTML element (SMACSS base) rules */
 /** @file Normalize.css is intended to be used as an alternative to CSS resets.  This file is a slight fork of these original sources: - normalize.css v2.1.2 | MIT License | git.io/normalize - normalize.scss v2.1.2 | MIT/GPLv2 License | bit.ly/normalize-with-compass  It's suggested that you read the normalize.scss file and customise it to meet your needs, rather then including the file in your project and overriding the defaults later in your CSS. @see http://nicolasgallagher.com/about-normalize-css/  Also: @see http://meiert.com/en/blog/20080419/reset-style-sheets-are-bad/ @see http://snook.ca/archives/html_and_css/no_css_reset/ */
@@ -432,7 +432,7 @@ tr.selected td { background: #ffc; }
 /** Progress bar.  @see progress.js */
 .progress { font-weight: bold; }
 .progress .bar { background: #ccc; border-color: #666; margin: 0 0.2em; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
-.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1384361478'); }
+.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1384382692'); }
 
 /** @file Print styling  We provide some sane print styling for Drupal using Zen's layout method. */
 /** By importing this CSS file as media "all", we allow this print file to be aggregated with other stylesheets, for improved front-end performance. */
@@ -1032,7 +1032,8 @@ h3.legend { font-weight: bold; }
 .page-application form .media-widget a.button.launcher, .page-application form .media-widget a.button.remove, .page-application form .media-widget a.button.ctools-modal-media-file-edit { color: white; font-weight: normal; text-align: center; text-decoration: none; background-color: #008161; background-image: -moz-linear-gradient(top, #008161, #00674e); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008161), to(#00674e)); background-image: -webkit-linear-gradient(top, #008161, #00674e); background-image: -o-linear-gradient(top, #008161, #00674e); background-image: linear-gradient(to bottom, #008161, #00674e); background-repeat: repeat-x; border: 1px solid #00674e; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); margin: 0 10px 0 0; padding: 5px 20px; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
 .page-application form .media-widget a.button.launcher:hover, .page-application form .media-widget a.button.remove:hover, .page-application form .media-widget a.button.ctools-modal-media-file-edit:hover { background-color: #f7a11a; background-image: -moz-linear-gradient(top, #f7a11a, #f8ab33); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f7a11a), to(#f8ab33)); background-image: -webkit-linear-gradient(top, #f7a11a, #f8ab33); background-image: -o-linear-gradient(top, #f7a11a, #f8ab33); background-image: linear-gradient(to bottom, #f7a11a, #f8ab33); background-repeat: repeat-x; border-color: #f7a11a; -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.1); }
 .page-application form input.input-incorrect { color: #bc9906; font-weight: bold; text-shadow: 0 1px #fdfbee; background-color: #faf3d0; border-color: #ebc610; }
-.page-application form .content-incorrect { color: #d6b52b; font-size: 0.9em; line-height: 1.2em; background: #fefdf8 url(../images/global/icon-warning-small.png) no-repeat 4px 5px; border: 1px solid #faeeb0; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; display: inline-block; margin: 5px 0 1em; padding: 5px 5px 4px 20px; width: auto; }
+.page-application form .validation-messages { color: #d6b52b; font-size: 0.9em; line-height: 1.2em; background: #fefdf8 url(../images/global/icon-warning-small.png) no-repeat 4px 5px; border: 1px solid #faeeb0; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; display: inline-block; margin: 5px 0 1em; padding: 5px 5px 4px 20px; width: auto; }
+.page-application form .validation-messages.validation-error { color: #8c2e0b; background: #fef5f1 url(../images/global/icon-error-small.png) no-repeat 4px 5px; border-color: #8c2e0b; }
 
 .page-application form .comment-form { position: relative; z-index: 1; }
 .page-application form .comment-form .comment-wrapper { border: 1px solid #ccc; background-color: white; -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; -o-border-radius: 2px; border-radius: 2px; -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.2); box-shadow: 0 1px 7px rgba(0, 0, 0, 0.2); display: none; padding: 8px; width: 440px; position: absolute; right: 0; bottom: 32px; z-index: 2; }
@@ -1062,10 +1063,13 @@ h3.legend { font-weight: bold; }
 .page-application .question-container table .question .form-item { border: none; margin-bottom: 0; padding-bottom: 0; padding-left: 0; }
 .page-application .question-container table .question-number { font-size: 13px; font-weight: bold; margin-left: 0; float: none; }
 
+.page-application table { width: 950px; }
 .page-application table .show-errors { color: #777; font-size: 11px; line-height: 14px; text-transform: uppercase; text-decoration: none; border-left: 1px solid #ededed; -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; -o-border-radius: 2px; border-radius: 2px; padding: 4px 10px 3px; float: right; cursor: pointer; }
 .page-application table .show-errors:hover { color: white; background-color: #c01730; border-color: #c01730; }
-.page-application table .error-list { color: #bc9906; background-color: #fefdf8; border: 1px solid #faeeb0; margin: 5px 0 0; padding: 9px 3%; width: 93.3%; float: right; }
+.page-application table .error-list { color: #ccc; background-color: #fefdf8; border: 1px solid #faeeb0; margin: 5px 0 0; padding: 9px 3%; width: 93.3%; float: right; }
 .page-application table .error-list p { font-size: 1em; line-height: 1.2em; padding-bottom: 5px; }
+.page-application table .error-list .validation-link-warning { color: #bc9906; }
+.page-application table .error-list .validation-link-error { color: #8c2e0b; }
 
 .page-application .pgh-form-status-container { margin: 0 auto; width: 960px; position: relative; z-index: 1; }
 .page-application .pgh-form-status { color: white; font-size: 12px; line-height: 27px; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1); background: #29aa8b url(../images/pgh-form/icon-page-saved.png) no-repeat 14px 5px; border: 1px solid #229f7e; -webkit-border-radius: 0 0 3px 3px; -moz-border-radius: 0 0 3px 3px; -ms-border-radius: 0 0 3px 3px; -o-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; padding-left: 40px; width: 130px; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; -webkit-transition: opacity 0.4s ease-in-out; -moz-transition: opacity 0.4s ease-in-out; -o-transition: opacity 0.4s ease-in-out; transition: opacity 0.4s ease-in-out; position: absolute; top: -9999px; right: 0; bottom: auto; z-index: 1; }
