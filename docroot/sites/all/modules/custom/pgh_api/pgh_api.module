@@ -546,6 +546,8 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   // Unbox the field value.
   $parent_qid = $parent[0]['value'];
   $parent_nid = pgh_api_find_nid($parent_qid, 'question');
+  $parent_question = node_load($parent_nid);
+  $parent_question_wrapper = entity_metadata_wrapper('node', $parent_question);
 
   // Check for questions qhich specify themselves as their own parent. This causes a recursion loop if we don't exit here.
   if ($parent_nid == $question_nid) {
@@ -559,6 +561,7 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   if ($question_parent_required_value) {
     $question_parent_required_value = $question_parent_required_value[0]['value'];
   }
+
 
   // Convert the value to its internal representation.
   $question_parent_required_value = pgh_api_internal_value($parent_nid, $question_parent_required_value);
@@ -574,9 +577,40 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   $parent_response_wrapper = entity_metadata_wrapper('node', $parent_response);
   $parent_response_value = $parent_response_wrapper->body->value() ? $parent_response_wrapper->body->value->raw() : '';
 
-  // If the parent's response value doesn't match the required value for this question, then this question is not active.
-  if ($parent_response_value != $question_parent_required_value) {
-    return FALSE;
+  //  Special handling for checkboxes.
+  if ($parent_question_wrapper->field_question_type->value() == 'selection' &&
+      $parent_question_wrapper->field_question_style->value() == 'checkboxes') {
+
+    // The required value does not get converted to its internal representation.
+    $question_parent_required_value = field_get_items('node', $question, 'field_question_parent_value');
+
+    // Unbox the required value.
+    if ($question_parent_required_value) {
+      $question_parent_required_value = $question_parent_required_value[0]['value'];
+    }
+
+    $checkbox_options = unserialize($parent_response_value);
+
+    if (!is_array($checkbox_options)) {
+      return FALSE;
+    }
+
+    $selected_options = array();
+    foreach ($checkbox_options as $name => $value) {
+      if ($name === $value) {
+        $selected_options[] = $name;
+      }
+    }
+
+    if (!in_array($question_parent_required_value, $selected_options)) {
+      return FALSE;
+    }
+
+  } else {
+    // If the parent's response value doesn't match the required value for this question, then this question is not active.
+    if ($parent_response_value != $question_parent_required_value) {
+      return FALSE;
+    }
   }
 
   // If the values match, we are only active if our parent is also active.
