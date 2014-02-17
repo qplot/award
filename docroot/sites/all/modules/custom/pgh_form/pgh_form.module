@@ -297,10 +297,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
         if (!empty($caption)) {
           $fieldset = 'fieldset_' . $sec_wrapper->title->value();
           $form[$fieldset] = array(
-            '#type' => 'fieldset',
-            '#title' => t($caption),
-            '#collapsible' => FALSE,
-            '#collapsed' => FALSE,
+            '#prefix' => '<div><h3 class="legend">' . t($caption) . '</h3>',
+            '#suffix' => '</div>',
           );
         }
         else {
