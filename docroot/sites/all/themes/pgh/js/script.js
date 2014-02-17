@@ -168,13 +168,6 @@
       });
 
 
-      // Replace the fieldset legends with H3s so they are easier to style
-      // ======================================================================
-      $('legend').each(function() {
-        $(this).replaceWith('<h3 class="legend">' + $(this).html() + '</h3>');
-      });
-
-
       // Disable node save page and add a progress indicator in case of long load times.
       // ======================================================================
       $('.node-form').submit(function () {
