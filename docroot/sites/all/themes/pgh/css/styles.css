@@ -502,8 +502,9 @@ h3.legend { font-weight: bold; }
 
 .region-content-top, .region-content-bottom { margin: 1.4em 0; }
 
-#footer-wrap { padding: 1em 0 6em; }
-#footer-wrap p { color: #8abdb1; text-align: center; font-size: 0.7em; }
+#footer-wrap { color: #8abdb1; text-align: center; padding: 1em 0 6em; }
+#footer-wrap .block p { font-size: 1em; }
+#footer-wrap p.footer-year { font-size: 0.8em; }
 
 .page-dashboard #drupal-messages { background-color: white; }
 .page-dashboard #drupal-messages #drupal-messages-inner { margin: 0 auto; width: 960px; *zoom: 1; }
