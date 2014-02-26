@@ -432,7 +432,7 @@ tr.selected td { background: #ffc; }
 /** Progress bar.  @see progress.js */
 .progress { font-weight: bold; }
 .progress .bar { background: #ccc; border-color: #666; margin: 0 0.2em; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
-.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1384361478'); }
+.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1376896851'); }
 
 /** @file Print styling  We provide some sane print styling for Drupal using Zen's layout method. */
 /** By importing this CSS file as media "all", we allow this print file to be aggregated with other stylesheets, for improved front-end performance. */
@@ -451,7 +451,6 @@ tr.selected td { background: #ffc; }
   .page-application.page-application-category h1#page-title { padding-left: 0 !important; }
   .page-application.page-application-category h1#page-title span { visibility: hidden; display: none; }
   .page-application form .media-widget a.button, .page-application form input.form-submit { background-image: none !important; }
-  .page-application form .form-item { display: block !important; }
   .page-application form .question-container table td { font-size: 12px; }
   .page-application form .question-container table td .question-number { font-size: 12px; }
   a.glossify-link { padding-right: 0 !important; }
