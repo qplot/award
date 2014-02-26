@@ -2556,7 +2556,7 @@
     },
     'pghq_PR_waste_10_1_tH_9': {
       'args': [
-        'pghq_PR_waste_6_2_20',
+        'pghq_PR_waste_6_2_14',
         'pghq_PR_waste_10_1_tG_1'
       ],
       'calculation': function() {
@@ -2565,15 +2565,6 @@
     },
     'pghq_PR_waste_10_1_tH_10': {
       'args': [
-        'pghq_PR_waste_6_2_14',
-        'pghq_PR_waste_10_1_tG_1'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
-      }
-    },
-    'pghq_PR_waste_10_1_tH_11': {
-      'args': [
         'pghq_PR_waste_6_2_15',
         'pghq_PR_waste_10_1_tG_2'
       ],
@@ -2581,10 +2572,19 @@
 	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
       }
     },
-    'pghq_PR_waste_10_1_tH_12': {
+    'pghq_PR_waste_10_1_tH_11': {
       'args': [
         'pghq_PR_waste_6_2_16',
         'pghq_PR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_12': {
+      'args': [
+        'pghq_PR_waste_6_2_17',
+        'pghq_PR_waste_10_1_tG_4'
       ],
       'calculation': function() {
 	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
@@ -5291,7 +5291,7 @@
     },
     'pghq_CHCPR_waste_10_1_tH_9': {
       'args': [
-        'pghq_CHCPR_waste_6_2_20',
+        'pghq_CHCPR_waste_6_2_14',
         'pghq_CHCPR_waste_10_1_tG_1'
       ],
       'calculation': function() {
@@ -5300,15 +5300,6 @@
     },
     'pghq_CHCPR_waste_10_1_tH_10': {
       'args': [
-        'pghq_CHCPR_waste_6_2_14',
-        'pghq_CHCPR_waste_10_1_tG_1'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
-      }
-    },
-    'pghq_CHCPR_waste_10_1_tH_11': {
-      'args': [
         'pghq_CHCPR_waste_6_2_15',
         'pghq_CHCPR_waste_10_1_tG_2'
       ],
@@ -5316,10 +5307,19 @@
 	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
       }
     },
-    'pghq_CHCPR_waste_10_1_tH_12': {
+    'pghq_CHCPR_waste_10_1_tH_11': {
       'args': [
         'pghq_CHCPR_waste_6_2_16',
         'pghq_CHCPR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_12': {
+      'args': [
+        'pghq_CHCPR_waste_6_2_17',
+        'pghq_CHCPR_waste_10_1_tG_4'
       ],
       'calculation': function() {
 	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
