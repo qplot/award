@@ -64,7 +64,8 @@
   body,
   #page,
   #main,
-  #content {
+  #content,
+  #footer-wrap {
     color: #000;
     background-color: transparent !important;
     background-image: none !important;
@@ -76,6 +77,10 @@
       text-indent: 0 !important;
       background-image: none;
     }
+  }
+
+  #footer-wrap {
+    border-top: 1px solid #ccc;
   }
 
   .page-application {
