@@ -132,7 +132,6 @@
   #navigation,
   .region-sidebar-first,
   .region-sidebar-second,
-  #footer,
   .breadcrumb,
   .tabs,
   .action-links,
@@ -153,4 +152,8 @@
     visibility: hidden;
     display: none;
   }
+}
+
+#footer-wrap {
+    color: #000;
 }
