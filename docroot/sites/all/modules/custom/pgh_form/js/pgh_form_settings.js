@@ -1515,7 +1515,7 @@
         'pghq_PFC_energy_4_4_3'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertBTUComplex.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_energy_4_4_11': {
@@ -1524,7 +1524,7 @@
         'pghq_PFC_energy_4_4_9'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertBTUComplex.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_energy_4_4_17': {
@@ -1533,7 +1533,7 @@
         'pghq_PFC_energy_4_4_15'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertBTUComplex.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_energy_4_4_23': {
@@ -1542,7 +1542,7 @@
         'pghq_PFC_energy_4_4_21'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertBTUComplex.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_energy_4_4_29': {
@@ -1551,7 +1551,7 @@
         'pghq_PFC_energy_4_4_27'
       ],
       'calculation': function() {
-	      return toFixed(handlers.convertBTUComplex.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_energy_4_4_32': {
@@ -1563,7 +1563,7 @@
         'pghq_PFC_energy_4_4_29'
       ],
       'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
       }
     },
     'pghq_PFC_energy_4_4_33': {
