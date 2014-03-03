@@ -1575,7 +1575,7 @@
         'pghq_PFC_energy_4_4_30'
       ],
       'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments) * 100, 0);
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
       }
     },
 
