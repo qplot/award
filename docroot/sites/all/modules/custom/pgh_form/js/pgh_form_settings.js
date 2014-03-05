@@ -129,41 +129,83 @@
         case 'Electricity: kWh':
           return amount * 3.413;
 
+        case 'Electricity: kWh X 3.413':
+          return amount * 3.413;
+
         case 'Electricity: MWh':
+          return amount * 3413;
+
+        case 'Electricity: MWh X 3413':
           return amount * 3413;
 
         case 'Natural Gas: CCF':
           return amount * 103;
 
+        case 'Natural Gas: CCF X 103':
+          return amount * 103;
+
         case 'Natural Gas: MCF':
+          return amount * 1030;
+
+        case 'Natural Gas: MCF X 1030':
           return amount * 1030;
 
         case 'Natural Gas: Therm':
           return amount * 100;
 
+        case 'Natural Gas: Therm X 100':
+          return amount * 100;
+
         case 'Natural Gas: Cubic Meter':
+          return amount * 36.4;
+
+        case 'Natural Gas: Cubic Meter X 36.4':
           return amount * 36.4;
 
         case 'Natural Gas: Gigajoule':
           return amount * 947.8;
 
+        case 'Natural Gas: Gigajoule X 947.8':
+          return amount * 947.8;
+
         case 'Purchased Steam: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Steam: 1000 Btu X 1.0':
           return amount * 1.0;
 
         case 'Purchased Steam: 1000 lb':
           return amount * 1000;
 
+        case 'Purchased Steam: 1000 lb X 1000':
+          return amount * 1000;
+
         case 'Purchased Steam: Therm':
+          return amount * 100;
+
+        case 'Purchased Steam: Therm X 100':
           return amount * 100;
 
         case 'Purchased Hot Water: 1000 Btu':
           return amount * 1.0;
 
+        case 'Purchased Hot Water: 1000 Btu X 1.0':
+          return amount * 1.0;
+
         case 'Purchased Chilled Water: 1000 Btu':
+          return amount * 1.0;
+
+        case 'Purchased Chilled Water: 1000 Btu X 1.0':
           return amount * 1.0;
 
         case 'Purchased Chilled Water: Ton-Hour':
           return amount * 12;
+
+        case 'Purchased Chilled Water: Ton-Hour X 12':
+          return amount * 12;
+
+        case 'Oil #2 Fuel Oil: U.S. Gallon X 139':
+          return amount * 139;
 
         case 'Oil #2 Fuel Oil: U.S. Gallon':
           return amount * 139;
@@ -171,16 +213,31 @@
         case 'Oil #2 Fuel Oil: Imp. Gallon':
           return amount * 167;
 
+        case 'Oil #2 Fuel Oil: Imp. Gallon X 167':
+          return amount * 167;
+
         case 'Oil #2 Fuel Oil: Liter':
+          return amount * 36.7;
+
+        case 'Oil #2 Fuel Oil: Liter X 36.7':
           return amount * 36.7;
 
         case 'Oil #6 Diesel: U.S. Gallon':
           return amount * 154;
 
+        case 'Oil #6 Diesel: U.S. Gallon X 154':
+          return amount * 154;
+
         case 'Oil #6 Diesel: Imp. Gallon':
           return amount * 185;
 
+        case 'Oil #6 Diesel: Imp. Gallon X 185':
+          return amount * 185;
+
          case 'Oil #6 Diesel: Liter':
+          return amount * 40.7;
+
+         case 'Oil #6 Diesel: Liter X 40.7':
           return amount * 40.7;
 
         default:
@@ -2630,6 +2687,51 @@
     //
     // PR Energy
     //
+    'pghq_PR_energy_4_4_5': {
+      'args': [
+        'pghq_PR_energy_4_4_4',
+        'pghq_PR_energy_4_4_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_PR_energy_4_4_11': {
+      'args': [
+        'pghq_PR_energy_4_4_10',
+        'pghq_PR_energy_4_4_9'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_PR_energy_4_4_17': {
+      'args': [
+        'pghq_PR_energy_4_4_16',
+        'pghq_PR_energy_4_4_15'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_PR_energy_4_4_23': {
+      'args': [
+        'pghq_PR_energy_4_4_22',
+        'pghq_PR_energy_4_4_21'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_PR_energy_4_4_29': {
+      'args': [
+        'pghq_PR_energy_4_4_28',
+        'pghq_PR_energy_4_4_27'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
     'pghq_PR_energy_4_4_32': {
       'args': [
         'pghq_PR_energy_4_4_5',
@@ -5365,6 +5467,51 @@
     //
     // CHCPR Energy
     //
+    'pghq_CHCPR_energy_4_4_5': {
+      'args': [
+        'pghq_CHCPR_energy_4_4_4',
+        'pghq_CHCPR_energy_4_4_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_CHCPR_energy_4_4_11': {
+      'args': [
+        'pghq_CHCPR_energy_4_4_10',
+        'pghq_CHCPR_energy_4_4_9'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_CHCPR_energy_4_4_17': {
+      'args': [
+        'pghq_CHCPR_energy_4_4_16',
+        'pghq_CHCPR_energy_4_4_15'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_CHCPR_energy_4_4_23': {
+      'args': [
+        'pghq_CHCPR_energy_4_4_22',
+        'pghq_CHCPR_energy_4_4_21'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
+    'pghq_CHCPR_energy_4_4_29': {
+      'args': [
+        'pghq_CHCPR_energy_4_4_28',
+        'pghq_CHCPR_energy_4_4_27'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.convertBTUComplex.apply(this, arguments), 0);
+      }
+    },
     'pghq_CHCPR_energy_4_4_32': {
       'args': [
         'pghq_CHCPR_energy_4_4_5',
