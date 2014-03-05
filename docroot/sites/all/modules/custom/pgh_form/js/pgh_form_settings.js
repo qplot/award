@@ -192,6 +192,12 @@
         case 'Purchased Hot Water: 1000 Btu X 1.0':
           return amount * 1.0;
 
+        case 'Purchased Hot Water: Ton-Hour':
+          return amount * 12;
+
+        case 'Purchased Hot Water: Ton-Hour X 12':
+          return amount * 12;
+
         case 'Purchased Chilled Water: 1000 Btu':
           return amount * 1.0;
 
