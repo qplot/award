@@ -1827,12 +1827,12 @@
     },
     'pghq_PFC_water_2_5': {
       'args': [
-        'pghq_PFC_water_1_5_1_14',
-        'pghq_PFC_water_1_5_1_13',
-        'pghq_PFC_water_2_4_1'
+        'pghq_PFC_water_1_5_1_14', // Units
+        'pghq_PFC_water_1_5_1_13', // Water Consumption
+        'pghq_PFC_water_2_4_1' // Energy in kWh
       ],
-      'calculation': function() {
-	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments) * 100, 2);
+      'calculation': function(a, b, c) {
+	      return toFixed(c / handlers.convertGallons(a, b), 2);
       }
     },
     'pghq_PFC_water_3_1tE_21': {
