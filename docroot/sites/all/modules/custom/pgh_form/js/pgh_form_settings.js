@@ -1832,7 +1832,7 @@
         'pghq_PFC_water_2_4_1' // Energy in kWh
       ],
       'calculation': function(a, b, c) {
-	      return toFixed(c / handlers.convertGallons(a, b), 2);
+	      return toFixed(c / handlers.convertGallons(a, b), 4);
       }
     },
     'pghq_PFC_water_3_1tE_21': {
@@ -4611,8 +4611,8 @@
         'pghq_LTC_water_1_5_1_13',
         'pghq_LTC_water_2_4_1'
       ],
-      'calculation': function() {
-	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 2);
+      'calculation': function(a, b, c) {
+	      return toFixed(c / handlers.convertGallons(a, b), 4);
       }
     },
     'pghq_LTC_water_3_1tE_21': {
@@ -7455,8 +7455,8 @@
         'pghq_CHCPFC_water_1_5_1_13',
         'pghq_CHCPFC_water_2_4_1'
       ],
-      'calculation': function() {
-	      return toFixed(handlers.convertGallonsAndDivide.apply(this, arguments), 2);
+      'calculation': function(a, b, c) {
+	      return toFixed(c / handlers.convertGallons(a, b), 4);
       }
     },
     'pghq_CHCPFC_water_3_1tE_21': {
