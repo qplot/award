@@ -1,0 +1,39 @@
+general:
+  description: 'Rebuilds local development environment from PGH Awards server'
+  version: 1.0
+  uli: true
+  overrides: 'local.rebuild.yaml'
+
+sync:
+  default_source: '@pgh.prod'
+  sql_sync:
+    create-db: 1
+    no-cache: 1
+    sanitize: 'sanitize-email'
+    structure-tables-key: 'common'
+
+drupal:
+  variables:
+    set:
+      preprocess_js: 0
+      cache: 0
+      preprocess_css: 0
+      site_mail: '%email'
+      reroute_email_enable: 1
+      reroute_email_address: '%email'
+      reroute_email_enable_message: 1
+  modules:
+    enable:
+      - devel
+      - views_ui
+      - stage_file_proxy
+      - reroute_email
+      - devel_node_access
+      - dblog
+    disable:
+      - overlay
+      - googleanalytics
+      - memcache
+      - shield
+      - mollom
+      - syslog
