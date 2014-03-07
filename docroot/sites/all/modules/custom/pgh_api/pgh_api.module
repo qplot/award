@@ -434,7 +434,7 @@ function pgh_api_get_response($app_id, $qid) {
     );
   }
   else {
-    watchdog('pgh_api', 'Couldn\'t find response $rid for question %qid in pgh_api_get_response', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Couldn\'t find response %rid for question %qid in pgh_api_get_response', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
   }
 
   return $response;
