@@ -70,6 +70,11 @@ function pgh_migrate_migrate_api() {
         'group_name' => 'PGH',
         'soft_dependencies' => array('PreprocessCSV')
       ),
+      'Points' => array(
+        'class_name' => 'MigratePGHPointsMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV')
+      ),
     ),
   );
   return $api;
