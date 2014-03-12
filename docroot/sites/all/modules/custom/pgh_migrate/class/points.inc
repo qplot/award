@@ -91,4 +91,25 @@ class MigratePGHPointsMigration extends Migration {
     return TRUE;
   }
 
+  public function complete($entity, stdClass $row) {
+    // after the question score is saved,
+    // find all response associated with this question
+    $rids = pgh_api_find_nodes(
+      array(
+        'type' => 'response',
+        'field_response_question' => array('target_id', $entity->nid, '=')
+      ),
+      NULL,
+      TRUE
+    );
+    foreach ($rids as $rid) {
+      $response = node_load($rid);
+      $response_wrapper = entity_metadata_wrapper('node', $response);
+      $app_id = $response_wrapper->field_response_application->raw();
+      $qid = $response_wrapper->field_response_question->raw();
+      $value = $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '';
+      pgh_api_save_response($app_id, $qid, $value);
+    }
+  }
+
 }
