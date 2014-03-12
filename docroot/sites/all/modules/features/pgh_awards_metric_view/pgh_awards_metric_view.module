@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Metric View feature.
+ */
+
+include_once 'pgh_awards_metric_view.features.inc';
