@@ -38,7 +38,21 @@ function pgh_awards_review_page() {
  * Implements hook_preprocess_page().
  */
 function pgh_awards_review_preprocess_page(&$vars) {
+  $app_id = 101304;
+  $app = node_load($app_id);
+  $app_wrapper = entity_metadata_wrapper('node', $app);
+
+  $apptype_tag = $app_wrapper->field_application_type->raw();
+
+
+  // update application information
   $vars['application'] = array(
     'id' => arg(1),
+    'apptype_id' => $apptype_tag,
+  );
+
+  // update business unit information
+  $vars['bussiness-unit'] = array(
+    'id' => 11,
   );
 }
