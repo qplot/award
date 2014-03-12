@@ -6672,7 +6672,7 @@
         'pghq_CHCPFC_greeningtheOR_3_4_0'
       ],
       'calculation': function() {
-	      return toFixed(handlers.divide.apply(this, arguments), 1);
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
       }
     },
 
