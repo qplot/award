@@ -104,11 +104,13 @@ class MigratePGHPointsMigration extends Migration {
     );
     foreach ($rids as $rid) {
       $response = node_load($rid);
-      $response_wrapper = entity_metadata_wrapper('node', $response);
-      $app_id = $response_wrapper->field_response_application->raw();
-      $qid = $response_wrapper->field_response_question->raw();
-      $value = $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '';
-      pgh_api_save_response($app_id, $qid, $value);
+      if (!empty($response->field_response_updated['und'][0]['value'])) {
+        $response_wrapper = entity_metadata_wrapper('node', $response);
+        $app_id = $response_wrapper->field_response_application->raw();
+        $qid = $response_wrapper->field_response_question->raw();
+        $value = $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '';
+        pgh_api_save_response($app_id, $qid, $value);
+      }
     }
   }
 
