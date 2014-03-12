@@ -672,8 +672,16 @@ function pgh_api_save_response($app_id, $qid, $value) {
     switch ($type) {
       case 'text':
       case 'file':
-        if (!empty($value) && !empty($point[0])) {
+        if (!empty($point[0])) {
           $r_point = $point[0];
+        }
+        if (!empty($value)) {
+          if (!empty($score[0])) {
+            $r_score = $score[0];
+          }
+          if (!empty($kpi[0])) {
+            $r_kpi = $kpi[0];
+          }
         }
         break;
 
