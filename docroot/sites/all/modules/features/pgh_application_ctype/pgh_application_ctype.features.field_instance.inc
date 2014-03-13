@@ -55,6 +55,49 @@ function pgh_application_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-application-field_application_qualify'
+  $field_instances['node-application-field_application_qualify'] = array(
+    'bundle' => 'application',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_qualify',
+    'label' => 'System Qualify',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 0,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 7,
+    ),
+  );
+
   // Exported field_instance: 'node-application-field_application_reviewers'
   $field_instances['node-application-field_application_reviewers'] = array(
     'bundle' => 'application',
@@ -136,6 +179,49 @@ function pgh_application_ctype_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-application-field_application_threshold_met'
+  $field_instances['node-application-field_application_threshold_met'] = array(
+    'bundle' => 'application',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_threshold_met',
+    'label' => 'Threshold Met',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 0,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 6,
     ),
   );
 
@@ -224,6 +310,8 @@ function pgh_application_ctype_field_default_field_instances() {
   t('Category Progress');
   t('Reviewers');
   t('Status');
+  t('System Qualify');
+  t('Threshold Met');
 
   return $field_instances;
 }
