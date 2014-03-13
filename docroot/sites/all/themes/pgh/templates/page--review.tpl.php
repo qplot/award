@@ -150,6 +150,24 @@
       <!-- Goals Section -->
       <div id="goals-wrap"><div id="goals-wrap-inner">
         <h2>Goals</h2>
+        <?php foreach ($app['goals'] as $year => $goals): ?>          
+          <table>
+            <thead>
+              <?php foreach ($goals['headers'] as $header): ?>
+                <th><?php echo $header ?></th> 
+              <?php endforeach ?>
+            </thead>
+            <tbody>
+              <?php foreach ($goals['question_vals'] as $row): ?>
+                <tr>
+                  <?php foreach ($row as $value): ?>
+                    <td><?php echo $value ?></td>
+                  <?php endforeach ?>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+        <?php endforeach ?>
 
       </div></div>
 

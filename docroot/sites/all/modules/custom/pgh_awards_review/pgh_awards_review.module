@@ -83,6 +83,33 @@ function pgh_awards_review_preprocess_page(&$vars) {
   // get application scores.
   $scores = pgh_awards_score_application($app_id, TRUE);
 
+  // get goals of the app.
+  $goals = array(
+    '2013' => array(
+      'headers' => array('Goals for 2013', 'Achieved ?', 'Highlights'),
+      'question_tag_prefix' => 'pghq_PFC_goals_3_',
+      'question_rows' => 5,
+      'question_cols' => 3,
+    ),
+    '2014' => array(
+      'headers' => array('Goals for 2014'),
+      'question_tag_prefix' => 'pghq_PFC_goals_5_',
+      'question_rows' => 5,
+      'question_cols' => 1,
+    ),
+  );
+  foreach ($goals as $year => &$goal) {
+    for ($i = 0; $i < $goal['question_rows']; $i++) {
+      $goal['question_vals'][$i] = array();
+      for ($j = 0; $j < $goal['question_cols']; $j++) {
+        $tag = $goal['question_tag_prefix'] . ($i * $goal['question_cols'] + $j + 1);
+        $question_id = pgh_api_find_nodes(array('type' => 'question', 'title' => $tag));
+        $response = pgh_api_get_response($app_id, $question_id);
+        $goal['question_vals'][$i][$j] = $response['value'];
+      }
+    }
+  }
+
   // assign application variables.
   $vars['app'] = array(
     'id' => arg(1),
@@ -109,6 +136,7 @@ function pgh_awards_review_preprocess_page(&$vars) {
     'app_info_form' => drupal_render($app_info_form),
     'score_view' => views_embed_view('score', 'page'),
     'scores' => $scores,
+    'goals' => $goals,
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);
