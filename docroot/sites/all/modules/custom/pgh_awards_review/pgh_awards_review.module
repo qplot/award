@@ -73,6 +73,9 @@ function pgh_awards_review_preprocess_page(&$vars) {
     $question_values[$key] = $response['value'];
   }
 
+  // get a form for updating application info
+  $app_info_form = drupal_get_form('pgh_awards_review_application_info_form', $app);
+
   // assign application variables.
   $vars['app'] = array(
     'id' => arg(1),
@@ -93,9 +96,36 @@ function pgh_awards_review_preprocess_page(&$vars) {
     'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
     // reviewers missing
     // number of hospitals winning missing
-    // system qualify missing
-    // does application meet metrics threshold missing
+    // 'qualify' => $app_wrapper->field_application_qualify->value(),
+    // 'threshold_met' => $app_wrapper->field_application_threshold_met->value(),
     // goals missing
+    'app_info_form' => drupal_render($app_info_form),
   );
   $vars['app'] = array_merge($vars['app'], $question_values);
+}
+
+/**
+ * Form for updating application info
+ */
+function pgh_awards_review_application_info_form($form, &$form_state, $app) {
+  $app_wrapper = entity_metadata_wrapper('node', $app);
+
+  $form['qualify'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Does system qualify ?'),
+    '#default_value' => $app_wrapper->field_application_qualify->value(),
+  );
+
+  $form['threshold_met'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Does application meet the metrics thresholds for award applied for ?'),
+    '#default_value' => $app_wrapper->field_application_threshold_met->value(),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
+
+  return $form;
 }

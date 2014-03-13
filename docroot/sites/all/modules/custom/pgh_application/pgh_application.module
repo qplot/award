@@ -60,6 +60,9 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
       if ($business_unit) {
         $bid = $business_unit->nid;
       }
+
+      // disable Application type field from editing
+      $form['field_application_type']['#disabled'] = TRUE;
     }
 
     // Remove application types which are not valid for this Business Unit.
@@ -154,7 +157,8 @@ function pgh_application_node_validate($node, $form, &$form_state) {
 
   foreach ($business_unit_wrapper->field_applications->getIterator() as $application_wrapper) {
     if ($application_wrapper->field_application_type->value() == $node->field_application_type['und'][0]['value'] &&
-        in_array($application_wrapper->field_application_status->value(), $open_statuses)) {
+        in_array($application_wrapper->field_application_status->value(), $open_statuses) &&
+        ($application_wrapper->getIdentifier() != $node->nid)) {
 
       $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
       $application_type_wrapper = entity_metadata_wrapper('node', $application_type);

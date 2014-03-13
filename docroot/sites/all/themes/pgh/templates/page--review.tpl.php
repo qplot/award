@@ -95,10 +95,9 @@
 
         <div id="hospital-content-mid" class="column">
           <h2>Application Name</h2>
-          <p><span class="semi-bold">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?></p>
-          <p><span class="semi-bold">Number of Hospitals winning PFC or above:</span></p>
-          <p><span class="semi-bold">Does System qualify:</span></p>
-          <p><span class="semi-bold">Does application meet the metrics thresholds for award applied for ?</span></p>
+          <p><span class="semi-bold">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> 36</p>
+          <p><span class="semi-bold">Number of Hospitals winning PFC or above:</span> 14</p>
+          <?php echo $app['app_info_form'] ?>
         </div>
 
         <div id="hospital-content-right" class="column">
