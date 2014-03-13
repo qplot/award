@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Metric Content Type feature.
+ */
+
+include_once 'pgh_awards_metric_ctype.features.inc';

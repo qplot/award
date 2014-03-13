@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Metric Response Content Type feature.
+ */
+
+include_once 'pgh_awards_metric_response_ctype.features.inc';
