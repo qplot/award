@@ -102,9 +102,6 @@
 
         <div id="hospital-content-right" class="column">
 
-<!--           <h2>Suggested Awards</h2>
-          <h2>Final Awards:</h2>
- -->
         </div>
 
         <div class="pull-right">
@@ -119,6 +116,40 @@
       <div id="scores-wrap"><div id="scores-wrap-inner">
         <h2>Scoring Roll-Up/Overview</h2>
         <?php echo $app['score_view'] ?>
+
+      </div></div>
+
+      <!-- Category Section -->
+      <h2>Metric and Quality</h2>
+      <div id="categories-wrap"><div id="categories-wrap-inner">
+        <?php foreach ($app['scores'] as $category): ?>
+          <?php if ($category): ?>
+            <h3><?php echo $category['category_id'] ?></h3>
+
+            <p><span class="semi-bold">Auto Score:</span><?php echo $category['final'] ?></p>
+            <p><span class="semi-bold">KPI Score:</span><?php echo $category['final'] ?></p>
+            <p><span class="semi-bold">Metric Score:</span><?php echo $category['final'] ?></p>
+            <p><span class="semi-bold">Final Score:</span><?php echo $category['final'] ?></p>
+
+            <div class="metric-wrap"><div class="metric_wrap-inner">
+              <?php if (!empty($category['metrics'])): ?>
+              <h4>Metrics</h4>
+                <ul>
+                  <?php foreach ($category['metrics'] as $metric): ?>
+                    <p><span class="semi-bold"><?php echo $metric['description'] ?></span><?php echo $metric['value'] ?></p>
+                  <?php endforeach ?>
+                </ul>
+              <?php endif ?>
+            </div></div>
+
+          <?php endif ?>
+        <?php endforeach ?>
+      </div></div>
+
+
+      <!-- Goals Section -->
+      <div id="goals-wrap"><div id="goals-wrap-inner">
+        <h2>Goals</h2>
 
       </div></div>
 

@@ -48,7 +48,7 @@ function pgh_awards_score_menu() {
 }
 
 /**
- * Calculate score for each application of application type
+ * Calculate score for each application of application type.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -69,7 +69,7 @@ function pgh_awards_score_calculate_apptype_metric($apptype) {
 }
 
 /**
- * Calculate score for each category of application
+ * Calculate score for each category of application.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -132,7 +132,7 @@ function pgh_awards_score_calculate_application_metric($app_id, $apptype = 'part
 }
 
 /**
- * Calculate the metric score
+ * Calculate the metric score.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -197,8 +197,10 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
 
 
 /**
- * Hook views_pre_render
- */
+ * Hook views_pre_render.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+*/
 function pgh_awards_score_views_pre_render(&$view) {
   // Add calculate button for now
   if ($view->name == 'metric_score') {
@@ -228,4 +230,96 @@ function pgh_awards_score_views_pre_render(&$view) {
     ));
 
   }
+}
+
+/**
+ * Get all score for application.
+ * 
+ * @param integer $app
+ *   The NID of application
+ *
+ * @return mixed
+ *   The array info with all category scores.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_score_application($app_id, $include_metric = FALSE) {
+  $app = node_load($app_id);  
+  $app_wrapper = entity_metadata_wrapper('node', $app);
+
+  // Find app type.
+  $apptype_tag = $app_wrapper->field_application_type->raw();
+  $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
+  $apptype = node_load($apptype_id);
+  $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
+
+  // Get available categories.
+  $cat_ids = $apptype_wrapper->field_apptype_categories->raw();
+
+  // Get all category responses.
+  $responses = array();
+  $cat_response_ids = pgh_api_find_nodes(
+    array(
+      'type' => 'category_response',
+      // 'field_cat_response_application' => array('target_id', $app->nid, '='),
+    ),
+    NULL,
+    TRUE
+  );
+  foreach ($cat_response_ids as $crid) {
+    $cat_response = node_load($crid);
+    $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
+    $cid = $cat_response_wrapper->field_cat_response_category->raw();
+    
+    $responses['cat_' . $cid] = array(
+      'category_id' => $cid,
+      'response_id' => $crid,
+      'final' => $cat_response_wrapper->field_cat_response_final->value(),
+    );
+  }
+  // Get all metric responses.
+  if ($include_metric) {
+    $metrics = array();
+    $metric_response_ids = pgh_api_find_nodes(
+      array(
+        'type' => 'metric_response',
+        // 'field_metric_response_app' => array('target_id', $app->nid, '='),
+      ),
+      NULL,
+      TRUE
+    );
+
+    foreach ($metric_response_ids as $mrid) {
+      $metric_response = node_load($mrid);
+      $metric_response_wrapper = entity_metadata_wrapper('node', $metric_response);
+      $metric_id = $metric_response_wrapper->field_metric_response_metric->raw();
+      $metric = node_load($metric_id);
+      $metric_wrapper = entity_metadata_wrapper('node', $metric);
+      $cid = $metric_wrapper->field_metric_category->raw();
+      $body = $metric_wrapper->body->value();
+
+      $responses['cat_' . $cid]['metrics'][] = array(
+        'metric_response_id' => $mrid,
+        'category_id' => $cid,
+        'description' => !empty($body) ? $body['value'] : '',
+        'formula' => $metric_wrapper->field_metric_formula->value(),
+        'value' => $metric_response_wrapper->field_metric_response_value->value(),
+        'score' => $metric_response_wrapper->field_metric_response_score->value(),
+      );       
+    }
+  }
+
+  // Assemble the final category scores.
+  $scores = array();
+  foreach ($cat_ids as $cid) {
+    $score_item = array();
+
+    if (!empty($responses['cat_' . $cid])) {
+      $score_item = array_merge($responses['cat_' . $cid], $score_item);
+    }
+
+    $scores[] = $score_item;
+  }
+
+  return $scores;
 }

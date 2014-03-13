@@ -73,12 +73,15 @@ function pgh_awards_review_preprocess_page(&$vars) {
     $question_values[$key] = $response['value'];
   }
 
-  // get a form for updating application info
+  // get a form for updating application info.
   $app_info_form = drupal_get_form('pgh_awards_review_application_info_form', $app);
 
   // get a score view
   // $view = views_get_view('score');
   // $view->execute();
+
+  // get application scores.
+  $scores = pgh_awards_score_application($app_id, TRUE);
 
   // assign application variables.
   $vars['app'] = array(
@@ -105,7 +108,9 @@ function pgh_awards_review_preprocess_page(&$vars) {
     // goals missing
     'app_info_form' => drupal_render($app_info_form),
     'score_view' => views_embed_view('score', 'page'),
+    'scores' => $scores,
   );
+
   $vars['app'] = array_merge($vars['app'], $question_values);
 }
 
