@@ -77,7 +77,7 @@
       <p class="dashboard-label">Work Group</p>
       <h1 class="page__title title">Review</h1>
 
-
+      <!-- Hospital Info Section -->
       <div id="hospital-wrap"><div id="hospital-wrap-inner">
 
         <div id="hospital-content-left" class="column">
@@ -101,8 +101,10 @@
         </div>
 
         <div id="hospital-content-right" class="column">
-          <h2>Suggested Awards</h2>
+
+<!--           <h2>Suggested Awards</h2>
           <h2>Final Awards:</h2>
+ -->
         </div>
 
         <div class="pull-right">
@@ -112,6 +114,14 @@
         </div>
 
       </div></div>
+
+      <!-- Scoring Roll-Up Section -->
+      <div id="scores-wrap"><div id="scores-wrap-inner">
+        <h2>Scoring Roll-Up/Overview</h2>
+        <?php echo $app['score_view'] ?>
+
+      </div></div>
+
     </div>
 
   </div><!-- /#workgroup -->
