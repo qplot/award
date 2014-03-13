@@ -260,6 +260,46 @@ function pgh_awards_category_response_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-category_response-field_cat_response_final'
+  $field_instances['node-category_response-field_cat_response_final'] = array(
+    'bundle' => 'category_response',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 12,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_cat_response_final',
+    'label' => 'Final score',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 13,
+    ),
+  );
+
   // Exported field_instance: 'node-category_response-field_cat_response_kpi'
   $field_instances['node-category_response-field_cat_response_kpi'] = array(
     'bundle' => 'category_response',
@@ -508,6 +548,7 @@ function pgh_awards_category_response_ctype_field_default_field_instances() {
   t('Body');
   t('Case study');
   t('Category');
+  t('Final score');
   t('KPI potential point');
   t('KPI score');
   t('Metric potential point');
