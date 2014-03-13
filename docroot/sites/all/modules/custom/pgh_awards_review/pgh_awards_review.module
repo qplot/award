@@ -38,21 +38,64 @@ function pgh_awards_review_page() {
  * Implements hook_preprocess_page().
  */
 function pgh_awards_review_preprocess_page(&$vars) {
+  if (arg(0) != 'review') { 
+    return;
+  }
   $app_id = 101304;
   $app = node_load($app_id);
   $app_wrapper = entity_metadata_wrapper('node', $app);
 
+  // get apptype.
   $apptype_tag = $app_wrapper->field_application_type->raw();
+  $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
+  $apptype = node_load($apptype_id);
+  $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
+  $apptype_body = $apptype_wrapper->body->value();
 
+  // get business unit.
+  $bunit_id = pgh_api_find_nodes(array(
+    'type' => 'business_unit',
+    'field_applications' => array('target_id', $app_id, '=')
+  ));
+  $bunit = node_load($bunit_id);
+  $bunit_wrapper = entity_metadata_wrapper('node', $bunit_id);
 
-  // update application information
-  $vars['application'] = array(
+  // get all cells value.
+  $question_tags = array(
+    'beds' => 'pghq_PFC_demographic_1_8t_2',
+    'ors' => 'pghq_PFC_demographic_1_9',
+    'cares' => 'pghq_SFC_2_1',
+  );
+  $question_values = array();
+  foreach ($question_tags as $key => $tag) {
+    $question_id = pgh_api_find_nodes(array('type' => 'question', 'title' => $tag));
+    $response = pgh_api_get_response($app_id, $question_id);
+    $question_values[$key] = $response['value'];
+  }
+
+  // assign application variables.
+  $vars['app'] = array(
     'id' => arg(1),
-    'apptype_id' => $apptype_tag,
+    'status' => $app_wrapper->field_application_status->raw(),
+    'apptype_tag' => $apptype_tag,
+    'apptype' => !empty($apptype_body) ? $apptype_body['value'] : '',
+    'business_unit_id' => $bunit_id,
+    'institution' => $bunit_wrapper->title->value(),
+    'institution_name' => $bunit_wrapper->field_business_unit_name->value(),
+    // health system missing
+    'city' => $bunit_wrapper->field_shipping_city->value(),
+    'state' => $bunit_wrapper->field_shipping_state->value(),
+    'zipcode' => $bunit_wrapper->field_shipping_zipcode->value(),
+    'country' => $bunit_wrapper->field_shipping_country->value(),
+    // primary contact missing    
+    // application year missing
+    // safesforce account owner missing
+    'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
+    // reviewers missing
+    // number of hospitals winning missing
+    // system qualify missing
+    // does application meet metrics threshold missing
+    // goals missing
   );
-
-  // update business unit information
-  $vars['bussiness-unit'] = array(
-    'id' => 11,
-  );
+  $vars['app'] = array_merge($vars['app'], $question_values);
 }
