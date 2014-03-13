@@ -1,0 +1,5 @@
+raw id,id,parent id,parent required value,type,style,layout- DH use,prompt,options,points,score,kpi,validation,default formula,default value,post prompt,Developer to notes,PGH notes,In PR?,In LTC?
+PFC,Leadership,,,,,,,,,,,,,,,,,,Yes
+1_2,pghq_PFC_leadership_1_2,,,html,non-numbered,,"As environmental stewardship increasingly becomes a priority for healthcare, it requires <b>planning, infrastructure and accountability</b>. Please  give us an understanding of how the facility's executive team is engaged in this work, how the work is being organized and how the organization is sharing its commitment with others in the health care community. ",,,,,,,,,,,,Yes
+PFC,Leadership,Infrastructure for Environmental Stewardship,,,,,,,,,,,,,,,,,Yes
+1_3,pghq_PFC_leadership_1_3,,,selection,radios,,Has the facility appointed an <b>Executive Champion</b> to provide administrative support for environmental stewardship?,Yes|No,30|20,2|0,2|0,,,,,,,,Yes
