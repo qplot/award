@@ -50,6 +50,19 @@ function pgh_awards_review_preprocess_page(&$vars) {
   $app = node_load($app_id);
   $app_wrapper = entity_metadata_wrapper('node', $app);
 
+  // get reviewers.
+  $reviewers = array();
+  $persons = array();
+  foreach ($app_wrapper->field_application_reviewers->getIterator() as $reviewer_wrapper) {
+    $reviewer = array(
+      'first' => $reviewer_wrapper->field_user_first_name->value(),
+      'last' =>$reviewer_wrapper->field_user_last_name->value(),
+      'name' => $reviewer_wrapper->name->value(),
+    );
+    $reviewers[] = $reviewer;
+    $persons[] = $reviewer['first'] . ' ' . $reviewer['last'];
+  }
+
   // get apptype.
   $apptype_tag = $app_wrapper->field_application_type->raw();
   $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
@@ -85,6 +98,7 @@ function pgh_awards_review_preprocess_page(&$vars) {
   $elements = array(
     'qualify' => render($form['qualify']),
     'threshold_met' => render($form['threshold_met']),
+    'comment' => render($form['comment']),
     'submit' => render($form['submit']),
   );
   if (preg_match('/<form.+div>/', $form_render, $matches)) {
@@ -147,12 +161,8 @@ function pgh_awards_review_preprocess_page(&$vars) {
     // application year missing
     // safesforce account owner missing
     'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
-    // reviewers missing
+    'reviewers' => implode(', ', $persons),
     // number of hospitals winning missing
-    // 'qualify' => $app_wrapper->field_application_qualify->value(),
-    // 'threshold_met' => $app_wrapper->field_application_threshold_met->value(),
-    // goals missing
-    // 'app_info_form' => $form_render,
     'score_view' => views_embed_view('score', 'page'),
     'scores' => $scores,
     'goals' => $goals,
@@ -166,6 +176,7 @@ function pgh_awards_review_preprocess_page(&$vars) {
  */
 function pgh_awards_review_application_form($form, &$form_state, $app) {
   $app_wrapper = entity_metadata_wrapper('node', $app);
+  $body = $app_wrapper->body->value();
 
   $form['qualify'] = array(
     '#type' => 'checkbox',
@@ -179,9 +190,15 @@ function pgh_awards_review_application_form($form, &$form_state, $app) {
     '#default_value' => $app_wrapper->field_application_threshold_met->value(),
   );
 
+  $form['comment'] = array(
+    '#type' => 'textarea',
+    '#title' => 'Overall Application Comments (please fill out last):',
+    '#default_value' => !empty($body['value']) ? $body['value'] : '',
+  );
+
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => 'Submit',
+    '#value' => 'Save worksheet',
   );
 
   return $form;

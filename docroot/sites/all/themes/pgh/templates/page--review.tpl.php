@@ -6,8 +6,8 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-  dsm($app);
-  dsm($form);
+  // dsm($app);
+  // dsm($form);
 ?>
 
 <div id="page">
@@ -78,23 +78,22 @@
     <?php print render($page['content_top']); ?>
 
     <div id="workgroup-content" class="column">
-      <p class="dashboard-label">Work Group</p>
+      <p class="dashboard-label"><?php echo $app['apptype'] ?></p>
       <h1 class="page__title title">Review</h1>
+
+      <hr />
 
       <!-- Hospital Info Section -->
       <div id="hospital-wrap"><div id="hospital-wrap-inner">
 
         <div id="hospital-content-left" class="column">
-          <p><?php echo $app['apptype'] ?></p>
-          <h2><?php echo $app['institution'] ?></h2>
+          <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
           <p><?php echo $app['institution_name'] ?></p>
           <h3>Primary Contact:</h3>
-          <p></p>
-          <p><?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></p>
           <p><span class="semi-bold">Staffed Beds:</span> <?php echo $app['beds'] ?></p>
           <p><span class="semi-bold">ORs:</span> <?php echo $app['ors'] ?></p>
           <p><span class="semi-bold">FE Liaison:</span></p>
-          <p><span class="semi-bold">Reviewer(s):</span></p>
+          <p><span class="semi-bold">Reviewer(s):</span> <?php echo $app['reviewers'] ?></p>
         </div>
 
         <div id="hospital-content-mid" class="column">
@@ -103,26 +102,27 @@
           <p><span class="semi-bold">Number of Hospitals winning PFC or above:</span> 14</p>
           <?php //echo $app['app_info_form'] ?>
           <?php echo $form['qualify'] ?>
+          <?php echo $form['threshold_met'] ?>
         </div>
 
         <div id="hospital-content-right" class="column">
-
-        </div>
-
-        <div class="pull-right">
-          <span class="edit-content">
-            <!-- <a href="">Save</a> -->
-          </span>
+          <h2>Final Awards</h2>
+          <?php echo $form['submit'] ?>
         </div>
 
       </div></div>
+
+      <hr />
 
       <!-- Scoring Roll-Up Section -->
       <div id="scores-wrap"><div id="scores-wrap-inner">
         <h2>Scoring Roll-Up/Overview</h2>
         <?php echo $app['score_view'] ?>
+        <?php echo $form['comment'] ?>
 
       </div></div>
+
+      <hr />      
 
       <!-- Category Section -->
       <h2>Metric and Quality</h2>
