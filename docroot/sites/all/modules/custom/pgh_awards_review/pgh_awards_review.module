@@ -74,7 +74,21 @@ function pgh_awards_review_preprocess_page(&$vars) {
   }
 
   // get a form for updating application info.
-  $app_info_form = drupal_get_form('pgh_awards_review_application_info_form', $app);
+  $form = drupal_get_form('pgh_awards_review_application_form', $app);
+  $elements = array();
+  $form_render = render($form);
+  $elements = array(
+    'qualify' => render($form['qualify']),
+    'threshold_met' => render($form['threshold_met']),
+    'submit' => render($form['submit']),
+  );
+  if (preg_match('/<form.+div>/', $form_render, $matches)) {
+    $elements['header'] = $matches[0];
+  }
+  if (preg_match('/<input type="hidden".+form>/s', $form_render, $matches)) {
+    $elements['footer'] = $matches[0];
+  }
+  $vars['form'] = $elements;
 
   // get a score view
   // $view = views_get_view('score');
@@ -133,7 +147,7 @@ function pgh_awards_review_preprocess_page(&$vars) {
     // 'qualify' => $app_wrapper->field_application_qualify->value(),
     // 'threshold_met' => $app_wrapper->field_application_threshold_met->value(),
     // goals missing
-    'app_info_form' => drupal_render($app_info_form),
+    // 'app_info_form' => $form_render,
     'score_view' => views_embed_view('score', 'page'),
     'scores' => $scores,
     'goals' => $goals,
@@ -145,7 +159,7 @@ function pgh_awards_review_preprocess_page(&$vars) {
 /**
  * Form for updating application info
  */
-function pgh_awards_review_application_info_form($form, &$form_state, $app) {
+function pgh_awards_review_application_form($form, &$form_state, $app) {
   $app_wrapper = entity_metadata_wrapper('node', $app);
 
   $form['qualify'] = array(
@@ -166,4 +180,11 @@ function pgh_awards_review_application_info_form($form, &$form_state, $app) {
   );
 
   return $form;
+}
+
+/**
+ * Form submit
+ */
+function pgh_awards_review_application_form_submit($form, &$form_state) {
+  dsm($form_state['values']);
 }

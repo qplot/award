@@ -1,12 +1,13 @@
 <?php
 /**
  * @file
- * Returns the HTML for a single Drupal page.
+ * Provides template for displaying review.
  *
- * Complete documentation for this file is available online.
- * @see https://drupal.org/node/1728148
+ * @author Fang Jin <fang@designhammer.com>
  */
+
   dsm($app);
+  dsm($form);
 ?>
 
 <div id="page">
@@ -68,6 +69,9 @@
     <?php endif; ?>
   </div></div>
 
+  <!-- form header printed  -->
+  <?php echo $form['header'] ?>
+
   <div id="workgroup-wrap"><div id="workgroup-wrap-inner">
   <div id="workgroup">
 
@@ -97,7 +101,8 @@
           <h2>Application Name</h2>
           <p><span class="semi-bold">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> 36</p>
           <p><span class="semi-bold">Number of Hospitals winning PFC or above:</span> 14</p>
-          <?php echo $app['app_info_form'] ?>
+          <?php //echo $app['app_info_form'] ?>
+          <?php echo $form['qualify'] ?>
         </div>
 
         <div id="hospital-content-right" class="column">
@@ -106,7 +111,7 @@
 
         <div class="pull-right">
           <span class="edit-content">
-            <a href="">Save</a>
+            <!-- <a href="">Save</a> -->
           </span>
         </div>
 
@@ -173,9 +178,12 @@
 
     </div>
 
+    <?php echo $form['submit']; ?>
+
   </div><!-- /#workgroup -->
   </div></div>
 
+  <?php echo $form['footer']; ?>
 
   <div id="footer-wrap"><div id="footer-wrap-inner">
     <p>&copy;<?php print date('Y'); ?> Practice Greenhealth Environmental Excellence Awards</p>
