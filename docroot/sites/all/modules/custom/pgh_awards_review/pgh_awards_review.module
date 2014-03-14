@@ -38,10 +38,15 @@ function pgh_awards_review_page() {
  * Implements hook_preprocess_page().
  */
 function pgh_awards_review_preprocess_page(&$vars) {
+  // only accept review page.
   if (arg(0) != 'review') { 
     return;
   }
-  $app_id = 101304;
+  // only accept application id.
+  $app_id = arg(1);
+  if (!$app_id || !is_numeric($app_id)) return;
+
+  // get application.
   $app = node_load($app_id);
   $app_wrapper = entity_metadata_wrapper('node', $app);
 
