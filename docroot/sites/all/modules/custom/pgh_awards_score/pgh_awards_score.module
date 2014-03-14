@@ -270,11 +270,22 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
     $cat_response = node_load($crid);
     $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
     $cid = $cat_response_wrapper->field_cat_response_category->raw();
+    $body = $cat_response_wrapper->body->value();
     
     $responses['cat_' . $cid] = array(
       'category_id' => $cid,
       'response_id' => $crid,
       'final' => $cat_response_wrapper->field_cat_response_final->value(),
+      'automatic_p' => $cat_response_wrapper->field_cat_response_automatic_p->value(),
+      'automatic' => $cat_response_wrapper->field_cat_response_automatic->value(),
+      'kpi_p' => $cat_response_wrapper->field_cat_response_kpi_p->value(),
+      'kpi' => $cat_response_wrapper->field_cat_response_kpi->value(),
+      'metric_p' => $cat_response_wrapper->field_cat_response_metric_p->value(),
+      'metric' => $cat_response_wrapper->field_cat_response_metric->value(),
+      'quality_p' => $cat_response_wrapper->field_cat_response_quality_p->value(),
+      'quality' => $cat_response_wrapper->field_cat_response_quality->value(),
+      'comment' => !empty($body['value']) ? $body['value'] : '',
+      'case_study' => $cat_response_wrapper->field_cat_response_case_study->value(),
     );
   }
   // Get all metric responses.

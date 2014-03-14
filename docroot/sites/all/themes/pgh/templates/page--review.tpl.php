@@ -6,11 +6,11 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-  // dsm($app);
-  // dsm($form);
+  dsm($app);
+  dsm($form);
 ?>
 
-<div id="page">
+<div id="page" class="page-application page-application-category">
 
   <div id="header-wrap"><div id="header-wrap-inner">
   <header class="header" id="header" role="banner">
@@ -127,23 +127,27 @@
       <!-- Category Section -->
       <h2>Metric and Quality</h2>
       <div id="categories-wrap"><div id="categories-wrap-inner">
-        <?php foreach ($app['scores'] as $category): ?>
-          <?php if ($category): ?>
-            <h3><?php echo $category['category_id'] ?></h3>
+        <?php foreach ($app['scores'] as $cat): ?>
+          <?php if ($cat): ?>
+            <hr />
+            <h1 class="<?php echo $cat['category_class'] ?>" id="page-title"><span></span><?php echo $cat['category_name'] ?></h1>
 
-            <p><span class="semi-bold">Auto Score:</span><?php echo $category['final'] ?></p>
-            <p><span class="semi-bold">KPI Score:</span><?php echo $category['final'] ?></p>
-            <p><span class="semi-bold">Metric Score:</span><?php echo $category['final'] ?></p>
-            <p><span class="semi-bold">Final Score:</span><?php echo $category['final'] ?></p>
+            <p><span class="semi-bold">Auto Score:</span> <?php echo $cat['automatic'] ?> of <?php echo $cat['automatic_p'] ?> (<?php echo $cat['automatic_pc'] ?>%)</p>
+            <p><span class="semi-bold">KPI Score:</span> <?php echo $cat['kpi'] ?> of <?php echo $cat['kpi_p'] ?> (<?php echo $cat['kpi_pc'] ?>%)</p>
+            <p><span class="semi-bold">Metric Score:</span> <?php echo $cat['metric'] ?> of <?php echo $cat['metric_p'] ?> (<?php echo $cat['metric_pc'] ?>%)</p>
+            <p><?php echo $form['quality_' . $cat['category_id']] ?></p>
+            <p><span class="semi-bold">Category Score:</span> <?php echo $cat['final'] ?></p>
+            <p><?php echo $form['case_study_' . $cat['category_id']] ?></p>
 
             <div class="metric-wrap"><div class="metric_wrap-inner">
-              <?php if (!empty($category['metrics'])): ?>
-              <h4>Metrics</h4>
+              <?php if (!empty($cat['metrics'])): ?>
+              <h4>Metrics Overview</h4>
                 <ul>
-                  <?php foreach ($category['metrics'] as $metric): ?>
-                    <p><span class="semi-bold"><?php echo $metric['description'] ?></span><?php echo $metric['value'] ?></p>
+                  <?php foreach ($cat['metrics'] as $metric): ?>
+                    <li><span class="semi-bold"><?php echo $metric['description'] ?></span><?php echo $metric['value'] ?></li>
                   <?php endforeach ?>
                 </ul>
+                <?php echo $form['comment_' . $cat['category_id']] ?>
               <?php endif ?>
             </div></div>
 
@@ -151,7 +155,8 @@
         <?php endforeach ?>
       </div></div>
 
-
+      <hr />
+      
       <!-- Goals Section -->
       <div id="goals-wrap"><div id="goals-wrap-inner">
         <h2>Goals</h2>

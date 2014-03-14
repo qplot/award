@@ -91,30 +91,34 @@ function pgh_awards_review_preprocess_page(&$vars) {
     $question_values[$key] = $response['value'];
   }
 
-  // get a form for updating application info.
-  $form = drupal_get_form('pgh_awards_review_application_form', $app);
-  $elements = array();
-  $form_render = render($form);
-  $elements = array(
-    'qualify' => render($form['qualify']),
-    'threshold_met' => render($form['threshold_met']),
-    'comment' => render($form['comment']),
-    'submit' => render($form['submit']),
-  );
-  if (preg_match('/<form.+div>/', $form_render, $matches)) {
-    $elements['header'] = $matches[0];
+  // get application scores.
+  $scores = pgh_awards_score_application($app_id, TRUE);
+  foreach ($scores as &$cat) {
+    if ($cat) {
+      $category = node_load($cat['category_id']);
+      $category_wrapper = entity_metadata_wrapper('node', $category);
+      $body = $category_wrapper->body->value();
+      $cat['category_tag'] = $category->title;
+      $cat['category_class'] = str_replace('_', '-', strtolower($cat['category_tag']));
+      $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
+      if (!empty($cat['automatic_p'])) {
+        $cat['automatic_pc'] = intval($cat['automatic'] / $cat['automatic_p'] * 100);
+      }
+      if (!empty($cat['kpi_p'])) {
+        $cat['kpi_pc'] = intval($cat['kpi'] / $cat['kpi_p'] * 100);
+      }
+      if (!empty($cat['metric_p'])) {
+        $cat['metric_pc'] = intval($cat['metric'] / $cat['metric_p'] * 100);
+      }
+      if (!empty($cat['quality_p'])) {
+        $cat['quality_pc'] = intval($cat['quality'] / $cat['quality_p'] * 100);
+      }
+    }
   }
-  if (preg_match('/<input type="hidden".+form>/s', $form_render, $matches)) {
-    $elements['footer'] = $matches[0];
-  }
-  $vars['form'] = $elements;
 
   // get a score view
   // $view = views_get_view('score');
   // $view->execute();
-
-  // get application scores.
-  $scores = pgh_awards_score_application($app_id, TRUE);
 
   // get goals of the app.
   $goals = array(
@@ -169,12 +173,41 @@ function pgh_awards_review_preprocess_page(&$vars) {
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);
+
+  // get a form for updating application info.
+  $form = drupal_get_form('pgh_awards_review_application_form', $app, $scores);
+  $elements = array();
+  $form_render = render($form);
+  $elements = array(
+    'qualify' => render($form['qualify']),
+    'threshold_met' => render($form['threshold_met']),
+    'comment' => render($form['comment']),
+    'submit' => render($form['submit']),
+  );
+  foreach ($scores as $cat) {
+    if ($cat) {
+      $key = 'quality_' . $cat['category_id'];
+      $elements[$key] = render($form[$key]);
+      $key = 'case_study_' . $cat['category_id'];
+      $elements[$key] = render($form[$key]);
+      $key = 'comment_' . $cat['category_id'];
+      $elements[$key] = render($form[$key]);
+    }
+  }
+  if (preg_match('/<form.+div>/', $form_render, $matches)) {
+    $elements['header'] = $matches[0];
+  }
+  if (preg_match('/<input type="hidden".+form>/s', $form_render, $matches)) {
+    $elements['footer'] = $matches[0];
+  }
+
+  $vars['form'] = $elements;
 }
 
 /**
  * Form for updating application info
  */
-function pgh_awards_review_application_form($form, &$form_state, $app) {
+function pgh_awards_review_application_form($form, &$form_state, $app, $scores) {
   $app_wrapper = entity_metadata_wrapper('node', $app);
   $body = $app_wrapper->body->value();
 
@@ -195,6 +228,34 @@ function pgh_awards_review_application_form($form, &$form_state, $app) {
     '#title' => 'Overall Application Comments (please fill out last):',
     '#default_value' => !empty($body['value']) ? $body['value'] : '',
   );
+
+  // make quality score and case study
+  $options = array(
+    'value_0' => t('Low'),
+    'value_50' => t('Medium'),
+    'value_100' => t('High'),
+  );
+  foreach ($scores as $cat) {
+    if ($cat) {
+      $key = 'value_' . $cat['quality'];
+      $form['quality_' . $cat['category_id']] = array(
+        '#type' => 'select',
+        '#title' => t('Quality Score'),
+        '#options' => $options,
+        '#default_value' => !empty($options[$key]) ? $key : 'value_0',
+      );
+      $form['case_study_' . $cat['category_id']] = array(
+        '#type' => 'textfield',
+        '#title' => 'Case Study:',
+        '#default_value' => $cat['case_study'],
+      );
+      $form['comment_' . $cat['category_id']] = array(
+        '#type' => 'textarea',
+        '#title' => t('Comment'),
+        '#default_value' => $cat['comment'],
+      );
+    }
+  }
 
   $form['submit'] = array(
     '#type' => 'submit',
