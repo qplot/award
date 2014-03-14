@@ -142,7 +142,29 @@ function pgh_awards_review_preprocess_page(&$vars) {
         $tag = $goal['question_tag_prefix'] . ($i * $goal['question_cols'] + $j + 1);
         $question_id = pgh_api_find_nodes(array('type' => 'question', 'title' => $tag));
         $response = pgh_api_get_response($app_id, $question_id);
-        $goal['question_vals'][$i][$j] = $response['value'];
+        $value = $response['value'];
+        if ($j == 0) {
+          // not taking empty rows.
+          if (!$value) {
+            break;
+          }
+          // prefix the row with row id.
+          $value = $i+1 . '. ' . $value;
+        }
+        // take care special case for achieved
+        if ($j == 1) {
+          switch ($value) {
+            case 2:
+              $value = 'Partial';
+              break;
+            
+            default:
+              $checked = $value ? 'checked="checked"' : '';
+              $value = '<input type="checkbox" ' . $checked . ' />';
+              break;
+          }
+        }
+        $goal['question_vals'][$i][$j] = $value;
       }
     }
   }

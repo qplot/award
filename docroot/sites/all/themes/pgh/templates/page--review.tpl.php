@@ -132,9 +132,9 @@
             <hr />
             <h1 class="<?php echo $cat['category_class'] ?>" id="page-title"><span></span><?php echo $cat['category_name'] ?></h1>
 
-            <p><span class="semi-bold">Auto Score:</span> <?php echo $cat['automatic'] ?> of <?php echo $cat['automatic_p'] ?> (<?php echo $cat['automatic_pc'] ?>%)</p>
-            <p><span class="semi-bold">KPI Score:</span> <?php echo $cat['kpi'] ?> of <?php echo $cat['kpi_p'] ?> (<?php echo $cat['kpi_pc'] ?>%)</p>
-            <p><span class="semi-bold">Metric Score:</span> <?php echo $cat['metric'] ?> of <?php echo $cat['metric_p'] ?> (<?php echo $cat['metric_pc'] ?>%)</p>
+            <p><span class="semi-bold">Auto Score:</span> <?php echo $cat['automatic'] ?> of <?php echo $cat['automatic_p'] ?> pts (<?php echo $cat['automatic_pc'] ?>%)</p>
+            <p><span class="semi-bold">KPI Score:</span> <?php echo $cat['kpi'] ?> of <?php echo $cat['kpi_p'] ?> pts (<?php echo $cat['kpi_pc'] ?>%)</p>
+            <p><span class="semi-bold">Metric Score:</span> <?php echo $cat['metric'] ?> of <?php echo $cat['metric_p'] ?> pts (<?php echo $cat['metric_pc'] ?>%)</p>
             <p><?php echo $form['quality_' . $cat['category_id']] ?></p>
             <p><span class="semi-bold">Category Score:</span> <?php echo $cat['final'] ?></p>
             <p><?php echo $form['case_study_' . $cat['category_id']] ?></p>
@@ -156,7 +156,7 @@
       </div></div>
 
       <hr />
-      
+
       <!-- Goals Section -->
       <div id="goals-wrap"><div id="goals-wrap-inner">
         <h2>Goals</h2>
@@ -184,6 +184,8 @@
     </div>
 
     <?php echo $form['submit']; ?>
+
+    <hr />
 
   </div><!-- /#workgroup -->
   </div></div>
