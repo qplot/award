@@ -645,7 +645,15 @@ function pgh_api_internal_value($question_nid, $value) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_api_save_response($app_id, $qid, $value) {
-  $application = node_load($app_id);
+  if (!($application = node_load($app_id))) {
+    watchdog(
+      'pgh', 
+      'Missing application %app in saving response.', 
+      array('%app' =>$app_id),
+      WATCHDOG_ERROR
+    );
+    return;
+  }
   $application_wrapper = entity_metadata_wrapper('node', $application);
   if ($application_wrapper->field_application_status->value() == 'new') {
     $application_wrapper->field_application_status->set('in-progress');
