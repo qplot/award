@@ -1,0 +1,31 @@
+raw id,id,category id,title,formula,reference,orientation,normalization,weight
+"Waste
+",,,,,,,,
+1,metric_PFC_waste_1,PFC_waste,% Recycling as a percent of total- current,pghq_PFC_waste_10_1_tH_9,100,high,,1
+2,metric_PFC_waste_2,PFC_waste,% RMW as a percent of total,pghq_PFC_waste_10_1_tH_15,50,low,,1
+3,metric_PFC_waste_3,PFC_waste,Lbs of RMW per staffed bed / day,pghq_PFC_waste_6_3_5,12,low,,1
+4,metric_PFC_waste_4,PFC_waste, Total Waste Lbs per Patient Day,pghq_PFC_waste_10_1_tG_3 *2000 /  pghq_PFC_demographic_1_7,110,low,,1
+5,metric_PFC_waste_5,PFC_waste,Total Waste Tons per OR,pghq_PFC_waste_10_1_tG_3 / pghq_PFC_demographic_1_9,400,low,,1
+Chemicals,,,,,,,,
+6,metric_PFC_chemicals_6,PFC_chemicals,% green spend on 5 categories,pghq_PFC_chemicals_2_4_2_18,100,high,,1
+GOR,,,,,,,,
+7,metric_PFC_gor_7,PFC_gor,% of OR Kits Reformulated / Reviewed,pghq_PFC_greeningtheOR_2_3_tB_3,100,high,,1
+8,metric_PFC_gor_8,PFC_gor,Reprocessing Compliance %,pghq_PFC_greeningtheOR_2_6_tD_3,75,high,,1
+9,metric_PFC_gor_9,PFC_gor,% of kits in reusable sterilization containers,pghq_PFC_greeningtheOR_2_12_2_tF_3,75,high,,1
+10,metric_PFC_gor_10,PFC_gor,% of ORs with HVAC setback,pghq_PFC_greeningtheOR_3_4,100,high,,1
+Food,,,,,,,,
+11,metric_PFC_food_11,PFC_food,% local and/or organic spend as a % of total,pghq_PFC_food_3_1_4,80,high,,1
+12,metric_PFC_food_12,PFC_food,% spend on healthy beverages as a % of total,pghq_PFC_food_2_1_4,100,high,,1
+13,metric_PFC_food_13,PFC_food,% change in meat use ,pghq_PFC_food_1_3_1_6,80,high,,1
+Energy,,,,,,,,
+14,metric_PFC_energy_14,PFC_energy,Percent EUI change from Baseline,pghq_PFC_energy_3_1_1_9,25,high,,1
+15,metric_PFC_energy_15,PFC_energy,EnergyStar Score,pghq_PFC_energy_3_2_2,100,high,,1
+16,metric_PFC_energy_16,PFC_energy,Energy Use Intensity (EUI=kBtu current/square foot),pghq_PFC_energy_3_1_1_6,500,low,,1
+17,metric_PFC_energy_17,PFC_energy,% offsite/purchased Renewable Energy,pghq_PFC_energy_2_11_19,100,high,,1
+18,metric_PFC_energy_18,PFC_energy,% onsite renewable energy,pghq_PFC_energy_2_11_17,25,high,,1
+Water,,,,,,,,
+19,metric_PFC_water_19,PFC_water, % Water Use Reduction in gallons per square foot of total building area from baseline,pghq_PFC_water_1_11,50,high,,1
+20,metric_PFC_water_20,PFC_water,Gallons per square foot of Gross Floor Area,pghq_PFC_water_1_7,250,low,,1
+21,metric_PFC_water_21,PFC_water,Million Gallons per OR,pghq_PFC_water_1_9 / 1000000,25,low,,1
+Climate,,,,,,,,
+22,metric_PFC_climate_22,PFC_climate,Total renewable energy as % of Total Energy Use,pghq_PFC_energy_2_12,100,high,,1
