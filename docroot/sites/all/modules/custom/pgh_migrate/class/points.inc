@@ -114,4 +114,9 @@ class MigratePGHPointsMigration extends Migration {
     }
   }
 
+  public function prepare($node, stdClass $row) {
+    $node->uid = 1;
+    $node->vid = $node->nid;
+  }
+
 }
