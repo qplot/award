@@ -56,7 +56,7 @@ function pgh_awards_review_permission() {
  * Review dashboard page.
  */
 function pgh_awards_review_dashboard() {
-  return '123';
+  return views_embed_view('review_applications', 'page');
 }
 
 /**
