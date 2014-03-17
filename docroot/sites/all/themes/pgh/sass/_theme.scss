@@ -251,14 +251,18 @@ h3 {
 // !---------------------------- */
 
 #footer-wrap {
+  color: $greenLight;
+  text-align: center;
   padding: 1em 0 6em;
 
   #footer-wrap-inner {}
 
-  p {
-    color: $greenLight;
-    text-align: center;
-    font-size: 0.7em;
+  .block p {
+    font-size: 1em;
+  }
+
+  p.footer-year {
+    font-size: 0.8em;
   }
 }
 

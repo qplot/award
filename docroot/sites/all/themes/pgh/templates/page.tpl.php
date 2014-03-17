@@ -123,7 +123,6 @@
   </div></div>
 
   <div id="footer-wrap"><div id="footer-wrap-inner">
-    <p>&copy;<?php print date('Y'); ?> Practice Greenhealth Environmental Excellence Awards</p>
     <?php print render($page['footer']); ?>
   </div></div>
 
