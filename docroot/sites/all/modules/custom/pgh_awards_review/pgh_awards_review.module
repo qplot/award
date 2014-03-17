@@ -21,15 +21,17 @@ function pgh_awards_review_menu() {
     'description' => 'Review application and give quality score etc.',
     'page callback' => 'pgh_awards_review_dashboard',
     'access arguments' => array('review awards application'),
+    'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['review/%nid'] = array(
+  $items['review/%'] = array(
     'title' => 'Review Application',
     'description' => 'Review application and give quality score etc.',
     'page callback' => 'pgh_awards_review_page',
     'page arguments' => array(1),
-    'access callback' => 'node_access',
-    'access arguments' => array('delete', 1),
+    'access callback' => FALSE,
+    'access callback' => 'pgh_awards_review_can_access',
+    'access arguments' => array(1),
   );
 
   return $items;
@@ -50,7 +52,31 @@ function pgh_awards_review_permission() {
 
 /**
  * Review dashboard access
+ * Instead of implements node access, custom page access is used here.
  */
+function pgh_awards_review_can_access($app_id) {
+  // load application id.
+  if ($node = node_load($app_id)) {
+    global $user;
+    $wrapper = entity_metadata_wrapper('node', $node);
+    $reviewers = $wrapper->field_application_reviewers->raw();
+    return in_array($user->uid, $reviewers);
+  }
+
+  return FALSE;
+}
+
+/**
+ * Implement hook_theme
+ */
+function pgh_awards_review_theme() {
+  return array(
+    'review' => array(
+      'variables' => array('app' => NULL, 'form' => NULL),
+      'template' => 'templates/review'
+    )
+  );
+}
 
 /**
  * Review dashboard page.
@@ -63,19 +89,7 @@ function pgh_awards_review_dashboard() {
  * Fake page, real template is in page--review.tpl.php.
  */
 function pgh_awards_review_page() {
-  return '';
-}
 
-/**
- * Implements hook_preprocess_page().
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_awards_review_preprocess_page(&$vars) {
-  // only accept review page.
-  if (arg(0) != 'review') { 
-    return;
-  }
   // only accept application id.
   $app_id = arg(1);
   if (!$app_id || !is_numeric($app_id)) return;
@@ -258,6 +272,20 @@ function pgh_awards_review_preprocess_page(&$vars) {
   }
 
   $vars['form'] = $elements;
+
+  return theme('review', $vars);
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_preprocess_page(&$vars) {
+  // only accept review page.
+  if (arg(0) != 'review') { 
+    return;
+  }
 }
 
 /**
