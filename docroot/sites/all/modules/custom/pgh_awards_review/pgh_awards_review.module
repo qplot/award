@@ -15,6 +15,14 @@
 function pgh_awards_review_menu() {
   $items = array();
 
+  // Review dashboard.
+  $items['review'] = array(
+    'title' => 'Review Application',
+    'description' => 'Review application and give quality score etc.',
+    'page callback' => 'pgh_awards_review_dashboard',
+    'access arguments' => array('review awards application'),
+  );
+
   $items['review/%nid'] = array(
     'title' => 'Review Application',
     'description' => 'Review application and give quality score etc.',
@@ -28,6 +36,30 @@ function pgh_awards_review_menu() {
 }
 
 /**
+ * Implementation of hook_permission().
+ */
+function pgh_awards_review_permission() {
+  return array(
+    'review awards application' => array(
+      'title' => t('Review Awards Applicaiton'),
+      'description' => t('Access review dashboard and submit quality score and comments.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Review dashboard access
+ */
+
+/**
+ * Review dashboard page.
+ */
+function pgh_awards_review_dashboard() {
+  return '123';
+}
+
+/**
  * Fake page, real template is in page--review.tpl.php.
  */
 function pgh_awards_review_page() {
@@ -36,6 +68,8 @@ function pgh_awards_review_page() {
 
 /**
  * Implements hook_preprocess_page().
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_preprocess_page(&$vars) {
   // only accept review page.
