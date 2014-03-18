@@ -22,6 +22,8 @@
 
       <hr />
 
+      <?php echo $form['header'] ?>
+
       <!-- Hospital Info Section -->
       <div id="hospital-wrap"><div id="hospital-wrap-inner">
 
@@ -125,6 +127,7 @@
     <?php echo $form['submit']; ?>
 
     <hr />
+    <?php echo $form['footer'] ?>
 
   </div><!-- /#workgroup -->
   </div></div>
