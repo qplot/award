@@ -64,7 +64,7 @@ function pgh_preprocess_page(&$variables, $hook) {
 
   if ($variables['theme_hook_suggestions'][0] == 'page__dashboard') {
     drupal_set_title('Work Group Dashboard');
-
+    $variables['reviewmode'] = variable_get('reviewmode', FALSE);
     $variables['work_group'] = FALSE;
     $variables['business_units'] = array();
 
