@@ -39,6 +39,8 @@ function pgh_awards_review_menu() {
 
 /**
  * Implementation of hook_permission().
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_permission() {
   return array(
@@ -53,6 +55,8 @@ function pgh_awards_review_permission() {
 /**
  * Review dashboard access
  * Instead of implements node access, custom page access is used here.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_can_access($app_id) {
   // load application id.
@@ -68,6 +72,8 @@ function pgh_awards_review_can_access($app_id) {
 
 /**
  * Implement hook_theme
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_theme() {
   return array(
@@ -86,7 +92,10 @@ function pgh_awards_review_dashboard() {
 }
 
 /**
- * Fake page, real template is in page--review.tpl.php.
+ * Review application page handling, 
+ * template is in review.tpl.php in theme folder.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_page() {
 
@@ -281,15 +290,17 @@ function pgh_awards_review_page() {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_review_preprocess_page(&$vars) {
-  // only accept review page.
-  if (arg(0) != 'review') { 
-    return;
-  }
-}
+// function pgh_awards_review_preprocess_page(&$vars) {
+//   // only accept review page.
+//   if (arg(0) != 'review') { 
+//     return;
+//   }
+// }
 
 /**
  * Form for updating application info
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_application_form($form, &$form_state, $app, $scores) {
   $app_wrapper = entity_metadata_wrapper('node', $app);
@@ -319,9 +330,10 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
     'value_50' => t('Medium'),
     'value_100' => t('High'),
   );
+  $category_ids = array();
   foreach ($scores as $cat) {
     if ($cat) {
-      $key = 'value_' . $cat['quality'];
+      $key = $cat['quality'];
       $form['quality_' . $cat['category_id']] = array(
         '#type' => 'select',
         '#title' => t('Quality Score'),
@@ -338,6 +350,10 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
         '#title' => t('Comment'),
         '#default_value' => $cat['comment'],
       );
+      $categories_ids[] = array(
+        'category_id' => $cat['category_id'],
+        'response_id' => $cat['response_id'],
+      );
     }
   }
 
@@ -346,12 +362,57 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
     '#value' => 'Save worksheet',
   );
 
+  // All hidden variables should be added after submit
+  // For theming to catch up.
+  $form['category_ids'] = array(
+    '#type' => 'hidden',
+    '#value' => serialize($categories_ids)
+  );
+
+  $form['application_id'] = array(
+    '#type' => 'hidden',
+    '#value' => $app->nid,
+  );
+
   return $form;
 }
 
 /**
- * Form submit
+ * Form submit for review application
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_application_form_submit($form, &$form_state) {
-  dsm($form_state['values']);
+  // dsm($form_state['values']);
+  $values = &$form_state['values'];
+
+  // save quality score and comment  to category response
+  $category_ids = unserialize($values['category_ids']);
+  foreach ($category_ids as $cat) {
+    $quality = $values['quality_' . $cat['category_id']];
+    $case_study = $values['case_study_' . $cat['category_id']];
+    $comment = $values['comment_' . $cat['category_id']];
+    if ($cat_response = node_load($cat['response_id'])) {
+      $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
+      $cat_response_wrapper->field_cat_response_quality->set($quality);
+      $cat_response_wrapper->field_cat_response_case_study->set($case_study);
+      $cat_response_wrapper->body->set(array(
+        'value' => $comment,
+        'format' => 'filtered_html'
+      ));
+      $cat_response_wrapper->save();
+    }
+  }
+
+  // save application data
+  if ($application = node_load($values['application_id'])) {
+    $app_wrapper = entity_metadata_wrapper('node', $application);
+    $app_wrapper->field_application_threshold_met->set($values['threshold_met']);
+    $app_wrapper->field_application_qualify->set($values['qualify']);
+    $app_wrapper->body->set(array(
+      'value' => $values['comment'],
+      'format' => 'filtered_html'
+    ));
+    $app_wrapper->save();
+  }
 }
