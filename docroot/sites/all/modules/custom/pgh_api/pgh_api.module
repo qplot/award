@@ -508,7 +508,6 @@ function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE)
     $wrapper->field_response_updated->set(1);
   }
   $wrapper->save();
-
   return $response->nid;
 }
 
