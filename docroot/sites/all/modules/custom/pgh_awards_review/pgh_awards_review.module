@@ -62,6 +62,10 @@ function pgh_awards_review_can_access($app_id) {
   // load application id.
   if ($node = node_load($app_id)) {
     global $user;
+    // Let's allow admins to view the page.
+    if (user_access('administer site configuration', $user)) {
+      return TRUE;
+    }
     $wrapper = entity_metadata_wrapper('node', $node);
     $reviewers = $wrapper->field_application_reviewers->raw();
     return in_array($user->uid, $reviewers);
