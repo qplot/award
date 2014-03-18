@@ -198,8 +198,8 @@
             </p>
         <?php else: ?>
     <?php if (variable_get('reviewmode', FALSE) && !in_array('administrator', array_values($user->roles)) && !in_array('PGH Administrator', array_values($user->roles))): ?>
-
-            Applications are being reviewed
+<? print t('Applications are being reviewed.'); ?>
+            
             <?php else: ?>
         <div class="applications">
           <?php
