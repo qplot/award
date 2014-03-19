@@ -13,7 +13,7 @@
   <div id="header-wrap"><div id="header-wrap-inner">
   <header class="header" id="header" role="banner">
 
-    <?php $application_type = $node->field_application_type['und'][0]['value']; ?>
+    <?php $application_type = isset($node->field_application_type['und'][0]['value']) ? $node->field_application_type['und'][0]['value'] : NULL; ?>
     <?php if ($logo): ?>
       <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" class="header__logo <?php print $application_type; ?>" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" class="header__logo-image" width="250" height="108"></a>
     <?php endif; ?>
