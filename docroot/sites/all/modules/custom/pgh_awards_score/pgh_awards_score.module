@@ -158,11 +158,14 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
             'title' => $match,
           )
         );
-        if ($qid) {
+        if ($qid && !isset($variables[$match])) {
           $response = pgh_api_get_response($app_id, $qid);
-          $variables[] = array(
+          $value = !empty($response['value']) ? $response['value'] : '0';
+          // Convert anything into a string, https://bugs.php.net/bug.php?id=39579.
+          $value = "'" . $value . "'";
+          $variables[$match] = array(
             'question' => $match,
-            'value' => !empty($response['value']) ? $response['value'] : 0,
+            'value' => $value,
           );
         }
       }
