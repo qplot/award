@@ -61,7 +61,7 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
         $bid = $business_unit->nid;
       }
 
-      // disable Application type field from editing
+      // Disable Application type field from editing.
       $form['field_application_type']['#disabled'] = TRUE;
     }
 
@@ -156,6 +156,8 @@ function pgh_application_node_validate($node, $form, &$form_state) {
   );
 
   foreach ($business_unit_wrapper->field_applications->getIterator() as $application_wrapper) {
+    // Make sure application type is unique
+    // and make sure we don't check the current application again under edit mode.
     if ($application_wrapper->field_application_type->value() == $node->field_application_type['und'][0]['value'] &&
         in_array($application_wrapper->field_application_status->value(), $open_statuses) &&
         ($application_wrapper->getIdentifier() != $node->nid)) {
@@ -251,6 +253,7 @@ function pgh_application_node_delete($node) {
     return;
   }
 
+  // @codingStandardsIgnoreStart
   // $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
 
   // Remove the deleted Application from the parent Business Unit.
@@ -261,6 +264,7 @@ function pgh_application_node_delete($node) {
   //     break;
   //   }
   // }
+  // @codingStandardsIgnoreEnd
 
   // Remove deleted application from the parent business unit
   // The reason i have to do the following way is to make sure
