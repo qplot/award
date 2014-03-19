@@ -421,20 +421,30 @@ function pgh_api_get_response($app_id, $qid) {
   $response = array(
     'value' => '',
     'point' => 0,
+    'score' => 0,
+    'kpi' => 0,
     'updated' => 0,
   );
   if ($rid) {
     $response_node = node_load($rid);
     $wrapper = entity_metadata_wrapper('node', $response_node);
+    $kpi = $wrapper->field_response_kpi->value();
 
     $response = array(
       'value' => $wrapper->body->value() ? $wrapper->body->value->raw() : '',
       'point' => $wrapper->field_response_point->value(),
+      'score' => $wrapper->field_response_score->value(),
+      'kpi' => ($kpi === NULL) ? '~' : $kpi,
       'updated' => $wrapper->field_response_updated->value(),
     );
   }
   else {
-    watchdog('pgh_api', 'Couldn\'t find response %rid for question %qid in pgh_api_get_response', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Couldn\'t find response %rid for question %qid in pgh_api_get_response. Creating empty response.', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
+
+    // If a response is not found, automatically generate a new empty response. This will fix issues where an application is
+    // in an inconsistent state (missing responses) due to an error on application creation or due to an administrator mistake.
+    $rnid = pgh_api_set_response($app->nid, $question->nid, array(), TRUE);
+    return node_load($rnid);
   }
 
   return $response;
@@ -472,6 +482,8 @@ function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE)
   $default = array(
     'value' => '',
     'point' => 0,
+    'score' => 0,
+    'kpi' => '',
   );
   $answer = array_merge($default, $answer);
 
@@ -494,12 +506,13 @@ function pgh_api_set_response($app_id, $qid, $answer = array(), $is_new = FALSE)
       'value' => $answer['value']
     );
     $wrapper->field_response_point->set($answer['point']);
+    $wrapper->field_response_score->set($answer['score']);
+    $wrapper->field_response_kpi->set($answer['kpi']);
   }
   if (!$is_new) {
     $wrapper->field_response_updated->set(1);
   }
   $wrapper->save();
-  node_save($response);
   return $response->nid;
 }
 
@@ -637,7 +650,15 @@ function pgh_api_internal_value($question_nid, $value) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_api_save_response($app_id, $qid, $value) {
-  $application = node_load($app_id);
+  if (!($application = node_load($app_id))) {
+    watchdog(
+      'pgh',
+      'Missing application %app in saving response.',
+      array('%app' =>$app_id),
+      WATCHDOG_ERROR
+    );
+    return;
+  }
   $application_wrapper = entity_metadata_wrapper('node', $application);
   if ($application_wrapper->field_application_status->value() == 'new') {
     $application_wrapper->field_application_status->set('in-progress');
@@ -651,48 +672,92 @@ function pgh_api_save_response($app_id, $qid, $value) {
 
   // Save response if the question expects a response.
   if (!in_array($type, array('html', 'container'))) {
-    // Assign point.
-    $points = $question_wrapper->field_question_points->value();
+    // To differentiate the name of question and response
+    // Response is prefixed with r_, point is potential point.
 
-    $point = 0;
+    // Fetch question spec for scores.
+    $point = $question_wrapper->field_question_point->value();
+    $score = $question_wrapper->field_question_score->value();
+    $kpi = $question_wrapper->field_question_kpi->value();
+
+    // Assign points to response.
+    $r_point = 0; $r_score = 0; $r_kpi = '';
     switch ($type) {
       case 'text':
       case 'file':
-        if (!empty($value) && !empty($points[0])) {
-          $point = $points[0];
+        if (!empty($point[0])) {
+          $r_point = $point[0];
+        }
+        if (!empty($value)) {
+          if (!empty($score[0])) {
+            $r_score = $score[0];
+          }
+          if (!empty($kpi[0])) {
+            $r_kpi = $kpi[0];
+          }
         }
         break;
 
       case 'selection':
         switch ($style) {
           case 'checkboxes':
+            if ($point) {
+              $r_point = array_sum($point);
+            }
             $options = $question_wrapper->field_question_options->value();
             $i = 0;
             foreach ($options as $option) {
-              if (!empty($value[$option]) && !empty($points[$i])) {
-                $point += $points[$i];
+              if (!empty($value[$option])) {
+                if (!empty($score[$i])) {
+                  $r_score += $score[$i];
+                }
+                if (!empty($kpi[$i])) {
+                  $r_kpi += $kpi[$i];
+                }
               }
               $i++;
             }
+            // Serialize only applies to checkboxes.
             $value = serialize($value);
             break;
 
+          case 'dropdown':
+            if ($point) {
+              $r_point = max($point);
+            }
+            if (!empty($score[$value])) {
+              $r_score = $score[$value];
+            }
+            if (!empty($kpi[$value])) {
+              $r_kpi = $kpi[$value];
+            }
+            break;
+
+          case 'radios':
           default:
-            if (is_numeric($value) && is_array($points) && !empty($points[$value])) {
-              $point = $points[$value];
+            if (!empty($point[$value])) {
+              $r_point = $point[$value];
+            }
+            if (!empty($score[$value])) {
+              $r_score = $score[$value];
+            }
+            if (!empty($kpi[$value])) {
+              $r_kpi = $kpi[$value];
             }
             break;
         }
         break;
 
       default:
-        // code...
+        //should be error message.
         break;
     }
 
     $answer = array(
       'value' => $value,
-      'point' => $point,
+      'point' => $r_point,
+      'score' => $r_score,
+      'kpi' => $r_kpi,
     );
     pgh_api_set_response($app_id, $qid, $answer);
   }
@@ -1267,5 +1332,120 @@ function _node_mass_operation_batch_finished($success, $results, $operations) {
     $message = format_plural(count($results), '1 item successfully processed:', '@count items successfully processed:');
     $message .= theme('item_list', $results);
     drupal_set_message($message);
+  }
+}
+
+/**
+ * Returns node nid(s) with filters and sorts.
+ *
+ * @param array $conds
+ *   Condition entries, there're three different type of conditions
+ *   1. prefixed with entity_, ex. 'entity_type' => 'node'
+ *   2. prefixed with field_, ex. 'field_project',
+ *      two formats allowed, simple version 'field_tag' => 'abc',
+ *      or long version, 'field_tag' => array('target_id', 11, '=')
+ *   3. no prefix or other prefix, 'title' => 'abc'
+ *   Default $conds contains 'entity_type' => 'node' entry.
+ *
+ * @param array $sorts
+ *   Sort entiries, there're two different type of sorts
+ *   1. prefixed with field_, ex. 'field_tag' => array('target_id', 'ASC')
+ *   2. no prefix or other prefix, 'title' => 'ASC'
+ *   Default $sorts are empty
+ *
+ * @param bool $all
+ *   If all matching nid are returned, or just the first one, default FALSE
+ *
+ * @return int
+ *   The nid for the supplied id or 0 if not found.
+ *   Or array of nids if $all = TRUE
+ *
+ * @author Fang Jin <windmaomao@gmail.com>
+ */
+function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) {
+  $conds = array_merge(array('entity_type' => 'node'), $conds);
+  if (empty($sorts)) {
+    $sorts = array();
+  }
+
+  $query = new EntityFieldQuery();
+
+  // apply condition to query
+  foreach ($conds as $key => $value) {
+    $splits = explode('_', $key);
+    $type = $splits[0];
+    if (count($splits) == 1) {
+      $type = 'property';
+    }
+
+    switch ($type) {
+      case 'entity':
+        $query->entityCondition($key, $value);
+        break;
+
+      case 'field':
+        if (is_array($value)) {
+          $property = isset($value[1]) ? $value[0] : 'value';
+          $assigned = isset($value[1]) ? $value[1] : $value[0];
+          $operator = isset($value[2]) ? $value[2] : '=';
+          $query->fieldCondition($key, $property, $assigned, $operator);
+        } else {
+          $query->fieldCondition($key, 'value', $value);
+        }
+        break;
+
+      // rest of them are all property
+      default:
+        $query->propertyCondition($key, $value);
+        break;
+    }
+  }
+
+  // apply sort to query
+  foreach ($sorts as $key => $value) {
+    $splits = explode('_', $key);
+    $type = $splits[0];
+    if (count($splits) == 1) {
+      $type = 'property';
+    }
+
+    switch ($type) {
+      case 'field':
+        $query->fieldOrderBy($key, $value[0], $value[1]);
+        break;
+
+      default:
+        $query->propertyOrderBy($key, $value);
+        break;
+    }
+  }
+
+  // apply range
+  if (!empty($range)) {
+    $rvars = array(0, 0);
+    if (is_array($range)) {
+      $rvars = $range;
+    } else {
+      $rvars[1] = $range;
+    }
+    $query->range($rvars[0], $rvars[1]);
+  }
+
+  $result = $query->execute();
+  $ctype = $conds['entity_type'];
+  if (!empty($result[$ctype])) {
+    $keys = array_keys($result[$ctype]);
+    if ($all) {
+      return $keys;
+    }
+    else {
+      return $keys[0];
+    }
+  } else {
+    if ($all) {
+      return array();
+    } else {
+      return 0;
+    }
   }
 }

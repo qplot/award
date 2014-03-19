@@ -1,22 +1,25 @@
 <?php
 /**
  * @file
- * pgh_response_ctype.features.field_base.inc
+ * pgh_awards_metric_response_ctype.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function pgh_response_ctype_field_default_field_bases() {
+function pgh_awards_metric_response_ctype_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_response_application'
-  $field_bases['field_response_application'] = array(
+  // Exported field_base: 'field_metric_response_app'
+  $field_bases['field_metric_response_app'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_response_application',
+    'field_name' => 'field_metric_response_app',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'node' => array(
         'columns' => array(
@@ -53,74 +56,16 @@ function pgh_response_ctype_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_response_kpi'
-  $field_bases['field_response_kpi'] = array(
+  // Exported field_base: 'field_metric_response_metric'
+  $field_bases['field_metric_response_metric'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_response_kpi',
+    'field_name' => 'field_metric_response_metric',
     'field_permissions' => array(
       'type' => 0,
     ),
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
-  );
-
-  // Exported field_base: 'field_response_point'
-  $field_bases['field_response_point'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_response_point',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
-  );
-
-  // Exported field_base: 'field_response_question'
-  $field_bases['field_response_question'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_response_question',
     'foreign keys' => array(
       'node' => array(
         'columns' => array(
@@ -148,7 +93,7 @@ function pgh_response_ctype_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
-          'question' => 'question',
+          'metric' => 'metric',
         ),
       ),
       'target_type' => 'node',
@@ -157,13 +102,13 @@ function pgh_response_ctype_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_response_score'
-  $field_bases['field_response_score'] = array(
+  // Exported field_base: 'field_metric_response_score'
+  $field_bases['field_metric_response_score'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_response_score',
+    'field_name' => 'field_metric_response_score',
     'field_permissions' => array(
       'type' => 0,
     ),
@@ -189,13 +134,16 @@ function pgh_response_ctype_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_response_total'
-  $field_bases['field_response_total'] = array(
+  // Exported field_base: 'field_metric_response_value'
+  $field_bases['field_metric_response_value'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_response_total',
+    'field_name' => 'field_metric_response_value',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -218,30 +166,36 @@ function pgh_response_ctype_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_response_updated'
-  $field_bases['field_response_updated'] = array(
+  // Exported field_base: 'field_metric_response_weight'
+  $field_bases['field_metric_response_weight'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_response_updated',
-    'foreign keys' => array(),
+    'field_name' => 'field_metric_response_weight',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
     'indexes' => array(
-      'value' => array(
-        0 => 'value',
+      'format' => array(
+        0 => 'format',
       ),
     ),
     'locked' => 0,
-    'module' => 'list',
+    'module' => 'text',
     'settings' => array(
-      'allowed_values' => array(
-        0 => '',
-        1 => '',
-      ),
-      'allowed_values_function' => '',
+      'max_length' => 255,
     ),
     'translatable' => 0,
-    'type' => 'list_boolean',
+    'type' => 'text',
   );
 
   return $field_bases;

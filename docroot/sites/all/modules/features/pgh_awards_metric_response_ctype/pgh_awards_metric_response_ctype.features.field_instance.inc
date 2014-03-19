@@ -1,18 +1,18 @@
 <?php
 /**
  * @file
- * pgh_response_ctype.features.field_instance.inc
+ * pgh_awards_metric_response_ctype.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function pgh_response_ctype_field_default_field_instances() {
+function pgh_awards_metric_response_ctype_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-response-body'
-  $field_instances['node-response-body'] = array(
-    'bundle' => 'response',
+  // Exported field_instance: 'node-metric_response-body'
+  $field_instances['node-metric_response-body'] = array(
+    'bundle' => 'metric_response',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -37,150 +37,26 @@ function pgh_response_ctype_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'body',
     'label' => 'Body',
-    'required' => 0,
+    'required' => FALSE,
     'settings' => array(
-      'display_summary' => 0,
-      'text_processing' => 0,
+      'display_summary' => TRUE,
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 2,
+        'rows' => 20,
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'node-response-field_response_application'
-  $field_instances['node-response-field_response_application'] = array(
-    'bundle' => 'response',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_response_application',
-    'label' => 'Application',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'entityreference',
-      'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
-      ),
-      'type' => 'entityreference_autocomplete_tags',
-      'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'node-response-field_response_kpi'
-  $field_instances['node-response-field_response_kpi'] = array(
-    'bundle' => 'response',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 7,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_response_kpi',
-    'label' => 'KPI',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 8,
-    ),
-  );
-
-  // Exported field_instance: 'node-response-field_response_point'
-  $field_instances['node-response-field_response_point'] = array(
-    'bundle' => 'response',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 3,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_response_point',
-    'label' => 'Point',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
       'weight' => 6,
     ),
   );
 
-  // Exported field_instance: 'node-response-field_response_question'
-  $field_instances['node-response-field_response_question'] = array(
-    'bundle' => 'response',
+  // Exported field_instance: 'node-metric_response-field_metric_response_app'
+  $field_instances['node-metric_response-field_metric_response_app'] = array(
+    'bundle' => 'metric_response',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -202,8 +78,8 @@ function pgh_response_ctype_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_response_question',
-    'label' => 'Question',
+    'field_name' => 'field_metric_response_app',
+    'label' => 'Application',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -216,24 +92,26 @@ function pgh_response_ctype_field_default_field_instances() {
         'path' => '',
         'size' => 60,
       ),
-      'type' => 'entityreference_autocomplete_tags',
+      'type' => 'entityreference_autocomplete',
       'weight' => 2,
     ),
   );
 
-  // Exported field_instance: 'node-response-field_response_score'
-  $field_instances['node-response-field_response_score'] = array(
-    'bundle' => 'response',
+  // Exported field_instance: 'node-metric_response-field_metric_response_metric'
+  $field_instances['node-metric_response-field_metric_response_metric'] = array(
+    'bundle' => 'metric_response',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 6,
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -243,27 +121,28 @@ function pgh_response_ctype_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_response_score',
-    'label' => 'Score',
+    'field_name' => 'field_metric_response_metric',
+    'label' => 'Metric',
     'required' => 0,
     'settings' => array(
-      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'text',
+      'module' => 'entityreference',
       'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
         'size' => 60,
       ),
-      'type' => 'text_textfield',
-      'weight' => 7,
+      'type' => 'entityreference_autocomplete',
+      'weight' => 0,
     ),
   );
 
-  // Exported field_instance: 'node-response-field_response_total'
-  $field_instances['node-response-field_response_total'] = array(
-    'bundle' => 'response',
+  // Exported field_instance: 'node-metric_response-field_metric_response_score'
+  $field_instances['node-metric_response-field_metric_response_score'] = array(
+    'bundle' => 'metric_response',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -283,8 +162,8 @@ function pgh_response_ctype_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_response_total',
-    'label' => 'Total',
+    'field_name' => 'field_metric_response_score',
+    'label' => 'Score',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -301,22 +180,18 @@ function pgh_response_ctype_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-response-field_response_updated'
-  $field_instances['node-response-field_response_updated'] = array(
-    'bundle' => 'response',
-    'default_value' => array(
-      0 => array(
-        'value' => 0,
-      ),
-    ),
+  // Exported field_instance: 'node-metric_response-field_metric_response_value'
+  $field_instances['node-metric_response-field_metric_response_value'] = array(
+    'bundle' => 'metric_response',
+    'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'text_default',
         'weight' => 4,
       ),
       'teaser' => array(
@@ -327,20 +202,61 @@ function pgh_response_ctype_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_response_updated',
-    'label' => 'Updated',
+    'field_name' => 'field_metric_response_value',
+    'label' => 'Value',
     'required' => 0,
     'settings' => array(
+      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'options',
+      'module' => 'text',
       'settings' => array(
-        'display_label' => 1,
+        'size' => 60,
       ),
-      'type' => 'options_onoff',
+      'type' => 'text_textfield',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-metric_response-field_metric_response_weight'
+  $field_instances['node-metric_response-field_metric_response_weight'] = array(
+    'bundle' => 'metric_response',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_metric_response_weight',
+    'label' => 'Weight',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 3,
     ),
   );
 
@@ -348,12 +264,10 @@ function pgh_response_ctype_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Application');
   t('Body');
-  t('KPI');
-  t('Point');
-  t('Question');
+  t('Metric');
   t('Score');
-  t('Total');
-  t('Updated');
+  t('Value');
+  t('Weight');
 
   return $field_instances;
 }
