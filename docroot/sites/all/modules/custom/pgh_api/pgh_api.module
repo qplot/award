@@ -439,14 +439,17 @@ function pgh_api_get_response($app_id, $qid) {
     );
   }
   else {
-    watchdog('pgh_api', 'Couldn\'t find response %rid for application %app_id - question %qid in pgh_api_get_response. Creating empty response.', array('%rid' => $rid, '%app_id' => $app_id, '%qid' => $qid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Couldn\'t find response %rid for application %app_id' .
+      ' - question %qid in pgh_api_get_response. Creating empty response.',
+      array('%rid' => $rid, '%app_id' => $app_id, '%qid' => $qid), WATCHDOG_ERROR);
 
     // If a response is not found, automatically generate a new empty response. This will fix issues where an application is
     // in an inconsistent state (missing responses) due to an error on application creation or due to an administrator mistake.
     $rnid = pgh_api_set_response($app_id, $qid, array(), TRUE);
     if ($rnid) {
       return pgh_api_get_response($app_id, $qid);
-    } else {
+    }
+    else {
       return;
     }
   }
@@ -658,7 +661,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
     watchdog(
       'pgh',
       'Missing application %app in saving response.',
-      array('%app' =>$app_id),
+      array('%app' => $app_id),
       WATCHDOG_ERROR
     );
     return;
@@ -753,7 +756,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
         break;
 
       default:
-        //should be error message.
+        // Should be error message.
         break;
     }
 
@@ -1209,6 +1212,8 @@ function pgh_api_add_user_to_business_unit($user, $business_unit) {
 }
 
 /**
+ * Perform a mass operation on nodes.
+ *
  * Perform a mass operation on nodes, switching based on the specified
  * operation. Currently supports updating and deleting, utilizing the atch
  * API for large numbers of updates.
@@ -1233,7 +1238,10 @@ function node_mass_operation($nodes, $op, $updates = array()) {
   if (count($nodes) > 10) {
     $batch = array(
       'operations' => array(
-        array('_node_mass_operation_batch_process', array($nodes, $op, 'updates'))
+        array(
+          '_node_mass_operation_batch_process',
+          array($nodes, $op, 'updates')
+        )
       ),
       'finished' => '_node_mass_operation_batch_finished',
       'title' => t('Processing'),
@@ -1279,7 +1287,7 @@ function _node_mass_operation_helper($nid, $op, $updates) {
 }
 
 /**
- * Node Mass Operation Batch operation
+ * Node Mass Operation Batch operation.
  *
  * @author Drupal Patch <noname@drupal.org>
  */
@@ -1293,7 +1301,7 @@ function _node_mass_operation_batch_process($nodes, $op, $updates, $context) {
   // Process nodes by groups of 5.
   $count = min(5, count($context['sandbox']['nodes']));
   for ($i = 1; $i <= $count; $i++) {
-    // For each nid, call the opertion helper
+    // For each nid, call the opertion helper.
     $nid = array_shift($context['sandbox']['nodes']);
 
     $node = _node_mass_operation_helper($nid, $op, $updates);
@@ -1306,10 +1314,9 @@ function _node_mass_operation_batch_process($nodes, $op, $updates, $context) {
 
       case 'delete':
         // Store result for post-processing in the finished callback.
-        $context['results'][] = t('Deleted ' . $node->title);
+        $context['results'][] = t(('Deleted ' . $node->title));
         break;
     }
-
 
     // Update our progress information.
     $context['sandbox']['progress']++;
@@ -1374,7 +1381,7 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
 
   $query = new EntityFieldQuery();
 
-  // apply condition to query
+  // Apply condition to query.
   foreach ($conds as $key => $value) {
     $splits = explode('_', $key);
     $type = $splits[0];
@@ -1393,19 +1400,20 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
           $assigned = isset($value[1]) ? $value[1] : $value[0];
           $operator = isset($value[2]) ? $value[2] : '=';
           $query->fieldCondition($key, $property, $assigned, $operator);
-        } else {
+        }
+        else {
           $query->fieldCondition($key, 'value', $value);
         }
         break;
 
-      // rest of them are all property
+      // Rest of them are all property.
       default:
         $query->propertyCondition($key, $value);
         break;
     }
   }
 
-  // apply sort to query
+  // Apply sort to query.
   foreach ($sorts as $key => $value) {
     $splits = explode('_', $key);
     $type = $splits[0];
@@ -1424,12 +1432,13 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
     }
   }
 
-  // apply range
+  // Apply range.
   if (!empty($range)) {
     $rvars = array(0, 0);
     if (is_array($range)) {
       $rvars = $range;
-    } else {
+    }
+    else {
       $rvars[1] = $range;
     }
     $query->range($rvars[0], $rvars[1]);
@@ -1445,10 +1454,12 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
     else {
       return $keys[0];
     }
-  } else {
+  }
+  else {
     if ($all) {
       return array();
-    } else {
+    }
+    else {
       return 0;
     }
   }
