@@ -439,12 +439,16 @@ function pgh_api_get_response($app_id, $qid) {
     );
   }
   else {
-    watchdog('pgh_api', 'Couldn\'t find response %rid for question %qid in pgh_api_get_response. Creating empty response.', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Couldn\'t find response %rid for application %app_id - question %qid in pgh_api_get_response. Creating empty response.', array('%rid' => $rid, '%app_id' => $app_id, '%qid' => $qid), WATCHDOG_ERROR);
 
     // If a response is not found, automatically generate a new empty response. This will fix issues where an application is
     // in an inconsistent state (missing responses) due to an error on application creation or due to an administrator mistake.
-    $rnid = pgh_api_set_response($app->nid, $question->nid, array(), TRUE);
-    return node_load($rnid);
+    $rnid = pgh_api_set_response($app_id, $qid, array(), TRUE);
+    if ($rnid) {
+      return pgh_api_get_response($app_id, $qid);
+    } else {
+      return;
+    }
   }
 
   return $response;
