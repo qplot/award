@@ -38,7 +38,7 @@ function pgh_awards_review_menu() {
 }
 
 /**
- * Implementation of hook_permission().
+ * Implements hook_permission().
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -55,7 +55,7 @@ function pgh_awards_review_permission() {
 /**
  * Review dashboard access.
  *
- * Instead of implements node access, custom page access is used here.
+ * Instead of implementing node access, custom page access is used here.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -63,6 +63,10 @@ function pgh_awards_review_can_access($app_id) {
   // Load application id.
   if ($node = node_load($app_id)) {
     global $user;
+    // Let's allow admins to view the page.
+    if (user_access('administer site configuration', $user)) {
+      return TRUE;
+    }
     $wrapper = entity_metadata_wrapper('node', $node);
     $reviewers = $wrapper->field_application_reviewers->raw();
     return in_array($user->uid, $reviewers);
@@ -72,7 +76,7 @@ function pgh_awards_review_can_access($app_id) {
 }
 
 /**
- * Implement hook_theme.
+ * Implements hook_theme().
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -80,8 +84,8 @@ function pgh_awards_review_theme() {
   return array(
     'review' => array(
       'variables' => array('app' => NULL, 'form' => NULL),
-      'template' => 'templates/review'
-    )
+      'template' => 'templates/review',
+    ),
   );
 }
 
@@ -94,7 +98,7 @@ function pgh_awards_review_dashboard() {
 
 /**
  * Review application page handling.
- * 
+ *
  * Template is in review.tpl.php in theme folder.
  *
  * @author Fang Jin <fang@designhammer.com>
@@ -106,7 +110,6 @@ function pgh_awards_review_page() {
   if (!$app_id || !is_numeric($app_id)) {
     return;
   }
-
   // Get application.
   $app = node_load($app_id);
   $app_wrapper = entity_metadata_wrapper('node', $app);
@@ -134,7 +137,7 @@ function pgh_awards_review_page() {
   // Get business unit.
   $bunit_id = pgh_api_find_nodes(array(
     'type' => 'business_unit',
-    'field_applications' => array('target_id', $app_id, '=')
+    'field_applications' => array('target_id', $app_id, '='),
   ));
   $bunit = node_load($bunit_id);
   $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
@@ -177,7 +180,7 @@ function pgh_awards_review_page() {
     }
   }
 
-  // Get a score view
+  // Get a score view.
   // $view = views_get_view('score');
   // $view->execute();
 
@@ -358,7 +361,7 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
   // For theming to catch up.
   $form['category_ids'] = array(
     '#type' => 'hidden',
-    '#value' => serialize($categories_ids)
+    '#value' => serialize($categories_ids),
   );
 
   $form['application_id'] = array(
@@ -390,7 +393,7 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
       $cat_response_wrapper->field_cat_response_case_study->set($case_study);
       $cat_response_wrapper->body->set(array(
         'value' => $comment,
-        'format' => 'filtered_html'
+        'format' => 'filtered_html',
       ));
       $cat_response_wrapper->save();
     }
@@ -403,7 +406,7 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
     $app_wrapper->field_application_qualify->set($values['qualify']);
     $app_wrapper->body->set(array(
       'value' => $values['comment'],
-      'format' => 'filtered_html'
+      'format' => 'filtered_html',
     ));
     $app_wrapper->save();
   }
