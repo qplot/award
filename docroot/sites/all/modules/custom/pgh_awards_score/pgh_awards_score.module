@@ -521,7 +521,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
   $cat_response_ids = pgh_api_find_nodes(
     array(
       'type' => 'category_response',
-      // 'field_cat_response_application' => array('target_id', $app->nid, '='),
+      'field_cat_response_application' => array('target_id', $app->nid, '='),
     ),
     NULL,
     TRUE
@@ -554,7 +554,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
     $metric_response_ids = pgh_api_find_nodes(
       array(
         'type' => 'metric_response',
-        // 'field_metric_response_app' => array('target_id', $app->nid, '='),
+        'field_metric_response_app' => array('target_id', $app->nid, '='),
       ),
       NULL,
       TRUE
