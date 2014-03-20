@@ -182,9 +182,9 @@ class MigratePGHPointsMigration extends Migration {
    */
   public function complete($entity, stdClass $row) {
     // In Debugging mode, suppose you only want to apply it to certain application
-    // Ex. Carolinas Medical Center - Charlotte.
-    $debug_mode = TRUE;
-    $debug_app_id = 213892;
+    // Ex. Carolinas Medical Center - Charlotte, 213892.
+    $debug_mode = variable_get('pgh_migrate_debug', FALSE);
+    $debug_app_id = variable_get('pgh_migrate_debug_app_id', NULL);
 
     // After the question score is saved find all responses associated with this
     // question.
@@ -192,7 +192,7 @@ class MigratePGHPointsMigration extends Migration {
       'type' => 'response',
       'field_response_question' => array('target_id', $entity->nid, '=')
     );
-    if ($debug_mode) {
+    if ($debug_mode && !empty($debug_app_id)) {
       $debug_find = array(
         'field_response_application' => array('target_id', $debug_app_id, '=')
       );
