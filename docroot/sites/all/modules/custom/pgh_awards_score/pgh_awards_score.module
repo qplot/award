@@ -402,7 +402,7 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
   // Aggregate metric scores.
   $metric_scores = pgh_awards_score_calculate_application_category_metric($app_id, $cat_id, $save);
   $scores = array_merge($scores, $metric_scores);
-  $scores['metric_p'] = $scores['metric'] * 100;
+  $scores['metric_p'] = $scores['metric_count'] * 100;
 
   // Save to category response.
   if ($save) {
