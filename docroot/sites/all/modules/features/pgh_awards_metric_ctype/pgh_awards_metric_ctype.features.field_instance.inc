@@ -37,16 +37,17 @@ function pgh_awards_metric_ctype_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'body',
     'label' => 'Body',
-    'required' => FALSE,
+    'required' => 0,
     'settings' => array(
-      'display_summary' => TRUE,
-      'text_processing' => 1,
+      'display_summary' => 0,
+      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 20,
+        'rows' => 1,
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
@@ -93,7 +94,7 @@ function pgh_awards_metric_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 0,
+      'weight' => 1,
     ),
   );
 
@@ -109,7 +110,7 @@ function pgh_awards_metric_ctype_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -130,9 +131,9 @@ function pgh_awards_metric_ctype_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'rows' => 3,
       ),
-      'type' => 'text_textfield',
+      'type' => 'text_textarea',
       'weight' => 3,
     ),
   );
