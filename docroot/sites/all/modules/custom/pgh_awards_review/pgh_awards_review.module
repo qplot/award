@@ -181,8 +181,11 @@ function pgh_awards_review_page() {
   }
 
   // Get a score view.
-  // $view = views_get_view('score');
-  // $view->execute();
+  $view = views_get_view('score_application');
+  $view->set_arguments(array($app_id));
+  $view->set_display('page');
+  $view->pre_execute();
+  $view->execute();
 
   // Get goals of the app.
   $goals = array(
@@ -253,7 +256,7 @@ function pgh_awards_review_page() {
     'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
     'reviewers' => implode(', ', $persons),
     // Number of hospitals winning missing.
-    'score_view' => views_embed_view('score', 'page'),
+    'score_view' => $view->render('page'),
     'scores' => $scores,
     'goals' => $goals,
   );
