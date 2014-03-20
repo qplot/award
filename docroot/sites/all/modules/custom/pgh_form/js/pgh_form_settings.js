@@ -397,15 +397,15 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 2);
       }
     },
-    'pghq_PFC_waste_4_8_tB_15': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_3',
-        'pghq_PFC_waste_4_8_tB_9'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments), 2);
-      }
-    },
+//     'pghq_PFC_waste_4_8_tB_15': {
+//       'args': [
+//         'pghq_PFC_waste_4_8_tB_3',
+//         'pghq_PFC_waste_4_8_tB_9'
+//       ],
+//       'calculation': function() {
+// 	      return toFixed(handlers.sum.apply(this, arguments), 2);
+//       }
+//     },
     'pghq_PFC_waste_4_8_tB_16': {
       'args': [
         'pghq_PFC_waste_4_8_tB_4',
@@ -424,15 +424,15 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 0);
       }
     },
-    'pghq_PFC_waste_4_8_tB_18': {
-      'args': [
-        'pghq_PFC_waste_4_8_tB_6',
-        'pghq_PFC_waste_4_8_tB_12'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments), 0);
-      }
-    },
+//     'pghq_PFC_waste_4_8_tB_18': {
+//       'args': [
+//         'pghq_PFC_waste_4_8_tB_6',
+//         'pghq_PFC_waste_4_8_tB_12'
+//       ],
+//       'calculation': function() {
+// 	      return toFixed(handlers.sum.apply(this, arguments), 0);
+//       }
+//     },
     'pghq_PFC_waste_6_2_20': {
       'args': [
         'pghq_PFC_waste_6_2_1',
@@ -2438,6 +2438,194 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 0);
       }
     },
+    'pghq_PR_waste_10_1_tG_1': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_2',
+        'pghq_PR_waste_4_8_tB_9',
+        'pghq_PR_waste_6_2_14',
+        'pghq_PR_waste_8_10_1tE_9'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
+    },
+    'pghq_PR_waste_10_1_tG_2': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_4',
+        'pghq_PR_waste_4_8_tB_10',
+        'pghq_PR_waste_6_2_15',
+        'pghq_PR_waste_8_10_1tE_10'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
+    },
+    'pghq_PR_waste_10_1_tG_3': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_3',
+        'pghq_PR_waste_4_8_tB_11',
+        'pghq_PR_waste_6_2_16',
+        'pghq_PR_waste_8_10_1tE_11'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
+    },
+    'pghq_PR_waste_10_1_tG_4': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_5',
+        'pghq_PR_waste_4_8_tB_12',
+        'pghq_PR_waste_6_2_17',
+        'pghq_PR_waste_8_10_1tE_12'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_1': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_2',
+        'pghq_PR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_2': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_4',
+        'pghq_PR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_3': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_3',
+        'pghq_PR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_4': {
+      'args': [
+        'pghq_PR_waste_2_3_tA_5',
+        'pghq_PR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_5': {
+      'args': [
+        'pghq_PR_waste_4_8_tB_9',
+        'pghq_PR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_6': {
+      'args': [
+        'pghq_PR_waste_4_8_tB_10',
+        'pghq_PR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_7': {
+      'args': [
+        'pghq_PR_waste_4_8_tB_11',
+        'pghq_PR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_8': {
+      'args': [
+        'pghq_PR_waste_4_8_tB_12',
+        'pghq_PR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_9': {
+      'args': [
+        'pghq_PR_waste_6_2_14',
+        'pghq_PR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_10': {
+      'args': [
+        'pghq_PR_waste_6_2_15',
+        'pghq_PR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_11': {
+      'args': [
+        'pghq_PR_waste_6_2_16',
+        'pghq_PR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_12': {
+      'args': [
+        'pghq_PR_waste_6_2_17',
+        'pghq_PR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_13': {
+      'args': [
+        'pghq_PR_waste_8_10_1tE_9',
+        'pghq_PR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_14': {
+      'args': [
+        'pghq_PR_waste_8_10_1tE_10',
+        'pghq_PR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_15': {
+      'args': [
+        'pghq_PR_waste_8_10_1tE_11',
+        'pghq_PR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_PR_waste_10_1_tH_16': {
+      'args': [
+        'pghq_PR_waste_8_10_1tE_12',
+        'pghq_PR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
 
     //
     // PR Energy
@@ -3006,15 +3194,15 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 2);
       }
     },
-    'pghq_LTC_waste_4_8_tB_15': {
-      'args': [
-        'pghq_LTC_waste_4_8_tB_3',
-        'pghq_LTC_waste_4_8_tB_9'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments), 2);
-      }
-    },
+//     'pghq_LTC_waste_4_8_tB_15': {
+//       'args': [
+//         'pghq_LTC_waste_4_8_tB_3',
+//         'pghq_LTC_waste_4_8_tB_9'
+//       ],
+//       'calculation': function() {
+// 	      return toFixed(handlers.sum.apply(this, arguments), 2);
+//       }
+//     },
     'pghq_LTC_waste_4_8_tB_16': {
       'args': [
         'pghq_LTC_waste_4_8_tB_4',
@@ -3033,15 +3221,15 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 0);
       }
     },
-    'pghq_LTC_waste_4_8_tB_18': {
-      'args': [
-        'pghq_LTC_waste_4_8_tB_6',
-        'pghq_LTC_waste_4_8_tB_12'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments), 0);
-      }
-    },
+//     'pghq_LTC_waste_4_8_tB_18': {
+//       'args': [
+//         'pghq_LTC_waste_4_8_tB_6',
+//         'pghq_LTC_waste_4_8_tB_12'
+//       ],
+//       'calculation': function() {
+// 	      return toFixed(handlers.sum.apply(this, arguments), 0);
+//       }
+//     },
     'pghq_LTC_waste_6_2_20': {
       'args': [
         'pghq_LTC_waste_6_2_1',
@@ -4985,6 +5173,194 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 0);
       }
     },
+    'pghq_CHCPR_waste_10_1_tG_1': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_2',
+        'pghq_CHCPR_waste_4_8_tB_9',
+        'pghq_CHCPR_waste_6_2_14',
+        'pghq_CHCPR_waste_8_10_1tE_9'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tG_2': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_4',
+        'pghq_CHCPR_waste_4_8_tB_10',
+        'pghq_CHCPR_waste_6_2_15',
+        'pghq_CHCPR_waste_8_10_1tE_10'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tG_3': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_3',
+        'pghq_CHCPR_waste_4_8_tB_11',
+        'pghq_CHCPR_waste_6_2_16',
+        'pghq_CHCPR_waste_8_10_1tE_11'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 2);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tG_4': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_5',
+        'pghq_CHCPR_waste_4_8_tB_12',
+        'pghq_CHCPR_waste_6_2_17',
+        'pghq_CHCPR_waste_8_10_1tE_12'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.sum.apply(this, arguments), 0);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_1': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_2',
+        'pghq_CHCPR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_2': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_4',
+        'pghq_CHCPR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_3': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_3',
+        'pghq_CHCPR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_4': {
+      'args': [
+        'pghq_CHCPR_waste_2_3_tA_5',
+        'pghq_CHCPR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_5': {
+      'args': [
+        'pghq_CHCPR_waste_4_8_tB_9',
+        'pghq_CHCPR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_6': {
+      'args': [
+        'pghq_CHCPR_waste_4_8_tB_10',
+        'pghq_CHCPR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_7': {
+      'args': [
+        'pghq_CHCPR_waste_4_8_tB_11',
+        'pghq_CHCPR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_8': {
+      'args': [
+        'pghq_CHCPR_waste_4_8_tB_12',
+        'pghq_CHCPR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_9': {
+      'args': [
+        'pghq_CHCPR_waste_6_2_14',
+        'pghq_CHCPR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_10': {
+      'args': [
+        'pghq_CHCPR_waste_6_2_15',
+        'pghq_CHCPR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_11': {
+      'args': [
+        'pghq_CHCPR_waste_6_2_16',
+        'pghq_CHCPR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_12': {
+      'args': [
+        'pghq_CHCPR_waste_6_2_17',
+        'pghq_CHCPR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_13': {
+      'args': [
+        'pghq_CHCPR_waste_8_10_1tE_9',
+        'pghq_CHCPR_waste_10_1_tG_1'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_14': {
+      'args': [
+        'pghq_CHCPR_waste_8_10_1tE_10',
+        'pghq_CHCPR_waste_10_1_tG_2'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_15': {
+      'args': [
+        'pghq_CHCPR_waste_8_10_1tE_11',
+        'pghq_CHCPR_waste_10_1_tG_3'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
+    'pghq_CHCPR_waste_10_1_tH_16': {
+      'args': [
+        'pghq_CHCPR_waste_8_10_1tE_12',
+        'pghq_CHCPR_waste_10_1_tG_4'
+      ],
+      'calculation': function() {
+	      return toFixed(handlers.divide.apply(this, arguments) * 100, 1);
+      }
+    },
 
     //
     // CHCPR Energy
@@ -5553,15 +5929,15 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 2);
       }
     },
-    'pghq_CHCPFC_waste_4_8_tB_15': {
-      'args': [
-        'pghq_CHCPFC_waste_4_8_tB_3',
-        'pghq_CHCPFC_waste_4_8_tB_9'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments), 2);
-      }
-    },
+//     'pghq_CHCPFC_waste_4_8_tB_15': {
+//       'args': [
+//         'pghq_CHCPFC_waste_4_8_tB_3',
+//         'pghq_CHCPFC_waste_4_8_tB_9'
+//       ],
+//       'calculation': function() {
+// 	      return toFixed(handlers.sum.apply(this, arguments), 2);
+//       }
+//     },
     'pghq_CHCPFC_waste_4_8_tB_16': {
       'args': [
         'pghq_CHCPFC_waste_4_8_tB_4',
@@ -5580,15 +5956,15 @@
 	      return toFixed(handlers.sum.apply(this, arguments), 0);
       }
     },
-    'pghq_CHCPFC_waste_4_8_tB_18': {
-      'args': [
-        'pghq_CHCPFC_waste_4_8_tB_6',
-        'pghq_CHCPFC_waste_4_8_tB_12'
-      ],
-      'calculation': function() {
-	      return toFixed(handlers.sum.apply(this, arguments), 0);
-      }
-    },
+//     'pghq_CHCPFC_waste_4_8_tB_18': {
+//       'args': [
+//         'pghq_CHCPFC_waste_4_8_tB_6',
+//         'pghq_CHCPFC_waste_4_8_tB_12'
+//       ],
+//       'calculation': function() {
+// 	      return toFixed(handlers.sum.apply(this, arguments), 0);
+//       }
+//     },
     'pghq_CHCPFC_waste_6_2_20': {
       'args': [
         'pghq_CHCPFC_waste_6_2_1',

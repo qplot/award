@@ -46,6 +46,36 @@ function pgh_business_unit_ctype_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_primary_contact|node|business_unit|form';
+  $field_group->group_name = 'group_primary_contact';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'business_unit';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Primary Contact',
+    'weight' => '27',
+    'children' => array(
+      0 => 'field_primary_first_name',
+      1 => 'field_primary_last_name',
+      2 => 'field_primary_phone',
+      3 => 'field_primary_email',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-primary-contact field-group-fieldset',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_primary_contact|node|business_unit|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_shipping_address|node|business_unit|form';
   $field_group->group_name = 'group_shipping_address';
   $field_group->entity_type = 'node';
@@ -61,8 +91,7 @@ function pgh_business_unit_ctype_field_group_info() {
       2 => 'field_shipping_city',
       3 => 'field_shipping_state',
       4 => 'field_shipping_zipcode',
-      5 => 'field_same_as_billing',
-      6 => 'field_shipping_country',
+      5 => 'field_shipping_country',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
