@@ -61,8 +61,7 @@ function pgh_business_unit_ctype_field_group_info() {
       2 => 'field_shipping_city',
       3 => 'field_shipping_state',
       4 => 'field_shipping_zipcode',
-      5 => 'field_same_as_billing',
-      6 => 'field_shipping_country',
+      5 => 'field_shipping_country',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

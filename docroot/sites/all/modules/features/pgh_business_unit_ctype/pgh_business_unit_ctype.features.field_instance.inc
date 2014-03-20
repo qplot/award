@@ -343,7 +343,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     'bundle' => 'business_unit',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The "Name of Institution" field should be the formal name of the institution that you want to see on an award plaque.',
+    'description' => 'The "Name of Institution" field should be the formal name of the institution that you want to see on an <strong>award plaque</strong>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -558,7 +558,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_phone',
-    'label' => 'Phone',
+    'label' => 'Organization Phone',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -572,6 +572,205 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_primary_email'
+  $field_instances['node-business_unit-field_primary_email'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Primary contact will received <strong>award notification</strong> via this email.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'email',
+        'settings' => array(),
+        'type' => 'email_default',
+        'weight' => 26,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_primary_email',
+    'label' => 'Email',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'email',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'email_textfield',
+      'weight' => 14,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_primary_first_name'
+  $field_instances['node-business_unit-field_primary_first_name'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 23,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_primary_first_name',
+    'label' => 'First name',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 10,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_primary_last_name'
+  $field_instances['node-business_unit-field_primary_last_name'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 24,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_primary_last_name',
+    'label' => 'Last name',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_primary_phone'
+  $field_instances['node-business_unit-field_primary_phone'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 25,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_primary_phone',
+    'label' => 'Phone',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 13,
+    ),
+  );
+
+  // Exported field_instance: 'node-business_unit-field_primary_title'
+  $field_instances['node-business_unit-field_primary_title'] = array(
+    'bundle' => 'business_unit',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 27,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_primary_title',
+    'label' => 'Title',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 12,
     ),
   );
 
@@ -923,10 +1122,15 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Billing zip code');
   t('Business unit type');
   t('Description / Notes');
+  t('Email');
+  t('First name');
+  t('Last name');
   t('Name of Institution');
   t('Number of Beds');
   t('Number of ORs');
+  t('Organization Phone');
   t('Phone');
+  t('Primary contact will received <strong>award notification</strong> via this email.');
   t('Provide state abbreviation.');
   t('Salesforce Id');
   t('Shipping Country');
@@ -935,7 +1139,8 @@ function pgh_business_unit_ctype_field_default_field_instances() {
   t('Shipping city');
   t('Shipping state');
   t('Shipping zip code');
-  t('The "Name of Institution" field should be the formal name of the institution that you want to see on an award plaque.');
+  t('The "Name of Institution" field should be the formal name of the institution that you want to see on an <strong>award plaque</strong>.');
+  t('Title');
   t('Users');
   t('Website URL');
 
