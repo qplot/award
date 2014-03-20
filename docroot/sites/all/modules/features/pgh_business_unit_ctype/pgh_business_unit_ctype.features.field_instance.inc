@@ -1131,7 +1131,6 @@ function pgh_business_unit_ctype_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 13,
->>>>>>> refs/heads/39-new-business-unit-fields
     ),
   );
 
