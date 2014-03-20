@@ -181,13 +181,26 @@ class MigratePGHPointsMigration extends Migration {
    * {@inheritdoc}
    */
   public function complete($entity, stdClass $row) {
+    // In Debugging mode, suppose you only want to apply it to certain application
+    // Ex. Carolinas Medical Center - Charlotte.
+    $debug_mode = TRUE;
+    $debug_app_id = 213892;
+
     // After the question score is saved find all responses associated with this
     // question.
+    $find = array(
+      'type' => 'response',
+      'field_response_question' => array('target_id', $entity->nid, '=')
+    );
+    if ($debug_mode) {
+      $debug_find = array(
+        'field_response_application' => array('target_id', $debug_app_id, '=')
+      );
+      $find = array_merge($find, $debug_find);
+    }
+
     $rids = pgh_api_find_nodes(
-      array(
-        'type' => 'response',
-        'field_response_question' => array('target_id', $entity->nid, '='),
-      ),
+      $find,
       NULL,
       TRUE
     );
