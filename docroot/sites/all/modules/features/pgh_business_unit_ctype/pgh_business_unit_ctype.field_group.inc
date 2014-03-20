@@ -39,7 +39,7 @@ function pgh_business_unit_ctype_field_group_info() {
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'group-award-notification-letter field-group-fieldset',
-        'description' => '',
+        'description' => 'A hard copy letter AWARD NOTIFICATION will be sent to the person designated here:',
       ),
       'formatter' => 'open',
     ),
@@ -137,7 +137,7 @@ function pgh_business_unit_ctype_field_group_info() {
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'group-shipping-address field-group-fieldset',
-        'description' => 'This is the address to which you would like an award plaque shipped.',
+        'description' => 'This is the address to which you would like an AWARD PLAQUE shipped.',
       ),
       'formatter' => 'open',
     ),
