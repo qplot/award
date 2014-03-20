@@ -361,6 +361,8 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
     'kpi' => 0,
     'metric_p' => 0,
     'metric' => 0,
+    'quality_p' => 0,
+    'quality' => 0,
     'question_count' => 0,
     'metric_count' => 0,
   );
@@ -429,6 +431,8 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
     $cat_response_wrapper->field_cat_response_kpi->set($scores['kpi']);
     $cat_response_wrapper->field_cat_response_metric_p->set($scores['metric_p']);
     $cat_response_wrapper->field_cat_response_metric->set($scores['metric']);
+    $cat_response_wrapper->field_cat_response_quality_p->set(100);
+
     $cat_response_wrapper->save();
   }
 
