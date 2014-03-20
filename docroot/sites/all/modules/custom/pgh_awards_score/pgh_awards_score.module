@@ -176,8 +176,8 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
         $value = eval("return @($replace);");
       } catch (Exception $e) {
         dsm($e->getMessage());
-      } finally {
       }
+
       // calculate score
 
       $score = intval($value / $reference * 100);
