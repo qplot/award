@@ -17,7 +17,7 @@ function pgh_awards_score_menu() {
   $items['admin/metric/application/%/calculate'] = array(
     'title' => 'Calculate metric score',
     'description' => 'Calculate metric score for application',
-    'page callback' => 'pgh_awards_score_calculate_application_metric',
+    'page callback' => 'pgh_awards_score_calculate_application_metric_page',
     'page arguments' => array(3),
     'access callback' => 'node_access',
     'access arguments' => array('view', 3),
@@ -32,6 +32,16 @@ function pgh_awards_score_menu() {
     'page arguments' => array(3),
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
+  );
+
+  // Calculate category score for one application type.
+  $items['admin/score/application/%/calculate'] = array(
+    'title' => 'Calculate category score',
+    'description' => 'Calculate all score for application category',
+    'page callback' => 'pgh_awards_score_calculate_application_page',
+    'page arguments' => array(3),
+    'access callback' => 'node_access',
+    'access arguments' => array('update', 1),
   );
 
   return $items;
@@ -53,7 +63,7 @@ function pgh_awards_score_calculate_apptype_metric($apptype) {
     TRUE
   );
   foreach ($aids as $aid) {
-    pgh_awards_score_calculate_application_metric($aid, $apptype, FALSE);
+    pgh_awards_score_calculate_application_metric_page($aid, $apptype, FALSE);
   }
   drupal_goto();
 }
@@ -63,7 +73,7 @@ function pgh_awards_score_calculate_apptype_metric($apptype) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_score_calculate_application_metric($app_id, $apptype = 'partner_for_change', $goto = TRUE) {
+function pgh_awards_score_calculate_application_metric_page($app_id, $apptype = 'partner_for_change', $goto = TRUE) {
   // Find application type.
   $atid = pgh_api_find_nodes(
     array(
@@ -122,8 +132,64 @@ function pgh_awards_score_calculate_application_metric($app_id, $apptype = 'part
   }
 }
 
+
+/**
+ * Hook views_pre_render.
+ */
+function pgh_awards_score_views_pre_render(&$view) {
+  // Add calculate button for now.
+  if ($view->name == 'metric_score') {
+    $app_id = arg(3);
+    $items = array();
+    $items[] = l(
+      t('Calculate'),
+      "admin/metric/application/$app_id/calculate",
+      array('query' => drupal_get_destination())
+    );
+    $view->attachment_before = theme('item_list', array(
+      'items' => $items,
+      'attributes' => array('class' => 'action-links')
+    ));
+  }
+  if ($view->name == 'metric_score_for_apptype') {
+    $apptype = arg(3);
+    $items = array();
+    $items[] = l(
+      t('Calculate'),
+      "admin/metric/apptype/$apptype/calculate",
+      array('query' => drupal_get_destination())
+    );
+    $view->attachment_before = theme('item_list', array(
+      'items' => $items,
+      'attributes' => array('class' => 'action-links')
+    ));
+  }
+  if ($view->name == 'score_application') {
+    $app_id = arg(3);
+    $items = array();
+    $items[] = l(
+      t('Calculate'),
+      "admin/score/application/$app_id/calculate",
+      array('query' => drupal_get_destination())
+    );
+    $view->attachment_before = theme('item_list', array(
+      'items' => $items,
+      'attributes' => array('class' => 'action-links')
+    ));
+  }
+}
+
 /**
  * Calculate the metric score.
+ *
+ * @param int $app_id
+ *   Application node id
+ *
+ * @param int $metric_id
+ *   Metric node id
+ *
+ * @return mixed 
+ *   Array of scores
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -190,52 +256,246 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
   }
 
   return array(
+    'metric_id' => $metric_id,
     'value' => $value,
     'score' => $score
   );
 }
 
-
 /**
- * Hook views_pre_render.
+ * Calculate metric score for specific category of specific application.
+ *
+ * @param int $app_id
+ *   Application node id
+ *
+ * @param int $cat_id
+ *   Category node id
+ *
+ * @param bool $save
+ *   If score should be saved
+ * 
+ * @return mixed 
+ *   Array of scores
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_score_views_pre_render(&$view) {
-  // Add calculate button for now.
-  if ($view->name == 'metric_score') {
-    $app_id = arg(3);
-    $items = array();
-    $items[] = l(
-      t('Calculate'),
-      "admin/metric/application/$app_id/calculate",
-      array('query' => drupal_get_destination())
-    );
-    $view->attachment_before = theme('item_list', array(
-      'items' => $items,
-      'attributes' => array('class' => 'action-links')
-    ));
-  }
-  if ($view->name == 'metric_score_for_apptype') {
-    $apptype = arg(3);
-    $items = array();
-    $items[] = l(
-      t('Calculate'),
-      "admin/metric/apptype/$apptype/calculate",
-      array('query' => drupal_get_destination())
-    );
-    $view->attachment_before = theme('item_list', array(
-      'items' => $items,
-      'attributes' => array('class' => 'action-links')
-    ));
+function pgh_awards_score_calculate_application_category_metric($app_id, $cat_id, $save = TRUE) {
+  // Find all metrics for each category.
+  $mids = pgh_api_find_nodes(
+    array(
+      'type' => 'metric',
+      // Missing application type.
+      'field_metric_category' => array('target_id', $cat_id, '=')
+    ),
+    array('created' => 'ASC'),
+    TRUE
+  );
+  $metric_values = array(
+    'metric_p' => 0,
+    'metric' => 0,
+    'metric_count' => 0,
+  );
+  // For each metric.
+  foreach ($mids as $mid) {
+    // Calculate value.
+    $metric_value = pgh_awards_score_calculate_metric($app_id, $mid);
 
+    // Save to metric response.
+    if ($save) {
+      // Find metric response object.
+      if ($mrid = pgh_api_find_nodes(
+        array(
+          'type' => 'metric_response',
+          'field_metric_response_app' => array('target_id', $app_id , '='),
+          'field_metric_response_metric' => array('target_id', $mid , '='),
+        )
+      )) {
+        $response = node_load($mrid);
+        $wrapper = entity_metadata_wrapper('node', $response);
+      }
+      else {
+        // Create a new metric response.
+        $response = entity_create('node', array('type' => 'metric_response'));
+        $wrapper = entity_metadata_wrapper('node', $response);
+        $wrapper->field_metric_response_app->set($app_id);
+        $wrapper->field_metric_response_metric->set($mid);
+      }
+
+      // Store response object.
+      $wrapper->title = 'app_' . $app_id . '_m_' . $mid;
+      $wrapper->field_metric_response_value->set($metric_value['value']);
+      $wrapper->field_metric_response_score->set($metric_value['score']);
+
+      $wrapper->save();
+    }
+
+    // $metric_values['point'] += $metric_value['point'];
+    $metric_values['metric'] += $metric_value['score'];
+    $metric_values['metric_count'] += 1;
   }
+  return $metric_values;
+}
+
+/**
+ * Calculate score for category and store in category response.
+ *
+ * @param int $app_id
+ *   Application node id
+ *
+ * @param int $cat_id
+ *   Category node id
+ *
+ * @param bool $save
+ *   If score should be saved
+ * 
+ * @return mixed 
+ *   Array of scores
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save = TRUE) {
+  $scores = array(
+    'automatic_p' => 0,
+    'automatic' => 0,
+    'kpi_p' => 0,
+    'kpi' => 0,
+    'metric_p' => 0,
+    'metric' => 0,
+    'question_count' => 0,
+    'metric_count' => 0,
+  );
+
+  // Aggregate automatic and kpi scores.
+  $category = node_load($cat_id);
+  $category_wrapper = entity_metadata_wrapper('node', $category);
+  foreach ($category_wrapper->field_category_sections->getIterator() as $section_wrapper) {
+    $qids = $section_wrapper->field_section_questions->raw();
+
+    // Find all response id associated with these questions.
+    $rids = pgh_api_find_nodes(
+      array(
+        'type' => 'response',
+        'field_response_application' => array('target_id', $app_id, '='),
+        'field_response_question' => array('target_id', $qids, 'IN'),
+      ),
+      NULL, TRUE
+    );
+
+    // Aggregate the scores.
+    $responses = node_load_multiple($rids);
+    foreach ($responses as &$response) {
+      $response_wrapper = entity_metadata_wrapper('node', $response);
+      // Calculate automatic scores.
+      $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
+      $scores['automatic'] += intval($response_wrapper->field_response_score->value());
+      // Calculate kpi scores.
+      $kpi = $response_wrapper->field_response_kpi->value();
+      if ($kpi !== '') {
+        $scores['kpi_p'] += 1;
+        $scores['kpi'] += intval($kpi);
+      }
+      // Calculate other stat.
+      $scores['question_count'] += 1;
+    }
+  }
+
+  // Aggregate metric scores.
+  $metric_scores = pgh_awards_score_calculate_application_category_metric($app_id, $cat_id, $save);
+  $scores = array_merge($scores, $metric_scores);
+  $scores['metric_p'] = $scores['metric'] * 100;
+
+  // Save to category response.
+  if ($save) {
+    if ($rid = pgh_api_find_nodes(
+          array(
+            'type' => 'category_response',
+            'field_cat_response_application' => array('target_id', $app_id, '='),
+            'field_cat_response_category' => array('target_id', $cat_id, '='),
+          )
+    )) {
+      $cat_response = node_load($rid);
+      $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
+    }
+    else {
+      $cat_response = entity_create('node', array('type' => 'category_response'));
+      $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
+      $cat_response_wrapper->field_cat_response_application->set($app_id);
+      $cat_response_wrapper->field_cat_response_category->set($cat_id);
+      $cat_response_wrapper->title->set('app_' . $app_id . '_' . $category_wrapper->title->value() .  '_' . $cat_id);
+    }
+    $cat_response_wrapper->field_cat_response_automatic_p->set($scores['automatic_p']);
+    $cat_response_wrapper->field_cat_response_automatic->set($scores['automatic']);
+    $cat_response_wrapper->field_cat_response_kpi_p->set($scores['kpi_p']);
+    $cat_response_wrapper->field_cat_response_kpi->set($scores['kpi']);
+    $cat_response_wrapper->field_cat_response_metric_p->set($scores['metric_p']);
+    $cat_response_wrapper->field_cat_response_metric->set($scores['metric']);
+    $cat_response_wrapper->save();
+  }
+
+  return $scores;
+}
+
+/**
+ * Calculate score for application.
+ *
+ * @param int $app_id
+ *   Application node id
+ *
+ * @param bool $save
+ *   If score should be saved
+ * 
+ * @return mixed 
+ *   Array of scores
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
+  // Find all categories.
+  $sums = array(
+    'automatic_p' => 0,
+    'automatic' => 0,
+    'kpi_p' => 0,
+    'kpi' => 0,
+    'metric_p' => 0,
+    'metric' => 0,
+    'question_count' => 0,
+    'metric_count' => 0,
+  );
+  if ($app = node_load($app_id)) {
+    // Find app type.
+    $apptype_tag = $app->field_application_type['und'][0]['value'];
+    $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
+    $apptype = node_load($apptype_id);
+    $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
+
+    $cids = $apptype_wrapper->field_apptype_categories->raw();
+    foreach ($cids as $cid) {
+      $scores = pgh_awards_score_calculate_application_category($app_id, $cid, $save);
+
+      foreach ($scores as $key => $score) {
+        $sums[$key] += $score;
+      }
+    }
+  }
+
+  return $sums;
+}
+
+/**
+ * Page for calculation of scores for application.
+ *
+ * This page will redirect to previous submitted page,
+ * it's usually associated with a button or link.
+ */
+function pgh_awards_score_calculate_application_page($app_id) {
+  pgh_awards_score_calculate_application($app_id, TRUE);
+  drupal_goto();
 }
 
 /**
  * Get all score for application.
  *
- * @param integer $app
+ * @param int $app_id
  *   The NID of application
  *
  * @return mixed
