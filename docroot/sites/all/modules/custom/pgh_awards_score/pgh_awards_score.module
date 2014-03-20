@@ -32,7 +32,7 @@ function pgh_awards_score_menu() {
     'access callback' => 'node_access',
     'access arguments' => array('view', 3),
     'type' => MENU_NORMAL_ITEM,
-  );  
+  );
 
   // calculate metric score for one application type
   $items['admin/metric/apptype/%/calculate'] = array(
@@ -42,7 +42,7 @@ function pgh_awards_score_menu() {
     'page arguments' => array(3),
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
-  );  
+  );
 
   return $items;
 }
@@ -53,7 +53,7 @@ function pgh_awards_score_menu() {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_score_calculate_apptype_metric($apptype) {
-  // find all applicaiton in this apptype 
+  // find all applicaiton in this apptype
   $aids = pgh_api_find_nodes(
     array(
       'type' => 'application',
@@ -86,7 +86,7 @@ function pgh_awards_score_calculate_application_metric($app_id, $apptype = 'part
   $cids = $awrapper->field_apptype_categories->raw();
 
   foreach ($cids as $cid) {
-    // find all metrics for each 
+    // find all metrics for each
     $mids = pgh_api_find_nodes(
       array(
         'type' => 'metric',
@@ -120,7 +120,7 @@ function pgh_awards_score_calculate_application_metric($app_id, $apptype = 'part
 
       // store response object
       $wrapper->title = 'app_' . $app_id . '_m_' . $mid;
-      $wrapper->field_metric_response_value->set($metric_value['value']);      
+      $wrapper->field_metric_response_value->set($metric_value['value']);
       $wrapper->field_metric_response_score->set($metric_value['score']);
 
       $wrapper->save();
@@ -176,7 +176,7 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
         $value = eval("return @($replace);");
       } catch (Exception $e) {
         dsm($e->getMessage());
-      } finally {        
+      } finally {
       }
       // calculate score
 
@@ -188,7 +188,7 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
       $value = intval($value);
     }
   }
-  
+
   return array(
     'value' => $value,
     'score' => $score
@@ -207,12 +207,12 @@ function pgh_awards_score_views_pre_render(&$view) {
     $app_id = arg(3);
     $items = array();
     $items[] = l(
-      'Calculate', 
-      "admin/metric/application/$app_id/calculate", 
+      'Calculate',
+      "admin/metric/application/$app_id/calculate",
       array('query' => drupal_get_destination())
     );
     $view->attachment_before = theme('item_list', array(
-      'items' => $items, 
+      'items' => $items,
       'attributes' => array('class' => 'action-links')
     ));
   }
@@ -220,12 +220,12 @@ function pgh_awards_score_views_pre_render(&$view) {
     $apptype = arg(3);
     $items = array();
     $items[] = l(
-      'Calculate', 
-      "admin/metric/apptype/$apptype/calculate", 
+      'Calculate',
+      "admin/metric/apptype/$apptype/calculate",
       array('query' => drupal_get_destination())
     );
     $view->attachment_before = theme('item_list', array(
-      'items' => $items, 
+      'items' => $items,
       'attributes' => array('class' => 'action-links')
     ));
 
@@ -234,7 +234,7 @@ function pgh_awards_score_views_pre_render(&$view) {
 
 /**
  * Get all score for application.
- * 
+ *
  * @param integer $app
  *   The NID of application
  *
@@ -244,7 +244,7 @@ function pgh_awards_score_views_pre_render(&$view) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_score_application($app_id, $include_metric = FALSE) {
-  $app = node_load($app_id);  
+  $app = node_load($app_id);
   $app_wrapper = entity_metadata_wrapper('node', $app);
 
   // Find app type.
@@ -271,7 +271,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
     $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
     $cid = $cat_response_wrapper->field_cat_response_category->raw();
     $body = $cat_response_wrapper->body->value();
-    
+
     $responses['cat_' . $cid] = array(
       'category_id' => $cid,
       'response_id' => $crid,
@@ -316,7 +316,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
         'formula' => $metric_wrapper->field_metric_formula->value(),
         'value' => $metric_response_wrapper->field_metric_response_value->value(),
         'score' => $metric_response_wrapper->field_metric_response_score->value(),
-      );       
+      );
     }
   }
 
