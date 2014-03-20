@@ -144,6 +144,7 @@ function pgh_business_unit_ctype_user_default_permissions() {
   $permissions['view own field_business_unit_type'] = array(
     'name' => 'view own field_business_unit_type',
     'roles' => array(
+      'Client Administrator' => 'Client Administrator',
       'PGH Administrator' => 'PGH Administrator',
       'administrator' => 'administrator',
     ),
