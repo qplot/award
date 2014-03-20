@@ -1,6 +1,13 @@
 Score
 =
 
+Instructions for 38-score:
+-
+* revert admin view: **drush fr pgh_applications_view**
+* revert score view: **drush fr pgh_awards_score_view**
+* add score module: **drush en pgh_awards_score**
+* latest database with points migrated !
+
 
 Step 1
 -
