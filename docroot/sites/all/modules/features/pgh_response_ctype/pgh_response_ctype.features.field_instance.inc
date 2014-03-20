@@ -98,6 +98,46 @@ function pgh_response_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-response-field_response_kpi'
+  $field_instances['node-response-field_response_kpi'] = array(
+    'bundle' => 'response',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_response_kpi',
+    'label' => 'KPI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-response-field_response_point'
   $field_instances['node-response-field_response_point'] = array(
     'bundle' => 'response',
@@ -178,6 +218,46 @@ function pgh_response_ctype_field_default_field_instances() {
       ),
       'type' => 'entityreference_autocomplete_tags',
       'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-response-field_response_score'
+  $field_instances['node-response-field_response_score'] = array(
+    'bundle' => 'response',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_response_score',
+    'label' => 'Score',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 7,
     ),
   );
 
@@ -268,8 +348,10 @@ function pgh_response_ctype_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Application');
   t('Body');
+  t('KPI');
   t('Point');
   t('Question');
+  t('Score');
   t('Total');
   t('Updated');
 

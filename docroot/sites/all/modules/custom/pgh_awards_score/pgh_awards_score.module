@@ -166,7 +166,7 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
           );
         }
       }
-      // evaluate the formula
+      // evaluate the formula.
       $replace = $formula;
       foreach ($variables as $variable) {
         $replace = str_replace($variable['question'], $variable['value'], $replace);
@@ -176,13 +176,18 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
         $value = eval("return @($replace);");
       } catch (Exception $e) {
         dsm($e->getMessage());
-      } finally {        
       }
-      // calculate score
-
+      // calculate score.
       $score = intval($value / $reference * 100);
       if ($orientation == 'low') {
         $score = 100 - $score;
+      }
+      // bound score.
+      if ($score < 0) {
+        $score = 0;
+      }
+      if ($score > 100) {
+        $score = 100;
       }
 
       $value = intval($value);

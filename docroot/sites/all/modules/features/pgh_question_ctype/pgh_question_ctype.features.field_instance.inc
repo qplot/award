@@ -134,7 +134,7 @@ function pgh_question_ctype_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 14,
+      'weight' => 13,
     ),
   );
 
@@ -175,6 +175,46 @@ function pgh_question_ctype_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'node-question-field_question_kpi'
+  $field_instances['node-question-field_question_kpi'] = array(
+    'bundle' => 'question',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 15,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_question_kpi',
+    'label' => 'KPI',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 16,
     ),
   );
 
@@ -338,8 +378,8 @@ function pgh_question_ctype_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-question-field_question_points'
-  $field_instances['node-question-field_question_points'] = array(
+  // Exported field_instance: 'node-question-field_question_point'
+  $field_instances['node-question-field_question_point'] = array(
     'bundle' => 'question',
     'default_value' => NULL,
     'deleted' => 0,
@@ -350,7 +390,7 @@ function pgh_question_ctype_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 12,
+        'weight' => 16,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -360,8 +400,8 @@ function pgh_question_ctype_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_question_points',
-    'label' => 'Points',
+    'field_name' => 'field_question_point',
+    'label' => 'Point',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -374,7 +414,7 @@ function pgh_question_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -455,6 +495,46 @@ function pgh_question_ctype_field_default_field_instances() {
       ),
       'type' => 'text_textarea',
       'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-question-field_question_score'
+  $field_instances['node-question-field_question_score'] = array(
+    'bundle' => 'question',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_question_score',
+    'label' => 'Score',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 15,
     ),
   );
 
@@ -584,13 +664,15 @@ function pgh_question_ctype_field_default_field_instances() {
   t('Default Formula');
   t('Default Value');
   t('EPP');
+  t('KPI');
   t('Layout');
   t('Options');
   t('Parent ID');
   t('Parent Required Value');
-  t('Points');
+  t('Point');
   t('Post Prompt');
   t('Prompt');
+  t('Score');
   t('Style');
   t('Type');
   t('Validation');

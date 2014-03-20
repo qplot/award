@@ -439,7 +439,16 @@ function pgh_api_get_response($app_id, $qid) {
     );
   }
   else {
-    watchdog('pgh_api', 'Couldn\'t find response $rid for question %qid in pgh_api_get_response', array('%rid' => $rid, '%qid' => $qid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Couldn\'t find response %rid for application %app_id - question %qid in pgh_api_get_response. Creating empty response.', array('%rid' => $rid, '%app_id' => $app_id, '%qid' => $qid), WATCHDOG_ERROR);
+
+    // If a response is not found, automatically generate a new empty response. This will fix issues where an application is
+    // in an inconsistent state (missing responses) due to an error on application creation or due to an administrator mistake.
+    $rnid = pgh_api_set_response($app_id, $qid, array(), TRUE);
+    if ($rnid) {
+      return pgh_api_get_response($app_id, $qid);
+    } else {
+      return;
+    }
   }
 
   return $response;
@@ -645,7 +654,15 @@ function pgh_api_internal_value($question_nid, $value) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_api_save_response($app_id, $qid, $value) {
-  $application = node_load($app_id);
+  if (!($application = node_load($app_id))) {
+    watchdog(
+      'pgh',
+      'Missing application %app in saving response.',
+      array('%app' =>$app_id),
+      WATCHDOG_ERROR
+    );
+    return;
+  }
   $application_wrapper = entity_metadata_wrapper('node', $application);
   if ($application_wrapper->field_application_status->value() == 'new') {
     $application_wrapper->field_application_status->set('in-progress');
@@ -689,7 +706,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
         switch ($style) {
           case 'checkboxes':
             if ($point) {
-              $r_point = array_sum($point);              
+              $r_point = array_sum($point);
             }
             $options = $question_wrapper->field_question_options->value();
             $i = 0;
@@ -1328,7 +1345,7 @@ function _node_mass_operation_batch_finished($success, $results, $operations) {
  * @param array $conds
  *   Condition entries, there're three different type of conditions
  *   1. prefixed with entity_, ex. 'entity_type' => 'node'
- *   2. prefixed with field_, ex. 'field_project', 
+ *   2. prefixed with field_, ex. 'field_project',
  *      two formats allowed, simple version 'field_tag' => 'abc',
  *      or long version, 'field_tag' => array('target_id', 11, '=')
  *   3. no prefix or other prefix, 'title' => 'abc'
@@ -1372,7 +1389,7 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
 
       case 'field':
         if (is_array($value)) {
-          $property = isset($value[1]) ? $value[0] : 'value'; 
+          $property = isset($value[1]) ? $value[0] : 'value';
           $assigned = isset($value[1]) ? $value[1] : $value[0];
           $operator = isset($value[2]) ? $value[2] : '=';
           $query->fieldCondition($key, $property, $assigned, $operator);
@@ -1380,7 +1397,7 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
           $query->fieldCondition($key, 'value', $value);
         }
         break;
-      
+
       // rest of them are all property
       default:
         $query->propertyCondition($key, $value);
@@ -1400,7 +1417,7 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
       case 'field':
         $query->fieldOrderBy($key, $value[0], $value[1]);
         break;
-      
+
       default:
         $query->propertyOrderBy($key, $value);
         break;

@@ -494,6 +494,8 @@ function pgh_form_render_question($question, $app_id = NULL) {
     $answer = pgh_api_get_response($app_id, $question_wrapper->getIdentifier());
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
+    $admin_info[] = ' <small>[S' . intval($answer['score']) . ']</small> ';
+    $admin_info[] = ' <small>[K' . $answer['kpi'] . ']</small> ';
 
     // Only set the default value if a response has been provided.
     if ($answer['updated']) {
