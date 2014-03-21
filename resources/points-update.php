@@ -15,7 +15,15 @@
  *
  * Set `memory_limit = 1024M` in ~/.drush/drush.ini
  * Run `drush @pgh.local scr /path/to/points-update.php`.
- /
+ *
+ * Options:
+ *
+ * Pass the `--file={filepath}` option to load a file instead of
+ * /compiled/points.csv. Useful* for testing.
+ *
+ * Pass the `--app-id={app_id}` option to update a specific app ID for testing.
+ */
+
 
 /**
  * Read a CSV and return an array of its contents.
@@ -31,7 +39,13 @@ function readCSV($file) {
   }
 }
 
-$file = PGH_MIGRATE_DATA_DIR . '/compiled/points.csv';
+$file = drush_get_option('file');
+if (!$file) {
+  $file = PGH_MIGRATE_DATA_DIR . '/compiled/points.csv';
+}
+$app_id = drush_get_option('app-id');
+
+drush_log(dt('Loading file !file', array('!file' => $file)), 'ok');
 if (!file_exists($file)) {
   return drush_set_error(dt('The file !file does not exist.', array('!file' => $file)));
 }
@@ -75,19 +89,15 @@ foreach ($data as $index => $row) {
   $wrapper->field_question_kpi->set($kpi);
   $wrapper->save();
 
-  // Debug mode options.
-  $debug_mode = variable_get('pgh_migrate_debug', FALSE);
-  $debug_app_id = variable_get('pgh_migrate_debug_app_id', NULL);
-
   // After the question score is saved find all responses associated with this
   // question.
   $find = array(
     'type' => 'response',
     'field_response_question' => array('target_id', $node->nid, '='),
   );
-  if ($debug_mode && !empty($debug_app_id)) {
+  if ($app_id) {
     $debug_find = array(
-      'field_response_application' => array('target_id', $debug_app_id, '='),
+      'field_response_application' => array('target_id', $app_id, '='),
     );
     $find = array_merge($find, $debug_find);
   }
@@ -110,11 +120,12 @@ foreach ($data as $index => $row) {
       $success[] = $index;
     }
   }
-  drush_log(dt('Saved !count responses for question !qid.', array('!count' => $saved_responses,
+  drush_log(dt('Saved !count responses for question !qid.', array(
+    '!count' => $saved_responses,
     '!qid' => $qid)), 'success');
 }
 
 drush_log(dt('Finished with updating questions.'), 'success');
 drush_log(dt('There were !count rows ignored due to missing IDs.', array('!count' => count($ignore))), 'ok');
 drush_log(dt('There were !count errors due to required fields missing.', array('!count' => count($error))), 'ok');
-drush_log(dt('There were !count successes', array('!success' => count($success))), 'ok');
+drush_log(dt('There were !count successes', array('!count' => count($success))), 'ok');
