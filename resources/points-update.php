@@ -15,7 +15,7 @@
  *
  * Set `memory_limit = 1024M` in ~/.drush/drush.ini
  * Run `drush @pgh.local scr /path/to/points-update.php`.
- */
+ /
 
 /**
  * Read a CSV and return an array of its contents.
@@ -110,7 +110,8 @@ foreach ($data as $index => $row) {
       $success[] = $index;
     }
   }
-  drush_log(dt('Saved !count responses for the question.', array('!count' => $saved_responses)), 'success');
+  drush_log(dt('Saved !count responses for question !qid.', array('!count' => $saved_responses,
+    '!qid' => $qid)), 'success');
 }
 
 drush_log(dt('Finished with updating questions.'), 'success');
