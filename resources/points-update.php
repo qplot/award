@@ -26,6 +26,8 @@
  * `--app-id={app_id}` option to update a specific app ID for testing.
  *
  * `--start-row={row}` option lets you (re)start update at a certain row.
+ *
+ * `--limit=10` Process only ten items.
  */
 
 
@@ -49,6 +51,7 @@ if (!$file) {
 }
 $app_id = drush_get_option('app-id');
 $start_row = drush_get_option('start-row');
+$limit = drush_get_option('limit');
 
 drush_log(dt('Loading file !file', array('!file' => $file)), 'ok');
 if (!file_exists($file)) {
@@ -59,12 +62,21 @@ $data = readCSV($file);
 
 $total = count($data) - 1;
 $ignore = $error = $success = array();
+$count = 0;
 // Loop through data.
 foreach ($data as $index => $row) {
   if ($index == 0) {
     // Ignore CSV headers.
     continue;
   }
+  if ($count > $limit) {
+    drush_log(dt('Reached max limit of !limit. Exiting at row !row.', array(
+      '!limit' => $limit,
+      '!row' => $index,
+    )), 'ok');
+    break;
+  }
+  $count++;
   // Allow (re)starting the migration at a particular row.
   if ($start_row && $index < $start_row) {
     continue;
@@ -82,11 +94,12 @@ foreach ($data as $index => $row) {
     $ignore[] = $index;
     continue;
   }
-  $point = explode('|', $row[9]);
-  $score = explode('|', $row[10]);
-  $kpi = explode('|', $row[11]);
-  if (!$point || !$score || !$kpi) {
-    drush_set_error(dt('- KPI, point or score are not set for row !row', array('!row' => $index)), 'ok');
+  // Set these to default to an array.
+  $point = !empty($row[9]) ? explode('|', $row[9]) : array();
+  $score = !empty($row[10]) ? explode('|', $row[10]) : array();
+  $kpi = !empty($row[11]) ? explode('|', $row[11]) : array();
+  if (!$point && !$score && !$kpi) {
+    drush_set_error(dt('- KPI, point, and score are all blank in row !row', array('!row' => $index)));
     $error[] = $index;
     continue;
   }
@@ -125,7 +138,10 @@ foreach ($data as $index => $row) {
       $app_id = $response_wrapper->field_response_application->raw();
       $qid = $response_wrapper->field_response_question->raw();
       $value = $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '';
-      drush_log(dt('    - Saving response for app ID !id', array('!id' => $app_id)), 'ok');
+      drush_log(dt('    - Saving response for app ID !id with body !body', array(
+        '!id' => $app_id,
+        '!body' => !empty($value) ? 'value set.' : 'NOT set.',
+      )), !empty($value) ? 'ok' : 'warning');
       pgh_api_save_response($app_id, $qid, $value);
       $saved_responses++;
       $success[] = $index;
