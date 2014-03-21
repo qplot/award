@@ -24,8 +24,8 @@
  * /compiled/points.csv. Useful* for testing.
  *
  * `--app-id={app_id}` option to update a specific app ID for testing.
- * 
- * `--start-row={row}` option lets you (re)start update at a certain row. 
+ *
+ * `--start-row={row}` option lets you (re)start update at a certain row.
  */
 
 
@@ -125,6 +125,7 @@ foreach ($data as $index => $row) {
       $app_id = $response_wrapper->field_response_application->raw();
       $qid = $response_wrapper->field_response_question->raw();
       $value = $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '';
+      drush_log(dt('    - Saving response for app ID !id', array('!id' => $app_id)), 'ok');
       pgh_api_save_response($app_id, $qid, $value);
       $saved_responses++;
       $success[] = $index;
