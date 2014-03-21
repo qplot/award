@@ -4,7 +4,7 @@
  * @file
  * Points migration.
  *
- * @author  Fang Jin <fang@designhammer.com>
+ * @author Fang Jin <fang@designhammer.com>
  */
 
 /**
@@ -13,7 +13,7 @@
 class MigratePGHPointsMigration extends Migration {
 
   /**
-   * Prepare the migration.
+   * {@inheritdoc}
    */
   public function __construct($arguments) {
     parent::__construct($arguments);
@@ -40,12 +40,14 @@ class MigratePGHPointsMigration extends Migration {
       15 => array('pprompt', 'post prompt'),
     );
 
-    // Load compiled CSV data if it's available (created in preprocess_csv.inc) or an empty source if not.
+    // Load compiled CSV data if it's available (created in preprocess_csv.inc)
+    // or an empty source if not.
     if (file_exists(PGH_MIGRATE_DATA_DIR . '/compiled/points.csv')) {
       $this->source = new MigrateSourceCSV(
         PGH_MIGRATE_DATA_DIR . '/compiled/points.csv',
         $columns,
-        array('header_rows' => 1)
+        array('header_rows' => 1),
+        $this->fields()
       );
     }
     else {
@@ -61,44 +63,144 @@ class MigratePGHPointsMigration extends Migration {
           'type' => 'varchar',
           'length' => 255,
           'not null' => TRUE,
-        )
+        ),
       ),
       MigrateDestinationNode::getKeySchema()
     );
 
-    $this->addFieldMapping('nid', 'id');
+    $this->addFieldMapping('nid', 'nid_lookup')
+         ->description(t('Lookup the node ID from the ID. See prepareRow().'));
+    $this->addFieldMapping('title', 'id');
     $this->addFieldMapping('field_question_point', 'point')
          ->separator('|');
     $this->addFieldMapping('field_question_score', 'score')
          ->separator('|');
     $this->addFieldMapping('field_question_kpi', 'kpi')
          ->separator('|');
+    $this->addFieldMapping('uid')
+         ->defaultValue(1);
+    $this->addFieldMapping('status')
+         ->defaultValue(1);
+    $this->addUnmigratedDestinations(array(
+      'created',
+      'changed',
+      'promote',
+      'sticky',
+      'revision',
+      'log',
+      'language',
+      'tnid',
+      'translate',
+      'revision_uid',
+      'is_new',
+      'body',
+      'body:summary',
+      'body:language',
+      'field_question_default',
+      'field_question_default:language',
+      'field_question_formula',
+      'field_question_formula:language',
+      'field_question_layout',
+      'field_question_layout:language',
+      'field_question_options',
+      'field_question_options:language',
+      'field_question_parent_qid',
+      'field_question_parent_qid:language',
+      'field_question_parent_value',
+      'field_question_parent_value:language',
+      'field_question_post_prompt',
+      'field_question_post_prompt:language',
+      'field_question_prompt',
+      'field_question_prompt:language',
+      'field_question_style',
+      'field_question_style:language',
+      'field_question_type',
+      'field_question_type:language',
+      'field_question_validation',
+      'field_question_validation:language',
+      'field_question_points',
+      'field_question_points:language',
+      'field_question_epp',
+      'field_question_kpi:language',
+      'field_question_point:language',
+      'field_question_score:language',
+      'path',
+      'comment',
+    ));
+    $this->addUnmigratedSources(array(
+      'raw_id',
+      'pid',
+      'pvalue',
+      'type',
+      'style',
+      'layout',
+      'prompt',
+      'options',
+      'validation',
+      'dformula',
+      'dvalue',
+      'pprompt',
+    ));
+
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function fields() {
+    return array(
+      'nid_lookup' => 'Look up the node ID to update from the source ID.',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function prepareRow($row) {
     if (parent::prepareRow($row) === FALSE) {
       return FALSE;
     }
 
-    // skip for empty row
-    if (empty($row->id))
+    // Skip for empty row.
+    if (empty($row->id)) {
       return FALSE;
+    }
 
-    // find the qid by id
-    if (!($row->id = pgh_api_find_nid($row->id, 'question')))
+    // Find the qid by id.
+    $nid = pgh_api_find_nid($row->id, 'question');
+    if (!$nid) {
       return FALSE;
-
+    }
+    else {
+      $row->nid_lookup = $nid;
+    }
     return TRUE;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function complete($entity, stdClass $row) {
-    // after the question score is saved,
-    // find all response associated with this question
+    // In Debugging mode, suppose you only want to apply it to certain application
+    // Ex. Carolinas Medical Center - Charlotte, 213892.
+    $debug_mode = variable_get('pgh_migrate_debug', FALSE);
+    $debug_app_id = variable_get('pgh_migrate_debug_app_id', NULL);
+
+    // After the question score is saved find all responses associated with this
+    // question.
+    $find = array(
+      'type' => 'response',
+      'field_response_question' => array('target_id', $entity->nid, '=')
+    );
+    if ($debug_mode && !empty($debug_app_id)) {
+      $debug_find = array(
+        'field_response_application' => array('target_id', $debug_app_id, '=')
+      );
+      $find = array_merge($find, $debug_find);
+    }
+
     $rids = pgh_api_find_nodes(
-      array(
-        'type' => 'response',
-        'field_response_question' => array('target_id', $entity->nid, '=')
-      ),
+      $find,
       NULL,
       TRUE
     );
@@ -112,11 +214,6 @@ class MigratePGHPointsMigration extends Migration {
         pgh_api_save_response($app_id, $qid, $value);
       }
     }
-  }
-
-  public function prepare($node, stdClass $row) {
-    $node->uid = 1;
-    $node->vid = $node->nid;
   }
 
 }
