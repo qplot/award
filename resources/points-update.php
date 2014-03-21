@@ -13,6 +13,7 @@
  *
  * Usage:
  *
+ * Set `memory_limit = 1024M` in ~/.drush/drush.ini
  * Run `drush @pgh.local scr /path/to/points-update.php`.
  */
 
@@ -37,6 +38,7 @@ if (!file_exists($file)) {
 
 $data = readCSV($file);
 
+$total = count($data) - 1;
 $ignore = $error = $success = array();
 // Loop through data.
 foreach ($data as $index => $row) {
@@ -44,6 +46,7 @@ foreach ($data as $index => $row) {
     // Ignore CSV headers.
     continue;
   }
+  drush_log(dt('### Processing row !row of total !total ###', array('!row' => $index, '!total' => $total)), 'ok');
   if (empty($row[1])) {
     drush_log(dt('Skipping row !row, it does not have an ID.', array('!row' => $index)), 'ok');
     $ignore[] = $index;
@@ -66,13 +69,11 @@ foreach ($data as $index => $row) {
   }
   $node = node_load($nid);
   drush_log(dt('Loaded node !title', array('!title' => $node->title)), 'success');
-  // Save the updated question node.
   $wrapper = entity_metadata_wrapper('node', $node);
   $wrapper->field_question_point->set($point);
   $wrapper->field_question_score->set($score);
   $wrapper->field_question_kpi->set($kpi);
   $wrapper->save();
-  drush_log(dt('Saved the updated question node.'), 'success');
 
   // Debug mode options.
   $debug_mode = variable_get('pgh_migrate_debug', FALSE);
@@ -96,6 +97,7 @@ foreach ($data as $index => $row) {
     NULL,
     TRUE
   );
+  $saved_responses = 0;
   foreach ($rids as $rid) {
     $response = node_load($rid);
     if (!empty($response->field_response_updated['und'][0]['value'])) {
@@ -103,15 +105,12 @@ foreach ($data as $index => $row) {
       $app_id = $response_wrapper->field_response_application->raw();
       $qid = $response_wrapper->field_response_question->raw();
       $value = $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '';
-      drush_log(dt('Saving response for app id !id with qid !qid and value !value', array(
-        '!id' => $app_id,
-        '!qid' => $qid,
-        '!value' => substr($value, 0, 20),
-      )), 'ok');
       pgh_api_save_response($app_id, $qid, $value);
+      $saved_responses++;
       $success[] = $index;
     }
   }
+  drush_log(dt('Saved !count responses for the question.', array('!count' => $saved_responses)), 'success');
 }
 
 drush_log(dt('Finished with updating questions.'), 'success');
