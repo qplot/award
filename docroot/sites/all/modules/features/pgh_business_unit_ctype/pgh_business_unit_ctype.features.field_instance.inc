@@ -940,7 +940,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
     'bundle' => 'business_unit',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Primary contact will received <strong>award notification</strong> via this email.',
+    'description' => 'Primary contact will receive <strong>award notification</strong> via this email.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1050,7 +1050,7 @@ function pgh_business_unit_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 26,
     ),
   );
 
