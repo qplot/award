@@ -706,7 +706,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
                 if (!empty($score[$i])) {
                   $r_score += $score[$i];
                 }
-                if (!empty($kpi[$i])) {
+                if (isset($kpi[$i])) {
                   $r_kpi += $kpi[$i];
                 }
               }
@@ -723,7 +723,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
             if (!empty($score[$value])) {
               $r_score = $score[$value];
             }
-            if (!empty($kpi[$value])) {
+            if (isset($kpi[$value])) {
               $r_kpi = $kpi[$value];
             }
             break;
@@ -736,7 +736,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
             if (!empty($score[$value])) {
               $r_score = $score[$value];
             }
-            if (!empty($kpi[$value])) {
+            if (isset($kpi[$value])) {
               $r_kpi = $kpi[$value];
             }
             break;
