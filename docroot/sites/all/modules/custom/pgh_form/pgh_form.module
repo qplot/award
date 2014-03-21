@@ -239,7 +239,10 @@ function pgh_form_category_page($application, $category_id) {
 
     drupal_set_title($application_title . ': ' . $category_title);
 
-    return drupal_get_form('pgh_application_form', $application->nid, $category_id);
+    // Set readonly through URL.
+    $readonly = (arg(4) == 'readonly');
+
+    return drupal_get_form('pgh_application_form', $application->nid, $category_id, $readonly);
   }
   else {
     drupal_not_found();
@@ -266,7 +269,7 @@ function pgh_form_category_page($application, $category_id) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {
+function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL, $readonly = FALSE) {
   // TODO: This is a very brittle way to skip already rendered questions.
   // We should not use globals for this.
   // Also, it leaves technically invalid question
@@ -328,7 +331,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
           $major = 'question_' . $q_wrapper->label();
 
-          $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id);
+          $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id, $readonly);
           // dsm($question_form);
 
           $form[$fieldset][$major][$q_wrapper->getIdentifier()] = $question_form;
@@ -465,7 +468,7 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question($question, $app_id = NULL) {
+function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) {
   $form_item = array();
 
   $question_wrapper = entity_metadata_wrapper('node', $question);
@@ -674,8 +677,12 @@ function pgh_form_render_question($question, $app_id = NULL) {
 
   // Disable this question if has default formula.
   if ($default_formula) {
-    // $form_item['#disabled'] = TRUE;
     $form_item['#attributes'] = array('readonly' => 'readonly');
+  }
+
+  // For readonly form, disable element.
+  if ($readonly) {
+    $form_item['#disabled'] = TRUE;
   }
 
   // Mark this question as processed.
@@ -708,7 +715,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question_layout($question, $app_id = NULL) {
+function pgh_form_render_question_layout($question, $app_id = NULL, $readonly = FALSE) {
   $question_wrapper = entity_metadata_wrapper('node', $question);
   $type = $question_wrapper->field_question_type->value();
   $layout = $question_wrapper->field_question_layout->value();
@@ -783,7 +790,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
           // Find the question.
           if ($qid = pgh_find_question_id($cell)) {
             $child = node_load($qid);
-            $form_item[$qid] = pgh_form_render_question($child, $app_id);
+            $form_item[$qid] = pgh_form_render_question($child, $app_id, $readonly);
           }
         }
       }
@@ -791,7 +798,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
   }
   else {
     // This is the original without layout handling.
-    $form_item = pgh_form_render_question($question, $app_id);
+    $form_item = pgh_form_render_question($question, $app_id, $readonly);
   }
 
   return $form_item;
