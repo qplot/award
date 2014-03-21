@@ -69,6 +69,10 @@ foreach ($data as $index => $row) {
     // Ignore CSV headers.
     continue;
   }
+  // Allow (re)starting the migration at a particular row.
+  if ($start_row && $index < $start_row) {
+    continue;
+  }
   if ($count > $limit) {
     drush_log(dt('Reached max limit of !limit. Exiting at row !row.', array(
       '!limit' => $limit,
@@ -77,10 +81,6 @@ foreach ($data as $index => $row) {
     break;
   }
   $count++;
-  // Allow (re)starting the migration at a particular row.
-  if ($start_row && $index < $start_row) {
-    continue;
-  }
   drush_log(dt('### Processing row !row of total !total ###', array('!row' => $index, '!total' => $total)), 'ok');
   if (empty($row[1])) {
     drush_log(dt('- Skipping row !row, it does not have an ID.', array('!row' => $index)), 'ok');
@@ -140,7 +140,7 @@ foreach ($data as $index => $row) {
       $value = $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '';
       drush_log(dt('    - Saving response for app ID !id with body !body', array(
         '!id' => $app_id,
-        '!body' => !empty($value) ? 'value set.' : 'NOT set.',
+        '!body' => !empty($value) ? 'value set.' : '*NOT* set.',
       )), !empty($value) ? 'ok' : 'warning');
       pgh_api_save_response($app_id, $qid, $value);
       $saved_responses++;
