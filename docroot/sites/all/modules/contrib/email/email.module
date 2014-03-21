@@ -20,7 +20,10 @@ function email_field_info() {
  * Implements hook_migrate_api().
  */
 function email_migrate_api() {
-  return array('api' => 2);
+  return array(
+    'api' => 2,
+    'field handlers' => array('MigrateEmailFieldHandler'),
+  );
 }
 
 /**
@@ -198,7 +201,7 @@ function email_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('email_admin_settings'),
     'access arguments' => array('administer site configuration'),
-    'type' => MENU_CALLBACK,
+    'type' => MENU_NORMAL_ITEM,
   );
   return $items;
 }
