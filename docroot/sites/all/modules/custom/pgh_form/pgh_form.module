@@ -337,7 +337,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
           if (!empty($question_form['#response_id'])) {
             $form_item = pgh_form_render_question_comment($question_form['#response_id']);
 
-            // Respect the visibility of this question
+            // Respect the visibility of this question.
             if ($q_wrapper->field_question_parent_qid->value()) {
               $form_item['#states'] = pgh_form_question_states($q_wrapper->value());
             }
@@ -672,7 +672,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
     }
   }
 
-  // Disable this question if has default formula
+  // Disable this question if has default formula.
   if ($default_formula) {
     // $form_item['#disabled'] = TRUE;
     $form_item['#attributes'] = array('readonly' => 'readonly');
@@ -1150,7 +1150,7 @@ function pgh_form_render_question_comment($rid) {
     '#prefix' => '<div class="comment-wrapper"><div id="comment_' . $rid . '">',
     '#suffix' => '</div>',
     '#description' => t('Please use the Comment feature only where necessary for clarification. No points are awarded for comments.'),
-    '#resizable' => false,
+    '#resizable' => FALSE,
     '#default_value' => pgh_form_get_question_comment($rid),
   );
 
@@ -1214,7 +1214,7 @@ function pgh_form_set_question_comment($rid, $body) {
   // But this function is outdated and can be upgraded
   // For now use EntityFieldQuery() manually.
 
-  // Find if the comment already exist
+  // Find if the comment already exist.
   global $user;
   $cid = 0;
   $query = new EntityFieldQuery();
@@ -1229,8 +1229,9 @@ function pgh_form_set_question_comment($rid, $body) {
   $wrapper = NULL;
   if ($cid) {
     $comment = comment_load($cid);
-  } else {
-    // add a new comment
+  }
+  else {
+    // Add a new comment.
     $comment = entity_create('comment', array(
       'type' => 'comment',
       'node_type' => 'comment_node_response',
