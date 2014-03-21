@@ -406,36 +406,6 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
   $scores = array_merge($scores, $metric_scores);
   $scores['metric_p'] = $scores['metric_count'] * 100;
 
-  // Save to category response.
-  if ($save) {
-    if ($rid = pgh_api_find_nodes(
-          array(
-            'type' => 'category_response',
-            'field_cat_response_application' => array('target_id', $app_id, '='),
-            'field_cat_response_category' => array('target_id', $cat_id, '='),
-          )
-    )) {
-      $cat_response = node_load($rid);
-      $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
-    }
-    else {
-      $cat_response = entity_create('node', array('type' => 'category_response'));
-      $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
-      $cat_response_wrapper->field_cat_response_application->set($app_id);
-      $cat_response_wrapper->field_cat_response_category->set($cat_id);
-      $cat_response_wrapper->title->set('app_' . $app_id . '_' . $category_wrapper->title->value() .  '_' . $cat_id);
-    }
-    $cat_response_wrapper->field_cat_response_automatic_p->set($scores['automatic_p']);
-    $cat_response_wrapper->field_cat_response_automatic->set($scores['automatic']);
-    $cat_response_wrapper->field_cat_response_kpi_p->set($scores['kpi_p']);
-    $cat_response_wrapper->field_cat_response_kpi->set($scores['kpi']);
-    $cat_response_wrapper->field_cat_response_metric_p->set($scores['metric_p']);
-    $cat_response_wrapper->field_cat_response_metric->set($scores['metric']);
-    $cat_response_wrapper->field_cat_response_quality_p->set(100);
-
-    $cat_response_wrapper->save();
-  }
-
   return $scores;
 }
 
@@ -473,8 +443,48 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
 
     $cids = $apptype_wrapper->field_apptype_categories->raw();
-    foreach ($cids as $cid) {
-      $scores = pgh_awards_score_calculate_application_category($app_id, $cid, $save);
+    foreach ($cids as $cat_id) {
+      $scores = pgh_awards_score_calculate_application_category($app_id, $cat_id, $save);
+
+      // Save to category response.
+      if ($save) {
+        if ($rid = pgh_api_find_nodes(
+          array(
+            'type' => 'category_response',
+            'field_cat_response_application' => array('target_id', $app_id, '='),
+            'field_cat_response_category' => array('target_id', $cat_id, '='),
+          )
+        )) {
+          $cat_response = node_load($rid);
+          $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
+        }
+        else {
+          $cat_response = entity_create('node', array('type' => 'category_response'));
+          $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
+          $cat_response_wrapper->field_cat_response_application->set($app_id);
+          $cat_response_wrapper->field_cat_response_category->set($cat_id);
+          $cat_response_wrapper->title->set('app_' . $app_id . '_' . $category_wrapper->title->value() .  '_' . $cat_id);
+        }
+        $cat_response_wrapper->field_cat_response_automatic_p->set($scores['automatic_p']);
+        $cat_response_wrapper->field_cat_response_automatic->set($scores['automatic']);
+        $cat_response_wrapper->field_cat_response_kpi_p->set($scores['kpi_p']);
+        $cat_response_wrapper->field_cat_response_kpi->set($scores['kpi']);
+        $cat_response_wrapper->field_cat_response_metric_p->set($scores['metric_p']);
+        $cat_response_wrapper->field_cat_response_metric->set($scores['metric']);
+        $cat_response_wrapper->field_cat_response_quality_p->set(100);
+
+        // Calculate and store final score.
+        $weight = $apptype_wrapper->field_apptype_score_weights->value();
+        $wp = explode('|', $weight);
+        if (count($wp) < 4) {
+          $wp = array(1, 1, 1, 1);
+        }
+        $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] +
+          $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
+        $cat_response_wrapper->field_cat_response_final->set($scores['final']);
+
+        $cat_response_wrapper->save();
+      }
 
       foreach ($scores as $key => $score) {
         $sums[$key] += $score;
