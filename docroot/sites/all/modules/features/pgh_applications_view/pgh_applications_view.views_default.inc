@@ -32,6 +32,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '20';
   $handler->display->display_options['style_plugin'] = 'table';
@@ -41,6 +42,13 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['relationships']['reverse_field_applications_node']['field'] = 'reverse_field_applications_node';
   $handler->display->display_options['relationships']['reverse_field_applications_node']['ui_name'] = 'Business Unit';
   $handler->display->display_options['relationships']['reverse_field_applications_node']['label'] = 'Business Unit';
+  /* Relationship: Workgroup */
+  $handler->display->display_options['relationships']['reverse_field_business_units_node']['id'] = 'reverse_field_business_units_node';
+  $handler->display->display_options['relationships']['reverse_field_business_units_node']['table'] = 'node';
+  $handler->display->display_options['relationships']['reverse_field_business_units_node']['field'] = 'reverse_field_business_units_node';
+  $handler->display->display_options['relationships']['reverse_field_business_units_node']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['relationships']['reverse_field_business_units_node']['ui_name'] = 'Workgroup';
+  $handler->display->display_options['relationships']['reverse_field_business_units_node']['label'] = 'Workgroup';
   /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
@@ -136,6 +144,130 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'application' => 'application',
+  );
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['relationship'] = 'reverse_field_business_units_node';
+  $handler->display->display_options['filters']['title']['operator'] = 'word';
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'in Workgroup';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['filters']['title_1']['table'] = 'node';
+  $handler->display->display_options['filters']['title_1']['field'] = 'title';
+  $handler->display->display_options['filters']['title_1']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['title_1']['operator'] = 'word';
+  $handler->display->display_options['filters']['title_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title_1']['expose']['operator_id'] = 'title_1_op';
+  $handler->display->display_options['filters']['title_1']['expose']['label'] = 'in Business Unit ';
+  $handler->display->display_options['filters']['title_1']['expose']['operator'] = 'title_1_op';
+  $handler->display->display_options['filters']['title_1']['expose']['identifier'] = 'title_1';
+  $handler->display->display_options['filters']['title_1']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Billing state (field_billing_state) */
+  $handler->display->display_options['filters']['field_billing_state_value']['id'] = 'field_billing_state_value';
+  $handler->display->display_options['filters']['field_billing_state_value']['table'] = 'field_data_field_billing_state';
+  $handler->display->display_options['filters']['field_billing_state_value']['field'] = 'field_billing_state_value';
+  $handler->display->display_options['filters']['field_billing_state_value']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['field_billing_state_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['operator_id'] = 'field_billing_state_value_op';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['label'] = 'State';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['operator'] = 'field_billing_state_value_op';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['identifier'] = 'field_billing_state_value';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Reviewers (field_application_reviewers) */
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['id'] = 'field_application_reviewers_target_id';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['table'] = 'field_data_field_application_reviewers';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['field'] = 'field_application_reviewers_target_id';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['operator_id'] = 'field_application_reviewers_target_id_op';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['label'] = 'Reviewers';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['operator'] = 'field_application_reviewers_target_id_op';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['identifier'] = 'field_application_reviewers_target_id';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Status (field_application_status) */
+  $handler->display->display_options['filters']['field_application_status_value']['id'] = 'field_application_status_value';
+  $handler->display->display_options['filters']['field_application_status_value']['table'] = 'field_data_field_application_status';
+  $handler->display->display_options['filters']['field_application_status_value']['field'] = 'field_application_status_value';
+  $handler->display->display_options['filters']['field_application_status_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['operator_id'] = 'field_application_status_value_op';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['label'] = 'Status';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['operator'] = 'field_application_status_value_op';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['identifier'] = 'field_application_status_value';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Application Type (field_application_type) */
+  $handler->display->display_options['filters']['field_application_type_value']['id'] = 'field_application_type_value';
+  $handler->display->display_options['filters']['field_application_type_value']['table'] = 'field_data_field_application_type';
+  $handler->display->display_options['filters']['field_application_type_value']['field'] = 'field_application_type_value';
+  $handler->display->display_options['filters']['field_application_type_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['operator_id'] = 'field_application_type_value_op';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['label'] = 'Application Type';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['operator'] = 'field_application_type_value_op';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['identifier'] = 'field_application_type_value';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Number of Beds (field_number_beds) */
+  $handler->display->display_options['filters']['field_number_beds_value']['id'] = 'field_number_beds_value';
+  $handler->display->display_options['filters']['field_number_beds_value']['table'] = 'field_data_field_number_beds';
+  $handler->display->display_options['filters']['field_number_beds_value']['field'] = 'field_number_beds_value';
+  $handler->display->display_options['filters']['field_number_beds_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['operator_id'] = 'field_number_beds_value_op';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['label'] = 'Beds';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['operator'] = 'field_number_beds_value_op';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['identifier'] = 'field_number_beds_value';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
   );
 
   /* Display: Page */
