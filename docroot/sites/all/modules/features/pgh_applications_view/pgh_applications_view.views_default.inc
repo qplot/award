@@ -11,6 +11,139 @@ function pgh_applications_view_views_default_views() {
   $export = array();
 
   $view = new view();
+  $view->name = 'admin_reviewers';
+  $view->description = 'Admin Reviewer Assignment and Tracking';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Admin Reviewers';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Admin Reviewers';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    4 => '4',
+  );
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '20';
+  $handler->display->display_options['style_plugin'] = 'table';
+  /* Relationship: Business Unit */
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['id'] = 'reverse_field_applications_node';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['table'] = 'node';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['field'] = 'reverse_field_applications_node';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['ui_name'] = 'Business Unit';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['label'] = 'Business Unit';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = 'ID';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['title']['label'] = 'Business Unit';
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Name of Institution */
+  $handler->display->display_options['fields']['field_business_unit_name']['id'] = 'field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['table'] = 'field_data_field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['field'] = 'field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: First name */
+  $handler->display->display_options['fields']['field_primary_first_name']['id'] = 'field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['table'] = 'field_data_field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['field'] = 'field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Last name */
+  $handler->display->display_options['fields']['field_primary_last_name']['id'] = 'field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['table'] = 'field_data_field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['field'] = 'field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Phone */
+  $handler->display->display_options['fields']['field_primary_phone']['id'] = 'field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['table'] = 'field_data_field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['field'] = 'field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Email */
+  $handler->display->display_options['fields']['field_primary_email']['id'] = 'field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['table'] = 'field_data_field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['field'] = 'field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Billing city */
+  $handler->display->display_options['fields']['field_billing_city']['id'] = 'field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['table'] = 'field_data_field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['field'] = 'field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_billing_city']['label'] = 'City';
+  /* Field: Content: Billing state */
+  $handler->display->display_options['fields']['field_billing_state']['id'] = 'field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['table'] = 'field_data_field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['field'] = 'field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_billing_state']['label'] = 'State';
+  /* Field: Content: Number of Beds */
+  $handler->display->display_options['fields']['field_number_beds']['id'] = 'field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['table'] = 'field_data_field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['field'] = 'field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_number_beds']['label'] = '#Beds';
+  /* Field: Content: Number of ORs */
+  $handler->display->display_options['fields']['field_number_ors']['id'] = 'field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['table'] = 'field_data_field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['field'] = 'field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_number_ors']['label'] = '#ORs';
+  /* Field: Content: Application Type */
+  $handler->display->display_options['fields']['field_application_type']['id'] = 'field_application_type';
+  $handler->display->display_options['fields']['field_application_type']['table'] = 'field_data_field_application_type';
+  $handler->display->display_options['fields']['field_application_type']['field'] = 'field_application_type';
+  /* Field: Content: Reviewers */
+  $handler->display->display_options['fields']['field_application_reviewers']['id'] = 'field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['table'] = 'field_data_field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['field'] = 'field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['settings'] = array(
+    'link' => 0,
+  );
+  $handler->display->display_options['fields']['field_application_reviewers']['delta_offset'] = '0';
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'application' => 'application',
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'admin/reviewers';
+  $export['admin_reviewers'] = $view;
+
+  $view = new view();
   $view->name = 'applications';
   $view->description = '';
   $view->tag = 'default';
