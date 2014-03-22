@@ -524,7 +524,7 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
   }
 
   // Ajax processing.
-  if (_pgh_form_should_use_ajax()) {
+  if (_pgh_form_should_use_ajax() && !$readonly) {
     $form_item['#ajax'] = array(
       'callback' => 'pgh_application_form_element_callback',
       'wrapper' => 'error-container-' . $question_wrapper->title->value(),
@@ -598,6 +598,7 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
     case 'file':
       $media = array(
         '#type' => 'media',
+        '#after_build' => array('pgh_form_file_after_build'),
         '#input' => TRUE,
         '#media_options' => array(
           'global' => array(
@@ -690,6 +691,20 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
   unset($_pgh_form_temp_section_questions_[$question_wrapper->getIdentifier()]);
 
   return $form_item;
+}
+
+/**
+ * Set permission control to file in read-only mode.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_file_after_build($form, &$form_state) {
+  if (!empty($form['#disabled'])) {
+    $form['edit']['#access'] = FALSE;
+    $form['select']['#access'] = FALSE;
+    $form['remove']['#access'] = FALSE;
+  }
+  return $form;
 }
 
 /**
