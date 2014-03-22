@@ -432,8 +432,11 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     'kpi' => 0,
     'metric_p' => 0,
     'metric' => 0,
+    'quality' => 0,
+    'quality_p' => 0,
     'question_count' => 0,
     'metric_count' => 0,
+    'final' => 0,
   );
   if ($app = node_load($app_id)) {
     // Find app type.
@@ -463,7 +466,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
           $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
           $cat_response_wrapper->field_cat_response_application->set($app_id);
           $cat_response_wrapper->field_cat_response_category->set($cat_id);
-          $cat_response_wrapper->title->set('app_' . $app_id . '_' . $category_wrapper->title->value() .  '_' . $cat_id);
+          $cat_response_wrapper->title->set('app_' . $app_id . '_cat_' . $cat_id);
         }
         $cat_response_wrapper->field_cat_response_automatic_p->set($scores['automatic_p']);
         $cat_response_wrapper->field_cat_response_automatic->set($scores['automatic']);
