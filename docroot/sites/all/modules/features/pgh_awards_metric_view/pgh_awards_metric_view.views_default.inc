@@ -342,12 +342,17 @@ function pgh_awards_metric_view_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Metric Score';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    4 => '4',
+  );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '20';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['pager']['options']['quantity'] = '9';
@@ -355,24 +360,49 @@ function pgh_awards_metric_view_views_default_views() {
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['style_options']['columns'] = array(
+    'nid' => 'nid',
+    'title_1' => 'title_1',
+    'body_1' => 'body_1',
+    'body' => 'body',
     'field_metric_formula' => 'field_metric_formula',
-    'field_metric_category' => 'field_metric_category',
     'title' => 'title',
     'field_metric_response_weight' => 'field_metric_response_weight',
     'field_metric_response_value' => 'field_metric_response_value',
     'field_metric_response_score' => 'field_metric_response_score',
+    'edit_node' => 'edit_node',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
-    'field_metric_formula' => array(
-      'sortable' => 1,
+    'nid' => array(
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_metric_category' => array(
-      'sortable' => 1,
+    'title_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'body_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'body' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_metric_formula' => array(
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -386,22 +416,27 @@ function pgh_awards_metric_view_views_default_views() {
       'empty_column' => 0,
     ),
     'field_metric_response_weight' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_metric_response_value' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_metric_response_score' => array(
-      'sortable' => 1,
+      'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_node' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -419,6 +454,20 @@ function pgh_awards_metric_view_views_default_views() {
   $handler->display->display_options['relationships']['field_metric_response_app_target_id']['field'] = 'field_metric_response_app_target_id';
   $handler->display->display_options['relationships']['field_metric_response_app_target_id']['ui_name'] = 'Application';
   $handler->display->display_options['relationships']['field_metric_response_app_target_id']['label'] = 'Application';
+  /* Relationship: Category */
+  $handler->display->display_options['relationships']['field_metric_category_target_id']['id'] = 'field_metric_category_target_id';
+  $handler->display->display_options['relationships']['field_metric_category_target_id']['table'] = 'field_data_field_metric_category';
+  $handler->display->display_options['relationships']['field_metric_category_target_id']['field'] = 'field_metric_category_target_id';
+  $handler->display->display_options['relationships']['field_metric_category_target_id']['relationship'] = 'field_metric_response_metric_target_id';
+  $handler->display->display_options['relationships']['field_metric_category_target_id']['ui_name'] = 'Category';
+  $handler->display->display_options['relationships']['field_metric_category_target_id']['label'] = 'Category';
+  /* Relationship: Business Unit */
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['id'] = 'reverse_field_applications_node';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['table'] = 'node';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['field'] = 'reverse_field_applications_node';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['relationship'] = 'field_metric_response_app_target_id';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['ui_name'] = 'Business Unit';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['label'] = 'Business Unit';
   /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
@@ -426,38 +475,37 @@ function pgh_awards_metric_view_views_default_views() {
   $handler->display->display_options['fields']['nid']['relationship'] = 'field_metric_response_app_target_id';
   $handler->display->display_options['fields']['nid']['label'] = 'Application ID';
   $handler->display->display_options['fields']['nid']['link_to_node'] = TRUE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['title_1']['label'] = 'Business Unit';
+  $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
   /* Field: Content: Body */
+  $handler->display->display_options['fields']['body_1']['id'] = 'body_1';
+  $handler->display->display_options['fields']['body_1']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body_1']['field'] = 'body';
+  $handler->display->display_options['fields']['body_1']['relationship'] = 'field_metric_category_target_id';
+  $handler->display->display_options['fields']['body_1']['label'] = 'Category';
+  /* Field: Description */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['relationship'] = 'field_metric_response_metric_target_id';
+  $handler->display->display_options['fields']['body']['ui_name'] = 'Description';
   $handler->display->display_options['fields']['body']['label'] = 'Metric';
-  /* Field: Content: Formula */
+  /* Field: Formula */
   $handler->display->display_options['fields']['field_metric_formula']['id'] = 'field_metric_formula';
   $handler->display->display_options['fields']['field_metric_formula']['table'] = 'field_data_field_metric_formula';
   $handler->display->display_options['fields']['field_metric_formula']['field'] = 'field_metric_formula';
   $handler->display->display_options['fields']['field_metric_formula']['relationship'] = 'field_metric_response_metric_target_id';
-  /* Field: Content: Category */
-  $handler->display->display_options['fields']['field_metric_category']['id'] = 'field_metric_category';
-  $handler->display->display_options['fields']['field_metric_category']['table'] = 'field_data_field_metric_category';
-  $handler->display->display_options['fields']['field_metric_category']['field'] = 'field_metric_category';
-  $handler->display->display_options['fields']['field_metric_category']['relationship'] = 'field_metric_response_metric_target_id';
-  $handler->display->display_options['fields']['field_metric_category']['settings'] = array(
-    'link' => 0,
-  );
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_metric_formula']['ui_name'] = 'Formula';
   /* Field: Content: Weight */
   $handler->display->display_options['fields']['field_metric_response_weight']['id'] = 'field_metric_response_weight';
   $handler->display->display_options['fields']['field_metric_response_weight']['table'] = 'field_data_field_metric_response_weight';
   $handler->display->display_options['fields']['field_metric_response_weight']['field'] = 'field_metric_response_weight';
+  $handler->display->display_options['fields']['field_metric_response_weight']['relationship'] = 'field_metric_response_metric_target_id';
   /* Field: Content: Value */
   $handler->display->display_options['fields']['field_metric_response_value']['id'] = 'field_metric_response_value';
   $handler->display->display_options['fields']['field_metric_response_value']['table'] = 'field_data_field_metric_response_value';
@@ -503,6 +551,162 @@ function pgh_awards_metric_view_views_default_views() {
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'metric_response' => 'metric_response',
+  );
+  /* Filter criterion: Content: Nid */
+  $handler->display->display_options['filters']['nid']['id'] = 'nid';
+  $handler->display->display_options['filters']['nid']['table'] = 'node';
+  $handler->display->display_options['filters']['nid']['field'] = 'nid';
+  $handler->display->display_options['filters']['nid']['relationship'] = 'field_metric_response_app_target_id';
+  $handler->display->display_options['filters']['nid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['nid']['expose']['operator_id'] = 'nid_op';
+  $handler->display->display_options['filters']['nid']['expose']['label'] = 'Application ID';
+  $handler->display->display_options['filters']['nid']['expose']['operator'] = 'nid_op';
+  $handler->display->display_options['filters']['nid']['expose']['identifier'] = 'nid';
+  $handler->display->display_options['filters']['nid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['title']['operator'] = 'word';
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Business Unit';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Body (body) */
+  $handler->display->display_options['filters']['body_value']['id'] = 'body_value';
+  $handler->display->display_options['filters']['body_value']['table'] = 'field_data_body';
+  $handler->display->display_options['filters']['body_value']['field'] = 'body_value';
+  $handler->display->display_options['filters']['body_value']['relationship'] = 'field_metric_response_metric_target_id';
+  $handler->display->display_options['filters']['body_value']['operator'] = 'word';
+  $handler->display->display_options['filters']['body_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['body_value']['expose']['operator_id'] = 'body_value_op';
+  $handler->display->display_options['filters']['body_value']['expose']['label'] = 'Metric contains';
+  $handler->display->display_options['filters']['body_value']['expose']['operator'] = 'body_value_op';
+  $handler->display->display_options['filters']['body_value']['expose']['identifier'] = 'body_value';
+  $handler->display->display_options['filters']['body_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Category (field_metric_category) */
+  $handler->display->display_options['filters']['field_metric_category_target_id']['id'] = 'field_metric_category_target_id';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['table'] = 'field_data_field_metric_category';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['field'] = 'field_metric_category_target_id';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['relationship'] = 'field_metric_response_metric_target_id';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['value'] = array(
+    'all' => 'all',
+    365833 => '365833',
+    365834 => '365834',
+    365835 => '365835',
+    365836 => '365836',
+    365837 => '365837',
+    365838 => '365838',
+    365839 => '365839',
+    365840 => '365840',
+    365841 => '365841',
+    365842 => '365842',
+    365843 => '365843',
+    365844 => '365844',
+    365845 => '365845',
+    365846 => '365846',
+    365847 => '365847',
+    365848 => '365848',
+    365849 => '365849',
+    365850 => '365850',
+    365851 => '365851',
+    365852 => '365852',
+    365853 => '365853',
+    365854 => '365854',
+    365855 => '365855',
+    365856 => '365856',
+    365857 => '365857',
+    365858 => '365858',
+    365859 => '365859',
+    365860 => '365860',
+    365861 => '365861',
+    365862 => '365862',
+    365863 => '365863',
+    365864 => '365864',
+    365865 => '365865',
+    365866 => '365866',
+    365867 => '365867',
+    365868 => '365868',
+    365869 => '365869',
+    365870 => '365870',
+    365871 => '365871',
+    365872 => '365872',
+    365873 => '365873',
+    365874 => '365874',
+    365875 => '365875',
+    365876 => '365876',
+    365877 => '365877',
+    365878 => '365878',
+    365879 => '365879',
+    365880 => '365880',
+    365881 => '365881',
+    365882 => '365882',
+    365883 => '365883',
+    365884 => '365884',
+    365885 => '365885',
+    365886 => '365886',
+    365887 => '365887',
+    365888 => '365888',
+    365889 => '365889',
+    365890 => '365890',
+    365891 => '365891',
+    365892 => '365892',
+    365893 => '365893',
+    365894 => '365894',
+    365895 => '365895',
+    365896 => '365896',
+    365897 => '365897',
+    365898 => '365898',
+    365899 => '365899',
+    365900 => '365900',
+    365901 => '365901',
+    365902 => '365902',
+    365903 => '365903',
+    365904 => '365904',
+    365905 => '365905',
+    365906 => '365906',
+    365907 => '365907',
+    365908 => '365908',
+    365909 => '365909',
+    365910 => '365910',
+    365911 => '365911',
+  );
+  $handler->display->display_options['filters']['field_metric_category_target_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_metric_category_target_id']['expose']['operator_id'] = 'field_metric_category_target_id_op';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['expose']['label'] = 'Category';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['expose']['operator'] = 'field_metric_category_target_id_op';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['expose']['identifier'] = 'field_metric_category_target_id';
+  $handler->display->display_options['filters']['field_metric_category_target_id']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
   );
 
   /* Display: Page */
