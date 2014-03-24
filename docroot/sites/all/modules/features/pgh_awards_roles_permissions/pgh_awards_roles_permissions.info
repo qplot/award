@@ -1,0 +1,11 @@
+name = Roles and Permissions
+description = PGH Awards Roles and Permissions
+core = 7.x
+package = PGH Content Type
+version = 7.x-1.0
+project = pgh_awards_roles_permissions
+dependencies[] = features
+dependencies[] = pgh_awards_review
+features[features_api][] = api:2
+features[user_permission][] = review awards application
+features[user_role][] = Reviewer

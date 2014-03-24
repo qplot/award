@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Category Response Content Type feature.
+ */
+
+include_once 'pgh_awards_category_response_ctype.features.inc';

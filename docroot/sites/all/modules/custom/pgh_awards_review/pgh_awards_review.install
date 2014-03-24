@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Install and update hooks for the PGH Awards Review module.
+ */
+
+/**
+ * Implements hook_update_N().
+ *
+ * Revert features that are dependencies for this module.
+ *
+ * @author Kosta Harlan
+ */
+function pgh_awards_review_update_7001(&$ret) {
+  return _pgh_awards_review_revert_dependencies();
+}
+
+/**
+ * Implements hook_install().
+ *
+ * @author Kosta Harlan
+ */
+function pgh_awards_review_install() {
+  return _pgh_awards_review_revert_dependencies();
+}
+
+/**
+ * Helper function to revert dependencies for the module.
+ *
+ * @author Kosta Harlan
+ */
+function _pgh_awards_review_revert_dependencies() {
+  // Revert features.
+  $features = array(
+    'pgh_question_ctype',
+    'pgh_response_ctype',
+    'pgh_category_response_ctype',
+    'pgh_application_ctype',
+    'pgh_glossary_vocabulary',
+  );
+  foreach ($features as $feature) {
+    features_revert_module($feature);
+  }
+  return t('Reverted the following features: !features', array(
+    '!features' => implode(', ', $features),
+  ));
+}
