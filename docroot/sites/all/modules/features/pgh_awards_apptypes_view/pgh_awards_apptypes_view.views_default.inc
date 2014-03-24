@@ -49,7 +49,7 @@ function pgh_awards_apptypes_view_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['label'] = 'Calculate';
   $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Calculate All';
   $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'admin/score/apptype/[title]/calculate';
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'admin/score/apptype/[title]/calculate?destination=admin/apptypes';
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
