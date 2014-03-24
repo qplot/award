@@ -165,15 +165,19 @@ function pgh_awards_review_page() {
       $cat['category_tag'] = $category->title;
       $cat['category_class'] = str_replace('_', '-', strtolower($cat['category_tag']));
       $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
+      $cat['automatic_pc'] = 0;
       if (!empty($cat['automatic_p'])) {
         $cat['automatic_pc'] = intval($cat['automatic'] / $cat['automatic_p'] * 100);
       }
+      $cat['kpi_pc'] = 0;
       if (!empty($cat['kpi_p'])) {
         $cat['kpi_pc'] = intval($cat['kpi'] / $cat['kpi_p'] * 100);
       }
+      $cat['metric_pc'] = 0;
       if (!empty($cat['metric_p'])) {
         $cat['metric_pc'] = intval($cat['metric'] / $cat['metric_p'] * 100);
       }
+      $cat['quality_pc'] = 0;
       if (!empty($cat['quality_p'])) {
         $cat['quality_pc'] = intval($cat['quality'] / $cat['quality_p'] * 100);
       }
