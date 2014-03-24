@@ -361,6 +361,10 @@ function pgh_application_theme() {
 function pgh_application_current_application_nid() {
   if (arg(0) == 'application' && is_numeric(arg(1))) {
     $application_node = node_load(arg(1));
+    // This is the case for 404 errors.
+    if (!$application_node) {
+      return FALSE;
+    }
     if ($application_node->type == 'application') {
       return $application_node->nid;
     }
