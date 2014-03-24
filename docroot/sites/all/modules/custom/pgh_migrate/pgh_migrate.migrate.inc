@@ -45,6 +45,11 @@ function pgh_migrate_migrate_api() {
         'group_name' => 'PGH',
         'soft_dependencies' => array('PreprocessCSV', 'Section')
       ),
+      'Metric' => array(
+        'class_name' => 'MigratePGHMetricMigration',
+        'group_name' => 'PGH',
+        'soft_dependencies' => array('PreprocessCSV', 'Category')
+      ),
       'ApplicationType' => array(
         'class_name' => 'MigratePGHAppTypeMigration',
         'group_name' => 'PGH',

@@ -1,0 +1,421 @@
+<?php
+
+/**
+ * @file
+ * Provides internal functionality for handling review.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_menu() {
+  $items = array();
+
+  // Review dashboard.
+  $items['review'] = array(
+    'title' => 'Review Application',
+    'description' => 'Review application and give quality score etc.',
+    'page callback' => 'pgh_awards_review_dashboard',
+    'access arguments' => array('review awards application'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['review/%'] = array(
+    'title' => 'Review Application',
+    'description' => 'Review application and give quality score etc.',
+    'page callback' => 'pgh_awards_review_page',
+    'page arguments' => array(1),
+    'access callback' => FALSE,
+    'access callback' => 'pgh_awards_review_can_access',
+    'access arguments' => array(1),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_permission() {
+  return array(
+    'review awards application' => array(
+      'title' => t('Review Awards Applicaiton'),
+      'description' => t('Access review dashboard and submit quality score and comments.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Review dashboard access.
+ *
+ * Instead of implementing node access, custom page access is used here.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_can_access($app_id) {
+  // Load application id.
+  if ($node = node_load($app_id)) {
+    global $user;
+    // Let's allow admins to view the page.
+    if (user_access('administer site configuration', $user)) {
+      return TRUE;
+    }
+    $wrapper = entity_metadata_wrapper('node', $node);
+    $reviewers = $wrapper->field_application_reviewers->raw();
+    return in_array($user->uid, $reviewers);
+  }
+
+  return FALSE;
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_theme() {
+  return array(
+    'review' => array(
+      'variables' => array('app' => NULL, 'form' => NULL),
+      'template' => 'templates/review',
+    ),
+  );
+}
+
+/**
+ * Review dashboard page.
+ */
+function pgh_awards_review_dashboard() {
+  return views_embed_view('review_applications', 'page');
+}
+
+/**
+ * Review application page handling.
+ *
+ * Template is in review.tpl.php in theme folder.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_page() {
+
+  // Only accept application id.
+  $app_id = arg(1);
+  if (!$app_id || !is_numeric($app_id)) {
+    return;
+  }
+  // Get application.
+  $app = node_load($app_id);
+  $app_wrapper = entity_metadata_wrapper('node', $app);
+
+  // Get reviewers.
+  $reviewers = array();
+  $persons = array();
+  foreach ($app_wrapper->field_application_reviewers->getIterator() as $reviewer_wrapper) {
+    $reviewer = array(
+      'first' => $reviewer_wrapper->field_user_first_name->value(),
+      'last' => $reviewer_wrapper->field_user_last_name->value(),
+      'name' => $reviewer_wrapper->name->value(),
+    );
+    $reviewers[] = $reviewer;
+    $persons[] = $reviewer['first'] . ' ' . $reviewer['last'];
+  }
+
+  // Get apptype.
+  $apptype_tag = $app_wrapper->field_application_type->raw();
+  $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
+  $apptype = node_load($apptype_id);
+  $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
+  $apptype_body = $apptype_wrapper->body->value();
+
+  // Get business unit.
+  $bunit_id = pgh_api_find_nodes(array(
+    'type' => 'business_unit',
+    'field_applications' => array('target_id', $app_id, '='),
+  ));
+  $bunit = node_load($bunit_id);
+  $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
+
+  // Get all cells value.
+  $question_tags = array(
+    'beds' => 'pghq_PFC_demographic_1_8t_2',
+    'ors' => 'pghq_PFC_demographic_1_9',
+    'cares' => 'pghq_SFC_2_1',
+  );
+  $question_values = array();
+  foreach ($question_tags as $key => $tag) {
+    $question_id = pgh_api_find_nodes(array('type' => 'question', 'title' => $tag));
+    $response = pgh_api_get_response($app_id, $question_id);
+    $question_values[$key] = $response['value'];
+  }
+
+  // Get application scores.
+  $scores = pgh_awards_score_application($app_id, TRUE);
+  foreach ($scores as &$cat) {
+    if ($cat) {
+      $category = node_load($cat['category_id']);
+      $category_wrapper = entity_metadata_wrapper('node', $category);
+      $body = $category_wrapper->body->value();
+      $cat['category_tag'] = $category->title;
+      $cat['category_class'] = str_replace('_', '-', strtolower($cat['category_tag']));
+      $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
+      if (!empty($cat['automatic_p'])) {
+        $cat['automatic_pc'] = intval($cat['automatic'] / $cat['automatic_p'] * 100);
+      }
+      if (!empty($cat['kpi_p'])) {
+        $cat['kpi_pc'] = intval($cat['kpi'] / $cat['kpi_p'] * 100);
+      }
+      if (!empty($cat['metric_p'])) {
+        $cat['metric_pc'] = intval($cat['metric'] / $cat['metric_p'] * 100);
+      }
+      if (!empty($cat['quality_p'])) {
+        $cat['quality_pc'] = intval($cat['quality'] / $cat['quality_p'] * 100);
+      }
+    }
+  }
+
+  // Get a score view.
+  $view = views_get_view('score_application');
+  $view->set_arguments(array($app_id));
+  $view->set_display('page');
+  $view->pre_execute();
+  $view->execute();
+
+  // Get goals of the app.
+  $goals = array(
+    '2013' => array(
+      'headers' => array('Goals for 2013', 'Achieved ?', 'Highlights'),
+      'question_tag_prefix' => 'pghq_PFC_goals_3_',
+      'question_rows' => 5,
+      'question_cols' => 3,
+    ),
+    '2014' => array(
+      'headers' => array('Goals for 2014'),
+      'question_tag_prefix' => 'pghq_PFC_goals_5_',
+      'question_rows' => 5,
+      'question_cols' => 1,
+    ),
+  );
+  foreach ($goals as $year => &$goal) {
+    for ($i = 0; $i < $goal['question_rows']; $i++) {
+      $goal['question_vals'][$i] = array();
+      for ($j = 0; $j < $goal['question_cols']; $j++) {
+        $tag = $goal['question_tag_prefix'] . ($i * $goal['question_cols'] + $j + 1);
+        $question_id = pgh_api_find_nodes(array('type' => 'question', 'title' => $tag));
+        $response = pgh_api_get_response($app_id, $question_id);
+        $value = $response['value'];
+        if ($j == 0) {
+          // Not taking empty rows.
+          if (!$value) {
+            break;
+          }
+          // Prefix the row with row id.
+          $value = $i + 1 . '. ' . $value;
+        }
+        // Take care special case for achieved.
+        if ($j == 1) {
+          switch ($value) {
+            case 2:
+              $value = 'Partial';
+              break;
+
+            default:
+              $checked = $value ? 'checked="checked"' : '';
+              $value = '<input type="checkbox" ' . $checked . ' />';
+              break;
+          }
+        }
+        $goal['question_vals'][$i][$j] = $value;
+      }
+    }
+  }
+
+  // Assign application variables.
+  $vars['app'] = array(
+    'id' => arg(1),
+    'status' => $app_wrapper->field_application_status->raw(),
+    'apptype_tag' => $apptype_tag,
+    'apptype' => !empty($apptype_body) ? $apptype_body['value'] : '',
+    'business_unit_id' => $bunit_id,
+    'institution' => $bunit_wrapper->title->value(),
+    'institution_name' => $bunit_wrapper->field_business_unit_name->value(),
+    // Health system missing.
+    'city' => $bunit_wrapper->field_shipping_city->value(),
+    'state' => $bunit_wrapper->field_shipping_state->value(),
+    'zipcode' => $bunit_wrapper->field_shipping_zipcode->value(),
+    'country' => $bunit_wrapper->field_shipping_country->value(),
+    // Primary contact missing.
+    // Application year missing.
+    // Safesforce account owner missing.
+    'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
+    'reviewers' => implode(', ', $persons),
+    // Number of hospitals winning missing.
+    'score_view' => $view->render('page'),
+    'scores' => $scores,
+    'goals' => $goals,
+  );
+
+  $vars['app'] = array_merge($vars['app'], $question_values);
+
+  // Get a form for updating application info.
+  $form = drupal_get_form('pgh_awards_review_application_form', $app, $scores);
+  $elements = array();
+  $form_render = render($form);
+  $elements = array(
+    'qualify' => render($form['qualify']),
+    'threshold_met' => render($form['threshold_met']),
+    'comment' => render($form['comment']),
+    'submit' => render($form['submit']),
+  );
+  foreach ($scores as $cat) {
+    if ($cat) {
+      $key = 'quality_' . $cat['category_id'];
+      $elements[$key] = render($form[$key]);
+      $key = 'case_study_' . $cat['category_id'];
+      $elements[$key] = render($form[$key]);
+      $key = 'comment_' . $cat['category_id'];
+      $elements[$key] = render($form[$key]);
+    }
+  }
+  if (preg_match('/<form.+div>/', $form_render, $matches)) {
+    $elements['header'] = $matches[0];
+  }
+  if (preg_match('/<input type="hidden".+form>/s', $form_render, $matches)) {
+    $elements['footer'] = $matches[0];
+  }
+
+  $vars['form'] = $elements;
+
+  return theme('review', $vars);
+}
+
+/**
+ * Form for updating application info.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_application_form($form, &$form_state, $app, $scores) {
+  $app_wrapper = entity_metadata_wrapper('node', $app);
+  $body = $app_wrapper->body->value();
+
+  $form['qualify'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Does system qualify ?'),
+    '#default_value' => $app_wrapper->field_application_qualify->value(),
+  );
+
+  $form['threshold_met'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Does application meet the metrics thresholds for award applied for ?'),
+    '#default_value' => $app_wrapper->field_application_threshold_met->value(),
+  );
+
+  $form['comment'] = array(
+    '#type' => 'textarea',
+    '#title' => 'Overall Application Comments (please fill out last):',
+    '#default_value' => !empty($body['value']) ? $body['value'] : '',
+  );
+
+  // Make quality score and case study.
+  $options = array(
+    'value_0' => t('Low'),
+    'value_50' => t('Medium'),
+    'value_100' => t('High'),
+  );
+  $categories_ids = array();
+  foreach ($scores as $cat) {
+    if ($cat) {
+      $key = 'value_' . $cat['quality'];
+      $form['quality_' . $cat['category_id']] = array(
+        '#type' => 'select',
+        '#title' => t('Quality Score'),
+        '#options' => $options,
+        '#default_value' => !empty($options[$key]) ? $key : 'value_0',
+      );
+      $form['case_study_' . $cat['category_id']] = array(
+        '#type' => 'textfield',
+        '#title' => 'Case Study:',
+        '#default_value' => $cat['case_study'],
+      );
+      $form['comment_' . $cat['category_id']] = array(
+        '#type' => 'textarea',
+        '#title' => t('Comment'),
+        '#default_value' => $cat['comment'],
+      );
+      $categories_ids[] = array(
+        'category_id' => $cat['category_id'],
+        'response_id' => $cat['response_id'],
+      );
+    }
+  }
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Save worksheet',
+  );
+
+  // All hidden variables should be added after submit
+  // For theming to catch up.
+  $form['category_ids'] = array(
+    '#type' => 'hidden',
+    '#value' => serialize($categories_ids),
+  );
+
+  $form['application_id'] = array(
+    '#type' => 'hidden',
+    '#value' => $app->nid,
+  );
+
+  return $form;
+}
+
+/**
+ * Form submit for review application.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_review_application_form_submit($form, &$form_state) {
+  // dsm($form_state['values']);
+  $values = &$form_state['values'];
+
+  // Save quality score and comment  to category response.
+  $category_ids = unserialize($values['category_ids']);
+  foreach ($category_ids as $cat) {
+    $quality = $values['quality_' . $cat['category_id']];
+    $case_study = $values['case_study_' . $cat['category_id']];
+    $comment = $values['comment_' . $cat['category_id']];
+    if ($cat_response = node_load($cat['response_id'])) {
+      $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
+      // Get quality point based on key.
+      $parts = explode('_', $quality);
+      if (isset($parts[1])) {
+        $quality = $parts[1];
+      }
+      $cat_response_wrapper->field_cat_response_quality->set($quality);
+      $cat_response_wrapper->field_cat_response_case_study->set($case_study);
+      $cat_response_wrapper->body->set(array(
+        'value' => $comment,
+        'format' => 'filtered_html',
+      ));
+      $cat_response_wrapper->save();
+    }
+  }
+
+  // Save application data.
+  if ($application = node_load($values['application_id'])) {
+    $app_wrapper = entity_metadata_wrapper('node', $application);
+    $app_wrapper->field_application_threshold_met->set($values['threshold_met']);
+    $app_wrapper->field_application_qualify->set($values['qualify']);
+    $app_wrapper->body->set(array(
+      'value' => $values['comment'],
+      'format' => 'filtered_html',
+    ));
+    $app_wrapper->save();
+  }
+}

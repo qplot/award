@@ -29,6 +29,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['pager']['options']['offset'] = '0';
@@ -47,7 +48,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
     'nid' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -106,51 +107,30 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['header']['result']['id'] = 'result';
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Relationship: Entity Reference: Referencing entity */
+  /* Relationship: Business Unit */
   $handler->display->display_options['relationships']['reverse_field_applications_node']['id'] = 'reverse_field_applications_node';
   $handler->display->display_options['relationships']['reverse_field_applications_node']['table'] = 'node';
   $handler->display->display_options['relationships']['reverse_field_applications_node']['field'] = 'reverse_field_applications_node';
+  $handler->display->display_options['relationships']['reverse_field_applications_node']['ui_name'] = 'Business Unit';
   $handler->display->display_options['relationships']['reverse_field_applications_node']['label'] = 'Business Unit';
-  /* Relationship: Entity Reference: Referencing entity */
+  /* Relationship: Work Group */
   $handler->display->display_options['relationships']['reverse_field_business_units_node']['id'] = 'reverse_field_business_units_node';
   $handler->display->display_options['relationships']['reverse_field_business_units_node']['table'] = 'node';
   $handler->display->display_options['relationships']['reverse_field_business_units_node']['field'] = 'reverse_field_business_units_node';
   $handler->display->display_options['relationships']['reverse_field_business_units_node']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['relationships']['reverse_field_business_units_node']['ui_name'] = 'Work Group';
   $handler->display->display_options['relationships']['reverse_field_business_units_node']['label'] = 'Work Group';
   /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
-  $handler->display->display_options['fields']['nid']['label'] = '';
-  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nid']['label'] = 'ID';
   $handler->display->display_options['fields']['nid']['element_label_colon'] = FALSE;
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Name';
-  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['path'] = 'application/[nid]';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Application Type */
   $handler->display->display_options['fields']['field_application_type']['id'] = 'field_application_type';
   $handler->display->display_options['fields']['field_application_type']['table'] = 'field_data_field_application_type';
   $handler->display->display_options['fields']['field_application_type']['field'] = 'field_application_type';
   $handler->display->display_options['fields']['field_application_type']['element_label_colon'] = FALSE;
-  /* Field: Content: Status */
-  $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
-  $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
-  $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
-  $handler->display->display_options['fields']['field_application_status']['element_label_colon'] = FALSE;
-  /* Field: Content: Post date */
-  $handler->display->display_options['fields']['created']['id'] = 'created';
-  $handler->display->display_options['fields']['created']['table'] = 'node';
-  $handler->display->display_options['fields']['created']['field'] = 'created';
-  $handler->display->display_options['fields']['created']['label'] = 'Created date';
-  $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['created']['date_format'] = 'short';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
   $handler->display->display_options['fields']['title_1']['table'] = 'node';
@@ -165,6 +145,51 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['title_2']['relationship'] = 'reverse_field_business_units_node';
   $handler->display->display_options['fields']['title_2']['label'] = 'Work Group';
   $handler->display->display_options['fields']['title_2']['element_label_colon'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Name';
+  $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'application/[nid]';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Post date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Created date';
+  $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'm.d.y';
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['element_label_colon'] = FALSE;
+  /* Field: Content: Edit link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Edit';
+  $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Score';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'score';
+  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'admin/score/application/[nid]';
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Review';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'review';
+  $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'review/[nid]';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -188,17 +213,6 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['field_application_status_value']['id'] = 'field_application_status_value';
   $handler->display->display_options['filters']['field_application_status_value']['table'] = 'field_data_field_application_status';
   $handler->display->display_options['filters']['field_application_status_value']['field'] = 'field_application_status_value';
-  $handler->display->display_options['filters']['field_application_status_value']['value'] = array(
-    'new' => 'new',
-    'in-progress' => 'in-progress',
-    'submitted' => 'submitted',
-    'assigned-for-review' => 'assigned-for-review',
-    'review-in-progress' => 'review-in-progress',
-    'final-scoring-complete' => 'final-scoring-complete',
-    'initial-award-recommended' => 'initial-award-recommended',
-    'review-complete' => 'review-complete',
-    'final-award-determined' => 'final-award-determined',
-  );
   $handler->display->display_options['filters']['field_application_status_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_application_status_value']['expose']['operator_id'] = 'field_application_status_value_op';
   $handler->display->display_options['filters']['field_application_status_value']['expose']['label'] = 'Status';
@@ -211,6 +225,7 @@ function pgh_applications_view_views_default_views() {
     5 => 0,
     4 => 0,
     3 => 0,
+    7 => 0,
   );
   $handler->display->display_options['filters']['field_application_status_value']['group_info']['label'] = 'Status (field_application_status)';
   $handler->display->display_options['filters']['field_application_status_value']['group_info']['identifier'] = 'field_application_status_value';
@@ -224,17 +239,6 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['field_application_type_value']['id'] = 'field_application_type_value';
   $handler->display->display_options['filters']['field_application_type_value']['table'] = 'field_data_field_application_type';
   $handler->display->display_options['filters']['field_application_type_value']['field'] = 'field_application_type_value';
-  $handler->display->display_options['filters']['field_application_type_value']['value'] = array(
-    'partner_for_change' => 'partner_for_change',
-    'partner_recognition' => 'partner_recognition',
-    'long_term_care' => 'long_term_care',
-    'champion_for_change_gpo' => 'champion_for_change_gpo',
-    'champion_for_change_nongpo' => 'champion_for_change_nongpo',
-    'chc_partner_for_change' => 'chc_partner_for_change',
-    'chc_partner_recognition' => 'chc_partner_recognition',
-    'greening_the_or' => 'greening_the_or',
-    'dehp_free' => 'dehp_free',
-  );
   $handler->display->display_options['filters']['field_application_type_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_application_type_value']['expose']['operator_id'] = 'field_application_type_value_op';
   $handler->display->display_options['filters']['field_application_type_value']['expose']['label'] = 'Application Type';
@@ -247,6 +251,65 @@ function pgh_applications_view_views_default_views() {
     5 => 0,
     4 => 0,
     3 => 0,
+    7 => 0,
+  );
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['title']['operator'] = 'word';
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Search by business unit';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
+  );
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['filters']['title_1']['table'] = 'node';
+  $handler->display->display_options['filters']['title_1']['field'] = 'title';
+  $handler->display->display_options['filters']['title_1']['relationship'] = 'reverse_field_business_units_node';
+  $handler->display->display_options['filters']['title_1']['operator'] = 'word';
+  $handler->display->display_options['filters']['title_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title_1']['expose']['operator_id'] = 'title_1_op';
+  $handler->display->display_options['filters']['title_1']['expose']['label'] = 'Search by workgroup';
+  $handler->display->display_options['filters']['title_1']['expose']['operator'] = 'title_1_op';
+  $handler->display->display_options['filters']['title_1']['expose']['identifier'] = 'title_1';
+  $handler->display->display_options['filters']['title_1']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
+  );
+  /* Filter criterion: Content: Nid */
+  $handler->display->display_options['filters']['nid']['id'] = 'nid';
+  $handler->display->display_options['filters']['nid']['table'] = 'node';
+  $handler->display->display_options['filters']['nid']['field'] = 'nid';
+  $handler->display->display_options['filters']['nid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['nid']['expose']['operator_id'] = 'nid_op';
+  $handler->display->display_options['filters']['nid']['expose']['label'] = 'Search by application ID';
+  $handler->display->display_options['filters']['nid']['expose']['operator'] = 'nid_op';
+  $handler->display->display_options['filters']['nid']['expose']['identifier'] = 'nid';
+  $handler->display->display_options['filters']['nid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
   );
 
   /* Display: Page */
