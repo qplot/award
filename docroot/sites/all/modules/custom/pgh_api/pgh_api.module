@@ -549,7 +549,7 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   $question = node_load($question_nid);
 
   if (!$question) {
-    watchdog('pgh_api', 'Tried to load invalid question nid $id in pgh_api_question_is_active', array('%id' => $question_nid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Tried to load invalid question nid %id in pgh_api_question_is_active', array('%id' => $question_nid), WATCHDOG_ERROR);
     return FALSE;
   }
 
@@ -1014,7 +1014,7 @@ function pgh_api_progress_for_category($application_nid, $category_nid) {
   $application = node_load($application_nid);
 
   if (!$application) {
-    watchdog('pgh_api', 'Tried to load invalid application nid $id in pgh_api_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Tried to load invalid application nid %id in pgh_api_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
     return 0;
   }
 
@@ -1098,7 +1098,7 @@ function pgh_api_recalculate_progress_for_category($application_nid, $category_n
   $application = node_load($application_nid);
 
   if (!$application) {
-    watchdog('pgh_api', 'Tried to load invalid application nid $id in pgh_api_recalculate_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Tried to load invalid application nid %id in pgh_api_recalculate_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
     return 0;
   }
 
