@@ -23,6 +23,16 @@ function pgh_awards_score_menu() {
     'access arguments' => array('update', 1),
   );
 
+  // Calculate all scores for one application type.
+  $items['admin/score/apptype/%/calculate'] = array(
+    'title' => 'Calculate scores for application type',
+    'description' => 'Calculate scores for application type',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array("pgh_awards_score_calculate_apptype_form", 3),
+    'access callback' => 'node_access',
+    'access arguments' => array('update', 1),
+  );
+
   return $items;
 }
 
@@ -569,4 +579,94 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
   }
 
   return $scores;
+}
+
+/**
+ * Calculate score for app type confirm page.
+ */
+function pgh_awards_score_calculate_apptype_form($form, &$form_state, $apptype_tag) {
+  $form['description'] = array(
+    '#markup' => 'This will take a few minutes to calculate scores for all applications of this application type, proceed ? <br />',
+  );
+  $atids = pgh_api_find_nodes(
+    array(
+      'type' => 'apptype',
+    ),
+    NULL, TRUE
+  );
+  $apptypes = node_load_multiple($atids);
+  $options = array();
+  foreach ($apptypes as &$apptype) {
+    $options[$apptype->title] = $apptype->body['und'][0]['value'];
+  }
+  $form['apptype'] = array(
+    '#type' => 'select',
+    '#title' => 'Choose application type',
+    '#options' => $options,
+    '#default_value' => $apptype_tag,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Calculate',
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for calculation.
+ */
+function pgh_awards_score_calculate_apptype_form_submit($form, &$form_state) {
+  $apptype_tag = $form_state['values']['apptype'];
+
+  // Find out all applications of this application type.
+  $app_ids = pgh_api_find_nodes(
+    array(
+      'type' => 'application',
+      'field_application_type' => $apptype_tag,
+    ),
+    NULL, TRUE
+  );
+
+  $operations = array();
+  $i = 0; $debug = 1;
+  foreach ($app_ids as $nid) {
+    $operations[] = array('pgh_awards_score_calculate_apptype_op', array($nid));
+    $i += 1;
+    if ($i >= $debug) {
+      break;
+    }
+  }
+  $batch = array(
+    'operations' => $operations,
+    'finished' => 'pgh_awards_score_calculate_apptype_form_finished',
+  );
+  batch_set($batch);
+}
+
+/**
+ * Finish handler for calculation.
+ */
+function pgh_awards_score_calculate_apptype_form_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('@count applications calculated.', array('@count' => count($results))));
+  }
+  else {
+    // An error occurred.
+    // $operations contains the operations that remained unprocessed.
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing id: @args',
+      array('@args' => print_r($error_operation[0], TRUE))));
+  }
+}
+
+/**
+ * Op handler for calculation.
+ */
+function pgh_awards_score_calculate_apptype_op($app_id, &$context) {
+  pgh_awards_score_calculate_application($app_id, TRUE);
+
+  $context['results'][] = $app_id;
+  $context['message'] = t('Calculating application "@nid"', array('@nid' => $app_id));
 }
