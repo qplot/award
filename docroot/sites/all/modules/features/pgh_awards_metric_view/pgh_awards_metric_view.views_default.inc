@@ -614,7 +614,6 @@ function pgh_awards_metric_view_views_default_views() {
   $handler->display->display_options['filters']['field_metric_category_target_id']['field'] = 'field_metric_category_target_id';
   $handler->display->display_options['filters']['field_metric_category_target_id']['relationship'] = 'field_metric_response_metric_target_id';
   $handler->display->display_options['filters']['field_metric_category_target_id']['value'] = array(
-    'all' => 'all',
     365833 => '365833',
     365834 => '365834',
     365835 => '365835',
@@ -707,7 +706,9 @@ function pgh_awards_metric_view_views_default_views() {
     5 => 0,
     4 => 0,
     3 => 0,
+    7 => 0,
   );
+  $handler->display->display_options['filters']['field_metric_category_target_id']['expose']['reduce'] = TRUE;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
