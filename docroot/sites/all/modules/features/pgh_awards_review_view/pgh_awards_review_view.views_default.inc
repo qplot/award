@@ -33,6 +33,13 @@ function pgh_awards_review_view_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '20';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'There\'s no application assigned for review. Please contact your PGH admin for more informations.';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   /* Relationship: Business Unit */
   $handler->display->display_options['relationships']['reverse_field_applications_node']['id'] = 'reverse_field_applications_node';
   $handler->display->display_options['relationships']['reverse_field_applications_node']['table'] = 'node';
