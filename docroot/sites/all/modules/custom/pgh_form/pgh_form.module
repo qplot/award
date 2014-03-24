@@ -596,6 +596,14 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
       break;
 
     case 'file':
+      $desc = '';
+      $shared = FALSE;
+      if ($fid = $answer['value']) {
+        $file = file_load($fid);
+        $file_wrapper = entity_metadata_wrapper('file', $file);
+        $desc = $file_wrapper->field_media_description->value();
+        $shared = $file_wrapper->field_media_shared->value();
+      }
       $media = array(
         '#type' => 'media',
         '#after_build' => array('pgh_form_file_after_build'),
@@ -610,6 +618,8 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
         '#extended' => TRUE,
         '#tree' => TRUE,
         '#value' => !empty($answer['value']) ? array('fid' => $answer['value']) : '',
+        '#custom_description' => $desc,
+        '#custom_shared' => $shared,
       );
       $form_item = array_merge($form_item, $media);
       break;
@@ -700,6 +710,8 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
  */
 function pgh_form_file_after_build($form, &$form_state) {
   if (!empty($form['#disabled'])) {
+    $form['title']['#description'] = $form['#custom_description'];
+    $form['title']['#description'] .= ($form['#custom_shared']) ? ' <strong>SHARED</strong>' : '' ;
     $form['edit']['#access'] = FALSE;
     $form['select']['#access'] = FALSE;
     $form['remove']['#access'] = FALSE;
