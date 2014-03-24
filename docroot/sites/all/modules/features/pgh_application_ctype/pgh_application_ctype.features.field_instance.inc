@@ -262,6 +262,46 @@ function pgh_application_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-application-field_application_winning_pfcs'
+  $field_instances['node-application-field_application_winning_pfcs'] = array(
+    'bundle' => 'application',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_winning_pfcs',
+    'label' => 'Winning PFCs',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Exported field_instance: 'node-application-field_category_progress'
   $field_instances['node-application-field_category_progress'] = array(
     'bundle' => 'application',
@@ -312,6 +352,7 @@ function pgh_application_ctype_field_default_field_instances() {
   t('Status');
   t('System Qualify');
   t('Threshold Met');
+  t('Winning PFCs');
 
   return $field_instances;
 }
