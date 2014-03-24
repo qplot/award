@@ -13,17 +13,6 @@
 function pgh_awards_score_menu() {
   $items = array();
 
-  // Calculate one application metric scores.
-  $items['admin/metric/application/%/calculate'] = array(
-    'title' => 'Calculate metric score',
-    'description' => 'Calculate metric score for application',
-    'page callback' => 'pgh_awards_score_calculate_application_metric_page',
-    'page arguments' => array(3),
-    'access callback' => 'node_access',
-    'access arguments' => array('view', 3),
-    'type' => MENU_NORMAL_ITEM,
-  );
-
   // Calculate metric score for one application type.
   $items['admin/metric/apptype/%/calculate'] = array(
     'title' => 'Calculate metric score',
@@ -34,7 +23,7 @@ function pgh_awards_score_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  // Calculate category score for one application type.
+  // Calculate category score for one application.
   $items['admin/score/application/%/calculate'] = array(
     'title' => 'Calculate category score',
     'description' => 'Calculate all score for application category',
