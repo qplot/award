@@ -13,16 +13,6 @@
 function pgh_awards_score_menu() {
   $items = array();
 
-  // Calculate metric score for one application type.
-  $items['admin/metric/apptype/%/calculate'] = array(
-    'title' => 'Calculate metric score',
-    'description' => 'Calculate metric score for application type',
-    'page callback' => 'pgh_awards_score_calculate_apptype_metric',
-    'page arguments' => array(3),
-    'access callback' => TRUE,
-    'type' => MENU_NORMAL_ITEM,
-  );
-
   // Calculate category score for one application.
   $items['admin/score/application/%/calculate'] = array(
     'title' => 'Calculate category score',
@@ -37,28 +27,9 @@ function pgh_awards_score_menu() {
 }
 
 /**
- * Calculate score for each application of application type.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_awards_score_calculate_apptype_metric($apptype) {
-  // Find all applicaiton in this apptype.
-  $aids = pgh_api_find_nodes(
-    array(
-      'type' => 'application',
-      'field_application_type' => $apptype
-    ),
-    NULL,
-    TRUE
-  );
-  foreach ($aids as $aid) {
-    pgh_awards_score_calculate_application_metric_page($aid, $apptype, FALSE);
-  }
-  drupal_goto();
-}
-
-/**
  * Calculate score for each category of application.
+ *
+ * Currently this function is retired. Waiting for merged into drush script
  *
  * @author Fang Jin <fang@designhammer.com>
  */
@@ -120,7 +91,6 @@ function pgh_awards_score_calculate_application_metric_page($app_id, $apptype = 
     drupal_goto();
   }
 }
-
 
 /**
  * Hook views_pre_render.
