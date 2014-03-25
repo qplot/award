@@ -449,6 +449,23 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         $sums[$key] += $score;
       }
     }
+
+    // Save to application.
+    if ($save) {
+      $app_wrapper = entity_metadata_wrapper('node', $app);
+
+      $app_wrapper->field_application_automatic_p->set($scores['automatic_p']);
+      $app_wrapper->field_application_automatic->set($scores['automatic']);
+      $app_wrapper->field_application_kpi_p->set($scores['kpi_p']);
+      $app_wrapper->field_application_kpi->set($scores['kpi']);
+      $app_wrapper->field_application_metric_p->set($scores['metric_p']);
+      $app_wrapper->field_application_metric->set($scores['metric']);
+      $app_wrapper->field_application_quality_p->set($scores['quality_p']);
+      $app_wrapper->field_application_quality->set($scores['quality']);
+      $app_wrapper->field_application_final->set($scores['final']);
+
+      $app_wrapper->save();
+    }
   }
 
   return $sums;
