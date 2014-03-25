@@ -334,6 +334,7 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
     '#type' => 'textfield',
     '#title' => 'Number of Hospitals winning PFC or above:',
     '#default_value' => $app_wrapper->field_application_winning_pfcs->value(),
+    '#size' => 1,
   );
 
   // Make quality score and case study.

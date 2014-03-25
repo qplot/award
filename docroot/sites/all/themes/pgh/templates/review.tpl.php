@@ -28,6 +28,8 @@
 
         <div id="hospital-content-left" class="column">
           <h3>Primary Contact:</h3>
+          <p><span class="label"><?php echo $app['primary_first'] . ' ' . $app['primary_last'] ?> , <?php $app['primary_phone'] ?></span></p>
+          <p><span class="label"><?php echo $app['primary_email'] ?></span></p>
           <p><span class="label">Staffed Beds:</span> <?php echo $app['beds'] ?></p>
           <p><span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
           <p><span class="label">FE Liaison:</span></p>
@@ -37,8 +39,7 @@
         <div id="hospital-content-mid" class="column">
           <h3>Application Name: <?php echo $app['apptype'] ?></h3>
           <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> 36</p>
-          <p><span class="label">Number of Hospitals winning PFC or above:</span> 14</p>
-          <?php //echo $app['app_info_form'] ?>
+          <?php echo $form['winning_pfcs'] ?>
           <?php echo $form['qualify'] ?>
           <?php echo $form['threshold_met'] ?>
         </div>
