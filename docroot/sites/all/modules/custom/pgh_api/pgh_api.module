@@ -1093,20 +1093,26 @@ function pgh_api_recalculate_progress_for_category($application_nid, $category_n
   $query = "SELECT rq.entity_id AS response_id,
                    rq.field_response_question_target_id AS question_id,
                    ru.field_response_updated_value AS response_updated
-            FROM {field_data_field_response_question} rq
-            INNER JOIN {field_data_field_response_application} ra
-              ON ra.entity_id = rq.entity_id
-            INNER JOIN field_data_field_response_updated ru
-              ON ru.entity_id = rq.entity_id
-            INNER JOIN {field_data_field_section_questions} s
-              ON s.field_section_questions_target_id = rq.field_response_question_target_id
-            INNER JOIN field_data_field_question_type qt
-              ON qt.entity_id = s.field_section_questions_target_id
-            INNER JOIN {field_data_field_category_sections} c
-              ON c.field_category_sections_target_id = s.entity_id
-            WHERE c.entity_id = :category_nid
-            AND ra.field_response_application_target_id = :application_nid
-            AND qt.field_question_type_value IN ('text', 'file', 'selection')";
+            FROM field_data_field_response_question rq
+            INNER JOIN field_data_field_response_application ra ON ra.entity_id = rq.entity_id
+            INNER JOIN field_data_field_response_updated ru ON ru.entity_id = rq.entity_id
+            WHERE
+              ra.field_response_application_target_id = :application_nid AND
+              rq.field_response_question_target_id IN (
+                SELECT field_section_questions_target_id
+                FROM (
+                  SELECT field_section_questions_target_id
+                  FROM field_data_field_section_questions s
+                  INNER JOIN field_data_field_question_type qt ON qt.entity_id = s.field_section_questions_target_id
+                  WHERE
+                    s.entity_id IN (
+                      SELECT field_category_sections_target_id FROM (
+                        SELECT field_category_sections_target_id FROM field_data_field_category_sections c WHERE c.entity_id = :category_nid
+                      ) x
+                    ) AND
+                    qt.field_question_type_value IN ('text', 'file', 'selection')
+                ) y
+              )";
 
   $results = db_query($query, array(':category_nid' => $category_nid, ':application_nid' => $application_nid));
 
