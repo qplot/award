@@ -242,7 +242,7 @@ function pgh_form_category_page($application, $category_id) {
     return drupal_get_form('pgh_application_form', $application->nid, $category_id);
   }
   else {
-    drupal_not_found();
+    return MENU_NOT_FOUND;
   }
 }
 
@@ -506,7 +506,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   $form_item['#title'] = '<div class="question-desc">' . check_markup($question_wrapper->field_question_prompt->value(), 'question_text', '', FALSE) . '</div><!-- .question-desc -->';
 
   if (user_access('administer awards system')) {
-    $form_item['#title'] .= ' ' . implode(' ', $admin_info);
+    $form_item['#title'] .= '<div class="question-admin">' . implode(' ', $admin_info) . '</div>';
   }
 
   // Make sure the flat return.
@@ -773,7 +773,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
     }
 
     if (user_access('administer awards system')) {
-      $form_item['#title'] .= ' ' . implode(' ', $admin_info);
+      $form_item['#title'] .= ' <div class="question-admin">' . implode(' ', $admin_info) . '</div>';
     }
 
     // Print child elements.

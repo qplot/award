@@ -170,7 +170,7 @@
 
       // Disable node save page and add a progress indicator in case of long load times.
       // ======================================================================
-      $('.node-form').submit(function () {
+      $('.node-application-form').submit(function () {
         var $button = $(this).find('#edit-submit');
         $button.attr('disabled', 'disabled').addClass('working').val('Working...');
       });

@@ -1,0 +1,11 @@
+name = PGH Review
+description = Review Application
+package = PGH
+version = 7.x-0.1
+core = 7.x
+project = pgh_awards_review
+dependencies[] = pgh_awards_metric_view
+dependencies[] = pgh_awards_score
+dependencies[] = pgh_awards_metric_response_ctype
+dependencies[] = pgh_awards_metric_ctype
+dependencies[] = pgh_awards_review_view

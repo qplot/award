@@ -13,6 +13,7 @@ files[] = class/preprocess_csv.inc
 files[] = class/question.inc
 files[] = class/section.inc
 files[] = class/category.inc
+files[] = class/metric.inc
 files[] = class/apptype.inc
 files[] = class/container.inc
 files[] = class/business_unit.inc
