@@ -226,6 +226,8 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
           );
         }
       }
+      // Sort the variable array to make sure mapping for long variable first.
+      uksort($variables, create_function('$a,$b', 'return strlen($a) < strlen($b);'));
       // Evaluate the formula.
       $replace = $formula;
       foreach ($variables as $variable) {
