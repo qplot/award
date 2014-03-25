@@ -112,7 +112,7 @@ function pgh_awards_score_views_pre_render(&$view) {
     $items = array();
     $items[] = l(
       t('Calculate'),
-      "admin/metric/application/$app_id/calculate",
+      "admin/score/application/$app_id/calculate",
       array('query' => drupal_get_destination())
     );
     $view->attachment_before = theme('item_list', array(
@@ -120,19 +120,19 @@ function pgh_awards_score_views_pre_render(&$view) {
       'attributes' => array('class' => 'action-links')
     ));
   }
-  if ($view->name == 'metric_score_for_apptype') {
-    $apptype = arg(3);
-    $items = array();
-    $items[] = l(
-      t('Calculate'),
-      "admin/metric/apptype/$apptype/calculate",
-      array('query' => drupal_get_destination())
-    );
-    $view->attachment_before = theme('item_list', array(
-      'items' => $items,
-      'attributes' => array('class' => 'action-links')
-    ));
-  }
+  // if ($view->name == 'metric_score_for_apptype') {
+  //   $apptype = arg(3);
+  //   $items = array();
+  //   $items[] = l(
+  //     t('Calculate'),
+  //     "admin/metric/apptype/$apptype/calculate",
+  //     array('query' => drupal_get_destination())
+  //   );
+  //   $view->attachment_before = theme('item_list', array(
+  //     'items' => $items,
+  //     'attributes' => array('class' => 'action-links')
+  //   ));
+  // }
   if ($view->name == 'score_application') {
     $app_id = arg(3);
     $items = array();
@@ -475,6 +475,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
  */
 function pgh_awards_score_calculate_application_page($app_id) {
   pgh_awards_score_calculate_application($app_id, TRUE);
+  drupal_set_message('Score has been calculated for application: ' . $app_id);
   drupal_goto();
 }
 
