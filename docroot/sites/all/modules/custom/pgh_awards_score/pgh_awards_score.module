@@ -120,19 +120,6 @@ function pgh_awards_score_views_pre_render(&$view) {
       'attributes' => array('class' => 'action-links')
     ));
   }
-  // if ($view->name == 'metric_score_for_apptype') {
-  //   $apptype = arg(3);
-  //   $items = array();
-  //   $items[] = l(
-  //     t('Calculate'),
-  //     "admin/metric/apptype/$apptype/calculate",
-  //     array('query' => drupal_get_destination())
-  //   );
-  //   $view->attachment_before = theme('item_list', array(
-  //     'items' => $items,
-  //     'attributes' => array('class' => 'action-links')
-  //   ));
-  // }
   if ($view->name == 'score_application') {
     $app_id = arg(3);
     $items = array();
@@ -607,6 +594,31 @@ function pgh_awards_score_calculate_apptype_form($form, &$form_state, $apptype_t
     '#default_value' => $apptype_tag,
   );
 
+  $types = array(
+    'automatic' => t('Automatic'),
+    'kpi' => t('KPI'),
+    'metric' => t('Metric'),
+    'quality' => t('Quality'),
+  );
+  $form['scores'] = array(
+    '#type' => 'checkboxes',
+    '#title' => 'Choose score types',
+    '#options' => $types,
+    '#default_value' => array_keys($types),
+  );
+
+  $form['all'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Process all',
+    '#description' => 'Check this if you are sure you want to calculate all the scores',
+    '#default_value' => 0,
+  );
+  $form['debug'] = array(
+    '#type' => 'textfield',
+    '#title' => '[Debug] Set how many applications to process',
+    '#default_value' => 1,
+  );
+
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Calculate',
@@ -619,7 +631,8 @@ function pgh_awards_score_calculate_apptype_form($form, &$form_state, $apptype_t
  * Submit handler for calculation.
  */
 function pgh_awards_score_calculate_apptype_form_submit($form, &$form_state) {
-  $apptype_tag = $form_state['values']['apptype'];
+  $values = &$form_state['values'];
+  $apptype_tag = $values['apptype'];
 
   // Find out all applications of this application type.
   $app_ids = pgh_api_find_nodes(
@@ -631,12 +644,20 @@ function pgh_awards_score_calculate_apptype_form_submit($form, &$form_state) {
   );
 
   $operations = array();
-  $i = 0; $debug = 1;
+  $debug = 0;
+  if (empty($values['all'])) {
+    if (isset($values['debug'])) {
+      $debug = intval($values['debug']);
+    }
+  }
+  $i = 0;
   foreach ($app_ids as $nid) {
     $operations[] = array('pgh_awards_score_calculate_apptype_op', array($nid));
-    $i += 1;
-    if ($i >= $debug) {
-      break;
+    if ($debug) {
+      $i += 1;
+      if ($i >= $debug) {
+        break;
+      }
     }
   }
   $batch = array(
