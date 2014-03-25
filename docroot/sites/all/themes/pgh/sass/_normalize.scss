@@ -232,6 +232,7 @@ dfn {
 }
 
 /* Address differences between Firefox and other browsers. */
+/*
 hr {
   @include box-sizing(content-box);
   height: 0;
@@ -239,6 +240,7 @@ hr {
   padding-bottom: -1px;
   margin: rhythm(1) 0;
 }
+*/
 
 /* Address styling not present in IE 8/9. */
 mark {
