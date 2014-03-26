@@ -178,8 +178,8 @@ function pgh_awards_metric_view_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
@@ -297,6 +297,7 @@ function pgh_awards_metric_view_views_default_views() {
   $handler->display->display_options['arguments']['field_metric_response_app_target_id']['id'] = 'field_metric_response_app_target_id';
   $handler->display->display_options['arguments']['field_metric_response_app_target_id']['table'] = 'field_data_field_metric_response_app';
   $handler->display->display_options['arguments']['field_metric_response_app_target_id']['field'] = 'field_metric_response_app_target_id';
+  $handler->display->display_options['arguments']['field_metric_response_app_target_id']['default_action'] = 'empty';
   $handler->display->display_options['arguments']['field_metric_response_app_target_id']['title_enable'] = TRUE;
   $handler->display->display_options['arguments']['field_metric_response_app_target_id']['title'] = 'Metric score for application: %1';
   $handler->display->display_options['arguments']['field_metric_response_app_target_id']['default_argument_type'] = 'fixed';
@@ -713,6 +714,27 @@ function pgh_awards_metric_view_views_default_views() {
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['path'] = 'admin/metric/apptype/%/score';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['filename'] = 'metrics.csv';
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 0;
+  $handler->display->display_options['path'] = 'admin/metric/apptype/%/export';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '100';
   $export['metric_score_for_apptype'] = $view;
 
   return $export;
