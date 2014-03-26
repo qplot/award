@@ -9,6 +9,5 @@ dependencies[] = list
 dependencies[] = options
 dependencies[] = taxonomy
 features[features_api][] = api:2
-features[field_base][] = field_designation_suggested
-features[field_instance][] = taxonomy_term-award_designation-field_designation_suggested
 features[taxonomy][] = award_designation
+features[taxonomy][] = suggested_designation
