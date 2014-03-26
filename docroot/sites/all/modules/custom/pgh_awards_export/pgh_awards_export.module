@@ -69,3 +69,68 @@ function pgh_awards_export_form($form, &$form_state, $apptype_tag = NULL) {
 
   return $form;
 }
+
+/**
+ * Submit handler for export.
+ */
+function pgh_awards_export_form_submit($form, &$form_state) {
+  $values = &$form_state['values'];
+  $apptype_tag = $values['apptype'];
+
+  // Find out all applications of this application type.
+  $app_ids = pgh_api_find_nodes(
+    array(
+      'type' => 'application',
+      'field_application_type' => $apptype_tag,
+    ),
+    NULL, TRUE
+  );
+
+  $operations = array();
+  $debug = 0;
+  if (empty($values['all'])) {
+    if (isset($values['debug'])) {
+      $debug = intval($values['debug']);
+    }
+  }
+  $i = 0;
+  foreach ($app_ids as $nid) {
+    $operations[] = array('pgh_awards_export_op', array($nid));
+    if ($debug) {
+      $i += 1;
+      if ($i >= $debug) {
+        break;
+      }
+    }
+  }
+  $batch = array(
+    'operations' => $operations,
+    'finished' => 'pgh_awards_export_form_finished',
+  );
+  batch_set($batch);
+}
+
+/**
+ * Finish handler for export.
+ */
+function pgh_awards_export_form_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('@count applications exported.', array('@count' => count($results))));
+  }
+  else {
+    // An error occurred.
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing id: @args',
+      array('@args' => print_r($error_operation[0], TRUE))));
+  }
+}
+
+/**
+ * Op handler for export.
+ */
+function pgh_awards_export_op($app_id, &$context) {
+  // pgh_awards_score_calculate_application($app_id, TRUE);
+
+  $context['results'][] = $app_id;
+  $context['message'] = t('Calculating application "@nid"', array('@nid' => $app_id));
+}
