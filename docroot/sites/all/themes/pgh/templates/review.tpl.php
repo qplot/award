@@ -64,6 +64,7 @@
 
         <div id="hospital-content-right" class="column">
           <h3>Final Awards</h3>
+          <?php echo $form['awards'] ?>
           <?php echo $form['submit'] ?>
         </div>
 

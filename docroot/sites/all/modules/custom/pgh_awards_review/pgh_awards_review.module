@@ -278,6 +278,7 @@ function pgh_awards_review_page() {
     'qualify' => render($form['qualify']),
     'threshold_met' => render($form['threshold_met']),
     'winning_pfcs' => render($form['winning_pfcs']),
+    'awards' => render($form['awards']),
     'comment' => render($form['comment']),
     'submit' => render($form['submit']),
   );
@@ -335,6 +336,21 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
     '#title' => 'Number of Hospitals winning PFC or above:',
     '#default_value' => $app_wrapper->field_application_winning_pfcs->value(),
     '#size' => 1,
+  );
+
+  $options = array();
+  $values = array();
+  if ($vid = taxonomy_vocabulary_machine_name_load("suggested_designation")->vid) {
+    $values = $app_wrapper->field_application_designations_s->raw();
+    $terms = taxonomy_get_tree($vid);
+    foreach ($terms as $term) {
+      $options[$term->tid] = $term->name;
+    }
+  }
+  $form['awards'] = array(
+    '#type' => 'checkboxes',
+    '#options' => $options,
+    '#default_value' => $values,
   );
 
   // Make quality score and case study.
@@ -428,6 +444,13 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
     $app_wrapper->field_application_threshold_met->set($values['threshold_met']);
     $app_wrapper->field_application_qualify->set($values['qualify']);
     $app_wrapper->field_application_winning_pfcs->set($values['winning_pfcs']);
+    $awards = array();
+    foreach ($values['awards'] as $value) {
+      if (!empty($value)) {
+        $awards[] = $value;
+      }
+    }
+    $app_wrapper->field_application_designations_s->set($awards);
     $app_wrapper->body->set(array(
       'value' => $values['comment'],
       'format' => 'filtered_html',
