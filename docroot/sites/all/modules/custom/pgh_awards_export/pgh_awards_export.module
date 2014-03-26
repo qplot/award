@@ -27,6 +27,8 @@ function pgh_awards_export_menu() {
 
 /**
  * Export form.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_form($form, &$form_state, $apptype_tag = NULL) {
   $form['description'] = array(
@@ -72,10 +74,14 @@ function pgh_awards_export_form($form, &$form_state, $apptype_tag = NULL) {
 
 /**
  * Submit handler for export.
+ *
+ * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_form_submit($form, &$form_state) {
   $values = &$form_state['values'];
   $apptype_tag = $values['apptype'];
+
+  // Create file and fill the header.
 
   // Find out all applications of this application type.
   $app_ids = pgh_api_find_nodes(
@@ -133,4 +139,26 @@ function pgh_awards_export_op($app_id, &$context) {
 
   $context['results'][] = $app_id;
   $context['message'] = t('Calculating application "@nid"', array('@nid' => $app_id));
+}
+
+/**
+ * Create export file.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_export_createfile() {
+  $dir = file_directory_temp();
+
+  // Make sure the directory exists first.
+  if (!file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+    $this->abort_export(t('Could not access temporary directory for result export (@dir). Check permissions.', array('@dir' => $dir)));
+  }
+
+  // Create a file with unique name prefixed with pgh.
+  $path = drupal_tempnam($dir, 'pgh');
+
+  // Save the file into the DB.
+  $file = $this->file_save_file($path);
+
+  return $file->fid;
 }
