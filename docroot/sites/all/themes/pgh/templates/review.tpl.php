@@ -28,12 +28,30 @@
 
         <div id="hospital-content-left" class="column">
           <h3>Primary Contact:</h3>
-          <p><span class="label"><?php echo $app['primary_first'] . ' ' . $app['primary_last'] ?> , <?php $app['primary_phone'] ?></span></p>
+          <p><span class="label">
+            <?php echo $app['primary_first'] . ' ' . $app['primary_last'] ?> 
+            <?php if (!empty($app['primary_phone'])): ?>
+              , <?php echo $app['primary_phone'] ?>
+            <?php endif ?>
+          </span></p>
           <p><span class="label"><?php echo $app['primary_email'] ?></span></p>
-          <p><span class="label">Staffed Beds:</span> <?php echo $app['beds'] ?></p>
-          <p><span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
+          <p>
+            <?php if (!empty($app['beds'])): ?>
+              <span class="label">Staffed Beds:</span> <?php echo $app['beds'] ?>
+            <?php endif ?>
+          </p>
+          <p>
+            <?php if (!empty($app['ors'])): ?>
+              <span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
+            <?php endif; ?>
           <p><span class="label">FE Liaison:</span></p>
-          <p><span class="label">Reviewer(s):</span> <?php echo $app['reviewers'] ?></p>
+          <p><span class="label">Reviewer(s):</span> 
+            <?php if (!empty($app['reviewers'])): ?>
+              <?php echo $app['reviewers'] ?>
+            <?php else: ?>
+              Not Assigned
+            <?php endif; ?>
+          </p>
         </div>
 
         <div id="hospital-content-mid" class="column">
