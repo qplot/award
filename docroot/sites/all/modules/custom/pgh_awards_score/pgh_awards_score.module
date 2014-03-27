@@ -620,6 +620,57 @@ function pgh_awards_score_quality_potential_categories($apptype_tag) {
       'PFC_appendixA',
       'PFC_appendixB'
     ),
+    'partner_recognition' => array(
+      'PR_demographic',
+      'PFC_goals',
+      'PR_accuracy',
+      'PR_appendixA',
+      'PR_appendixB'
+    ),
+    'long_term_care' => array(
+      'LTC_demographic',
+      'PFC_goals',
+      'LTC_accuracy',
+      'LTC_appendixA',
+      'LTC_appendixB'
+    ),
+    'champion_for_change_gpo' => array(
+      'CFC_goals',
+      'PFC_accuracy',
+    ),
+    'champion_for_change_nongpo' => array(
+      'CFC_goals',
+      'PFC_accuracy'
+    ),
+    'greening_the_or' => array(
+      'PFC_goals',
+      'PFC_accuracy'
+    ),
+    'dehp_free' => array(
+      'PFC_accuracy'
+    ),
+    'system_for_change' => array(
+      'PFC_goals',
+      'PFC_accuracy'
+    ),
+    'mmmf' => array(
+      'PFC_goals',
+      'PFC_accuracy'
+    ),
+    'chc_partner_for_change' => array(
+      'CHCPFC_demographic',
+      'PFC_goals',
+      'CHCPFC_accuracy',
+      'CHCPFC_appendixA',
+      'CHCPFC_appendixB'
+    ),
+    'chc_partner_recognition' => array(
+      'CHCPR_demographic',
+      'PFC_goals',
+      'CHCPR_accuracy',
+      'CHCPR_appendixA',
+      'CHCPR_appendixB'
+    )
   );
 
   if (!empty($hiddens[$apptype_tag])) {
