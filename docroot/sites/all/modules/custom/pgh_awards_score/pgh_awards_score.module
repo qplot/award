@@ -433,8 +433,10 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
     $apptype = node_load($apptype_id);
     $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
+    $quality_disable_cids = pgh_awards_score_quality_potential_categories($apptype_tag);
 
     $cids = $apptype_wrapper->field_apptype_categories->raw();
+    // dsm($apptype_tag); dsm($quality_disable_cids); dsm($cids);
     foreach ($cids as $cat_id) {
       $scores = pgh_awards_score_calculate_application_category($app_id, $cat_id, $save);
 
@@ -463,7 +465,10 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         $cat_response_wrapper->field_cat_response_kpi->set($scores['kpi']);
         $cat_response_wrapper->field_cat_response_metric_p->set($scores['metric_p']);
         $cat_response_wrapper->field_cat_response_metric->set($scores['metric']);
-        $cat_response_wrapper->field_cat_response_quality_p->set(100);
+
+        // Based on the application type, hidden tag is stored as 0 here.
+        $quality_p = in_array($cat_id, $quality_disable_cids) ? 0 : 100;
+        $cat_response_wrapper->field_cat_response_quality_p->set($quality_p);
 
         // Calculate and store final score.
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
@@ -599,4 +604,35 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
   }
 
   return $scores;
+}
+
+/**
+ * Get a list of displayable categories id based on application type.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_score_quality_potential_categories($apptype_tag) {
+  $hiddens = array(
+    'partner_for_change' => array(
+      'PFC_demographic',
+      'PFC_goals',
+      'PFC_accuracy',
+      'PFC_appendixA',
+      'PFC_appendixB'
+    ),
+  );
+
+  if (!empty($hiddens[$apptype_tag])) {
+    $cids = pgh_api_find_nodes(
+      array(
+        'type' => 'category',
+        'title' => array($hiddens[$apptype_tag], 'IN')
+      ),
+      NULL, TRUE
+    );
+
+    return $cids;
+  }
+
+  return array();
 }

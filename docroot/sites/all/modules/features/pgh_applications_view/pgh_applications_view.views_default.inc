@@ -254,6 +254,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['field_application_type_value']['expose']['label'] = 'Application Type';
   $handler->display->display_options['filters']['field_application_type_value']['expose']['operator'] = 'field_application_type_value_op';
   $handler->display->display_options['filters']['field_application_type_value']['expose']['identifier'] = 'field_application_type_value';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['remember'] = TRUE;
   $handler->display->display_options['filters']['field_application_type_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
