@@ -165,15 +165,19 @@ function pgh_awards_review_page() {
       $cat['category_tag'] = $category->title;
       $cat['category_class'] = str_replace('_', '-', strtolower($cat['category_tag']));
       $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
+      $cat['automatic_pc'] = 0;
       if (!empty($cat['automatic_p'])) {
         $cat['automatic_pc'] = intval($cat['automatic'] / $cat['automatic_p'] * 100);
       }
+      $cat['kpi_pc'] = 0;
       if (!empty($cat['kpi_p'])) {
         $cat['kpi_pc'] = intval($cat['kpi'] / $cat['kpi_p'] * 100);
       }
+      $cat['metric_pc'] = 0;
       if (!empty($cat['metric_p'])) {
         $cat['metric_pc'] = intval($cat['metric'] / $cat['metric_p'] * 100);
       }
+      $cat['quality_pc'] = 0;
       if (!empty($cat['quality_p'])) {
         $cat['quality_pc'] = intval($cat['quality'] / $cat['quality_p'] * 100);
       }
@@ -245,17 +249,20 @@ function pgh_awards_review_page() {
     'business_unit_id' => $bunit_id,
     'institution' => $bunit_wrapper->title->value(),
     'institution_name' => $bunit_wrapper->field_business_unit_name->value(),
-    // Health system missing.
+    'health_system' => $bunit_wrapper->field_health_system->value(),
     'city' => $bunit_wrapper->field_shipping_city->value(),
     'state' => $bunit_wrapper->field_shipping_state->value(),
     'zipcode' => $bunit_wrapper->field_shipping_zipcode->value(),
     'country' => $bunit_wrapper->field_shipping_country->value(),
-    // Primary contact missing.
+    'primary_first' => $bunit_wrapper->field_primary_first_name->value(),
+    'primary_last' => $bunit_wrapper->field_primary_last_name->value(),
+    'primary_phone' => $bunit_wrapper->field_primary_phone->value(),
+    'primary_email' => $bunit_wrapper->field_primary_email->value(),
     // Application year missing.
-    // Safesforce account owner missing.
+    'salesforce_owner' => $bunit_wrapper->field_salesforce_owner->value(),
     'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
     'reviewers' => implode(', ', $persons),
-    // Number of hospitals winning missing.
+    'winning_pfcs' => $app_wrapper->field_application_winning_pfcs->value(),
     'score_view' => $view->render('page'),
     'scores' => $scores,
     'goals' => $goals,
@@ -270,6 +277,8 @@ function pgh_awards_review_page() {
   $elements = array(
     'qualify' => render($form['qualify']),
     'threshold_met' => render($form['threshold_met']),
+    'winning_pfcs' => render($form['winning_pfcs']),
+    'awards' => render($form['awards']),
     'comment' => render($form['comment']),
     'submit' => render($form['submit']),
   );
@@ -320,6 +329,28 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
     '#type' => 'textarea',
     '#title' => 'Overall Application Comments (please fill out last):',
     '#default_value' => !empty($body['value']) ? $body['value'] : '',
+  );
+
+  $form['winning_pfcs'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Number of Hospitals winning PFC or above:',
+    '#default_value' => $app_wrapper->field_application_winning_pfcs->value(),
+    '#size' => 1,
+  );
+
+  $options = array();
+  $values = array();
+  if ($vid = taxonomy_vocabulary_machine_name_load("suggested_designation")->vid) {
+    $values = $app_wrapper->field_application_designations_s->raw();
+    $terms = taxonomy_get_tree($vid);
+    foreach ($terms as $term) {
+      $options[$term->tid] = $term->name;
+    }
+  }
+  $form['awards'] = array(
+    '#type' => 'checkboxes',
+    '#options' => $options,
+    '#default_value' => $values,
   );
 
   // Make quality score and case study.
@@ -412,10 +443,20 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
     $app_wrapper = entity_metadata_wrapper('node', $application);
     $app_wrapper->field_application_threshold_met->set($values['threshold_met']);
     $app_wrapper->field_application_qualify->set($values['qualify']);
+    $app_wrapper->field_application_winning_pfcs->set($values['winning_pfcs']);
+    $awards = array();
+    foreach ($values['awards'] as $value) {
+      if (!empty($value)) {
+        $awards[] = $value;
+      }
+    }
+    $app_wrapper->field_application_designations_s->set($awards);
     $app_wrapper->body->set(array(
       'value' => $values['comment'],
       'format' => 'filtered_html',
     ));
     $app_wrapper->save();
   }
+
+  drupal_set_message('Review info has been saved.');
 }

@@ -1,0 +1,13 @@
+name = Awards Designation
+description = PGH Awards Designation Vocabulary
+core = 7.x
+package = PGH Vocabulary
+version = 7.x-1.0
+project = pgh_awards_designation_vocabulary
+dependencies[] = features
+dependencies[] = list
+dependencies[] = options
+dependencies[] = taxonomy
+features[features_api][] = api:2
+features[taxonomy][] = award_designation
+features[taxonomy][] = suggested_designation

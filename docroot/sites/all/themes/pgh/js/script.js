@@ -118,11 +118,14 @@
       }
 
 
-      // Add waypoints functionailty to app menu.
-      // http://imakewebthings.com/jquery-waypoints
+      // Add waypoints functionailty.
+      // imakewebthings.com/jquery-waypoints
       // ======================================================================
+      // App menu
       $('#application-menu-container').waypoint('sticky');
 
+      // Review details
+      $('#hospital-wrap').waypoint('sticky');
 
 
       // Show / hide business units on the dashboard.
@@ -182,6 +185,11 @@
       $('.page-application .print-page').click(function() {
         window.print();
       });
+
+
+      // Add class to reviewer page
+      // ======================================================================
+      $('#reviewer-wrap').parents('#main-wrap').addClass('main-reviewer');
 
 
       // Comments

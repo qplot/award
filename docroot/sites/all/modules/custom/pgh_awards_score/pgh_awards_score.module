@@ -164,19 +164,6 @@ function pgh_awards_score_views_pre_render(&$view) {
       'attributes' => array('class' => 'action-links')
     ));
   }
-  if ($view->name == 'score_application') {
-    $app_id = arg(3);
-    $items = array();
-    $items[] = l(
-      t('Calculate'),
-      "admin/score/application/$app_id/calculate",
-      array('query' => drupal_get_destination())
-    );
-    $view->attachment_before = theme('item_list', array(
-      'items' => $items,
-      'attributes' => array('class' => 'action-links')
-    ));
-  }
 }
 
 /**
@@ -226,6 +213,8 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
           );
         }
       }
+      // Sort the variable array to make sure mapping for long variable first.
+      uksort($variables, create_function('$a,$b', 'return strlen($a) < strlen($b);'));
       // Evaluate the formula.
       $replace = $formula;
       foreach ($variables as $variable) {
