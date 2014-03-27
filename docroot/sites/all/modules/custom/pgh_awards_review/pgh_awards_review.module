@@ -119,12 +119,11 @@ function pgh_awards_review_page() {
   $persons = array();
   foreach ($app_wrapper->field_application_reviewers->getIterator() as $reviewer_wrapper) {
     $reviewer = array(
-      'first' => $reviewer_wrapper->field_user_first_name->value(),
-      'last' => $reviewer_wrapper->field_user_last_name->value(),
       'name' => $reviewer_wrapper->name->value(),
+      'realname' => $reviewer_wrapper->value()->realname,
     );
     $reviewers[] = $reviewer;
-    $persons[] = $reviewer['first'] . ' ' . $reviewer['last'];
+    $persons[] = $reviewer['realname'];
   }
 
   // Get apptype.
