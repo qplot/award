@@ -154,6 +154,20 @@ function pgh_awards_review_page() {
     $question_values[$key] = $response['value'];
   }
 
+  // Get all metrics value.
+  $metric_tags = array(
+    'solid_waste' => 'metric_PFC_waste_1'
+  );
+  $metric_values = array();
+  foreach ($metric_tags as $key => $tag) {
+    $metric_values[$key] = '';
+    if ($metric_id = pgh_api_find_nodes(array('type' => 'metric', 'title' => $tag))) {
+      if ($response = pgh_awards_score_calculate_metric($app_id, $metric_id)) {
+        $metric_values[$key] = $response['value'];
+      }
+    }
+  }
+
   // Get application scores.
   $scores = pgh_awards_score_application($app_id, TRUE);
   foreach ($scores as &$cat) {
@@ -268,6 +282,7 @@ function pgh_awards_review_page() {
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);
+  $vars['app'] = array_merge($vars['app'], $metric_values);
 
   // Get a form for updating application info.
   $form = drupal_get_form('pgh_awards_review_application_form', $app, $scores);

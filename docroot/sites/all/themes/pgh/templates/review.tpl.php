@@ -22,8 +22,9 @@
       <div id="hospital-wrap"><div id="hospital-wrap-inner">
 
         <div id="hospital-content-top">
-        <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
-        <p class="institution-name"><?php echo $app['institution_name'] ?></p>
+          <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
+          <p class="institution-name"><?php echo $app['institution_name'] ?></p>
+          <p><span class="lable">% Solid Waste :</span> <?php echo $app['solid_waste'] ?></p>          
         </div>
 
         <div id="hospital-content-left" class="column">
