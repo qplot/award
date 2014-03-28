@@ -197,10 +197,12 @@
               <a href="/node/<?php print $business_unit->vid; ?>/edit#edit-field-business-unit-type">Please update this Business Unit</a>
             </p>
         <?php else: ?>
-    <?php if ($reviewmode && !in_array('administrator', array_values($user->roles)) && !in_array('PGH Administrator', array_values($user->roles))): ?>
-<? print t('Applications are being reviewed.'); ?>
-            
-            <?php else: ?>
+
+          <?php if ($reviewmode && !user_access('administer awards system')): ?>
+            <? print t('Applications are being reviewed.'); ?>
+
+          <?php else: ?>
+
         <div class="applications">
           <?php
             /* Hiding archive link till it's needed.
