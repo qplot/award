@@ -93,7 +93,7 @@
       <h2>Metric and Quality</h2>
 
         <?php foreach ($app['scores'] as $cat): ?>
-          <?php if ($cat): ?>
+          <?php if ($cat && $cat['quality_p']): ?>
 
             <div class="cat-group">
 
@@ -121,8 +121,8 @@
                       <div class="metrics-group"><span class="label"><?php echo $metric['description'] ?>:</span> <strong><?php echo $metric['value'] ?></strong></div>
                     <?php endforeach ?>
                   </div>
-                <?php echo $form['comment_' . $cat['category_id']] ?>
               <?php endif ?>
+              <?php echo $form['comment_' . $cat['category_id']] ?>
             </div></div>
 
             </div>

@@ -169,7 +169,7 @@ function pgh_awards_review_page() {
   }
 
   // Get application scores.
-  $scores = pgh_awards_score_application($app_id, TRUE);
+  $scores = pgh_awards_score_application($app_id, TRUE);dsm($scores);
   foreach ($scores as &$cat) {
     if ($cat) {
       $category = node_load($cat['category_id']);
