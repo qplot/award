@@ -225,7 +225,11 @@ function pgh_awards_export_application_row($app_id) {
     );
 
     // Find Business Unit.
-    $bunit_info = array();
+    $bunit_info = array(
+      'id' => 0,
+      'title' => 'N/A',
+      'institution' => 'N/A'
+    );
     $buid = pgh_api_find_nodes(array(
       'type' => 'business_unit',
       'field_applications' => array('target_id', $app_id, '='),
@@ -240,21 +244,41 @@ function pgh_awards_export_application_row($app_id) {
       );
     }
 
+    // Populate all questions.
     $questions = array();
     $items = pgh_awards_export_questions($app_info['type']);
-    $qids = array_keys($items);
-    // Find out all responses
-    foreach ($items as $key => $value) {
-      # code...
+    foreach ($items as $key => &$question) {
+      $questions[$key] = $question['id'];
     }
 
+    // Find responses of all the questions.
+    $qids = array_values($questions);
+    $rids = pgh_api_find_nodes(
+      array(
+        'type' => 'response',
+        'field_response_question' => array('target_id', $qids, 'IN'),
+        'field_response_application' => array('target_id', $app_id, '=')
+      ),
+      NULL, TRUE
+    ); dsm($rids);
+    $responses = node_load_multiple($rids);
+
+    // Find out all responses.
+    foreach ($responses as &$response) {
+      $response_wrapper = entity_metadata_wrapper('node', $response);
+      $qid = $response_wrapper->field_response_question->raw();
+      $body = $response_wrapper->body->value();
+
+      $questions[$qid] = !empty($body) ? $body['value'] : '';
+    }
 
     $row = array_merge(
       array_values($app_info),
-      array_values($bunit_info)
+      array_values($bunit_info),
+      array_values($questions)
     );
   }
-
+dsm($row);
   // Convert row into a csv row.
   return implode(',', $row) . "\r\n";
 }
