@@ -84,9 +84,8 @@ function pgh_awards_export_form_submit($form, &$form_state) {
 
   // Create file and fill the header.
   if ($uri = pgh_awards_export_createfile()) {
-    $header = pgh_awards_export_application_header();
+    $header = pgh_awards_export_application_header($apptype_tag);
     pgh_awards_export_writefile($uri, $header);
-    dsm($uri);
   }
 
   // Find out all applications of this application type.
@@ -179,7 +178,7 @@ function pgh_awards_export_writefile($uri, $string) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_export_application_header() {
+function pgh_awards_export_application_header($apptype_tag) {
   $row = array(
     // Application Info.
     'application' => array(
@@ -194,9 +193,16 @@ function pgh_awards_export_application_header() {
     ),
   );
 
+  $questions = array();
+  $items = pgh_awards_export_questions($apptype_tag);
+  foreach ($items as $key => &$question) {
+    $questions[$key] = $key;
+  }
+
   $header = array_merge(
     array_values($row['application']),
-    array_values($row['business_unit'])
+    array_values($row['business_unit']),
+    array_values($questions)
   );
 
   return implode(',', $header) . "\r\n";
@@ -233,6 +239,16 @@ function pgh_awards_export_application_row($app_id) {
         'institution' => $bunit_wrapper->field_business_unit_name->value(),
       );
     }
+
+    $questions = array();
+    $items = pgh_awards_export_questions($app_info['type']);
+    $qids = array_keys($items);
+    // Find out all responses
+    foreach ($items as $key => $value) {
+      # code...
+    }
+
+
     $row = array_merge(
       array_values($app_info),
       array_values($bunit_info)
@@ -241,4 +257,35 @@ function pgh_awards_export_application_row($app_id) {
 
   // Convert row into a csv row.
   return implode(',', $row) . "\r\n";
+}
+
+/**
+ * Get all questions for one application type.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_export_questions($apptype_tag) {
+  if ($apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag))) {
+    $app_type = node_load($apptype_id);
+    $app_type_wrapper = entity_metadata_wrapper('node', $app_type);
+
+    $questions = array();
+    foreach ($app_type_wrapper->field_apptype_categories->getIterator() as $cat_wrapper) {
+      foreach ($cat_wrapper->field_category_sections->getIterator() as $section_wrapper) {
+        foreach ($section_wrapper->field_section_questions->getIterator() as $question_wrapper) {
+          $title = $question_wrapper->title->value();
+          $questions[$title] = array(
+            'id' => $question_wrapper->getIdentifier(),
+            'title' => $title,
+            'type' => $question_wrapper->field_question_type->value(),
+            'style' => $question_wrapper->field_question_style->value(),
+            'options' => $question_wrapper->field_question_options->value(),
+            'prompt' => $question_wrapper->field_question_prompt->value(),
+          );
+          break;
+        }
+      }
+    }
+  }
+  return $questions;
 }
