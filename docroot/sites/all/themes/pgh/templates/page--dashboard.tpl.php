@@ -198,6 +198,11 @@
             </p>
         <?php else: ?>
 
+          <?php if ($reviewmode && !user_access('administer awards system')): ?>
+            <? print t('Applications are being reviewed.'); ?>
+
+          <?php else: ?>
+
         <div class="applications">
           <?php
             /* Hiding archive link till it's needed.
@@ -311,7 +316,7 @@
 
         <?php endif; ?>
         </div><!-- /.bu-container-bottom -->
-
+<?php endif; ?>
       </div>
 
     <?php endforeach; ?>
