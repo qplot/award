@@ -19,8 +19,7 @@ function pgh_awards_score_menu() {
     'description' => 'Calculate metric score for application',
     'page callback' => 'pgh_awards_score_calculate_application_metric_page',
     'page arguments' => array(3),
-    'access callback' => 'node_access',
-    'access arguments' => array('view', 3),
+    'access arguments' => array('administer awards system'),
     'type' => MENU_NORMAL_ITEM,
   );
 
@@ -30,7 +29,7 @@ function pgh_awards_score_menu() {
     'description' => 'Calculate metric score for application type',
     'page callback' => 'pgh_awards_score_calculate_apptype_metric',
     'page arguments' => array(3),
-    'access callback' => TRUE,
+    'access arguments' => array('administer awards system'),
     'type' => MENU_NORMAL_ITEM,
   );
 
@@ -40,8 +39,7 @@ function pgh_awards_score_menu() {
     'description' => 'Calculate all score for application category',
     'page callback' => 'pgh_awards_score_calculate_application_page',
     'page arguments' => array(3),
-    'access callback' => 'node_access',
-    'access arguments' => array('update', 1),
+    'access arguments' => array('administer awards system'),
   );
 
   return $items;
