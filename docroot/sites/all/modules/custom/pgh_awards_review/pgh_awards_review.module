@@ -327,16 +327,19 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
   $app_wrapper = entity_metadata_wrapper('node', $app);
   $body = $app_wrapper->body->value();
 
+  $yesno = array(t('No'), t('Yes'));
   $form['qualify'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Does system qualify ?'),
-    '#default_value' => $app_wrapper->field_application_qualify->value(),
+    '#type' => 'radios',
+    // '#title' => t('Does system qualify ?'),
+    '#options' => $yesno,
+    '#default_value' => intval($app_wrapper->field_application_qualify->value()),
   );
 
   $form['threshold_met'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Does application meet the metrics thresholds for award applied for ?'),
-    '#default_value' => $app_wrapper->field_application_threshold_met->value(),
+    '#type' => 'radios',
+    // '#title' => t('Does application meet the metrics thresholds for award applied for ?'),
+    '#options' => $yesno,
+    '#default_value' => intval($app_wrapper->field_application_threshold_met->value()),
   );
 
   $form['comment'] = array(
@@ -426,7 +429,7 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_application_form_submit($form, &$form_state) {
-  // dsm($form_state['values']);
+  dsm($form_state['values']);
   $values = &$form_state['values'];
 
   // Save quality score and comment  to category response.

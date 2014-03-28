@@ -61,7 +61,9 @@
             <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> </p>
           <?php endif; ?>
           <?php echo $form['winning_pfcs'] ?>
+          <p>Does system qualify ?</p>
           <?php echo $form['qualify'] ?>
+          <p>Does application meet the metrics thresholds for award applied for ?</p>
           <?php echo $form['threshold_met'] ?>
         </div>
 
