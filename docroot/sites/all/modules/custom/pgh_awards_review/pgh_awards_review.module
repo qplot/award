@@ -169,7 +169,7 @@ function pgh_awards_review_page() {
   }
 
   // Get application scores.
-  $scores = pgh_awards_score_application($app_id, TRUE);dsm($scores);
+  $scores = pgh_awards_score_application($app_id, TRUE);
   foreach ($scores as &$cat) {
     if ($cat) {
       $category = node_load($cat['category_id']);
@@ -429,7 +429,7 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_review_application_form_submit($form, &$form_state) {
-  dsm($form_state['values']);
+  // dsm($form_state['values']);
   $values = &$form_state['values'];
 
   // Save quality score and comment  to category response.
