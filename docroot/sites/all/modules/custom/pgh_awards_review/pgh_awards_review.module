@@ -154,6 +154,20 @@ function pgh_awards_review_page() {
     $question_values[$key] = $response['value'];
   }
 
+  // Get all metrics value.
+  $metric_tags = array(
+    'solid_waste' => 'metric_PFC_waste_1'
+  );
+  $metric_values = array();
+  foreach ($metric_tags as $key => $tag) {
+    $metric_values[$key] = '';
+    if ($metric_id = pgh_api_find_nodes(array('type' => 'metric', 'title' => $tag))) {
+      if ($response = pgh_awards_score_calculate_metric($app_id, $metric_id)) {
+        $metric_values[$key] = $response['value'];
+      }
+    }
+  }
+
   // Get application scores.
   $scores = pgh_awards_score_application($app_id, TRUE);
   foreach ($scores as &$cat) {
@@ -268,6 +282,7 @@ function pgh_awards_review_page() {
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);
+  $vars['app'] = array_merge($vars['app'], $metric_values);
 
   // Get a form for updating application info.
   $form = drupal_get_form('pgh_awards_review_application_form', $app, $scores);
@@ -312,16 +327,19 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
   $app_wrapper = entity_metadata_wrapper('node', $app);
   $body = $app_wrapper->body->value();
 
+  $yesno = array(t('No'), t('Yes'));
   $form['qualify'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Does system qualify ?'),
-    '#default_value' => $app_wrapper->field_application_qualify->value(),
+    '#type' => 'radios',
+    // '#title' => t('Does system qualify ?'),
+    '#options' => $yesno,
+    '#default_value' => intval($app_wrapper->field_application_qualify->value()),
   );
 
   $form['threshold_met'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Does application meet the metrics thresholds for award applied for ?'),
-    '#default_value' => $app_wrapper->field_application_threshold_met->value(),
+    '#type' => 'radios',
+    // '#title' => t('Does application meet the metrics thresholds for award applied for ?'),
+    '#options' => $yesno,
+    '#default_value' => intval($app_wrapper->field_application_threshold_met->value()),
   );
 
   $form['comment'] = array(

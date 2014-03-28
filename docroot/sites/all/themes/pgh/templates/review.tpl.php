@@ -22,19 +22,21 @@
       <div id="hospital-wrap"><div id="hospital-wrap-inner">
 
         <div id="hospital-content-top">
-        <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
-        <p class="institution-name"><?php echo $app['institution_name'] ?></p>
+          <?php echo $form['submit'] ?>
+          <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
+          <p class="institution-name"><?php echo $app['institution_name'] ?></p>
+          <p><span class="lable">% Solid Waste :</span> <?php echo $app['solid_waste'] ?></p>
         </div>
 
         <div id="hospital-content-left" class="column">
           <h3>Primary Contact:</h3>
-          <p><span class="label">
-            <?php echo $app['primary_first'] . ' ' . $app['primary_last'] ?> 
+          <p>
+            <?php echo $app['primary_first'] . ' ' . $app['primary_last'] ?>
             <?php if (!empty($app['primary_phone'])): ?>
               , <?php echo $app['primary_phone'] ?>
             <?php endif ?>
-          </span></p>
-          <p><span class="label"><?php echo $app['primary_email'] ?></span></p>
+          </p>
+          <p><?php echo $app['primary_email'] ?></p>
           <p>
             <?php if (!empty($app['beds'])): ?>
               <span class="label">Staffed Beds:</span> <?php echo $app['beds'] ?>
@@ -45,7 +47,7 @@
               <span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
             <?php endif; ?>
           <p><span class="label">FE Liaison: Not Implemented</span></p>
-          <p><span class="label">Reviewer(s):</span> 
+          <p><span class="label">Reviewer(s):</span>
             <?php if (!empty($app['reviewers'])): ?>
               <?php echo $app['reviewers'] ?>
             <?php else: ?>
@@ -60,14 +62,15 @@
             <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> </p>
           <?php endif; ?>
           <?php echo $form['winning_pfcs'] ?>
+          <p>Does system qualify ?</p>
           <?php echo $form['qualify'] ?>
+          <p>Does application meet the metrics thresholds for award applied for ?</p>
           <?php echo $form['threshold_met'] ?>
         </div>
 
         <div id="hospital-content-right" class="column">
           <h3>Final Awards</h3>
           <?php echo $form['awards'] ?>
-          <?php echo $form['submit'] ?>
         </div>
 
       </div></div>
@@ -90,7 +93,7 @@
       <h2>Metric and Quality</h2>
 
         <?php foreach ($app['scores'] as $cat): ?>
-          <?php if ($cat): ?>
+          <?php if ($cat && $cat['quality_p']): ?>
 
             <div class="cat-group">
 
@@ -118,8 +121,8 @@
                       <div class="metrics-group"><span class="label"><?php echo $metric['description'] ?>:</span> <strong><?php echo $metric['value'] ?></strong></div>
                     <?php endforeach ?>
                   </div>
-                <?php echo $form['comment_' . $cat['category_id']] ?>
               <?php endif ?>
+              <?php echo $form['comment_' . $cat['category_id']] ?>
             </div></div>
 
             </div>
