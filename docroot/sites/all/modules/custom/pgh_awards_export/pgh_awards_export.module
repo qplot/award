@@ -164,7 +164,6 @@ function pgh_awards_export_op($apptype_tag, $op_id, &$context) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_createfile() {
-  // return 1;
   // Create a file with unique name prefixed with pgh.
   $path = 'pgh_' . substr(md5(rand()), 0, 7) . '.csv';
 
@@ -200,7 +199,7 @@ function pgh_awards_export_writefile($uri, $string) {
 function pgh_awards_export_application_row($op_id, &$questions) {
   // Header row $op id is negative value.
   if ($op_id <= 0) {
-    $row = array(
+    $header = array(
       // Application Info.
       'application' => array(
         'id' => 'Application ID',
@@ -216,16 +215,20 @@ function pgh_awards_export_application_row($op_id, &$questions) {
 
     $prompts = array();
     foreach ($questions as $key => &$question) {
-      $prompts[$key] = substr($question['prompt'], 0, 20);
+      $prompts[$key] = $question['title'] . ":" . substr($question['prompt'], 0, 20);
+      if (isset($question['row'])) {
+        $prompts[$key] .= ' (R) ' . $question['row'];
+      }
+      if (isset($question['col'])) {
+        $prompts[$key] .= ' (C) ' .  $question['col'];
+      }
     }
 
-    $header = array_merge(
-      array_values($row['application']),
-      array_values($row['business_unit']),
+    $row = array_merge(
+      array_values($header['application']),
+      array_values($header['business_unit']),
       array_values($prompts)
     );
-
-    return implode(',', $header) . "\r\n";
   }
   // Whereas row $op id is positive value.
   else {
@@ -287,6 +290,16 @@ function pgh_awards_export_application_row($op_id, &$questions) {
 
           $value = !empty($body) ? $body['value'] : '';
           switch ($question['type']) {
+            case 'container':
+              $value = 'CONTAINER';
+              break;
+
+            case 'file':
+              if ($file = file_load($value)) {
+                $value = file_create_url($file->uri);
+              }
+              break;
+
             case 'selection':
               switch ($question['style']) {
                 case 'checkboxes':
@@ -329,10 +342,10 @@ function pgh_awards_export_application_row($op_id, &$questions) {
         array_values($answers)
       );
     }
-
-    // Convert row into a csv row.
-    return implode(',', $row) . "\r\n";
   }
+
+  // Convert row into a csv row.
+  return '"' . implode('","', $row) . '"' . "\r\n";
 }
 /**
  * Get all questions for one application type.
@@ -354,7 +367,7 @@ function pgh_awards_export_questions($apptype_tag) {
 
     $i = 0;
     $questions = array();
-    $types = array('html', 'text');
+    $types = array('html');
     foreach ($app_type_wrapper->field_apptype_categories->getIterator() as $cat_wrapper) {
       foreach ($cat_wrapper->field_category_sections->getIterator() as $section_wrapper) {
         foreach ($section_wrapper->field_section_questions->getIterator() as $question_wrapper) {
@@ -370,15 +383,49 @@ function pgh_awards_export_questions($apptype_tag) {
             'style' => $question_wrapper->field_question_style->value(),
             'prompt' => $question_wrapper->field_question_prompt->value(),
             'options' => $question_wrapper->field_question_options->value(),
+            'layout' => $question_wrapper->field_question_layout->value(),
           );
 
+          // @codingStandardsIgnoreStart
           $i += 1;
-          if ($i > 50) {
+          if ($i > 100000) {
+            // Handle layout field requires post process.
+            foreach ($questions as &$question) {
+              if ($question['type'] == 'container') {
+                $layout = pgh_parse_layout($question['layout']);
+                // Figure out if first col is not a header
+                $col_skipped = !empty($layout[1][0]) ? (substr($layout[1][0], 0, 5) == 'pghq_') : FALSE;
+                $row_skipped = !empty($layout[0][1]) ? (substr($layout[0][1], 0 ,5) == 'pghq_') : FALSE;
+                $p = 0;
+                foreach ($layout as &$row) {
+                  $q = 0;
+                  foreach ($row as $cell) {
+                    if (substr($cell, 0, 5) == 'pghq_') {
+                      if ($qid = pgh_find_question_id($cell)) {
+                        $id = 'question_' . $qid;
+                        if (!$col_skipped) {
+                          $questions[$id]['row'] = $layout[$p][0];
+                        }
+                        if (!$row_skipped) {
+                          $questions[$id]['col'] = $layout[0][$q];
+                        }
+                      }
+                    }
+                    $q += 1;
+                  }
+                  $p += 1;
+                }
+                // dsm($layout);
+              }
+            }
+
             return $questions;
           }
+          // @codingStandardsIgnoreEnd
         }
       }
     }
+
   }
   return $questions;
 }
