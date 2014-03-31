@@ -82,12 +82,6 @@ function pgh_awards_export_form_submit($form, &$form_state) {
   $values = &$form_state['values'];
   $apptype_tag = $values['apptype'];
 
-  // Create file and fill the header.
-  if ($uri = pgh_awards_export_createfile()) {
-    $header = pgh_awards_export_application_header($apptype_tag);
-    pgh_awards_export_writefile($uri, $header);
-  }
-
   // Find out all applications of this application type.
   $app_ids = pgh_api_find_nodes(
     array(
@@ -104,9 +98,11 @@ function pgh_awards_export_form_submit($form, &$form_state) {
       $debug = intval($values['debug']);
     }
   }
+  // Setup op for headers.
+  $operations[] = array('pgh_awards_export_op', array($apptype_tag, 0));
   $i = 0;
   foreach ($app_ids as $nid) {
-    $operations[] = array('pgh_awards_export_op', array($nid, $uri));
+    $operations[] = array('pgh_awards_export_op', array($apptype_tag, $nid));
     if ($debug) {
       $i += 1;
       if ($i >= $debug) {
@@ -138,20 +134,28 @@ function pgh_awards_export_form_finished($success, $results, $operations) {
 
 /**
  * Op handler for export.
+ *
+ * Pass in $op_id, which is app_id for positive, and header row for non-positive value.
+ * 
+ * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_export_op($app_id, $uri, &$context) {
-  $row = pgh_awards_export_application_row($app_id);
-  pgh_awards_export_writefile($uri, $row);
+function pgh_awards_export_op($apptype_tag, $op_id, &$context) {
+  if ($op_id <= 0) {
+    // Init the whole process.
+    if (!isset($context['results']['uri'])) {
+      if ($uri = pgh_awards_export_createfile()) {
+        $context['results']['uri'] = $uri;
+        $context['results']['questions'] = pgh_awards_export_questions($apptype_tag);
+      }
+    }
+  }
 
-  $context['results'][] = $row;
-  $context['message'] = t('Calculating application "@nid"', array('@nid' => $app_id));
+  // Calculate the op.
+  $row = pgh_awards_export_application_row($op_id, $context['results']['questions']);dsm($row);
+  // Write the result.
+  pgh_awards_export_writefile($context['results']['uri'], $row);
 
-  // if (count($context['results']) > 20) {
-  //   dsm($context['results']);
-  //   pgh_awards_export_writefile($uri, implode('', $context['results']));
-  //   $context['results'] = array();
-  // }
-  // dsm($context['results']);
+  $context['message'] = t('Calculating application "@nid"', array('@nid' => $op_id));
 }
 
 /**
@@ -160,6 +164,7 @@ function pgh_awards_export_op($app_id, $uri, &$context) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_createfile() {
+  // return 1;
   // Create a file with unique name prefixed with pgh.
   $path = 'pgh_' . substr(md5(rand()), 0, 7) . '.csv';
 
@@ -182,156 +187,167 @@ function pgh_awards_export_writefile($uri, $string) {
 
 /**
  * Get the header of the application.
+ * 
+ * Generate CSV header and row information.
+ *
+ * @param int $op_id
+ *   Application ID or Header ID.
+ * @param array $questions
+ *   Questions arrange of specific application type.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_export_application_header($apptype_tag) {
-  $row = array(
-    // Application Info.
-    'application' => array(
-      'id' => 'Application ID',
-      'type' => 'Application Type',
-      'status' => 'Application Status',
-    ),
-    'business_unit' => array(
-      'id' => 'Business Unit ID',
-      'title' => 'Business Unit Title',
-      'institution' => 'Name of Institution',
-    ),
-  );
+function pgh_awards_export_application_row($op_id, &$questions) {
+  // Header row $op id is negative value.
+  if ($op_id <= 0) {
+    $row = array(
+      // Application Info.
+      'application' => array(
+        'id' => 'Application ID',
+        'type' => 'Application Type',
+        'status' => 'Application Status',
+      ),
+      'business_unit' => array(
+        'id' => 'Business Unit ID',
+        'title' => 'Business Unit Title',
+        'institution' => 'Name of Institution',
+      ),
+    );
 
-  $questions = array();
-  $items = pgh_awards_export_questions($apptype_tag);
-  foreach ($items as $key => &$question) {
-    $questions[$key] = substr($question['prompt'], 0, 20);
+    $prompts = array();
+    foreach ($questions as $key => &$question) {
+      $prompts[$key] = substr($question['prompt'], 0, 20);
+    }
+
+    $header = array_merge(
+      array_values($row['application']),
+      array_values($row['business_unit']),
+      array_values($prompts)
+    );
+
+    return implode(',', $header) . "\r\n";
   }
+  // Whereas row $op id is positive value.
+  else {
+    $app_id = $op_id;
+    $row = array();
+    // Read application.
+    if ($app = node_load($app_id)) {
+      $app_wrapper = entity_metadata_wrapper('node', $app);
+      $app_info = array(
+        'id' => $app_id,
+        'type' => $app_wrapper->field_application_type->value(),
+        'status' => $app_wrapper->field_application_status->value(),
+      );
 
-  $header = array_merge(
-    array_values($row['application']),
-    array_values($row['business_unit']),
-    array_values($questions)
-  );
-
-  return implode(',', $header) . "\r\n";
-}
-
-/**
- * Create csv row for each application.
- *
- * @author Fang Jin <fang@designhammer.com>
- */
-function pgh_awards_export_application_row($app_id) {
-  $row = array();
-  // Read application.
-  if ($app = node_load($app_id)) {
-    $app_wrapper = entity_metadata_wrapper('node', $app);
-    $app_info = array(
-      'id' => $app_id,
-      'type' => $app_wrapper->field_application_type->value(),
-      'status' => $app_wrapper->field_application_status->value(),
-    );
-
-    // Find Business Unit.
-    $bunit_info = array(
-      'id' => 0,
-      'title' => 'N/A',
-      'institution' => 'N/A'
-    );
-    $buid = pgh_api_find_nodes(array(
-      'type' => 'business_unit',
-      'field_applications' => array('target_id', $app_id, '='),
-    ));
-    if ($bunit = node_load($buid)) {
-      $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
-
+      // Find Business Unit.
       $bunit_info = array(
-        'id' => $buid,
-        'title' => $bunit_wrapper->title->value(),
-        'institution' => $bunit_wrapper->field_business_unit_name->value(),
+        'id' => 0,
+        'title' => 'N/A',
+        'institution' => 'N/A'
+      );
+      $buid = pgh_api_find_nodes(array(
+        'type' => 'business_unit',
+        'field_applications' => array('target_id', $app_id, '='),
+      ));
+      if ($bunit = node_load($buid)) {
+        $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
+
+        $bunit_info = array(
+          'id' => $buid,
+          'title' => $bunit_wrapper->title->value(),
+          'institution' => $bunit_wrapper->field_business_unit_name->value(),
+        );
+      }
+
+      // Populate all questions.
+      $qids = array();
+      foreach ($questions as $key => &$question) {
+        $qids[] = $question['id'];
+      }
+
+      // Find responses of all the questions.
+      $rids = pgh_api_find_nodes(
+        array(
+          'type' => 'response',
+          'field_response_question' => array('target_id', $qids, 'IN'),
+          'field_response_application' => array('target_id', $app_id, '=')
+        ),
+        NULL, TRUE
+      );
+      $responses = node_load_multiple($rids);
+
+      // Find out all responses.
+      foreach ($responses as &$response) {
+        $response_wrapper = entity_metadata_wrapper('node', $response);
+        $qid = $response_wrapper->field_response_question->raw();
+        $body = $response_wrapper->body->value();
+        if (!empty($questions['question_' . $qid])) {
+          $question = &$questions['question_' . $qid];
+
+          $value = !empty($body) ? $body['value'] : '';
+          switch ($question['type']) {
+            case 'selection':
+              switch ($question['style']) {
+                case 'checkboxes':
+                  $choices = unserialize($value);
+                  $value = array();
+                  foreach ($choices as $choice) {
+                    if ($choice) {
+                      $value[] = $choice;
+                    }
+                  }
+                  $value = implode('|', $value);
+                  break;
+
+                case 'default':
+                case 'dropdown':
+                case 'radios':
+                  if (isset($question['options'][$value])) {
+                    $value = $question['options'][$value];
+                  }
+                  break;
+              }
+              break;
+
+            default:
+              break;
+          }
+
+          $question['value'] = $value;
+        }
+      }
+      // dsm($questions);
+      $answers = array();
+      foreach ($questions as $key => &$question) {
+        $answers[$key] = $question['value'];
+      }
+
+      $row = array_merge(
+        array_values($app_info),
+        array_values($bunit_info),
+        array_values($answers)
       );
     }
 
-    // Populate all questions.
-    $qids = array();
-    $questions = pgh_awards_export_questions($app_info['type']);
-    foreach ($questions as $key => &$question) {
-      $qids[] = $question['id'];
-    }
-
-    // Find responses of all the questions.
-    $rids = pgh_api_find_nodes(
-      array(
-        'type' => 'response',
-        'field_response_question' => array('target_id', $qids, 'IN'),
-        'field_response_application' => array('target_id', $app_id, '=')
-      ),
-      NULL, TRUE
-    );
-    $responses = node_load_multiple($rids);
-
-    // Find out all responses.
-    foreach ($responses as &$response) {
-      $response_wrapper = entity_metadata_wrapper('node', $response);
-      $qid = $response_wrapper->field_response_question->raw();
-      $body = $response_wrapper->body->value();
-      if (!empty($questions['question_' . $qid])) {
-        $question = &$questions['question_' . $qid];
-
-        $value = !empty($body) ? $body['value'] : '';
-        switch ($question['type']) {
-          case 'selection':
-            switch ($question['style']) {
-              case 'checkboxes':
-                $choices = unserialize($value);
-                $value = array();
-                foreach ($choices as $choice) {
-                  if ($choice) {
-                    $value[] = $choice;
-                  }
-                }
-                $value = implode('|', $value);
-                break;
-
-              case 'default':
-              case 'dropdown':
-              case 'radios':
-                if (isset($question['options'][$value])) {
-                  $value = $question['options'][$value];
-                }
-                break;
-            }
-            break;
-
-          default:
-            break;
-        }
-
-        $question['value'] = $value;
-      }
-    }
-    // dsm($questions);
-    $answers = array();
-    foreach ($questions as $key => &$question) {
-      $answers[$key] = $question['value'];
-    }
-
-    $row = array_merge(
-      array_values($app_info),
-      array_values($bunit_info),
-      array_values($answers)
-    );
+    // Convert row into a csv row.
+    return implode(',', $row) . "\r\n";
   }
-
-  // Convert row into a csv row.
-  return implode(',', $row) . "\r\n";
 }
-
 /**
  * Get all questions for one application type.
  *
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_questions($apptype_tag) {
+  // Use drupal static to cache for same page load.
+  // @codingStandardsIgnoreStart
+  // $questions = &drupal_static(__FUNCTION__);
+  // if (isset($questions)) {
+  //   return $questions;
+  // }
+  // @codingStandardsIgnoreEnd
+  $questions = array();
   if ($apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag))) {
     $app_type = node_load($apptype_id);
     $app_type_wrapper = entity_metadata_wrapper('node', $app_type);
