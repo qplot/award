@@ -79,10 +79,12 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
     unset($form['title']);
     unset($form['body']);
 
-    $form['field_application_status'] = array(
-      '#type' => 'hidden',
-      '#value' => array('new'),
-    );
+    // I believe we have field permissions set for status
+    // Jay, can i remove the following lines.
+    // $form['field_application_status'] = array(
+    // '#type' => 'hidden',
+    // '#value' => array('new'),
+    // );
 
     // Redirect to dashboard after saving node.
     $form['actions']['submit']['#submit'][] = 'pgh_application_form_node_form_submit';

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Application Types View feature.
+ */
+
+include_once 'pgh_awards_apptypes_view.features.inc';
