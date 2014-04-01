@@ -386,7 +386,11 @@ function pgh_awards_score_view_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Score';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    4 => '4',
+  );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -458,6 +462,7 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['arguments']['field_cat_response_application_target_id']['id'] = 'field_cat_response_application_target_id';
   $handler->display->display_options['arguments']['field_cat_response_application_target_id']['table'] = 'field_data_field_cat_response_application';
   $handler->display->display_options['arguments']['field_cat_response_application_target_id']['field'] = 'field_cat_response_application_target_id';
+  $handler->display->display_options['arguments']['field_cat_response_application_target_id']['default_action'] = 'empty';
   $handler->display->display_options['arguments']['field_cat_response_application_target_id']['title_enable'] = TRUE;
   $handler->display->display_options['arguments']['field_cat_response_application_target_id']['title'] = 'Score for %1';
   $handler->display->display_options['arguments']['field_cat_response_application_target_id']['default_argument_type'] = 'fixed';
@@ -483,6 +488,12 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'category_response' => 'category_response',
   );
+  /* Filter criterion: Content: Quality potential point (field_cat_response_quality_p) */
+  $handler->display->display_options['filters']['field_cat_response_quality_p_value']['id'] = 'field_cat_response_quality_p_value';
+  $handler->display->display_options['filters']['field_cat_response_quality_p_value']['table'] = 'field_data_field_cat_response_quality_p';
+  $handler->display->display_options['filters']['field_cat_response_quality_p_value']['field'] = 'field_cat_response_quality_p_value';
+  $handler->display->display_options['filters']['field_cat_response_quality_p_value']['operator'] = '!=';
+  $handler->display->display_options['filters']['field_cat_response_quality_p_value']['value'] = '0';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
