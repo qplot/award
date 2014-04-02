@@ -19,8 +19,7 @@ function pgh_awards_score_menu() {
     'description' => 'Calculate all score for application category',
     'page callback' => 'pgh_awards_score_calculate_application_page',
     'page arguments' => array(3),
-    'access callback' => 'pgh_awards_score_access',
-    'access arguments' => array(),
+    'access arguments' => array('administer awards system'),
   );
 
   // Calculate all scores for one application type.
@@ -29,18 +28,10 @@ function pgh_awards_score_menu() {
     'description' => 'Calculate scores for application type',
     'page callback' => 'drupal_get_form',
     'page arguments' => array("pgh_awards_score_calculate_apptype_form", 3),
-    'access callback' => 'pgh_awards_score_access',
-    'access arguments' => array(),
+    'access arguments' => array('administer awards system'),
   );
 
   return $items;
-}
-
-/**
- * Access callback for admin score calculations.
- */
-function pgh_awards_score_access() {
-  return user_access('administer site configuration') || user_access('administer awards system');
 }
 
 /**
