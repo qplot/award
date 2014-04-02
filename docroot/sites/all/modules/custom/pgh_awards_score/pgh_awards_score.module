@@ -187,8 +187,10 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
           );
         }
       }
-      // Sort the variable array to make sure mapping for long variable first.
+
+      // Sort variables by variable length.
       uksort($variables, create_function('$a,$b', 'return strlen($a) < strlen($b);'));
+
       // Evaluate the formula.
       $replace = $formula;
       foreach ($variables as $variable) {
@@ -199,7 +201,8 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
         $value = eval("return @($replace);");
       }
       catch (Exception $e) {
-        dsm($e->getMessage());
+        // Can't catch this error for now, needs better solution, ex. writing script to file.
+        watchdog('pgh_score', 'Error in eval on %var', array('%var' => $replace), WATCHDOG_ERROR);
       }
       // Calculate score.
       $score = intval($value / $reference * 100);
