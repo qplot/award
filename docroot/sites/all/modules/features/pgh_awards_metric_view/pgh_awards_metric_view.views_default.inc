@@ -12,8 +12,8 @@ function pgh_awards_metric_view_views_default_views() {
 
   $view = new view();
   $view->name = 'metric';
-  $view->description = '';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying all metric spec';
+  $view->tag = 'admin';
   $view->base_table = 'node';
   $view->human_name = 'Metric';
   $view->core = 7;
@@ -162,10 +162,10 @@ function pgh_awards_metric_view_views_default_views() {
 
   $view = new view();
   $view->name = 'metric_score';
-  $view->description = '';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying metric score for one application';
+  $view->tag = 'admin';
   $view->base_table = 'node';
-  $view->human_name = 'Metric Score';
+  $view->human_name = 'Metric for app';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -331,10 +331,10 @@ function pgh_awards_metric_view_views_default_views() {
 
   $view = new view();
   $view->name = 'metric_score_for_apptype';
-  $view->description = '';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying metric score for one application type';
+  $view->tag = 'admin';
   $view->base_table = 'node';
-  $view->human_name = 'Metric Score for apptype';
+  $view->human_name = 'Metric for apptype';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -343,11 +343,8 @@ function pgh_awards_metric_view_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Metric Score';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'role';
-  $handler->display->display_options['access']['role'] = array(
-    3 => '3',
-    4 => '4',
-  );
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer awards system';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';

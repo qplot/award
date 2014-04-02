@@ -12,10 +12,10 @@ function pgh_applications_view_views_default_views() {
 
   $view = new view();
   $view->name = 'admin_reviewers';
-  $view->description = 'Admin Reviewer Assignment and Tracking';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying application and reviewers';
+  $view->tag = 'admin';
   $view->base_table = 'node';
-  $view->human_name = 'Admin Reviewers';
+  $view->human_name = 'Reviewers';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -24,11 +24,8 @@ function pgh_applications_view_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Admin Reviewers';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'role';
-  $handler->display->display_options['access']['role'] = array(
-    3 => '3',
-    4 => '4',
-  );
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'review awards application';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -584,7 +581,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Score';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'admin/score/application/[nid]';
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'admin/score/application/[nid]/category';
   /* Field: review */
   $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
@@ -741,6 +738,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['nid']['expose']['label'] = 'Search by application ID';
   $handler->display->display_options['filters']['nid']['expose']['operator'] = 'nid_op';
   $handler->display->display_options['filters']['nid']['expose']['identifier'] = 'nid';
+  $handler->display->display_options['filters']['nid']['expose']['remember'] = TRUE;
   $handler->display->display_options['filters']['nid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
