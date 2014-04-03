@@ -413,8 +413,8 @@ function pgh_applications_view_views_default_views() {
 
   $view = new view();
   $view->name = 'applications';
-  $view->description = '';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying all applications';
+  $view->tag = 'admin';
   $view->base_table = 'node';
   $view->human_name = 'Applications';
   $view->core = 7;
@@ -626,6 +626,30 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['nothing_3']['ui_name'] = 'Actions';
   $handler->display->display_options['fields']['nothing_3']['label'] = 'Actions';
   $handler->display->display_options['fields']['nothing_3']['alter']['text'] = '[nothing_2] ([nothing]|[nothing_4]) [nothing_1] [edit_node]';
+  /* Field: Form */
+  $handler->display->display_options['fields']['nothing_5']['id'] = 'nothing_5';
+  $handler->display->display_options['fields']['nothing_5']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_5']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_5']['ui_name'] = 'Form';
+  $handler->display->display_options['fields']['nothing_5']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_5']['alter']['text'] = 'Form';
+  $handler->display->display_options['fields']['nothing_5']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_5']['alter']['path'] = 'application/[nid]';
+  /* Field: Readonly */
+  $handler->display->display_options['fields']['nothing_6']['id'] = 'nothing_6';
+  $handler->display->display_options['fields']['nothing_6']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_6']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_6']['ui_name'] = 'Readonly';
+  $handler->display->display_options['fields']['nothing_6']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_6']['alter']['text'] = 'Readonly';
+  $handler->display->display_options['fields']['nothing_6']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_6']['alter']['path'] = 'review/[nid]/readonly';
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing_7']['id'] = 'nothing_7';
+  $handler->display->display_options['fields']['nothing_7']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_7']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_7']['label'] = 'Form';
+  $handler->display->display_options['fields']['nothing_7']['alter']['text'] = '[nothing_5] [nothing_6]';
   /* Sort criterion: Content: Nid */
   $handler->display->display_options['sorts']['nid']['id'] = 'nid';
   $handler->display->display_options['sorts']['nid']['table'] = 'node';
