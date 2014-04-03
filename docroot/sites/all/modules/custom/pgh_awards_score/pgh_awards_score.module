@@ -197,19 +197,19 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
         watchdog('pgh_score', 'Error in eval on %var', array('%var' => $replace), WATCHDOG_ERROR);
       }
       // Calculate score.
-      $score = intval($value / $reference * 100);
+      $score = round($value / $reference * 100, 2);
+      $value = round($value, 2);
       if ($orientation == 'low') {
-        $score = 100 - $score;
+        $score = 100.0 - $score;
       }
       // Bound score.
       if ($score < 0) {
-        $score = 0;
+        $score = 0.0;
       }
       if ($score > 100) {
-        $score = 100;
+        $score = 100.0;
       }
 
-      $value = intval($value);
     }
   }
 
