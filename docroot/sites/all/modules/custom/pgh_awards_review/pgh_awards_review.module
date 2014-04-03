@@ -181,7 +181,9 @@ function pgh_awards_review_page($app) {
   }
 
   // Get application scores.
+  $rows = array();
   $scores = pgh_awards_score_application($app_id, TRUE);
+  $rounds = 1;
   foreach ($scores as &$cat) {
     if ($cat) {
       $category = node_load($cat['category_id']);
@@ -192,29 +194,46 @@ function pgh_awards_review_page($app) {
       $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
       $cat['automatic_pc'] = 0;
       if (!empty($cat['automatic_p'])) {
-        $cat['automatic_pc'] = intval($cat['automatic'] / $cat['automatic_p'] * 100);
+        $cat['automatic_pc'] = round($cat['automatic'] / $cat['automatic_p'] * 100, $rounds);
       }
       $cat['kpi_pc'] = 0;
       if (!empty($cat['kpi_p'])) {
-        $cat['kpi_pc'] = intval($cat['kpi'] / $cat['kpi_p'] * 100);
+        $cat['kpi_pc'] = round($cat['kpi'] / $cat['kpi_p'] * 100, $rounds);
       }
       $cat['metric_pc'] = 0;
       if (!empty($cat['metric_p'])) {
-        $cat['metric_pc'] = intval($cat['metric'] / $cat['metric_p'] * 100);
+        $cat['metric_pc'] = round($cat['metric'] / $cat['metric_p'] * 100, $rounds);
       }
       $cat['quality_pc'] = 0;
       if (!empty($cat['quality_p'])) {
-        $cat['quality_pc'] = intval($cat['quality'] / $cat['quality_p'] * 100);
+        $cat['quality_pc'] = round($cat['quality'] / $cat['quality_p'] * 100, $rounds);
       }
+      $cat['final_p'] = $cat['automatic_p'] + $cat['kpi_p'] + $cat['metric_p'] + $cat['quality_p'];
+      $cat['final_pc'] = 0;
+      if (!empty($cat['final_p'])) {
+        $cat['final_pc'] = round($cat['final'] / $cat['final_p'] * 100, $rounds);
+      }
+
+      // Assemble score view row.
+      $rows[] = array(
+        $cat['category_name'], $cat['automatic'], $cat['automatic_pc'] . '%',
+        $cat['metric'], $cat['metric_pc'] . '%',
+        $cat['kpi'], $cat['kpi_pc'] . '%',
+        $cat['quality'], $cat['quality_p'],
+        $cat['final'], $cat['final_pc'] . '%'
+      );
     }
   }
 
-  // Get a score view.
-  $view = views_get_view('score_category');
-  $view->set_arguments(array($app_id));
-  $view->set_display('page');
-  $view->pre_execute();
-  $view->execute();
+  // Assemble a score view.
+  $header = array(
+    'Category', 'Auto', '% Auto',
+    'Metric', '% Metric',
+    'KPI', '% KPI',
+    'Quality', '% Not Applicable',
+    'Final', '% Final'
+  );
+  $score_view = theme('table', array('header' => $header, 'rows' => $rows));
 
   // Get goals of the app.
   $goals = array(
@@ -288,7 +307,7 @@ function pgh_awards_review_page($app) {
     'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
     'reviewers' => implode(', ', $persons),
     'winning_pfcs' => $app_wrapper->field_application_winning_pfcs->value(),
-    'score_view' => $view->render('page'),
+    'score_view' => $score_view,
     'scores' => $scores,
     'goals' => $goals,
   );

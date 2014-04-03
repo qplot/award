@@ -440,8 +440,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         if (count($wp) < 4) {
           $wp = array(1, 1, 1, 1);
         }
-        $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] +
-          $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
+        $scores['final'] = round($wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'], 2);
         $cat_response_wrapper->field_cat_response_final->set($scores['final']);
 
         $cat_response_wrapper->save();
