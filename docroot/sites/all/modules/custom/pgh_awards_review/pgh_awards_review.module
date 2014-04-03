@@ -24,12 +24,29 @@ function pgh_awards_review_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['review/%'] = array(
+  $items['review/%node'] = array(
     'title' => 'Review Application',
     'description' => 'Review application and give quality score etc.',
     'page callback' => 'pgh_awards_review_page',
     'page arguments' => array(1),
-    'access callback' => FALSE,
+    'access callback' => 'pgh_awards_review_can_access',
+    'access arguments' => array(1),
+  );
+
+  $items['review/%node/readonly'] = array(
+    'title' => 'Review application',
+    'description' => 'Review application',
+    'page callback' => 'pgh_form_application_page',
+    'page arguments' => array(1),
+    'access callback' => 'pgh_awards_review_can_access',
+    'access arguments' => array(1),
+  );
+
+  $items['review/%node/category/%/readonly'] = array(
+    'title' => 'Review application',
+    'description' => 'Review application',
+    'page callback' => 'pgh_form_category_page',
+    'page arguments' => array(1, 3),
     'access callback' => 'pgh_awards_review_can_access',
     'access arguments' => array(1),
   );
@@ -59,20 +76,21 @@ function pgh_awards_review_permission() {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_review_can_access($app_id) {
-  // Load application id.
-  if ($node = node_load($app_id)) {
-    global $user;
-    // Let's allow admins to view the page.
-    if (user_access('administer site configuration', $user)) {
-      return TRUE;
-    }
-    $wrapper = entity_metadata_wrapper('node', $node);
-    $reviewers = $wrapper->field_application_reviewers->raw();
-    return in_array($user->uid, $reviewers);
+function pgh_awards_review_can_access($node) {
+  if ($node->type != 'application') {
+    return FALSE;
   }
-
-  return FALSE;
+  // Load application id.
+  global $user;
+  // Let's allow admins to view the page.
+  // Review awards application permission seems to me redundant.
+  if (user_access('administer site configuration', $user) ||
+    user_access('administer awards system')) {
+    return TRUE;
+  }
+  $wrapper = entity_metadata_wrapper('node', $node);
+  $reviewers = $wrapper->field_application_reviewers->raw();
+  return in_array($user->uid, $reviewers);
 }
 
 /**
@@ -103,15 +121,9 @@ function pgh_awards_review_dashboard() {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_review_page() {
-
-  // Only accept application id.
-  $app_id = arg(1);
-  if (!$app_id || !is_numeric($app_id)) {
-    return;
-  }
+function pgh_awards_review_page($app) {
   // Get application.
-  $app = node_load($app_id);
+  $app_id = $app->nid;
   $app_wrapper = entity_metadata_wrapper('node', $app);
 
   // Get reviewers.
@@ -181,7 +193,7 @@ function pgh_awards_review_page() {
   }
 
   // Get a score view.
-  $view = views_get_view('score_application');
+  $view = views_get_view('score_category');
   $view->set_arguments(array($app_id));
   $view->set_display('page');
   $view->pre_execute();

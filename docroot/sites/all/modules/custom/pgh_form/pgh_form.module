@@ -183,7 +183,8 @@ function pgh_form_application_page($application) {
     return MENU_NOT_FOUND;
   }
 
-  drupal_goto('application/' . $application->nid . '/category/' . $first_category->title);
+  $readonly = (arg(2) == 'readonly') ? '/readonly' : '';
+  drupal_goto('application/' . $application->nid . '/category/' . $first_category->title . $readonly);
 }
 
 /**
@@ -711,7 +712,7 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
 function pgh_form_file_after_build($form, &$form_state) {
   if (!empty($form['#disabled'])) {
     $form['title']['#description'] = $form['#custom_description'];
-    $form['title']['#description'] .= ($form['#custom_shared']) ? ' <strong>SHARED</strong>' : '' ;
+    $form['title']['#description'] .= ($form['#custom_shared']) ? ' <strong>SHARED</strong>' : '';
     $form['edit']['#access'] = FALSE;
     $form['select']['#access'] = FALSE;
     $form['remove']['#access'] = FALSE;
