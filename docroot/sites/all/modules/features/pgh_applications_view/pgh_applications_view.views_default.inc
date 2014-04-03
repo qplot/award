@@ -12,10 +12,10 @@ function pgh_applications_view_views_default_views() {
 
   $view = new view();
   $view->name = 'admin_reviewers';
-  $view->description = 'Admin Reviewer Assignment and Tracking';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying application and reviewers';
+  $view->tag = 'admin';
   $view->base_table = 'node';
-  $view->human_name = 'Admin Reviewers';
+  $view->human_name = 'Reviewers';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -24,11 +24,8 @@ function pgh_applications_view_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Admin Reviewers';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'role';
-  $handler->display->display_options['access']['role'] = array(
-    3 => '3',
-    4 => '4',
-  );
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'review awards application';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -416,8 +413,8 @@ function pgh_applications_view_views_default_views() {
 
   $view = new view();
   $view->name = 'applications';
-  $view->description = '';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying all applications';
+  $view->tag = 'admin';
   $view->base_table = 'node';
   $view->human_name = 'Applications';
   $view->core = 7;
@@ -584,7 +581,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Score';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'admin/score/application/[nid]';
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'admin/score/application/[nid]/category';
   /* Field: review */
   $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
@@ -629,6 +626,30 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['nothing_3']['ui_name'] = 'Actions';
   $handler->display->display_options['fields']['nothing_3']['label'] = 'Actions';
   $handler->display->display_options['fields']['nothing_3']['alter']['text'] = '[nothing_2] ([nothing]|[nothing_4]) [nothing_1] [edit_node]';
+  /* Field: Form */
+  $handler->display->display_options['fields']['nothing_5']['id'] = 'nothing_5';
+  $handler->display->display_options['fields']['nothing_5']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_5']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_5']['ui_name'] = 'Form';
+  $handler->display->display_options['fields']['nothing_5']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_5']['alter']['text'] = 'Form';
+  $handler->display->display_options['fields']['nothing_5']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_5']['alter']['path'] = 'application/[nid]';
+  /* Field: Readonly */
+  $handler->display->display_options['fields']['nothing_6']['id'] = 'nothing_6';
+  $handler->display->display_options['fields']['nothing_6']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_6']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_6']['ui_name'] = 'Readonly';
+  $handler->display->display_options['fields']['nothing_6']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_6']['alter']['text'] = 'Readonly';
+  $handler->display->display_options['fields']['nothing_6']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_6']['alter']['path'] = 'review/[nid]/readonly';
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing_7']['id'] = 'nothing_7';
+  $handler->display->display_options['fields']['nothing_7']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_7']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_7']['label'] = 'Form';
+  $handler->display->display_options['fields']['nothing_7']['alter']['text'] = '[nothing_5] [nothing_6]';
   /* Sort criterion: Content: Nid */
   $handler->display->display_options['sorts']['nid']['id'] = 'nid';
   $handler->display->display_options['sorts']['nid']['table'] = 'node';
@@ -741,6 +762,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['nid']['expose']['label'] = 'Search by application ID';
   $handler->display->display_options['filters']['nid']['expose']['operator'] = 'nid_op';
   $handler->display->display_options['filters']['nid']['expose']['identifier'] = 'nid';
+  $handler->display->display_options['filters']['nid']['expose']['remember'] = TRUE;
   $handler->display->display_options['filters']['nid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,

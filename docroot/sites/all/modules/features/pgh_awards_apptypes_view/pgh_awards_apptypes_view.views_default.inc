@@ -12,8 +12,8 @@ function pgh_awards_apptypes_view_views_default_views() {
 
   $view = new view();
   $view->name = 'apptypes';
-  $view->description = '';
-  $view->tag = 'default';
+  $view->description = 'Admin view displaying application types and calculation buttons';
+  $view->tag = 'admin';
   $view->base_table = 'node';
   $view->human_name = 'Application Types';
   $view->core = 7;
@@ -25,6 +25,7 @@ function pgh_awards_apptypes_view_views_default_views() {
   $handler->display->display_options['title'] = 'Application Types';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer awards system';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -47,22 +48,30 @@ function pgh_awards_apptypes_view_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing_1']['label'] = 'Calculate';
-  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Calculate All';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Calculate all scores';
   $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'admin/score/apptype/[title]/calculate?destination=admin/apptypes';
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = 'Score';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'View metrics';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Metric Score';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'View metric scores';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'admin/metric/apptype/[title]/score';
+  /* Field: Global: Custom text */
+  $handler->display->display_options['fields']['nothing_3']['id'] = 'nothing_3';
+  $handler->display->display_options['fields']['nothing_3']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_3']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_3']['label'] = 'Category Score';
+  $handler->display->display_options['fields']['nothing_3']['alter']['text'] = 'View category scores';
+  $handler->display->display_options['fields']['nothing_3']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_3']['alter']['path'] = 'admin/score/apptype/[title]/category';
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
   $handler->display->display_options['fields']['nothing_2']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing_2']['label'] = 'Final';
+  $handler->display->display_options['fields']['nothing_2']['label'] = 'Final Score';
   $handler->display->display_options['fields']['nothing_2']['alter']['text'] = 'View all scores';
   $handler->display->display_options['fields']['nothing_2']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing_2']['alter']['path'] = 'admin/score/apptype/[title]/score';

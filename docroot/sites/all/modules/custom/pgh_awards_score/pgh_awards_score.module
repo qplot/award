@@ -138,6 +138,19 @@ function pgh_awards_score_views_pre_render(&$view) {
       'attributes' => array('class' => 'action-links')
     ));
   }
+  if ($view->name == 'score_application') {
+    $app_id = arg(3);
+    $items = array();
+    $items[] = l(
+      t('Calculate'),
+      "admin/score/application/$app_id/calculate",
+      array('query' => drupal_get_destination())
+    );
+    $view->attachment_before = theme('item_list', array(
+      'items' => $items,
+      'attributes' => array('class' => 'action-links')
+    ));
+  }
 }
 
 /**
@@ -205,19 +218,19 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
         watchdog('pgh_score', 'Error in eval on %var', array('%var' => $replace), WATCHDOG_ERROR);
       }
       // Calculate score.
-      $score = intval($value / $reference * 100);
+      $score = round($value / $reference * 100, 2);
+      $value = round($value, 2);
       if ($orientation == 'low') {
-        $score = 100 - $score;
+        $score = 100.0 - $score;
       }
       // Bound score.
       if ($score < 0) {
-        $score = 0;
+        $score = 0.0;
       }
       if ($score > 100) {
-        $score = 100;
+        $score = 100.0;
       }
 
-      $value = intval($value);
     }
   }
 
@@ -410,10 +423,8 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
     $apptype = node_load($apptype_id);
     $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
-    $quality_disable_cids = pgh_awards_score_quality_potential_categories($apptype_tag);
 
     $cids = $apptype_wrapper->field_apptype_categories->raw();
-    // dsm($apptype_tag); dsm($quality_disable_cids); dsm($cids);
     foreach ($cids as $cat_id) {
       $scores = pgh_awards_score_calculate_application_category($app_id, $cat_id, $save);
 
@@ -442,10 +453,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         $cat_response_wrapper->field_cat_response_kpi->set($scores['kpi']);
         $cat_response_wrapper->field_cat_response_metric_p->set($scores['metric_p']);
         $cat_response_wrapper->field_cat_response_metric->set($scores['metric']);
-
-        // Based on the application type, hidden tag is stored as 0 here.
-        $quality_p = in_array($cat_id, $quality_disable_cids) ? 0 : 100;
-        $cat_response_wrapper->field_cat_response_quality_p->set($quality_p);
+        $cat_response_wrapper->field_cat_response_quality_p->set(100);
 
         // Calculate and store final score.
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
@@ -602,6 +610,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
 }
 
 /**
+<<<<<<< HEAD
  * Get a list of displayable categories id based on application type.
  *
  * @author Fang Jin <fang@designhammer.com>
@@ -684,6 +693,8 @@ function pgh_awards_score_quality_potential_categories($apptype_tag) {
 }
 
 /**
+=======
+>>>>>>> refs/heads/43b-admin-views
  * Calculate score for app type confirm page.
  */
 function pgh_awards_score_calculate_apptype_form($form, &$form_state, $apptype_tag) {
