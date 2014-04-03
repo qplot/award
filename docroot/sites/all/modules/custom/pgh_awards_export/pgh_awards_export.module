@@ -19,8 +19,7 @@ function pgh_awards_export_menu() {
     'description' => 'Export application forms value and questions',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pgh_awards_export_form'),
-    'access arguments' => array('access administration pages'),
-    'type' => MENU_CALLBACK,
+    'access arguments' => array('administer awards system'),
   );
 
   return $items;
@@ -123,6 +122,8 @@ function pgh_awards_export_form_submit($form, &$form_state) {
 function pgh_awards_export_form_finished($success, $results, $operations) {
   if ($success) {
     drupal_set_message(t('@count applications exported.', array('@count' => count($results))));
+    $link = theme('file_link', array('file' => $results['file']));
+    drupal_set_message("Download the export file here: $link");
   }
   else {
     // An error occurred.
@@ -142,18 +143,18 @@ function pgh_awards_export_form_finished($success, $results, $operations) {
 function pgh_awards_export_op($apptype_tag, $op_id, &$context) {
   if ($op_id <= 0) {
     // Init the whole process.
-    if (!isset($context['results']['uri'])) {
-      if ($uri = pgh_awards_export_createfile()) {
-        $context['results']['uri'] = $uri;
+    if (!isset($context['results']['file'])) {
+      if ($file = pgh_awards_export_createfile()) {
+        $context['results']['file'] = $file;
         $context['results']['questions'] = pgh_awards_export_questions($apptype_tag);
       }
     }
   }
 
   // Calculate the op.
-  $row = pgh_awards_export_application_row($op_id, $context['results']['questions']);dsm($row);
+  $row = pgh_awards_export_application_row($op_id, $context['results']['questions']);
   // Write the result.
-  pgh_awards_export_writefile($context['results']['uri'], $row);
+  pgh_awards_export_writefile($context['results']['file']->uri, $row);
 
   $context['message'] = t('Calculating application "@nid"', array('@nid' => $op_id));
 }
@@ -170,7 +171,7 @@ function pgh_awards_export_createfile() {
   // Save the file into the DB.
   $file = file_save_data('', 'temporary://' . $path, FILE_EXISTS_REPLACE);
 
-  return $file->uri;
+  return $file;
 }
 
 /**
