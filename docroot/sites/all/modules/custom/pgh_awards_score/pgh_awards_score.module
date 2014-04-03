@@ -544,6 +544,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
       'case_study' => $cat_response_wrapper->field_cat_response_case_study->value(),
     );
   }
+
   // Get all metric responses.
   if ($include_metric) {
     $metrics = array();
