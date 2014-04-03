@@ -135,6 +135,80 @@ function pgh_application_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-application-field_application_designations'
+  $field_instances['node-application-field_application_designations'] = array(
+    'bundle' => 'application',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 17,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_designations',
+    'label' => 'Awards Designations',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 18,
+    ),
+  );
+
+  // Exported field_instance: 'node-application-field_application_designations_s'
+  $field_instances['node-application-field_application_designations_s'] = array(
+    'bundle' => 'application',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 18,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_designations_s',
+    'label' => 'Suggested Awards Designations',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 19,
+    ),
+  );
+
   // Exported field_instance: 'node-application-field_application_final'
   $field_instances['node-application-field_application_final'] = array(
     'bundle' => 'application',
@@ -708,6 +782,7 @@ function pgh_application_ctype_field_default_field_instances() {
   t('Application Type');
   t('Automatic potential point');
   t('Automatic score');
+  t('Awards Designations');
   t('Body');
   t('Category Progress');
   t('Final score');
@@ -719,6 +794,7 @@ function pgh_application_ctype_field_default_field_instances() {
   t('Quality score');
   t('Reviewers');
   t('Status');
+  t('Suggested Awards Designations');
   t('System Qualify');
   t('Threshold Met');
   t('Winning PFCs');

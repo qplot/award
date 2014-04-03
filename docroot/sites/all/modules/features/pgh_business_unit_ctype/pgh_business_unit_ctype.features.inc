@@ -21,7 +21,7 @@ function pgh_business_unit_ctype_node_info() {
     'business_unit' => array(
       'name' => t('Business Unit'),
       'base' => 'node_content',
-      'description' => '',
+      'description' => t('Use <em>Business Unit</em> to add business contact informations for this hospital'),
       'has_title' => '1',
       'title_label' => t('Name of Institution'),
       'help' => t('The "Name of Institution" field below should be the formal name of the institution that you want to see on an award plaque.'),
