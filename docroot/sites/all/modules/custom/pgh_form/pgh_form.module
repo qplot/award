@@ -239,7 +239,10 @@ function pgh_form_category_page($application, $category_id) {
 
     drupal_set_title($application_title . ': ' . $category_title);
 
-    return drupal_get_form('pgh_application_form', $application->nid, $category_id);
+    // Set readonly through URL.
+    $readonly = (arg(4) == 'readonly');
+
+    return drupal_get_form('pgh_application_form', $application->nid, $category_id, $readonly);
   }
   else {
     return MENU_NOT_FOUND;
@@ -266,7 +269,7 @@ function pgh_form_category_page($application, $category_id) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {
+function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL, $readonly = FALSE) {
   // TODO: This is a very brittle way to skip already rendered questions.
   // We should not use globals for this.
   // Also, it leaves technically invalid question
@@ -328,7 +331,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
           $major = 'question_' . $q_wrapper->label();
 
-          $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id);
+          $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id, $readonly);
           // dsm($question_form);
 
           $form[$fieldset][$major][$q_wrapper->getIdentifier()] = $question_form;
@@ -337,7 +340,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
           if (!empty($question_form['#response_id'])) {
             $form_item = pgh_form_render_question_comment($question_form['#response_id']);
 
-            // Respect the visibility of this question
+            // Respect the visibility of this question.
             if ($q_wrapper->field_question_parent_qid->value()) {
               $form_item['#states'] = pgh_form_question_states($q_wrapper->value());
             }
@@ -465,7 +468,7 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question($question, $app_id = NULL) {
+function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) {
   $form_item = array();
 
   $question_wrapper = entity_metadata_wrapper('node', $question);
@@ -521,7 +524,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
   }
 
   // Ajax processing.
-  if (_pgh_form_should_use_ajax()) {
+  if (_pgh_form_should_use_ajax() && !$readonly) {
     $form_item['#ajax'] = array(
       'callback' => 'pgh_application_form_element_callback',
       'wrapper' => 'error-container-' . $question_wrapper->title->value(),
@@ -593,8 +596,17 @@ function pgh_form_render_question($question, $app_id = NULL) {
       break;
 
     case 'file':
+      $desc = '';
+      $shared = FALSE;
+      if ($fid = $answer['value']) {
+        $file = file_load($fid);
+        $file_wrapper = entity_metadata_wrapper('file', $file);
+        $desc = $file_wrapper->field_media_description->value();
+        $shared = $file_wrapper->field_media_shared->value();
+      }
       $media = array(
         '#type' => 'media',
+        '#after_build' => array('pgh_form_file_after_build'),
         '#input' => TRUE,
         '#media_options' => array(
           'global' => array(
@@ -606,6 +618,8 @@ function pgh_form_render_question($question, $app_id = NULL) {
         '#extended' => TRUE,
         '#tree' => TRUE,
         '#value' => !empty($answer['value']) ? array('fid' => $answer['value']) : '',
+        '#custom_description' => $desc,
+        '#custom_shared' => $shared,
       );
       $form_item = array_merge($form_item, $media);
       break;
@@ -672,10 +686,14 @@ function pgh_form_render_question($question, $app_id = NULL) {
     }
   }
 
-  // Disable this question if has default formula
+  // Disable this question if has default formula.
   if ($default_formula) {
-    // $form_item['#disabled'] = TRUE;
     $form_item['#attributes'] = array('readonly' => 'readonly');
+  }
+
+  // For readonly form, disable element.
+  if ($readonly) {
+    $form_item['#disabled'] = TRUE;
   }
 
   // Mark this question as processed.
@@ -683,6 +701,22 @@ function pgh_form_render_question($question, $app_id = NULL) {
   unset($_pgh_form_temp_section_questions_[$question_wrapper->getIdentifier()]);
 
   return $form_item;
+}
+
+/**
+ * Set permission control to file in read-only mode.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_file_after_build($form, &$form_state) {
+  if (!empty($form['#disabled'])) {
+    $form['title']['#description'] = $form['#custom_description'];
+    $form['title']['#description'] .= ($form['#custom_shared']) ? ' <strong>SHARED</strong>' : '' ;
+    $form['edit']['#access'] = FALSE;
+    $form['select']['#access'] = FALSE;
+    $form['remove']['#access'] = FALSE;
+  }
+  return $form;
 }
 
 /**
@@ -708,7 +742,7 @@ function pgh_form_render_question($question, $app_id = NULL) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question_layout($question, $app_id = NULL) {
+function pgh_form_render_question_layout($question, $app_id = NULL, $readonly = FALSE) {
   $question_wrapper = entity_metadata_wrapper('node', $question);
   $type = $question_wrapper->field_question_type->value();
   $layout = $question_wrapper->field_question_layout->value();
@@ -783,7 +817,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
           // Find the question.
           if ($qid = pgh_find_question_id($cell)) {
             $child = node_load($qid);
-            $form_item[$qid] = pgh_form_render_question($child, $app_id);
+            $form_item[$qid] = pgh_form_render_question($child, $app_id, $readonly);
           }
         }
       }
@@ -791,7 +825,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
   }
   else {
     // This is the original without layout handling.
-    $form_item = pgh_form_render_question($question, $app_id);
+    $form_item = pgh_form_render_question($question, $app_id, $readonly);
   }
 
   return $form_item;
@@ -1150,7 +1184,7 @@ function pgh_form_render_question_comment($rid) {
     '#prefix' => '<div class="comment-wrapper"><div id="comment_' . $rid . '">',
     '#suffix' => '</div>',
     '#description' => t('Please use the Comment feature only where necessary for clarification. No points are awarded for comments.'),
-    '#resizable' => false,
+    '#resizable' => FALSE,
     '#default_value' => pgh_form_get_question_comment($rid),
   );
 
@@ -1214,7 +1248,7 @@ function pgh_form_set_question_comment($rid, $body) {
   // But this function is outdated and can be upgraded
   // For now use EntityFieldQuery() manually.
 
-  // Find if the comment already exist
+  // Find if the comment already exist.
   global $user;
   $cid = 0;
   $query = new EntityFieldQuery();
@@ -1229,8 +1263,9 @@ function pgh_form_set_question_comment($rid, $body) {
   $wrapper = NULL;
   if ($cid) {
     $comment = comment_load($cid);
-  } else {
-    // add a new comment
+  }
+  else {
+    // Add a new comment.
     $comment = entity_create('comment', array(
       'type' => 'comment',
       'node_type' => 'comment_node_response',
