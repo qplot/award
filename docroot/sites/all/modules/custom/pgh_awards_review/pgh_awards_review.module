@@ -145,6 +145,17 @@ function pgh_awards_review_page($app) {
   $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
   $apptype_body = $apptype_wrapper->body->value();
 
+  // Get custom metric values.
+  $profiles = pgh_awards_review_profile_formulas();
+  $rounds = 1;
+  foreach ($profiles as &$profile) {
+    $score = pgh_awards_score_calculate_formula($app_id, $profile['formula']);
+    foreach ($score as &$s) {
+      $s = round($s, $rounds);
+    }
+    $profile = array_merge($profile, $score);
+  }
+
   // Get business unit.
   $bunit_id = pgh_api_find_nodes(array(
     'type' => 'business_unit',
@@ -164,20 +175,6 @@ function pgh_awards_review_page($app) {
     $question_id = pgh_api_find_nodes(array('type' => 'question', 'title' => $tag));
     $response = pgh_api_get_response($app_id, $question_id);
     $question_values[$key] = $response['value'];
-  }
-
-  // Get all metrics value.
-  $metric_tags = array(
-    'solid_waste' => 'metric_PFC_waste_1'
-  );
-  $metric_values = array();
-  foreach ($metric_tags as $key => $tag) {
-    $metric_values[$key] = '';
-    if ($metric_id = pgh_api_find_nodes(array('type' => 'metric', 'title' => $tag))) {
-      if ($response = pgh_awards_score_calculate_metric($app_id, $metric_id)) {
-        $metric_values[$key] = $response['value'];
-      }
-    }
   }
 
   // Get application scores.
@@ -289,10 +286,10 @@ function pgh_awards_review_page($app) {
     'score_view' => $score_view,
     'scores' => $scores,
     'goals' => $goals,
+    'profiles' => $profiles,
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);
-  $vars['app'] = array_merge($vars['app'], $metric_values);
 
   // Get a form for updating application info.
   $form = drupal_get_form('pgh_awards_review_application_form', $app, $scores);
@@ -523,7 +520,6 @@ function pgh_awards_review_percentage_score(&$cat) {
   }
 }
 
-
 /**
  * Get the header and row of the score table.
  */
@@ -552,4 +548,30 @@ function pgh_awards_review_score_row($cat) {
     $cat['quality'],
     $cat['final'], $cat['final_pc'] . '%'
   );
+}
+
+/**
+ * Get review profile formulas.
+ */
+function pgh_awards_review_profile_formulas() {
+  $profiles = array(
+    'pghq_PFC_waste_10_1_tH_3' => array(
+      'caption' => 'Solid',
+      'formula' => '(pghq_PFC_waste_2_3_tA_4 / (pghq_PFC_waste_2_3_tA_4 + pghq_PFC_appendixa_1_8t_1 + pghq_PFC_waste_6_2_3 + pghq_PFC_waste_6_2_10 + pghq_PFC_waste_6_2_16 + pghq_PFC_waste_8_10_1tE_3 + pghq_PFC_waste_8_10_1tE_9)) * 100'
+    ),
+    'pghq_PFC_waste_10_1_tH_9' => array(
+      'caption' => 'Recycling',
+      'formula' => '(pghq_PFC_appendixa_1_8t_1 / (pghq_PFC_waste_2_3_tA_4 + pghq_PFC_appendixa_1_8t_1 + pghq_PFC_waste_6_2_3 + pghq_PFC_waste_6_2_10 + pghq_PFC_waste_6_2_16 + pghq_PFC_waste_8_10_1tE_3 + pghq_PFC_waste_8_10_1tE_9)) * 100'
+    ),
+    'pghq_PFC_waste_10_1_tH_15' => array(
+      'caption' => 'RMW',
+      'formula' => '((pghq_PFC_waste_6_2_3 + pghq_PFC_waste_6_2_10 + pghq_PFC_waste_6_2_16) / (pghq_PFC_waste_2_3_tA_4 + pghq_PFC_appendixa_1_8t_1 + pghq_PFC_waste_6_2_3 + pghq_PFC_waste_6_2_10 + pghq_PFC_waste_6_2_16 + pghq_PFC_waste_8_10_1tE_3 + pghq_PFC_waste_8_10_1tE_9)) * 100'
+    ),
+    'pghq_PFC_waste_10_1_tH_21' => array(
+      'caption' => 'Hazardous',
+      'formula' => '((pghq_PFC_waste_8_10_1tE_3 + pghq_PFC_waste_8_10_1tE_9) / (pghq_PFC_waste_2_3_tA_4 + pghq_PFC_appendixa_1_8t_1 + pghq_PFC_waste_6_2_3 + pghq_PFC_waste_6_2_10 + pghq_PFC_waste_6_2_16 + pghq_PFC_waste_8_10_1tE_3 + pghq_PFC_waste_8_10_1tE_9)) * 100'
+    )
+  );
+
+  return $profiles;
 }

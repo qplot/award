@@ -6,7 +6,7 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-  // dsm($app);
+  dsm($app);
   // dsm($form);
 ?>
 
@@ -21,70 +21,84 @@
       <!-- Hospital Info Section -->
       <div id="hospital-wrap"><div id="hospital-wrap-inner">
 
-        <div id="hospital-content-top">
-          <?php echo $form['submit'] ?>
-          <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
-          <p class="institution-name"><?php echo $app['health_system'] ?></p>
-          <p><span class="lable">% Solid Waste :</span> <?php echo $app['solid_waste'] ?></p>
+        <div id="hospital-wrap-inner-info">
+          <div id="hospital-content-top">
+            <?php echo $form['submit'] ?>
+            <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
+            <p class="institution-name"><?php echo $app['health_system'] ?></p>
+          </div>
+
+          <div id="hospital-content-left" class="column">
+            <h3>Primary Contact:</h3>
+            <p>
+              <?php echo $app['primary_first'] . ' ' . $app['primary_last'] ?>
+              <?php if (!empty($app['primary_phone'])): ?>
+                , <?php echo $app['primary_phone'] ?>
+              <?php endif ?>
+            </p>
+            <p><?php echo $app['primary_email'] ?></p>
+            <p>
+              <?php if (!empty($app['beds'])): ?>
+                <span class="label">Staffed Beds:</span> <?php echo $app['beds'] ?>
+              <?php endif ?>
+            </p>
+            <p>
+              <?php if (!empty($app['ors'])): ?>
+                <span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
+              <?php endif; ?>
+            <p>
+              <?php if (!empty($app['salesforce_owner'])): ?>
+                <span class="label">Salesforce Account Owner:</span>
+                <?php echo $app['salesforce_owner'] ?>
+              <?php endif; ?>
+            </p>
+            <p>
+              <?php if (!empty($app['salesforce_id'])): ?>
+                <span class="label">Salesforce Account Owner:</span>
+                <a href="https://pgh.my.salesforce.com/<?php echo $app['salesforce_id'] ?>" target="_blank"><?php echo $app['salesforce_id'] ?></a>
+              <?php endif; ?>
+            </p>
+            <p><span class="label">Reviewer(s):</span>
+              <?php if (!empty($app['reviewers'])): ?>
+                <?php echo $app['reviewers'] ?>
+              <?php else: ?>
+                Not Assigned
+              <?php endif; ?>
+            </p>
+          </div>
+
+          <div id="hospital-content-mid" class="column">
+            <h3>Application: <?php echo $app['year'] . ' ' . $app['apptype'] ?></h3>
+            <?php if (!empty($app['cares'])): ?>
+              <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> </p>
+            <?php endif; ?>
+            <?php echo $form['winning_pfcs'] ?>
+            <p>Does system qualify ?</p>
+            <?php echo $form['qualify'] ?>
+            <p>Does application meet the metrics thresholds for award applied for ?</p>
+            <?php echo $form['threshold_met'] ?>
+          </div>
+
+          <div id="hospital-content-right" class="column">
+            <h3>Final Awards</h3>
+            <?php echo $form['awards'] ?>
+          </div>
+
         </div>
 
-        <div id="hospital-content-left" class="column">
-          <h3>Primary Contact:</h3>
-          <p>
-            <?php echo $app['primary_first'] . ' ' . $app['primary_last'] ?>
-            <?php if (!empty($app['primary_phone'])): ?>
-              , <?php echo $app['primary_phone'] ?>
-            <?php endif ?>
-          </p>
-          <p><?php echo $app['primary_email'] ?></p>
-          <p>
-            <?php if (!empty($app['beds'])): ?>
-              <span class="label">Staffed Beds:</span> <?php echo $app['beds'] ?>
-            <?php endif ?>
-          </p>
-          <p>
-            <?php if (!empty($app['ors'])): ?>
-              <span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
-            <?php endif; ?>
-          <p>
-            <?php if (!empty($app['salesforce_owner'])): ?>
-              <span class="label">Salesforce Account Owner:</span>
-              <?php echo $app['salesforce_owner'] ?>
-            <?php endif; ?>
-          </p>
-          <p>
-            <?php if (!empty($app['salesforce_id'])): ?>
-              <span class="label">Salesforce Account Owner:</span>
-              <a href="https://pgh.my.salesforce.com/<?php echo $app['salesforce_id'] ?>" target="_blank"><?php echo $app['salesforce_id'] ?></a>
-            <?php endif; ?>
-          </p>
-          <p><span class="label">Reviewer(s):</span>
-            <?php if (!empty($app['reviewers'])): ?>
-              <?php echo $app['reviewers'] ?>
-            <?php else: ?>
-              Not Assigned
-            <?php endif; ?>
-          </p>
-        </div>
-
-        <div id="hospital-content-mid" class="column">
-          <h3>Application: <?php echo $app['year'] . ' ' . $app['apptype'] ?></h3>
-          <?php if (!empty($app['cares'])): ?>
-            <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> </p>
-          <?php endif; ?>
-          <?php echo $form['winning_pfcs'] ?>
-          <p>Does system qualify ?</p>
-          <?php echo $form['qualify'] ?>
-          <p>Does application meet the metrics thresholds for award applied for ?</p>
-          <?php echo $form['threshold_met'] ?>
-        </div>
-
-        <div id="hospital-content-right" class="column">
-          <h3>Final Awards</h3>
-          <?php echo $form['awards'] ?>
+        <div class="clearfix"></div>
+        <div id="hospital-wrap-inner-profile">
+          <ul>
+            <?php foreach ($app['profiles'] as $profile): ?>
+              <li>
+                <?php echo $profile['caption'] ?> : <?php echo $profile['value'] ?>
+              </li>
+            <?php endforeach ?>
+          </ul>
         </div>
 
       </div></div>
+
 
 
       <!-- Scoring Roll-Up Section -->
