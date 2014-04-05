@@ -6,7 +6,7 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-  dsm($app);
+  // dsm($app);
   // dsm($form);
 ?>
 
