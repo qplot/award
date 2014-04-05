@@ -134,7 +134,7 @@ function pgh_awards_score_views_pre_render(&$view) {
 }
 
 /**
- * Calculate the metric score.
+ * Calculate the metric score for metric object.
  *
  * @param int $app_id
  *   Application node id
@@ -148,15 +148,41 @@ function pgh_awards_score_views_pre_render(&$view) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_score_calculate_metric($app_id, $metric_id) {
-  $value = 0; $score = 0;
-
   $node = node_load($metric_id);
   $wrapper = entity_metadata_wrapper('node', $node);
   $formula = $wrapper->field_metric_formula->value();
   $reference = $wrapper->field_metric_reference->value();
   $orientation = $wrapper->field_metric_orientation->value();
-  // $formula = 'pghq_PFC_waste_10_1_tG_3 + pghq_PFC_demographic_1_7';
 
+  $score = pgh_awards_score_calculate_formula($app_id, $formula, $reference, $orientation);
+  $score['metric_id'] = $metric_id;
+
+  return $score;
+}
+
+/**
+ * Calculate the metric score.
+ *
+ * @param int $app_id
+ *   Application ID
+ *
+ * @param string $formula
+ *   Formula string containing question tag and equations
+ *
+ * @param int $reference
+ *   Reference value, most of time 100
+ *
+ * @param string $orientation
+ *   Key of orientation, 'low' or 'high'
+ *
+ * @return array
+ *   Array of value, array('value'=> $value, 'score' => $score)
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_score_calculate_formula($app_id, $formula, $reference = 100, $orientation = 'high') {
+  $value = 0;
+  $score = 0;
   // Pattern match the formula to find all variables with pghq_ prefix.
   $matches = array();
   if (preg_match_all('/\bpghq_[\w]*/', $formula, $matches)) {
@@ -170,14 +196,15 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
           )
         );
         if ($qid && !isset($variables[$match])) {
-          $response = pgh_api_get_response($app_id, $qid);
-          $value = !empty($response['value']) ? $response['value'] : '0';
-          // Convert anything into a string, https://bugs.php.net/bug.php?id=39579.
-          $value = "'" . $value . "'";
-          $variables[$match] = array(
-            'question' => $match,
-            'value' => $value,
-          );
+          if ($response = pgh_api_get_response($app_id, $qid)) {
+            $value = !empty($response['value']) ? $response['value'] : '0';
+            // Convert anything into a string, https://bugs.php.net/bug.php?id=39579.
+            $value = "'" . $value . "'";
+            $variables[$match] = array(
+              'question' => $match,
+              'value' => $value,
+            );
+          }
         }
       }
       // Sort variables by variable length.
@@ -195,6 +222,7 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
       catch (Exception $e) {
         // Can't catch this error for now, needs better solution, ex. writing script to file.
         watchdog('pgh_score', 'Error in eval on %var', array('%var' => $replace), WATCHDOG_ERROR);
+        return array('value' => $value, 'score' => $score);
       }
       // Calculate score.
       $score = $value / $reference * 100.0;
@@ -208,15 +236,9 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
       if ($score > 100) {
         $score = 100.0;
       }
-
     }
   }
-
-  return array(
-    'metric_id' => $metric_id,
-    'value' => $value,
-    'score' => $score
-  );
+  return array('value' => $value, 'score' => $score);
 }
 
 /**
@@ -256,7 +278,6 @@ function pgh_awards_score_calculate_application_category_metric($app_id, $cat_id
   foreach ($mids as $mid) {
     // Calculate value.
     $metric_value = pgh_awards_score_calculate_metric($app_id, $mid);
-
     // Save to metric response.
     if ($save) {
       // Find metric response object.
