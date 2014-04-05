@@ -281,7 +281,7 @@ function pgh_awards_review_page($app) {
     'primary_last' => $bunit_wrapper->field_primary_last_name->value(),
     'primary_phone' => $bunit_wrapper->field_primary_phone->value(),
     'primary_email' => $bunit_wrapper->field_primary_email->value(),
-    // Application year missing.
+    'year' => date('Y', $app_wrapper->created->value()),
     'salesforce_owner' => $bunit_wrapper->field_salesforce_owner->value(),
     'salesforce_id' => $bunit_wrapper->field_business_unit_sfid->value(),
     'reviewers' => implode(', ', $persons),

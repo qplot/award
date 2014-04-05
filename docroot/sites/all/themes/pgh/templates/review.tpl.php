@@ -24,7 +24,7 @@
         <div id="hospital-content-top">
           <?php echo $form['submit'] ?>
           <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
-          <p class="institution-name"><?php echo $app['institution_name'] ?></p>
+          <p class="institution-name"><?php echo $app['health_system'] ?></p>
           <p><span class="lable">% Solid Waste :</span> <?php echo $app['solid_waste'] ?></p>
         </div>
 
@@ -46,7 +46,18 @@
             <?php if (!empty($app['ors'])): ?>
               <span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
             <?php endif; ?>
-          <p><span class="label">FE Liaison: Not Implemented</span></p>
+          <p>
+            <?php if (!empty($app['salesforce_owner'])): ?>
+              <span class="label">Salesforce Account Owner:</span>
+              <?php echo $app['salesforce_owner'] ?>
+            <?php endif; ?>
+          </p>
+          <p>
+            <?php if (!empty($app['salesforce_id'])): ?>
+              <span class="label">Salesforce Account Owner:</span>
+              <a href="https://pgh.my.salesforce.com/<?php echo $app['salesforce_id'] ?>" target="_blank"><?php echo $app['salesforce_id'] ?></a>
+            <?php endif; ?>
+          </p>
           <p><span class="label">Reviewer(s):</span>
             <?php if (!empty($app['reviewers'])): ?>
               <?php echo $app['reviewers'] ?>
@@ -57,7 +68,7 @@
         </div>
 
         <div id="hospital-content-mid" class="column">
-          <h3>Application Name: <?php echo $app['apptype'] ?></h3>
+          <h3>Application: <?php echo $app['year'] . ' ' . $app['apptype'] ?></h3>
           <?php if (!empty($app['cares'])): ?>
             <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> </p>
           <?php endif; ?>
