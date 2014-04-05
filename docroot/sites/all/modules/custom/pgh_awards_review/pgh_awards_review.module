@@ -189,8 +189,6 @@ function pgh_awards_review_page($app) {
       $cat['category_class'] = str_replace('_', '-', strtolower($cat['category_tag']));
       $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
       if ($cat['quality_p']) {
-        pgh_awards_review_percentage_score($cat);
-        pgh_awards_review_round_scores($cat);
         $rows[] = pgh_awards_review_score_row($cat);
       }
     }
@@ -210,7 +208,8 @@ function pgh_awards_review_page($app) {
     'final' => $app_wrapper->field_application_final->value(),
   );
   $rows[] = pgh_awards_review_score_row($fs);
-  $header = pgh_awards_review_score_row(array('category_id' => 0));
+  $cat = array('category_id' => 0);
+  $header = pgh_awards_review_score_row($cat);
   $score_view = theme('table', array('header' => $header, 'rows' => $rows));
 
   // Get goals of the app.
@@ -517,7 +516,7 @@ function pgh_awards_review_percentage_score(&$cat) {
 /**
  * Get the header and row of the score table.
  */
-function pgh_awards_review_score_row($cat) {
+function pgh_awards_review_score_row(&$cat) {
   // Return header.
   if ($cat['category_id'] == 0) {
     return array(
@@ -528,6 +527,13 @@ function pgh_awards_review_score_row($cat) {
       'Final', '% Final'
     );
   }
+
+  // Calculate the percentage score.
+  pgh_awards_review_percentage_score($cat);
+
+  // Round off the score value.
+  pgh_awards_review_round_scores($cat);
+
   // Return row including the summary.
   if ($cat['category_id'] == '-1') {
     $cat['category_name'] = "Total";
