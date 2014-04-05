@@ -492,27 +492,34 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
  * Calculate percentage scores.
  */
 function pgh_awards_review_percentage_score(&$cat) {
-  $rounds = 1;
+  $rounds = 2;
   $cat['automatic_pc'] = 0;
   if (!empty($cat['automatic_p'])) {
-    $cat['automatic_pc'] = round($cat['automatic'] / $cat['automatic_p'] * 100, $rounds);
+    $cat['automatic_pc'] = $cat['automatic'] / $cat['automatic_p'] * 100;
   }
   $cat['kpi_pc'] = 0;
   if (!empty($cat['kpi_p'])) {
-    $cat['kpi_pc'] = round($cat['kpi'] / $cat['kpi_p'] * 100, $rounds);
+    $cat['kpi_pc'] = $cat['kpi'] / $cat['kpi_p'] * 100;
   }
   $cat['metric_pc'] = 0;
   if (!empty($cat['metric_p'])) {
-    $cat['metric_pc'] = round($cat['metric'] / $cat['metric_p'] * 100, $rounds);
+    $cat['metric_pc'] = $cat['metric'] / $cat['metric_p'] * 100;
   }
   $cat['quality_pc'] = 0;
   if (!empty($cat['quality_p'])) {
-    $cat['quality_pc'] = round($cat['quality'] / $cat['quality_p'] * 100, $rounds);
+    $cat['quality_pc'] = $cat['quality'] / $cat['quality_p'] * 100;
   }
   $cat['final_p'] = $cat['automatic_p'] + $cat['kpi_p'] + $cat['metric_p'] + $cat['quality_p'];
   $cat['final_pc'] = 0;
   if (!empty($cat['final_p'])) {
-    $cat['final_pc'] = round($cat['final'] / $cat['final_p'] * 100, $rounds);
+    $cat['final_pc'] = $cat['final'] / $cat['final_p'] * 100;
+  }
+
+  // Round values for display.
+  foreach ($cat as $key => &$value) {
+    if (is_numeric($value)) {
+      $value = round($value, $rounds);
+    }
   }
 }
 

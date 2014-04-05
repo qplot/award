@@ -197,8 +197,7 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
         watchdog('pgh_score', 'Error in eval on %var', array('%var' => $replace), WATCHDOG_ERROR);
       }
       // Calculate score.
-      $score = round($value / $reference * 100, 2);
-      $value = round($value, 2);
+      $score = $value / $reference * 100.0;
       if ($orientation == 'low') {
         $score = 100.0 - $score;
       }
@@ -444,7 +443,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         if (count($wp) < 4) {
           $wp = array(1, 1, 1, 1);
         }
-        $scores['final'] = round($wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'], 2);
+        $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
         $cat_response_wrapper->field_cat_response_final->set($scores['final']);
 
         $cat_response_wrapper->save();
