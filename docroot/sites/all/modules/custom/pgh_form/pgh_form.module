@@ -8,9 +8,6 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-// Define a temp variable to hold the questions.
-$_pgh_form_temp_section_questions_ = NULL;
-
 /**
  * Implements hook_menu().
  */
@@ -271,14 +268,6 @@ function pgh_form_category_page($application, $category_id) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL, $readonly = FALSE) {
-  // TODO: This is a very brittle way to skip already rendered questions.
-  // We should not use globals for this.
-  // Also, it leaves technically invalid question
-  // specifiers in the Section objects.
-  // Questions contained within tables/containers should be
-  // filtered out at migration time, not render time.
-  global $_pgh_form_temp_section_questions_;
-
   $form = array();
 
   if (empty($app_id) || empty($cat_id)) {
@@ -302,9 +291,25 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
   // Cache application data for future reuse.
   foreach ($cat_wrapper->field_category_sections->getIterator() as $sec_wrapper) {
     $qids = $sec_wrapper->field_section_questions->raw();
+
+    // Cache questions.
     $questions = node_load_multiple($qids);
     foreach ($questions as &$question) {
       pgh_form_set_data($question->title, 'question', $question);
+    }
+
+    // Cache responses.
+    $rids = pgh_api_find_nodes(
+      array(
+        'type' => 'response',
+        'field_response_application' => array('target_id', $app_id, '='),
+        'field_response_question' => array('target_id', $qids, 'IN')
+      ),
+      NULL, TRUE
+    );
+    $responses = node_load_multiple($rids);
+    foreach ($responses as &$response) {
+      pgh_form_set_data($response->title, 'response', $response);
     }
   }
 
@@ -364,8 +369,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     }
   }
 
-  // global $_pgh_application_data;
-  // dsm($_pgh_application_data);
+  global $_pgh_application_data;
+  dsm($_pgh_application_data);
 
   $form['submit'] = array(
     '#type' => 'submit',
