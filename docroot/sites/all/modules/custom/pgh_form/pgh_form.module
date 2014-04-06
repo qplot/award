@@ -287,79 +287,86 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
   // Load category by name, can be id as well.
   $cat = node_load($cat_id);
-  $questions = array();
+  $cat_wrapper = entity_metadata_wrapper('node', $cat);
 
-  if (!empty($cat->field_category_sections['und'])) {
-    // For debugging purpose add a counter.
-    $debug = 0;
-    $total = variable_get('pgh_form_max_questions', 1000000000);
+  // For debugging purpose add a counter.
+  $debug = 0;
+  $total = variable_get('pgh_form_max_questions', 1000000000);
 
-    $form['ajax_div'] = array(
-      '#markup' => '',
-      '#prefix' => '<div id="pgh_form_ajax_div">',
-      '#suffix' => '</div><!-- #question --><br /><br />',
-    );
+  $form['ajax_div'] = array(
+    '#markup' => '',
+    '#prefix' => '<div id="pgh_form_ajax_div">',
+    '#suffix' => '</div><!-- #question --><br /><br />',
+  );
 
-    foreach ($cat->field_category_sections['und'] as $sec_id) {
-      if ($sec = node_load($sec_id['target_id'])) {
-        $sec_wrapper = entity_metadata_wrapper('node', $sec);
-
-        $caption = $sec_wrapper->field_section_label->value();
-
-        // Add a fieldset to hold section info.
-        if (!empty($caption)) {
-          $fieldset = 'fieldset_' . $sec_wrapper->title->value();
-          $form[$fieldset] = array(
-            '#prefix' => '<div><h3 class="legend">' . t($caption) . '</h3>',
-            '#suffix' => '</div>',
-          );
-        }
-        else {
-          $fieldset = 'container_' . $sec_wrapper->title->value();
-          $form[$fieldset] = array(
-            '#type' => 'container',
-          );
-        }
-
-        // Add all question inside this section.
-        $_pgh_form_temp_section_questions_ = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
-        // dsm($_pgh_form_temp_section_questions_);
-        foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
-
-          if (!isset($_pgh_form_temp_section_questions_[$q_wrapper->getIdentifier()])) {
-            continue;
-          }
-
-          $major = 'question_' . $q_wrapper->label();
-
-          $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id, $readonly);
-          // dsm($question_form);
-
-          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = $question_form;
-
-          // Add comment for question for each response.
-          if (!empty($question_form['#response_id'])) {
-            $form_item = pgh_form_render_question_comment($question_form['#response_id']);
-
-            // Respect the visibility of this question.
-            if ($q_wrapper->field_question_parent_qid->value()) {
-              $form_item['#states'] = pgh_form_question_states($q_wrapper->value());
-            }
-            $form[$fieldset][$major]['comment'] = $form_item;
-          }
-
-          $debug = $debug + 1;
-          if ($debug == $total) {
-            break;
-          }
-
-        }
-        if ($debug == $total) {
-          break;
-        }
-      }
+  // Cache application data for future reuse.
+  foreach ($cat_wrapper->field_category_sections->getIterator() as $sec_wrapper) {
+    $qids = $sec_wrapper->field_section_questions->raw();
+    $questions = node_load_multiple($qids);
+    foreach ($questions as &$question) {
+      pgh_form_set_data($question->title, 'question', $question);
     }
   }
+
+  // Build form.
+  foreach ($cat_wrapper->field_category_sections->getIterator() as $sec_wrapper) {
+    $caption = $sec_wrapper->field_section_label->value();
+
+    // Add a fieldset to hold section info.
+    if (!empty($caption)) {
+      $fieldset = 'fieldset_' . $sec_wrapper->title->value();
+      $form[$fieldset] = array(
+        '#prefix' => '<div><h3 class="legend">' . t($caption) . '</h3>',
+        '#suffix' => '</div>',
+      );
+    }
+    else {
+      $fieldset = 'container_' . $sec_wrapper->title->value();
+      $form[$fieldset] = array(
+        '#type' => 'container',
+      );
+    }
+
+    // Add all question inside this section.
+    $_pgh_form_temp_section_questions_ = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
+    // dsm($_pgh_form_temp_section_questions_);
+    foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
+
+      if (!isset($_pgh_form_temp_section_questions_[$q_wrapper->getIdentifier()])) {
+        continue;
+      }
+
+      $major = 'question_' . $q_wrapper->label();
+
+      $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id, $readonly);
+      // dsm($question_form);
+
+      $form[$fieldset][$major][$q_wrapper->getIdentifier()] = $question_form;
+
+      // Add comment for question for each response.
+      if (!empty($question_form['#response_id'])) {
+        $form_item = pgh_form_render_question_comment($question_form['#response_id']);
+
+        // Respect the visibility of this question.
+        if ($q_wrapper->field_question_parent_qid->value()) {
+          $form_item['#states'] = pgh_form_question_states($q_wrapper->value());
+        }
+        $form[$fieldset][$major]['comment'] = $form_item;
+      }
+
+      $debug = $debug + 1;
+      if ($debug == $total) {
+        break;
+      }
+
+    }
+    if ($debug == $total) {
+      break;
+    }
+  }
+
+  global $_pgh_application_data;
+  dsm($_pgh_application_data);
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -1311,4 +1318,42 @@ function pgh_form_get_question_comment($rid) {
     return $wrapper->comment_body->value->raw();
   }
   return '';
+}
+
+/**
+ * Set application global object data.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_set_data($question_tag, $object, $data, $overwrite = FALSE) {
+  global $_pgh_application_data;
+
+  if ($overwrite) {
+    if (isset($_pgh_application_data[$question_tag][$object])) {
+      return FALSE;
+    }
+  }
+
+  $_pgh_application_data[$question_tag][$object] = $data;
+
+  if ($object == 'processed') {
+    return TRUE;
+  }
+  $wrapper = entity_metadata_wrapper('node', $_pgh_application_data[$question_tag][$object]);
+  $_pgh_application_data[$question_tag][$object . '_wrapper'] = $wrapper;
+
+  return TRUE;
+}
+
+/**
+ * Get application global data.
+ */
+function pgh_form_get_data($question_tag, $object) {
+  global $_pgh_application_data;
+
+  if (isset($_pgh_application_data[$question_tag][$object])) {
+    return $_pgh_application_data[$question_tag][$object];
+  }
+
+  return array();
 }
