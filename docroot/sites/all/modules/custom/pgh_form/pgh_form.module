@@ -310,6 +310,11 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     $responses = node_load_multiple($rids);
     foreach ($responses as &$response) {
       pgh_form_set_data($response->title, 'response', $response);
+      // Need a mapping between question and response.
+      if ($response_wrapper = pgh_form_get_data($response->title, 'response_wrapper')) {
+        $qid = $response_wrapper->field_response_question->raw();
+        pgh_form_set_data($qid, 'mapping', $response->title);
+      }
     }
   }
 
@@ -369,8 +374,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     }
   }
 
-  global $_pgh_application_data;
-  dsm($_pgh_application_data);
+  // global $_pgh_application_data;
+  // dsm($_pgh_application_data);
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -505,12 +510,9 @@ function pgh_form_render_question($qid, $app_id = NULL, $readonly = FALSE) {
   // Prepare response for question expecting a response.
   // if (!in_array($type, array('html', 'container'))) {
   if (!in_array($type, array('html'))) {
-    $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
-    if (!$rid) {
-      $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
-    }
+    $answer = pgh_form_get_response_answer($qid, $app_id);
+    $rid = $answer['id'];
 
-    $answer = pgh_api_get_response($app_id, $question_wrapper->getIdentifier());
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
     $admin_info[] = ' <small>[S' . intval($answer['score']) . ']</small> ';
@@ -690,10 +692,12 @@ function pgh_form_render_question($qid, $app_id = NULL, $readonly = FALSE) {
   // Add default question id handling.
   // If no default value is set and a default question id is given,
   // set it to default question response value.
+  // This part can not be cached,
+  // since the question can be outside of this category.
   $form_item['#default_question_id'] = $question_wrapper->field_question_formula->value();
   if (empty($form_item['#default_value']) && !empty($form_item['#default_question_id'])) {
     // Fetch question.
-    if ($fid = pgh_form_find_qid_by_tag($form_item['#default_question_id'])) {
+    if ($fid = pgh_find_question_id($form_item['#default_question_id'])) {
       // Fetch the question response.
       if ($rid = pgh_api_find_response_id($app_id, $fid)) {
         $answer = pgh_api_get_response($app_id, $fid);
@@ -777,12 +781,9 @@ function pgh_form_render_question_layout($qid, $app_id = NULL, $readonly = FALSE
 
   if (!empty($layout) && ($type == 'container')) {
     // Container needs to have a response as well.
-    $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
-    if (!$rid) {
-      $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
-    }
+    $answer = pgh_form_get_response_answer($qid, $app_id);
+    $rid = $answer['id'];
 
-    $answer = pgh_api_get_response($app_id, $question_wrapper->getIdentifier());
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
@@ -1337,6 +1338,12 @@ function pgh_form_get_question_comment($rid) {
 function pgh_form_set_data($question_tag, $object, $data, $overwrite = FALSE) {
   global $_pgh_application_data;
 
+  if (is_numeric($question_tag)) {
+    if (isset($_pgh_application_data[$question_tag])) {
+      $question_tag = $_pgh_application_data[$question_tag];
+    }
+  }
+
   if ($overwrite) {
     if (isset($_pgh_application_data[$question_tag][$object])) {
       return FALSE;
@@ -1345,7 +1352,7 @@ function pgh_form_set_data($question_tag, $object, $data, $overwrite = FALSE) {
 
   $_pgh_application_data[$question_tag][$object] = $data;
 
-  if ($object == 'processed') {
+  if (($object == 'processed') || ($object == 'mapping')) {
     return TRUE;
   }
   $wrapper = entity_metadata_wrapper('node', $_pgh_application_data[$question_tag][$object]);
@@ -1384,4 +1391,39 @@ function pgh_form_find_qid_by_tag($question_tag) {
   }
 
   return 0;
+}
+
+/**
+ * Get response answer.
+ */
+function pgh_form_get_response_answer($qid, $app_id) {
+  if (!($rid = pgh_form_get_data($qid, 'mapping'))) {
+    // Create new response.
+    $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
+    // Put it into cache.
+    $response = node_load($rid);
+    pgh_form_set_data($response->title, 'response', $response);
+    pgh_form_set_data($qid, 'mapping', $response->title);
+  }
+
+  $answer = array(
+    'id' => 0,
+    'value' => '',
+    'point' => 0,
+    'score' => 0,
+    'kpi' => 0,
+    'updated' => 0,
+  );
+  if ($response_wrapper = pgh_form_get_data($rid, 'response_wrapper')) {
+    $answer = array(
+      'id' => $rid,
+      'value' => $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '',
+      'point' => $response_wrapper->field_response_point->value(),
+      'score' => $response_wrapper->field_response_score->value(),
+      'kpi' => ($kpi === NULL) ? '~' : $kpi,
+      'updated' => $response_wrapper->field_response_updated->value(),
+    );
+  }
+
+  return $answer;
 }
