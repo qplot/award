@@ -374,7 +374,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     }
   }
 
-  // global $_pgh_application_data;
+  global $_pgh_application_data;
   // dsm($_pgh_application_data);
 
   $form['submit'] = array(
@@ -411,22 +411,23 @@ function pgh_application_form_element_callback($form, &$form_state) {
   if (empty($form_state['triggering_element']['#parents'][0])) {
     return;
   }
-  // Find the question.
+  // Find and save form element.
+  $parents = $form_state['triggering_element']['#array_parents'];
+  array_pop($parents);
+  $element = drupal_array_get_nested_value($form, $parents);
+  $q_tag = $element['#question-tag'];
   $qid = $form_state['triggering_element']['#parents'][0];
-  $question = node_load($qid);
-  $wrapper = entity_metadata_wrapper('node', $question);
-
-  // Save the response value.
   $app_id = $form_state['values']['application'];
   $value = $form_state['values'][$qid];
+
   pgh_api_save_response($app_id, $qid, $value);
 
   // Validate the response.
-  $error_msg = '<div id="error-container-' . $wrapper->title->value() . '">';
-  if ($validations = $wrapper->field_question_validation->value()) {
+  $error_msg = '<div id="error-container-' . $q_tag . '">';
+  if ($validations = unserialize($element['#validation-rules'])) {
     $errors = pgh_api_validate_question_value($validations, $value);
     if ($errors) {
-      $error_msg .= pgh_form_error_html($wrapper->title->value(), $errors);
+      $error_msg .= pgh_form_error_html($q_tag, $errors);
     }
   }
   $error_msg .= '</div><!-- #error-container -->';
@@ -493,6 +494,7 @@ function pgh_form_render_question($qid, $app_id = NULL, $readonly = FALSE) {
   }
 
   $q_tag = $question_wrapper->title->value();
+  $form_item['#question-tag'] = $q_tag;
   $type = $question_wrapper->field_question_type->value();
   $style = $question_wrapper->field_question_style->value();
   $default_formula = $question_wrapper->field_question_formula->value();
@@ -652,12 +654,14 @@ function pgh_form_render_question($qid, $app_id = NULL, $readonly = FALSE) {
   $form_item['#description'] = '<div id="error-container-' . $question_wrapper->title->value() . '">';
 
   // Add error validation to description.
+  $validations = array();
   if ((!empty($answer['updated'])) && ($validations = $question_wrapper->field_question_validation->value())) {
     $errors = pgh_api_validate_question_value($validations, $answer['value']);
     if ($errors) {
       $form_item['#description'] .= pgh_form_error_html($question_wrapper->title->value(), $errors);
     }
   }
+  $form_item['#validation-rules'] = serialize($validations);
 
   $form_item['#description'] .= '</div><!-- #error-container -->';
 
