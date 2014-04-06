@@ -327,39 +327,38 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
       );
     }
 
-    // Add all question inside this section.
-    $_pgh_form_temp_section_questions_ = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
-    // dsm($_pgh_form_temp_section_questions_);
-    foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
+    $qids = $sec_wrapper->field_section_questions->raw();
+    foreach ($qids as $qid) {
 
-      if (!isset($_pgh_form_temp_section_questions_[$q_wrapper->getIdentifier()])) {
+      // Skip processed question.
+      if (pgh_form_get_data($qid, 'processed')) {
         continue;
       }
 
-      $major = 'question_' . $q_wrapper->label();
+      if ($q_wrapper = pgh_form_get_data($qid, 'question_wrapper')) {
 
-      $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id, $readonly);
-      // dsm($question_form);
+        $major = 'question_' . $q_wrapper->label();
+        $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id, $readonly);
+        $form[$fieldset][$major][$qid] = $question_form;
 
-      $form[$fieldset][$major][$q_wrapper->getIdentifier()] = $question_form;
+        // Add comment for question for each response.
+        if (!empty($question_form['#response_id'])) {
+          $form_item = pgh_form_render_question_comment($question_form['#response_id']);
 
-      // Add comment for question for each response.
-      if (!empty($question_form['#response_id'])) {
-        $form_item = pgh_form_render_question_comment($question_form['#response_id']);
-
-        // Respect the visibility of this question.
-        if ($q_wrapper->field_question_parent_qid->value()) {
-          $form_item['#states'] = pgh_form_question_states($q_wrapper->value());
+          // Respect the visibility of this question.
+          if ($q_wrapper->field_question_parent_qid->value()) {
+            $form_item['#states'] = pgh_form_question_states($qid);
+          }
+          $form[$fieldset][$major]['comment'] = $form_item;
         }
-        $form[$fieldset][$major]['comment'] = $form_item;
-      }
 
-      $debug = $debug + 1;
-      if ($debug == $total) {
-        break;
+        $debug = $debug + 1;
+        if ($debug == $total) {
+          break;
+        }
       }
-
     }
+
     if ($debug == $total) {
       break;
     }
@@ -480,6 +479,7 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
   $form_item = array();
 
   $question_wrapper = entity_metadata_wrapper('node', $question);
+  $q_tag = $question_wrapper->title->value();
   $type = $question_wrapper->field_question_type->value();
   $style = $question_wrapper->field_question_style->value();
   $default_formula = $question_wrapper->field_question_formula->value();
@@ -528,7 +528,7 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
 
   // Dependency display.
   if ($parent_qid = $question_wrapper->field_question_parent_qid->value()) {
-    $form_item['#states'] = pgh_form_question_states($question);
+    $form_item['#states'] = pgh_form_question_states($question_wrapper->getIdentifier());
   }
 
   // Ajax processing.
@@ -708,6 +708,8 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
   global $_pgh_form_temp_section_questions_;
   unset($_pgh_form_temp_section_questions_[$question_wrapper->getIdentifier()]);
 
+  pgh_form_set_data($q_tag, 'processed', 1, TRUE);
+
   return $form_item;
 }
 
@@ -790,7 +792,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL, $readonly = 
       $classes[] = 'data-parent-id-question-' . $parent_qid;
       $data_attributes[] = 'data-parent-id="question-' . $parent_qid . '"';
 
-      $form_item['#states'] = pgh_form_question_states($question);
+      $form_item['#states'] = pgh_form_question_states($question_wrapper->getIdentifier());
     }
 
     $opening_div = '<div id="question-' . $question_wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
@@ -876,14 +878,16 @@ function pgh_form_error_html($question_id, $errors) {
  *
  * This is the code that provides support for the "Dependant Question" feature.
  *
- * @param object $question
- *   The question node object.
+ * @param int $qid
+ *   Question node id
  *
  * @return array
  *   The visibility state array supported by the Drupal form API.
  */
-function pgh_form_question_states($question) {
-  $wrapper = entity_metadata_wrapper('node', $question);
+function pgh_form_question_states($qid) {
+  if (!($wrapper = pgh_form_get_data($qid, 'question_wrapper'))) {
+    return array();
+  }
 
   // Load parent question.
   $parent_qid = $wrapper->field_question_parent_qid->value();
@@ -1341,6 +1345,7 @@ function pgh_form_set_data($question_tag, $object, $data, $overwrite = FALSE) {
   }
   $wrapper = entity_metadata_wrapper('node', $_pgh_application_data[$question_tag][$object]);
   $_pgh_application_data[$question_tag][$object . '_wrapper'] = $wrapper;
+  $_pgh_application_data[$data->nid] = $question_tag;
 
   return TRUE;
 }
@@ -1351,6 +1356,11 @@ function pgh_form_set_data($question_tag, $object, $data, $overwrite = FALSE) {
 function pgh_form_get_data($question_tag, $object) {
   global $_pgh_application_data;
 
+  if (is_numeric($question_tag)) {
+    if (isset($_pgh_application_data[$question_tag])) {
+      $question_tag = $_pgh_application_data[$question_tag];
+    }
+  }
   if (isset($_pgh_application_data[$question_tag][$object])) {
     return $_pgh_application_data[$question_tag][$object];
   }
