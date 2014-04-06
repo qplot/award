@@ -364,8 +364,8 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
     }
   }
 
-  global $_pgh_application_data;
-  dsm($_pgh_application_data);
+  // global $_pgh_application_data;
+  // dsm($_pgh_application_data);
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -891,54 +891,53 @@ function pgh_form_question_states($qid) {
   }
 
   // Load parent question.
-  $parent_qid = $wrapper->field_question_parent_qid->value();
-  $parent_nid = pgh_form_find_qid_by_tag($parent_qid);
-  $parent_question = node_load($parent_nid);
-  $parent_wrapper = entity_metadata_wrapper('node', $parent_question);
-  $parent_type = $parent_wrapper->field_question_type->value();
-  $parent_style = $parent_wrapper->field_question_style->value();
+  if ($parent_wrapper = pgh_form_get_data($wrapper->field_question_parent_qid->value(), 'question_wrapper')) {
+    $parent_type = $parent_wrapper->field_question_type->value();
+    $parent_style = $parent_wrapper->field_question_style->value();
 
-  $name = $parent_wrapper->getIdentifier();
-  $value = $wrapper->field_question_parent_value->value();
+    $name = $parent_wrapper->getIdentifier();
+    $value = $wrapper->field_question_parent_value->value();
 
-  if ($value === NULL) {
-    drupal_set_message(t('Question %qid specifies parent %pid but does not specify a parent required value.', array('%qid' => $wrapper->title->value(), '%pid' => $parent_qid)), 'error');
-    return array();
+    if ($value === NULL) {
+      drupal_set_message(t('Question %qid specifies parent %pid but does not specify a parent required value.', array('%qid' => $wrapper->title->value(), '%pid' => $parent_wrapper->title->value())), 'error');
+      return array();
+    }
+
+    $condition = '';
+    switch ($parent_type) {
+      case 'selection':
+        switch ($parent_style) {
+          // Multiple choices.
+          case 'checkboxes':
+            $name = $parent_wrapper->getIdentifier() . '[' . $value . ']';
+            $condition = array('checked' => TRUE);
+            break;
+
+          // Single choice, ex. radios.
+          default:
+            $options = $parent_wrapper->field_question_options->value();
+            $value = array_search($value, $options);
+            break;
+        }
+        break;
+
+      default:
+        // Noop. Dependant question display is currently only
+        // supported for the 'selection' question type.
+        break;
+    }
+    if (empty($condition)) {
+      $condition = array('value' => $value);
+    }
+    $result = array(
+      'visible' => array(
+        ':input[name="' . $name . '"]' => $condition,
+      ),
+    );
+    return $result;
   }
 
-  $condition = '';
-  switch ($parent_type) {
-    case 'selection':
-      switch ($parent_style) {
-        // Multiple choices.
-        case 'checkboxes':
-          $name = $parent_wrapper->getIdentifier() . '[' . $value . ']';
-          $condition = array('checked' => TRUE);
-          break;
-
-        // Single choice, ex. radios.
-        default:
-          $options = $parent_wrapper->field_question_options->value();
-          $value = array_search($value, $options);
-          break;
-      }
-      break;
-
-    default:
-      // Noop. Dependant question display is currently only
-      // supported for the 'selection' question type.
-      break;
-  }
-  if (empty($condition)) {
-    $condition = array('value' => $value);
-  }
-  $result = array(
-    'visible' => array(
-      ':input[name="' . $name . '"]' => $condition,
-    ),
-  );
-
-  return $result;
+  return array();
 }
 
 /**
