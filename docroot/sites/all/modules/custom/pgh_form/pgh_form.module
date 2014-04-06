@@ -130,7 +130,7 @@ function theme_pgh_form_table($vars) {
       // dsm($cell);
       if (substr($cell, 0, 5) == 'pghq_') {
         // Find the question.
-        if ($qid = pgh_find_question_id($cell)) {
+        if ($qid = pgh_form_find_qid_by_tag($cell)) {
           $cell_data = render($element[$qid]);
         }
       }
@@ -338,7 +338,7 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
       if ($q_wrapper = pgh_form_get_data($qid, 'question_wrapper')) {
 
         $major = 'question_' . $q_wrapper->label();
-        $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id, $readonly);
+        $question_form = pgh_form_render_question_layout($qid, $app_id, $readonly);
         $form[$fieldset][$major][$qid] = $question_form;
 
         // Add comment for question for each response.
@@ -464,8 +464,8 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * Sets the default value to a provided answer in a response node if one is available.
  *
- * @param object $question
- *   A fully-loaded question node.
+ * @param int $qid
+ *   NID for a specific question.
  *
  * @param int $app_id
  *   NID for a specific application instance.
@@ -475,10 +475,13 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) {
+function pgh_form_render_question($qid, $app_id = NULL, $readonly = FALSE) {
   $form_item = array();
 
-  $question_wrapper = entity_metadata_wrapper('node', $question);
+  if (!($question_wrapper = pgh_form_get_data($qid, 'question_wrapper'))) {
+    return $form_item;
+  }
+
   $q_tag = $question_wrapper->title->value();
   $type = $question_wrapper->field_question_type->value();
   $style = $question_wrapper->field_question_style->value();
@@ -685,7 +688,7 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
   $form_item['#default_question_id'] = $question_wrapper->field_question_formula->value();
   if (empty($form_item['#default_value']) && !empty($form_item['#default_question_id'])) {
     // Fetch question.
-    if ($fid = pgh_find_question_id($form_item['#default_question_id'])) {
+    if ($fid = pgh_form_find_qid_by_tag($form_item['#default_question_id'])) {
       // Fetch the question response.
       if ($rid = pgh_api_find_response_id($app_id, $fid)) {
         $answer = pgh_api_get_response($app_id, $fid);
@@ -705,10 +708,7 @@ function pgh_form_render_question($question, $app_id = NULL, $readonly = FALSE) 
   }
 
   // Mark this question as processed.
-  global $_pgh_form_temp_section_questions_;
-  unset($_pgh_form_temp_section_questions_[$question_wrapper->getIdentifier()]);
-
-  pgh_form_set_data($q_tag, 'processed', 1, TRUE);
+  pgh_form_set_data($qid, 'processed', 1, TRUE);
 
   return $form_item;
 }
@@ -741,8 +741,8 @@ function pgh_form_file_after_build($form, &$form_state) {
  * This is not a recursive function. Questions with type 'container' may not contain other questions with
  * type 'container'.
  *
- * @param object $question
- *   A fully-loaded question node. If the question has a layout string, also render the layout.
+ * @param int $qid
+ *   NID for a specific question.
  *
  * @param int $app_id
  *   NID for a specific application instance.
@@ -752,8 +752,13 @@ function pgh_form_file_after_build($form, &$form_state) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question_layout($question, $app_id = NULL, $readonly = FALSE) {
-  $question_wrapper = entity_metadata_wrapper('node', $question);
+function pgh_form_render_question_layout($qid, $app_id = NULL, $readonly = FALSE) {
+  $form_item = array();
+
+  if (!($question_wrapper = pgh_form_get_data($qid, 'question_wrapper'))) {
+    return $form_item;
+  }
+
   $type = $question_wrapper->field_question_type->value();
   $layout = $question_wrapper->field_question_layout->value();
   $prompt = check_markup($question_wrapper->field_question_prompt->value(), 'question_text', '', FALSE);
@@ -764,8 +769,6 @@ function pgh_form_render_question_layout($question, $app_id = NULL, $readonly = 
   $admin_info = array();
   $admin_info[] = ' <small>[' . $question_wrapper->title->value() . ']</small> ';
   $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $question_wrapper->getIdentifier() . '/edit') . '</small>';
-
-  $form_item = array();
 
   if (!empty($layout) && ($type == 'container')) {
     // Container needs to have a response as well.
@@ -824,10 +827,8 @@ function pgh_form_render_question_layout($question, $app_id = NULL, $readonly = 
     foreach ($parse as $row) {
       foreach ($row as $cell) {
         if (substr($cell, 0, 5) == 'pghq_') {
-          // Find the question.
-          if ($qid = pgh_find_question_id($cell)) {
-            $child = node_load($qid);
-            $form_item[$qid] = pgh_form_render_question($child, $app_id, $readonly);
+          if ($child_id = pgh_form_find_qid_by_tag($cell)) {
+            $form_item[$child_id] = pgh_form_render_question($child_id, $app_id, $readonly);
           }
         }
       }
@@ -835,7 +836,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL, $readonly = 
   }
   else {
     // This is the original without layout handling.
-    $form_item = pgh_form_render_question($question, $app_id, $readonly);
+    $form_item = pgh_form_render_question($qid, $app_id, $readonly);
   }
 
   return $form_item;
@@ -891,7 +892,7 @@ function pgh_form_question_states($qid) {
 
   // Load parent question.
   $parent_qid = $wrapper->field_question_parent_qid->value();
-  $parent_nid = pgh_find_question_id($parent_qid);
+  $parent_nid = pgh_form_find_qid_by_tag($parent_qid);
   $parent_question = node_load($parent_nid);
   $parent_wrapper = entity_metadata_wrapper('node', $parent_question);
   $parent_type = $parent_wrapper->field_question_type->value();
@@ -1366,4 +1367,17 @@ function pgh_form_get_data($question_tag, $object) {
   }
 
   return array();
+}
+
+/**
+ * Find nid of question given question tag.
+ */
+function pgh_form_find_qid_by_tag($question_tag) {
+  global $_pgh_application_data;
+
+  if ($question = pgh_form_get_data($question_tag, 'question')) {
+    return $question->nid;
+  }
+
+  return 0;
 }
