@@ -245,16 +245,8 @@ function pgh_awards_review_page($app) {
         }
         // Take care special case for achieved.
         if ($j == 1) {
-          switch ($value) {
-            case 2:
-              $value = 'Partial';
-              break;
-
-            default:
-              $checked = $value ? 'checked="checked"' : '';
-              $value = '<input type="checkbox" ' . $checked . ' />';
-              break;
-          }
+          $values = array('Yes', 'No', 'Partial');
+          $value = $values[$value];
         }
         $goal['question_vals'][$i][$j] = $value;
       }
