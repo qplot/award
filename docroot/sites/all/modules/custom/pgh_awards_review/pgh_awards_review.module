@@ -164,6 +164,12 @@ function pgh_awards_review_page($app) {
   $bunit = node_load($bunit_id);
   $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
 
+  // Get awards.
+  $award = 'N/A';
+  foreach ($app_wrapper->field_application_designations->getIterator() as $term_wrapper) {
+    $award = $term_wrapper->name->value();
+  }
+
   // Get all cells value.
   $question_tags = array(
     'beds' => 'pghq_PFC_demographic_1_8t_2',
@@ -280,6 +286,7 @@ function pgh_awards_review_page($app) {
     'scores' => $scores,
     'goals' => $goals,
     'profiles' => $profiles,
+    'award' => $award,
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);

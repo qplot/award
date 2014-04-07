@@ -81,7 +81,9 @@
 
           <div id="hospital-content-right" class="column">
             <h3>Final Awards</h3>
-            <?php echo $form['awards'] ?>
+            <p><?php echo $app['award'] ?></p>
+            <h3>Suggested Awards</h3>
+            <?php echo $form['awards'] ?>            
           </div>
 
         </div>
