@@ -1230,11 +1230,20 @@ body.section-review.admin-menu #reviewer-wrap #hospital-wrap.stuck { top: 28px; 
 #reviewer-wrap #hospital-wrap .column .form-item label { color: white; font-size: 14px; line-height: 17px; margin-left: 20px; padding-bottom: 0.3em; display: block; }
 #reviewer-wrap #hospital-wrap .column input.form-submit { border: 1px solid #a5a5a5; }
 #reviewer-wrap #hospital-wrap .column input.form-submit:hover { border-color: #ffb043; }
-#reviewer-wrap #hospital-wrap #hospital-content-top { background-color: #444; border-bottom: 1px solid #3a3a3a; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; -ms-border-radius: 4px 4px 0 0; -o-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0; padding: 14px 3.4% 8px; }
+
+#reviewer-wrap #hospital-wrap #hospital-content-top { background-color: #444; border-bottom: 1px solid #3a3a3a; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; -ms-border-radius: 4px 4px 0 0; -o-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0; padding: 10px 3.4%; *zoom: 1; }
+#reviewer-wrap #hospital-wrap #hospital-content-top:before, #reviewer-wrap #hospital-wrap #hospital-content-top:after { display: table; content: ""; line-height: 0; }
+#reviewer-wrap #hospital-wrap #hospital-content-top:after { clear: both; }
 #reviewer-wrap #hospital-wrap #hospital-content-top h2 { color: white; font-family: Arial, Helvetica, "Nimbus Sans L", sans-serif; font-size: 16px; line-height: 20px; margin: 0; }
 #reviewer-wrap #hospital-wrap #hospital-content-top .institution-name { color: #f7a11a; font-size: 13px; line-height: 15px; }
 #reviewer-wrap #hospital-wrap #hospital-content-top input.form-submit { float: right; }
+
+#reviewer-wrap #hospital-wrap #hospital-wrap-inner-info { *zoom: 1; }
+#reviewer-wrap #hospital-wrap #hospital-wrap-inner-info:before, #reviewer-wrap #hospital-wrap #hospital-wrap-inner-info:after { display: table; content: ""; line-height: 0; }
+#reviewer-wrap #hospital-wrap #hospital-wrap-inner-info:after { clear: both; }
+
 #reviewer-wrap #hospital-wrap #hospital-content-left.column { width: 32%; }
+
 #reviewer-wrap #hospital-wrap #hospital-content-mid.column { width: 34%; }
 #reviewer-wrap #hospital-wrap #hospital-content-mid .form-type-textfield label { line-height: 24px; margin-right: 7px; margin-left: 0; float: left; }
 #reviewer-wrap #hospital-wrap #hospital-content-mid .form-type-textfield input.form-text { border: 1px solid white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); -moz-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1); padding: 2px 5px; width: auto; float: left; }
@@ -1244,7 +1253,17 @@ body.section-review.admin-menu #reviewer-wrap #hospital-wrap.stuck { top: 28px; 
 #reviewer-wrap #hospital-wrap #hospital-content-mid .form-type-radio label { margin-left: 20px; }
 #reviewer-wrap #hospital-wrap #hospital-content-mid .form-type-radio input.form-radio { float: left; }
 #reviewer-wrap #hospital-wrap #hospital-content-mid p { clear: left; }
+
 #reviewer-wrap #hospital-wrap #hospital-content-right.column { width: 23.4%; }
+
+#reviewer-wrap #hospital-wrap #hospital-content-profile { color: white; }
+#reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap { padding: 10px 3.4%; }
+#reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap .profile-group-wrap { background-color: #3a3a3a; border: 1px solid #333; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; margin-bottom: 1em; *zoom: 1; }
+#reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap .profile-group-wrap:before, #reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap .profile-group-wrap:after { display: table; content: ""; line-height: 0; }
+#reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap .profile-group-wrap:after { clear: both; }
+#reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap .profile-group-wrap .profile-group { font-size: 13px; line-height: 16px; text-align: center; border-right: 1px solid #333; padding: 10px 1%; width: 22%; float: left; }
+#reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap .profile-group-wrap .profile-group:last-child { border-right: none; }
+#reviewer-wrap #hospital-wrap #hospital-content-profile .profile-wrap .profile-group-wrap .label { color: #999; }
 
 #reviewer-wrap #scores-wrap h2 { border-top: 1px solid #e0e0e0; margin-top: 5px; padding-top: 30px; }
 #reviewer-wrap #scores-wrap .scoring-group { background-color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; border: 1px solid #ebebeb; -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.05); -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.05); box-shadow: 0 0 4px rgba(0, 0, 0, 0.05); margin: 10px 0 40px; padding: 0 30px 25px; }

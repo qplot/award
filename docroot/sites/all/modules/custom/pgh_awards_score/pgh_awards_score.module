@@ -154,7 +154,7 @@ function pgh_awards_score_views_pre_render(&$view) {
 }
 
 /**
- * Calculate the metric score.
+ * Calculate the metric score for metric object.
  *
  * @param int $app_id
  *   Application node id
@@ -168,15 +168,41 @@ function pgh_awards_score_views_pre_render(&$view) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_score_calculate_metric($app_id, $metric_id) {
-  $value = 0; $score = 0;
-
   $node = node_load($metric_id);
   $wrapper = entity_metadata_wrapper('node', $node);
   $formula = $wrapper->field_metric_formula->value();
   $reference = $wrapper->field_metric_reference->value();
   $orientation = $wrapper->field_metric_orientation->value();
-  // $formula = 'pghq_PFC_waste_10_1_tG_3 + pghq_PFC_demographic_1_7';
 
+  $score = pgh_awards_score_calculate_formula($app_id, $formula, $reference, $orientation);
+  $score['metric_id'] = $metric_id;
+
+  return $score;
+}
+
+/**
+ * Calculate the metric score.
+ *
+ * @param int $app_id
+ *   Application ID
+ *
+ * @param string $formula
+ *   Formula string containing question tag and equations
+ *
+ * @param int $reference
+ *   Reference value, most of time 100
+ *
+ * @param string $orientation
+ *   Key of orientation, 'low' or 'high'
+ *
+ * @return array
+ *   Array of value, array('value'=> $value, 'score' => $score)
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_score_calculate_formula($app_id, $formula, $reference = 100, $orientation = 'high') {
+  $value = 0;
+  $score = 0;
   // Pattern match the formula to find all variables with pghq_ prefix.
   $matches = array();
   if (preg_match_all('/\bpghq_[\w]*/', $formula, $matches)) {
@@ -190,14 +216,15 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
           )
         );
         if ($qid && !isset($variables[$match])) {
-          $response = pgh_api_get_response($app_id, $qid);
-          $value = !empty($response['value']) ? $response['value'] : '0';
-          // Convert anything into a string, https://bugs.php.net/bug.php?id=39579.
-          $value = "'" . $value . "'";
-          $variables[$match] = array(
-            'question' => $match,
-            'value' => $value,
-          );
+          if ($response = pgh_api_get_response($app_id, $qid)) {
+            $value = !empty($response['value']) ? $response['value'] : '0';
+            // Convert anything into a string, https://bugs.php.net/bug.php?id=39579.
+            $value = "'" . $value . "'";
+            $variables[$match] = array(
+              'question' => $match,
+              'value' => $value,
+            );
+          }
         }
       }
 
@@ -216,10 +243,10 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
       catch (Exception $e) {
         // Can't catch this error for now, needs better solution, ex. writing script to file.
         watchdog('pgh_score', 'Error in eval on %var', array('%var' => $replace), WATCHDOG_ERROR);
+        return array('value' => $value, 'score' => $score);
       }
       // Calculate score.
-      $score = round($value / $reference * 100, 2);
-      $value = round($value, 2);
+      $score = $value / $reference * 100.0;
       if ($orientation == 'low') {
         $score = 100.0 - $score;
       }
@@ -230,15 +257,9 @@ function pgh_awards_score_calculate_metric($app_id, $metric_id) {
       if ($score > 100) {
         $score = 100.0;
       }
-
     }
   }
-
-  return array(
-    'metric_id' => $metric_id,
-    'value' => $value,
-    'score' => $score
-  );
+  return array('value' => $value, 'score' => $score);
 }
 
 /**
@@ -278,7 +299,6 @@ function pgh_awards_score_calculate_application_category_metric($app_id, $cat_id
   foreach ($mids as $mid) {
     // Calculate value.
     $metric_value = pgh_awards_score_calculate_metric($app_id, $mid);
-
     // Save to metric response.
     if ($save) {
       // Find metric response object.
@@ -423,6 +443,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
     $apptype = node_load($apptype_id);
     $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
+    $quality_disable_cids = pgh_awards_score_quality_potential_categories($apptype_tag);
 
     $cids = $apptype_wrapper->field_apptype_categories->raw();
     foreach ($cids as $cat_id) {
@@ -453,16 +474,18 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         $cat_response_wrapper->field_cat_response_kpi->set($scores['kpi']);
         $cat_response_wrapper->field_cat_response_metric_p->set($scores['metric_p']);
         $cat_response_wrapper->field_cat_response_metric->set($scores['metric']);
-        $cat_response_wrapper->field_cat_response_quality_p->set(100);
+
+        // Based on the application type, hidden tag is stored as 0 here.
+        $quality_p = in_array($cat_id, $quality_disable_cids) ? 0 : 100;
+        $cat_response_wrapper->field_cat_response_quality_p->set($quality_p);
 
         // Calculate and store final score.
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
         $wp = explode('|', $weight);
         if (count($wp) < 4) {
-          $wp = array(1, 1, 1, 1);
+          $wp = array(0.45, 0.25, 0.15, 0.15);
         }
-        $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] +
-          $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
+        $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
         $cat_response_wrapper->field_cat_response_final->set($scores['final']);
 
         $cat_response_wrapper->save();
@@ -562,6 +585,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
       'case_study' => $cat_response_wrapper->field_cat_response_case_study->value(),
     );
   }
+
   // Get all metric responses.
   if ($include_metric) {
     $metrics = array();
@@ -816,4 +840,89 @@ function pgh_awards_score_calculate_apptype_op($app_id, &$context) {
 
   $context['results'][] = $app_id;
   $context['message'] = t('Calculating application "@nid"', array('@nid' => $app_id));
+}
+
+/**
+ * Get a list of displayable categories id based on application type.
+ *
+ * @param string $apptype_tag
+ *   Application Type Tag String
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_awards_score_quality_potential_categories($apptype_tag) {
+  $hiddens = array(
+    'partner_for_change' => array(
+      'PFC_demographic',
+      'PFC_goals',
+      'PFC_accuracy',
+      'PFC_appendixA',
+      'PFC_appendixB'
+    ),
+    'partner_recognition' => array(
+      'PR_demographic',
+      'PFC_goals',
+      'PR_accuracy',
+      'PR_appendixA',
+      'PR_appendixB'
+    ),
+    'long_term_care' => array(
+      'LTC_demographic',
+      'PFC_goals',
+      'LTC_accuracy',
+      'LTC_appendixA',
+      'LTC_appendixB'
+    ),
+    'champion_for_change_gpo' => array(
+      'CFC_goals',
+      'PFC_accuracy',
+    ),
+    'champion_for_change_nongpo' => array(
+      'CFC_goals',
+      'PFC_accuracy'
+    ),
+    'greening_the_or' => array(
+      'PFC_goals',
+      'PFC_accuracy'
+    ),
+    'dehp_free' => array(
+      'PFC_accuracy'
+    ),
+    'system_for_change' => array(
+      'PFC_goals',
+      'PFC_accuracy'
+    ),
+    'mmmf' => array(
+      'PFC_goals',
+      'PFC_accuracy'
+    ),
+    'chc_partner_for_change' => array(
+      'CHCPFC_demographic',
+      'PFC_goals',
+      'CHCPFC_accuracy',
+      'CHCPFC_appendixA',
+      'CHCPFC_appendixB'
+    ),
+    'chc_partner_recognition' => array(
+      'CHCPR_demographic',
+      'PFC_goals',
+      'CHCPR_accuracy',
+      'CHCPR_appendixA',
+      'CHCPR_appendixB'
+    )
+  );
+
+  if (!empty($hiddens[$apptype_tag])) {
+    $cids = pgh_api_find_nodes(
+      array(
+        'type' => 'category',
+        'title' => array($hiddens[$apptype_tag], 'IN')
+      ),
+      NULL, TRUE
+    );
+
+    return $cids;
+  }
+
+  return array();
 }
