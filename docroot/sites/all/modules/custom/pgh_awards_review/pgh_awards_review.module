@@ -195,7 +195,14 @@ function pgh_awards_review_page($app) {
       $cat['category_class'] = str_replace('_', '-', strtolower($cat['category_tag']));
       $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
       if ($cat['quality_p']) {
-        $rows[] = pgh_awards_review_score_row($cat);
+        $row = pgh_awards_review_score_row($cat);
+        // Add readonly link here.
+        $row[0] = l($row[0],
+          "review/$app_id/category/{$cat['category_tag']}/readonly",
+          array('attributes' => array('target' => '_blank'))
+        );
+
+        $rows[] = $row;
       }
     }
   }
@@ -526,7 +533,6 @@ function pgh_awards_review_score_row(&$cat) {
       'Final', '% Final'
     );
   }
-
   // Calculate the percentage score.
   pgh_awards_review_percentage_score($cat);
 
