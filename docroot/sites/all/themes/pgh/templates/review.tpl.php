@@ -20,13 +20,13 @@
 
       <!-- Hospital Info Section -->
       <div id="hospital-wrap"><div id="hospital-wrap-inner">
-
         <div id="hospital-wrap-inner-info">
+
           <div id="hospital-content-top">
             <?php echo $form['submit'] ?>
             <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
             <p class="institution-name"><?php echo $app['health_system'] ?></p>
-          </div>
+          </div><!-- /#hospital-content-top -->
 
           <div id="hospital-content-left" class="column">
             <h3>Primary Contact:</h3>
@@ -65,7 +65,7 @@
                 Not Assigned
               <?php endif; ?>
             </p>
-          </div>
+          </div><!-- /#hospital-content-left -->
 
           <div id="hospital-content-mid" class="column">
             <h3>Application: <?php echo $app['year'] . ' ' . $app['apptype'] ?></h3>
@@ -77,30 +77,26 @@
             <?php echo $form['qualify'] ?>
             <p>Does application meet the metrics thresholds for award applied for ?</p>
             <?php echo $form['threshold_met'] ?>
-          </div>
+          </div><!-- /#hospital-content-mid -->
 
           <div id="hospital-content-right" class="column">
             <h3>Final Awards</h3>
             <p><?php echo $app['award'] ?></p>
             <h3>Suggested Awards</h3>
-            <?php echo $form['awards'] ?>            
+            <?php echo $form['awards'] ?>
+          </div><!-- /#hospital-content-right -->
+
+        </div><!-- /#hospital-wrap-inner-info -->
+
+          <div id="hospital-content-profile">
+            <div class="profile-wrap"><div class="profile-group-wrap">
+              <?php foreach ($app['profiles'] as $profile): ?>
+                <div class="profile-group"><span class="label"><?php echo $profile['caption'] ?>:</span> <strong><?php echo $profile['value'] ?></strong></div>
+              <?php endforeach ?>
+            </div></div>
           </div>
 
-        </div>
-
-        <div class="clearfix"></div>
-        <div id="hospital-wrap-inner-profile">
-          <ul>
-            <?php foreach ($app['profiles'] as $profile): ?>
-              <li>
-                <?php echo $profile['caption'] ?> : <?php echo $profile['value'] ?>
-              </li>
-            <?php endforeach ?>
-          </ul>
-        </div>
-
-      </div></div>
-
+      </div></div><!-- /#hospital-wrap-inner, /#hospital-wrap -->
 
 
       <!-- Scoring Roll-Up Section -->
