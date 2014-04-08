@@ -932,6 +932,19 @@ function pgh_awards_score_migrate_form($form, &$form_state) {
   $form['description'] = array(
     '#markup' => 'This will take a few minutes to migrate scores for all questions, proceed ? <br />',
   );
+
+  $form['list'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Application ID List',
+    '#description' => 'Ex. 957166, 958928, 834766'
+  );
+
+  $form['range'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Application ID Range',
+    '#description' => 'Ex. 0,1000'
+  );
+
   $form['all'] = array(
     '#type' => 'checkbox',
     '#title' => 'Process all',
@@ -959,16 +972,31 @@ function pgh_awards_score_migrate_form_submit($form, &$form_state) {
   $values = &$form_state['values'];
 
   $operations = array();
+  // Debug option.
   $debug = 0;
   if (empty($values['all'])) {
     if (isset($values['debug'])) {
       $debug = intval($values['debug']);
     }
   }
+  // OP option.
+  $aids = array();
+  if (!empty($values['list'])) {
+    $list = explode(',', $values['list']);
+    $aids = array_merge($aids, $list);
+  }
+  if (!empty($values['range'])) {
+    $range = explode(',', $values['range']);
+    if (count($range) > 1) {
+      $list = range($range[0], $range[1]);
+      $aids = array_merge($aids, $list);
+    }
+  }
+
   $i = 0;
   $pids = pgh_api_find_nodes(array('type' => 'question'), NULL, TRUE);
   foreach ($pids as $nid) {
-    $operations[] = array('pgh_awards_score_migrate_op', array($nid));
+    $operations[] = array('pgh_awards_score_migrate_op', array($nid, $aids));
     if ($debug) {
       $i += 1;
       if ($i >= $debug) {
@@ -1002,7 +1030,7 @@ function pgh_awards_score_migrate_form_finished($success, $results, $operations)
 /**
  * Op handler for migration.
  */
-function pgh_awards_score_migrate_op($qid, &$context) {
+function pgh_awards_score_migrate_op($qid, $aids, &$context) {
   // watchdog('pgh_score', $qid);
   $question = node_load($qid);
   $question_wrapper = entity_metadata_wrapper('node', $question);
@@ -1013,16 +1041,18 @@ function pgh_awards_score_migrate_op($qid, &$context) {
   $style = $question_wrapper->field_question_style->value();
   $options = $question_wrapper->field_question_options->value();
 
-  $aids = array(957166, 958928);
-  // $aids = array(834766);
-  $rids = pgh_api_find_nodes(
-    array(
-      'type' => 'response',
-      'field_response_question' => array('target_id', $qid, '='),
-      'field_response_application' => array('target_id', $aids, 'IN')
-    ),
-    NULL, TRUE
+  // $aids = array(957166, 958928, 834766);
+  $query = array(
+    'type' => 'response',
+    'field_response_question' => array('target_id', $qid, '='),
   );
+  if ($aids) {
+    $query = array_merge($query, array(
+      'field_response_application' => array('target_id', $aids, 'IN')
+    ));
+  }
+
+  $rids = pgh_api_find_nodes($query, NULL, TRUE);
   $responses = node_load_multiple($rids);
   $records = array();
   foreach ($responses as &$response) {
