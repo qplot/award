@@ -55,6 +55,24 @@ function pgh_awards_review_menu() {
 }
 
 /**
+ * Implements hook_init().
+ *
+ * We want users with the reviewer role to be redirected to "review" whenever
+ * they visit the dashboard.
+ *
+ * @see ac.designhammer.net/projects/practice-greenhealth-phase-12/tasks/76
+ * @author Kosta Harlan
+ */
+function pgh_awards_review_init() {
+  global $user;
+  // Check for rhe Reviewer role, and that they only have 2 roles (authenticated
+  // user and Reviewer).
+  if (arg(0) == 'dashboard' && count($user->roles) == 2 && in_array('Reviewer', $user->roles)) {
+    drupal_goto('review');
+  }
+}
+
+/**
  * Implements hook_permission().
  *
  * @author Fang Jin <fang@designhammer.com>
