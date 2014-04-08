@@ -530,7 +530,7 @@ function pgh_awards_review_score_row(&$cat) {
       'Metric', '% Metric',
       'KPI', '% KPI',
       'Quality',
-      'Final', '% Final'
+      'Final', '% Final', 'Auto P'
     );
   }
   // Calculate the percentage score.
@@ -548,7 +548,7 @@ function pgh_awards_review_score_row(&$cat) {
     $cat['metric'], $cat['metric_pc'] . '%',
     $cat['kpi'], $cat['kpi_pc'] . '%',
     $cat['quality'],
-    $cat['final'], $cat['final_pc'] . '%'
+    $cat['final'], $cat['final_pc'] . '%', $cat['automatic_p']
   );
 }
 
