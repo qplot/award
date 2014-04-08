@@ -988,8 +988,8 @@ function pgh_awards_score_migrate_form_submit($form, &$form_state) {
   if (!empty($values['range'])) {
     $range = explode(',', $values['range']);
     if (count($range) > 1) {
-      $list = range($range[0], $range[1]);
-      $aids = array_merge($aids, $list);
+      $aids = $range;
+      array_unshift($aids, 'R');
     }
   }
 
@@ -1047,9 +1047,17 @@ function pgh_awards_score_migrate_op($qid, $aids, &$context) {
     'field_response_question' => array('target_id', $qid, '='),
   );
   if ($aids) {
-    $query = array_merge($query, array(
-      'field_response_application' => array('target_id', $aids, 'IN')
-    ));
+    if ($aids[0] == 'R') {
+      array_shift($aids);
+      $query = array_merge($query, array(
+        'field_response_application' => array('target_id', $aids, 'BETWEEN')
+      ));
+    }
+    else {
+      $query = array_merge($query, array(
+        'field_response_application' => array('target_id', $aids, 'IN')
+      ));
+    }
   }
 
   $rids = pgh_api_find_nodes($query, NULL, TRUE);
