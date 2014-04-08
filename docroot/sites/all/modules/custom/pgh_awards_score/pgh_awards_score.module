@@ -32,8 +32,8 @@ function pgh_awards_score_menu() {
   );
 
   // Migrate all scores for one application type.
-  $items['admin/score/migrate'] = array(
-    'title' => 'Migrate scores for application type',
+  $items['admin/content/migrate/score'] = array(
+    'title' => 'Score',
     'description' => 'Migrate scores for application type',
     'page callback' => 'drupal_get_form',
     'page arguments' => array("pgh_awards_score_migrate_form", 3),

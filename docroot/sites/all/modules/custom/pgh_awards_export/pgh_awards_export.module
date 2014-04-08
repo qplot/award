@@ -14,8 +14,8 @@ function pgh_awards_export_menu() {
   $items = array();
 
   // Calculate category score for one application.
-  $items['admin/export/data'] = array(
-    'title' => 'Export applications',
+  $items['admin/content/export'] = array(
+    'title' => 'Export',
     'description' => 'Export application forms value and questions',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pgh_awards_export_form'),
