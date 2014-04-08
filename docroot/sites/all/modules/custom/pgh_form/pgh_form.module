@@ -180,8 +180,13 @@ function pgh_form_application_page($application) {
     return MENU_NOT_FOUND;
   }
 
-  $readonly = (arg(2) == 'readonly') ? '/readonly' : '';
-  drupal_goto('application/' . $application->nid . '/category/' . $first_category->title . $readonly);
+  $readonly = (arg(2) == 'readonly');
+  if ($readonly) {
+    drupal_goto('review/' . $application->nid . '/category/' . $first_category->title . '/readonly');
+  }
+  else {
+    drupal_goto('application/' . $application->nid . '/category/' . $first_category->title);
+  }
 }
 
 /**

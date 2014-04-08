@@ -311,7 +311,8 @@ function pgh_application_block_view($delta = '') {
     case 'application_category_menu':
       $block['subject'] = t('Application Category Menu');
       $application_nid = pgh_application_current_application_nid();
-      $category_links = pgh_application_category_links($application_nid);
+      $readonly = (arg(4) == 'readonly');
+      $category_links = pgh_application_category_links($application_nid, $readonly);
 
       $class = 'category-menu';
       if (count($category_links) == 1) {
@@ -355,7 +356,7 @@ function pgh_application_theme() {
  *   current page is not a valid application.
  */
 function pgh_application_current_application_nid() {
-  if (arg(0) == 'application' && is_numeric(arg(1))) {
+  if (((arg(0) == 'application') || (arg(0) == 'review')) && is_numeric(arg(1))) {
     $application_node = node_load(arg(1));
     // This is the case for 404 errors.
     if (!$application_node) {
@@ -389,7 +390,7 @@ function pgh_application_current_application_nid() {
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
-function pgh_application_category_links($application_nid) {
+function pgh_application_category_links($application_nid, $readonly = FALSE) {
   if (!$application_nid) {
     return array();
   }
@@ -419,7 +420,12 @@ function pgh_application_category_links($application_nid) {
         ),
       ),
     );
-    $items[] = l($title, 'application/' . $application_nid . '/category/' . $category_wrapper->title->value(), $options);
+    if ($readonly) {
+      $items[] = l($title, 'review/' . $application_nid . '/category/' . $category_wrapper->title->value() . '/readonly', $options);
+    }
+    else {
+      $items[] = l($title, 'application/' . $application_nid . '/category/' . $category_wrapper->title->value(), $options);
+    }
   }
 
   return $items;
