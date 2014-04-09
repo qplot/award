@@ -10,6 +10,7 @@ dependencies[] = field_permissions
 dependencies[] = list
 dependencies[] = options
 dependencies[] = pgh_awards_designation_vocabulary
+dependencies[] = taxonomy
 dependencies[] = text
 features[features_api][] = api:2
 features[field_base][] = field_application_automatic
