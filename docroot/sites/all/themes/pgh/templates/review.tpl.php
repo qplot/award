@@ -54,7 +54,7 @@
             </p>
             <p>
               <?php if (!empty($app['salesforce_id'])): ?>
-                <span class="label">Salesforce Account Owner:</span>
+                <span class="label">Salesforce Account:</span>
                 <a href="https://pgh.my.salesforce.com/<?php echo $app['salesforce_id'] ?>" target="_blank"><?php echo $app['salesforce_id'] ?></a>
               <?php endif; ?>
             </p>
