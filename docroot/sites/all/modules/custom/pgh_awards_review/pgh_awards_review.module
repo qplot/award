@@ -280,7 +280,12 @@ function pgh_awards_review_page($app) {
         // Take care special case for achieved.
         if ($j == 1) {
           $values = array('Yes', 'No', 'Partial');
-          $value = $values[$value];
+          if ($value) {
+            $value = $values[$value];
+          }
+          else {
+            $value = 'N/A';
+          }
         }
         $goal['question_vals'][$i][$j] = $value;
       }

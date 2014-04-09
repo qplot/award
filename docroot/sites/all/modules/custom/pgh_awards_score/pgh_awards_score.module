@@ -60,6 +60,15 @@ function pgh_awards_score_menu() {
     'access arguments' => array('administer awards system'),
   );
 
+  // Migrate all scores for one application type.
+  $items['admin/content/migrate/checkboxes'] = array(
+    'title' => 'Checkboxes',
+    'description' => 'Fix migrate checkbox values for application type',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array("pgh_awards_score_checkboxes_form", 3),
+    'access arguments' => array('administer awards system'),
+  );
+
   return $items;
 }
 
@@ -1095,6 +1104,127 @@ function pgh_awards_score_migrate_op($qid, $aids, &$context) {
     $wrapper->field_response_point->set($answer['point']);
     $wrapper->field_response_score->set($answer['score']);
     $wrapper->field_response_kpi->set($answer['kpi']);
+    $wrapper->save();
+    $records[] = $response->nid;
+  }
+  if ($records) {
+    watchdog('pgh_score', "[$qid] " . implode(",", $records));
+  }
+
+  $context['results'][] = $qid;
+  $context['message'] = t('Migrating question @nid with @count responses', array('@nid' => $qid, '@count' => count($rids)));
+}
+
+/**
+ * Migrate checkboxes for app type confirm page.
+ */
+function pgh_awards_score_checkboxes_form($form, &$form_state) {
+  $form['description'] = array(
+    '#markup' => 'This will take a few minutes to migrate scores for all checkboxes questions, proceed ? <br />',
+  );
+
+  $form['all'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Process all',
+    '#description' => 'Check this if you are sure you want to calculate all the scores',
+    '#default_value' => 0,
+  );
+  $form['debug'] = array(
+    '#type' => 'textfield',
+    '#title' => '[Debug] Set how many applications to process',
+    '#default_value' => 1,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Calculate',
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for migration.
+ */
+function pgh_awards_score_checkboxes_form_submit($form, &$form_state) {
+  $values = &$form_state['values'];
+
+  $operations = array();
+  // Debug option.
+  $debug = 0;
+  if (empty($values['all'])) {
+    if (isset($values['debug'])) {
+      $debug = intval($values['debug']);
+    }
+  }
+
+  $i = 0;
+  $pids = pgh_api_find_nodes(
+    array(
+      'type' => 'question',
+      'field_question_type' => 'selection',
+      'field_question_style' => 'checkboxes',
+    ),
+    NULL, TRUE
+  );
+  foreach ($pids as $nid) {
+    $operations[] = array('pgh_awards_score_checkboxes_op', array($nid));
+    if ($debug) {
+      $i += 1;
+      if ($i >= $debug) {
+        break;
+      }
+    }
+  }
+  $batch = array(
+    'operations' => $operations,
+    'finished' => 'pgh_awards_score_checkboxes_form_finished',
+  );
+  batch_set($batch);
+}
+
+/**
+ * Finish handler for migration.
+ */
+function pgh_awards_score_checkboxes_form_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('@count questions migrated.', array('@count' => count($results))));
+  }
+  else {
+    // An error occurred.
+    // $operations contains the operations that remained unprocessed.
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing id: @args',
+      array('@args' => print_r($error_operation[0], TRUE))));
+  }
+}
+
+/**
+ * Op handler for migration.
+ */
+function pgh_awards_score_checkboxes_op($qid, &$context) {
+  $question = node_load($qid);
+  $question_wrapper = entity_metadata_wrapper('node', $question);
+
+  $query = array(
+    'type' => 'response',
+    'field_response_question' => array('target_id', $qid, '='),
+    // 'field_response_application' => array('target_id', 971157, '=')
+  );
+  $rids = pgh_api_find_nodes($query, NULL, TRUE);
+  $responses = node_load_multiple($rids);
+  $records = array();
+  foreach ($responses as &$response) {
+
+    $wrapper = entity_metadata_wrapper('node', $response);
+    $value = $wrapper->body->value() ? $wrapper->body->value->raw() : '';
+
+    do {
+      $value = unserialize($value);
+    } while (is_string($value));
+    $value = serialize($value);
+
+    $wrapper->body = array('value' => $value);
     $wrapper->save();
     $records[] = $response->nid;
   }
