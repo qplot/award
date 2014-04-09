@@ -81,7 +81,13 @@
 
           <div id="hospital-content-right" class="column">
             <h3>Final Awards</h3>
-            <p><?php echo $app['award'] ?></p>
+            <?php if ($app['awards']): ?>
+              <?php foreach ($app['awards'] as $award): ?>
+                <p><?php echo $award; ?></p>
+              <?php endforeach ?>
+            <?php else: ?>
+              <p>N/A</p>
+            <?php endif ?>
             <h3>Suggested Awards</h3>
             <?php echo $form['awards'] ?>
           </div><!-- /#hospital-content-right -->

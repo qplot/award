@@ -55,7 +55,7 @@ function pgh_preprocess_html(&$variables, $hook) {
  */
 function pgh_preprocess_page(&$variables, $hook) {
   // Use category page template for application categories.
-  if (arg(0) == 'application' && arg(2) == 'category') {
+  if (((arg(0) == 'application') || (arg(0) == 'review')) && arg(2) == 'category') {
     $variables['theme_hook_suggestions'][] = 'page__category';
 
     $variables['business_unit'] = pgh_api_business_unit_for_application(arg(1));

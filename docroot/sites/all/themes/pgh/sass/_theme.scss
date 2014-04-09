@@ -119,7 +119,8 @@ button, input, select, textarea {
   }
 }
 
-.page-application {
+.page-application,
+.page-review {
 
   #breadcrumb-wrap {
     background-color: $white;
@@ -902,7 +903,9 @@ button, input, select, textarea {
 // !-- Appication -------------- */
 // !---------------------------- */
 
-.page-application { //node
+//node
+.page-application,
+.page-review {
 
   #header-wrap {
     background-color: $white;
@@ -1050,7 +1053,8 @@ button, input, select, textarea {
 // !-- Application progress ---- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #review-submit-wrap {
     background-color: $white;
@@ -1164,7 +1168,8 @@ button, input, select, textarea {
 // !-- Application sponsor ----- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #sponsor-wrap {
     background-color: #f2f2f2;
@@ -1239,7 +1244,8 @@ button, input, select, textarea {
 // !-- Application menu -------- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #application-menu-container.stuck {
     width: 100%;
@@ -1438,7 +1444,8 @@ button, input, select, textarea {
 // !-- Application categories -- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #cat-menu-wrap {
     background: #2c2c2c url(../images/menu-app/cat-menu-bg.png) repeat center top;
@@ -1549,7 +1556,8 @@ button, input, select, textarea {
 // !-- Application H1 cat ------ */
 // !---------------------------- */
 
-.page-application.page-application-category {
+.page-application.page-application-category,
+.page-review.page-review-category {
 
   h1#page-title {
     padding: 10px 0;
@@ -1660,7 +1668,8 @@ button, input, select, textarea {
 // !-- Application form -------- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   form {
 
@@ -1759,7 +1768,8 @@ button, input, select, textarea {
   }
 }
 
-.page-application {
+.page-application,
+.page-review {
 
   form {
 
@@ -1864,7 +1874,8 @@ button, input, select, textarea {
 }
 
 // comment
-.page-application {
+.page-application,
+.page-review {
 
   form .comment-form {
     position: relative;
@@ -1977,7 +1988,8 @@ button, input, select, textarea {
 // !-- Application tables ------ */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   td .content-incorrect {
     background-position: 4px 5px;
@@ -2074,7 +2086,8 @@ button, input, select, textarea {
 // !-- Application show errors - */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   table {
     width: 950px;
@@ -2129,7 +2142,8 @@ button, input, select, textarea {
 // !-- saving indicator -------- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   .pgh-form-status-container {
     margin: 0 auto;
@@ -2178,7 +2192,8 @@ button, input, select, textarea {
 // !-- submission warnings ----- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   .submission_message,
   .submission_warning {

@@ -51,6 +51,15 @@ function pgh_awards_score_menu() {
     'access arguments' => array('administer awards system'),
   );
 
+  // Migrate all scores for one application type.
+  $items['admin/content/migrate/score'] = array(
+    'title' => 'Score',
+    'description' => 'Migrate scores for application type',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array("pgh_awards_score_migrate_form", 3),
+    'access arguments' => array('administer awards system'),
+  );
+
   return $items;
 }
 
@@ -245,17 +254,24 @@ function pgh_awards_score_calculate_formula($app_id, $formula, $reference = 100,
         watchdog('pgh_score', 'Error in eval on %var', array('%var' => $replace), WATCHDOG_ERROR);
         return array('value' => $value, 'score' => $score);
       }
-      // Calculate score.
-      $score = $value / $reference * 100.0;
-      if ($orientation == 'low') {
-        $score = 100.0 - $score;
-      }
-      // Bound score.
-      if ($score < 0) {
+      // Special cutoff here, bypass normalization. https://ac.designhammer.net/projects/practice-greenhealth-phase-12/tasks/59
+      if ($value <= 0.0) {
+        $value = 0.0;
         $score = 0.0;
       }
-      if ($score > 100) {
-        $score = 100.0;
+      else {
+        // Calculate score.
+        $score = $value / $reference * 100.0;
+        if ($orientation == 'low') {
+          $score = 100.0 - $score;
+        }
+        // Bound score.
+        if ($score < 0) {
+          $score = 0.0;
+        }
+        if ($score > 100) {
+          $score = 100.0;
+        }
       }
     }
   }
@@ -397,6 +413,9 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
       }
       // Calculate other stat.
       $scores['question_count'] += 1;
+      // dsm($response_wrapper->field_response_question->raw());
+      // dsm($response->nid);
+      // dsm('AP:' . $scores['automatic_p']);
     }
   }
 
@@ -841,4 +860,248 @@ function pgh_awards_score_quality_potential_categories($apptype_tag) {
   }
 
   return array();
+}
+
+/**
+ * Based on question answer and property, calculate automatic and kpi scores.
+ */
+function pgh_awards_score_calculate_question_autokpi($value, $point, $score, $kpi, $type, $style, $options) {
+  $r_point = 0; $r_score = 0; $r_kpi = '';
+  switch ($type) {
+    case 'text':
+    case 'file':
+      if (!empty($point[0])) {
+        $r_point = $point[0];
+      }
+      if (!empty($value)) {
+        if (!empty($score[0])) {
+          $r_score = $score[0];
+        }
+        if (isset($kpi[0])) {
+          $r_kpi = $kpi[0];
+        }
+      }
+      break;
+
+    case 'selection':
+      switch ($style) {
+        case 'checkboxes':
+          if ($point) {
+            $r_point = array_sum($point);
+          }
+          $i = 0;
+          foreach ($options as $option) {
+            if (!empty($value[$option])) {
+              if (!empty($score[$i])) {
+                $r_score += $score[$i];
+              }
+              if (isset($kpi[$i])) {
+                $r_kpi += $kpi[$i];
+              }
+            }
+            $i++;
+          }
+          // Serialize only applies to checkboxes.
+          $value = serialize($value);
+          break;
+
+        case 'radios':
+        case 'dropdown':
+          if ($point) {
+            $r_point = max($point);
+          }
+          if (!empty($score[$value])) {
+            $r_score = $score[$value];
+          }
+          if (isset($kpi[$value])) {
+            $r_kpi = $kpi[$value];
+          }
+          break;
+
+        default:
+          if (!empty($point[$value])) {
+            $r_point = $point[$value];
+          }
+          if (!empty($score[$value])) {
+            $r_score = $score[$value];
+          }
+          if (isset($kpi[$value])) {
+            $r_kpi = $kpi[$value];
+          }
+          break;
+      }
+      break;
+
+    default:
+      // Should be error message.
+      break;
+  }
+
+  $answer = array(
+    'value' => $value,
+    'point' => $r_point,
+    'score' => $r_score,
+    'kpi' => $r_kpi,
+  );
+
+  return $answer;
+}
+
+/**
+ * Migrate score for app type confirm page.
+ */
+function pgh_awards_score_migrate_form($form, &$form_state) {
+  $form['description'] = array(
+    '#markup' => 'This will take a few minutes to migrate scores for all questions, proceed ? <br />',
+  );
+
+  $form['list'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Application ID List',
+    '#description' => 'Ex. 957166, 958928, 834766'
+  );
+
+  $form['range'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Application ID Range',
+    '#description' => 'Ex. 0,1000'
+  );
+
+  $form['all'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Process all',
+    '#description' => 'Check this if you are sure you want to calculate all the scores',
+    '#default_value' => 0,
+  );
+  $form['debug'] = array(
+    '#type' => 'textfield',
+    '#title' => '[Debug] Set how many applications to process',
+    '#default_value' => 1,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Calculate',
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for migration.
+ */
+function pgh_awards_score_migrate_form_submit($form, &$form_state) {
+  $values = &$form_state['values'];
+
+  $operations = array();
+  // Debug option.
+  $debug = 0;
+  if (empty($values['all'])) {
+    if (isset($values['debug'])) {
+      $debug = intval($values['debug']);
+    }
+  }
+  // OP option.
+  $aids = array();
+  if (!empty($values['list'])) {
+    $list = explode(',', $values['list']);
+    $aids = array_merge($aids, $list);
+  }
+  if (!empty($values['range'])) {
+    $range = explode(',', $values['range']);
+    if (count($range) > 1) {
+      $aids = $range;
+      array_unshift($aids, 'R');
+    }
+  }
+
+  $i = 0;
+  $pids = pgh_api_find_nodes(array('type' => 'question'), NULL, TRUE);
+  foreach ($pids as $nid) {
+    $operations[] = array('pgh_awards_score_migrate_op', array($nid, $aids));
+    if ($debug) {
+      $i += 1;
+      if ($i >= $debug) {
+        break;
+      }
+    }
+  }
+  $batch = array(
+    'operations' => $operations,
+    'finished' => 'pgh_awards_score_migrate_form_finished',
+  );
+  batch_set($batch);
+}
+
+/**
+ * Finish handler for migration.
+ */
+function pgh_awards_score_migrate_form_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('@count questions migrated.', array('@count' => count($results))));
+  }
+  else {
+    // An error occurred.
+    // $operations contains the operations that remained unprocessed.
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing id: @args',
+      array('@args' => print_r($error_operation[0], TRUE))));
+  }
+}
+
+/**
+ * Op handler for migration.
+ */
+function pgh_awards_score_migrate_op($qid, $aids, &$context) {
+  // watchdog('pgh_score', $qid);
+  $question = node_load($qid);
+  $question_wrapper = entity_metadata_wrapper('node', $question);
+  $point = $question_wrapper->field_question_point->value();
+  $score = $question_wrapper->field_question_score->value();
+  $kpi = $question_wrapper->field_question_kpi->value();
+  $type = $question_wrapper->field_question_type->value();
+  $style = $question_wrapper->field_question_style->value();
+  $options = $question_wrapper->field_question_options->value();
+
+  // $aids = array(957166, 958928, 834766);
+  $query = array(
+    'type' => 'response',
+    'field_response_question' => array('target_id', $qid, '='),
+  );
+  if ($aids) {
+    if ($aids[0] == 'R') {
+      array_shift($aids);
+      $query = array_merge($query, array(
+        'field_response_application' => array('target_id', $aids, 'BETWEEN')
+      ));
+    }
+    else {
+      $query = array_merge($query, array(
+        'field_response_application' => array('target_id', $aids, 'IN')
+      ));
+    }
+  }
+
+  $rids = pgh_api_find_nodes($query, NULL, TRUE);
+  $responses = node_load_multiple($rids);
+  $records = array();
+  foreach ($responses as &$response) {
+    $wrapper = entity_metadata_wrapper('node', $response);
+    $value = $wrapper->body->value() ? $wrapper->body->value->raw() : '';
+    $answer = pgh_awards_score_calculate_question_autokpi($value, $point, $score, $kpi, $type, $style, $options);
+
+    // Save response back.
+    $wrapper->body = array('value' => $answer['value']);
+    $wrapper->field_response_point->set($answer['point']);
+    $wrapper->field_response_score->set($answer['score']);
+    $wrapper->field_response_kpi->set($answer['kpi']);
+    $wrapper->save();
+    $records[] = $response->nid;
+  }
+  if ($records) {
+    watchdog('pgh_score', "[$qid] " . implode(",", $records));
+  }
+
+  $context['results'][] = $qid;
+  $context['message'] = t('Migrating question @nid with @count responses', array('@nid' => $qid, '@count' => count($rids)));
 }

@@ -165,9 +165,9 @@ function pgh_awards_review_page($app) {
   $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
 
   // Get awards.
-  $award = 'N/A';
+  $awards = array();
   foreach ($app_wrapper->field_application_designations->getIterator() as $term_wrapper) {
-    $award = $term_wrapper->name->value();
+    $awards[] = $term_wrapper->name->value();
   }
 
   // Get all cells value.
@@ -293,7 +293,7 @@ function pgh_awards_review_page($app) {
     'scores' => $scores,
     'goals' => $goals,
     'profiles' => $profiles,
-    'award' => $award,
+    'awards' => $awards,
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);
@@ -379,7 +379,7 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
     }
   }
   $form['awards'] = array(
-    '#type' => 'checkboxes',
+    '#type' => 'select',
     '#options' => $options,
     '#default_value' => $values,
   );
@@ -475,13 +475,7 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
     $app_wrapper->field_application_threshold_met->set($values['threshold_met']);
     $app_wrapper->field_application_qualify->set($values['qualify']);
     $app_wrapper->field_application_winning_pfcs->set($values['winning_pfcs']);
-    $awards = array();
-    foreach ($values['awards'] as $value) {
-      if (!empty($value)) {
-        $awards[] = $value;
-      }
-    }
-    $app_wrapper->field_application_designations_s->set($awards);
+    $app_wrapper->field_application_designations_s->set($values['awards']);
     $app_wrapper->body->set(array(
       'value' => $values['comment'],
       'format' => 'filtered_html',
@@ -530,7 +524,7 @@ function pgh_awards_review_score_row(&$cat) {
       'Metric', '% Metric',
       'KPI', '% KPI',
       'Quality',
-      'Final', '% Final'
+      'Final', '% Final', 'Auto P'
     );
   }
   // Calculate the percentage score.
@@ -548,7 +542,7 @@ function pgh_awards_review_score_row(&$cat) {
     $cat['metric'], $cat['metric_pc'] . '%',
     $cat['kpi'], $cat['kpi_pc'] . '%',
     $cat['quality'],
-    $cat['final'], $cat['final_pc'] . '%'
+    $cat['final'], $cat['final_pc'] . '%', $cat['automatic_p']
   );
 }
 

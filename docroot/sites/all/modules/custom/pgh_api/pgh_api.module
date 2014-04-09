@@ -720,86 +720,10 @@ function pgh_api_save_response($app_id, $qid, $value) {
     $point = $question_wrapper->field_question_point->value();
     $score = $question_wrapper->field_question_score->value();
     $kpi = $question_wrapper->field_question_kpi->value();
+    $options = $question_wrapper->field_question_options->value();
 
-    // Assign points to response.
-    $r_point = 0; $r_score = 0; $r_kpi = '';
-    switch ($type) {
-      case 'text':
-      case 'file':
-        if (!empty($point[0])) {
-          $r_point = $point[0];
-        }
-        if (!empty($value)) {
-          if (!empty($score[0])) {
-            $r_score = $score[0];
-          }
-          if (isset($kpi[0])) {
-            $r_kpi = $kpi[0];
-          }
-        }
-        break;
+    $answer = pgh_awards_score_calculate_question_autokpi($value, $point, $score, $kpi, $type, $style, $options);
 
-      case 'selection':
-        switch ($style) {
-          case 'checkboxes':
-            if ($point) {
-              $r_point = array_sum($point);
-            }
-            $options = $question_wrapper->field_question_options->value();
-            $i = 0;
-            foreach ($options as $option) {
-              if (!empty($value[$option])) {
-                if (!empty($score[$i])) {
-                  $r_score += $score[$i];
-                }
-                if (isset($kpi[$i])) {
-                  $r_kpi += $kpi[$i];
-                }
-              }
-              $i++;
-            }
-            // Serialize only applies to checkboxes.
-            $value = serialize($value);
-            break;
-
-          case 'dropdown':
-            if ($point) {
-              $r_point = max($point);
-            }
-            if (!empty($score[$value])) {
-              $r_score = $score[$value];
-            }
-            if (isset($kpi[$value])) {
-              $r_kpi = $kpi[$value];
-            }
-            break;
-
-          case 'radios':
-          default:
-            if (!empty($point[$value])) {
-              $r_point = $point[$value];
-            }
-            if (!empty($score[$value])) {
-              $r_score = $score[$value];
-            }
-            if (isset($kpi[$value])) {
-              $r_kpi = $kpi[$value];
-            }
-            break;
-        }
-        break;
-
-      default:
-        // Should be error message.
-        break;
-    }
-
-    $answer = array(
-      'value' => $value,
-      'point' => $r_point,
-      'score' => $r_score,
-      'kpi' => $r_kpi,
-    );
     pgh_api_set_response($app_id, $qid, $answer);
   }
 }

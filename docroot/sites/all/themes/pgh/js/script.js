@@ -182,7 +182,7 @@
       // Disable fieldsets on print.
       // https://support.mozilla.org/en-US/questions/936857
       // ======================================================================
-      $('.page-application .print-page').click(function() {
+      $('.page-application .print-page, .page-review .print-page').click(function() {
         window.print();
       });
 
@@ -194,10 +194,9 @@
 
       // Comments
       // ======================================================================
-      var app_comment = '.page-application form .comment-form';
+      var app_comment = '.page-application form .comment-form, .page-review form .comment-form';
 
       $(app_comment + ' .add-comment').addClass('closed-comment');
-
       $(app_comment + ' .add-comment').click(function() {
         if ($(this).hasClass('closed-comment')) {
           $(this).siblings('.comment-wrapper').show();
@@ -208,7 +207,7 @@
         }
       });
 
-      var app_comment_submit = '.page-application form .comment-form ul li.comment-add a';
+      var app_comment_submit = '.page-application form .comment-form ul li.comment-add a, .page-review form .comment-form ul li.comment-add a';
 
       $(app_comment_submit).click(function() {
         $(this).text('Saving...').addClass('saving');
