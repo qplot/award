@@ -23,12 +23,14 @@
         <div id="hospital-wrap-inner-info">
 
           <div id="hospital-content-top">
-            <a href="<?php echo $app['readonly_link'] ?>">
-              <input type="button" value="Scoresheets" />
-            </a>
-            <?php echo $form['submit'] ?>
-            <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
-            <p class="institution-name"><?php echo $app['health_system'] ?></p>
+            <div class="colomn-1">
+              <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
+              <p class="institution-name"><?php echo $app['health_system'] ?></p>
+            </div>
+            <div class="colomn-2">
+              <?php echo $form['submit'] ?>
+              <a href="<?php echo $app['readonly_link'] ?>" class="scoresheets-btn"><input type="button" value="Scoresheets"></a>
+            </div>
           </div><!-- /#hospital-content-top -->
 
           <div id="hospital-content-left" class="column">
@@ -40,15 +42,15 @@
               <?php endif ?>
             </p>
             <p><?php echo $app['primary_email'] ?></p>
-            <p>
+            <p class="first-label">
               <?php if (!empty($app['beds'])): ?>
                 <span class="label">Staffed Beds:</span> <?php echo $app['beds'] ?>
               <?php endif ?>
-            </p>
-            <p>
+
               <?php if (!empty($app['ors'])): ?>
                 <span class="label">ORs:</span> <?php echo $app['ors'] ?></p>
               <?php endif; ?>
+            </p>
             <p>
               <?php if (!empty($app['salesforce_owner'])): ?>
                 <span class="label">Salesforce Account Owner:</span>
@@ -73,13 +75,16 @@
           <div id="hospital-content-mid" class="column">
             <h3>Application: <?php echo $app['year'] . ' ' . $app['apptype'] ?></h3>
             <?php if (!empty($app['cares'])): ?>
-              <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?> </p>
+              <p><span class="label">Number of Acute Care Hospitals in Systems:</span> <?php echo $app['cares'] ?></p>
             <?php endif; ?>
             <?php echo $form['winning_pfcs'] ?>
-            <p>Does system qualify ?</p>
-            <?php echo $form['qualify'] ?>
-            <p>Does application meet the metrics thresholds for award applied for ?</p>
-            <?php echo $form['threshold_met'] ?>
+            <div class="qualify">
+              <p>Does system qualify ?</p>
+              <?php echo $form['qualify'] ?>
+            </div><div class="threshold">
+              <p>Does application meet the metrics thresholds for award applied for ?</p>
+              <?php echo $form['threshold_met'] ?>
+            </div>
           </div><!-- /#hospital-content-mid -->
 
           <div id="hospital-content-right" class="column">
