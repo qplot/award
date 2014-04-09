@@ -138,6 +138,9 @@ function pgh_awards_review_page($app) {
     $persons[] = $reviewer['realname'];
   }
 
+  // Get reviewer readonly link.
+  $readonly_link = url('review/' . $app_id . '/readonly', array('absolute' => TRUE));
+
   // Get apptype.
   $apptype_tag = $app_wrapper->field_application_type->raw();
   $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
@@ -294,6 +297,7 @@ function pgh_awards_review_page($app) {
     'goals' => $goals,
     'profiles' => $profiles,
     'awards' => $awards,
+    'readonly_link' => $readonly_link
   );
 
   $vars['app'] = array_merge($vars['app'], $question_values);

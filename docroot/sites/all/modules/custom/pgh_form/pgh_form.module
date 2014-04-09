@@ -1423,7 +1423,9 @@ function pgh_form_get_response_answer($qid, $app_id) {
     'kpi' => 0,
     'updated' => 0,
   );
+
   if ($response_wrapper = pgh_form_get_data($rid, 'response_wrapper')) {
+    $kpi = $response_wrapper->field_response_kpi->value();
     $answer = array(
       'id' => $rid,
       'value' => $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '',
