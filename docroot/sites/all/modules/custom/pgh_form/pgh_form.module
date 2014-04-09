@@ -1410,7 +1410,7 @@ function pgh_form_get_response_answer($qid, $app_id) {
   $response_tag = pgh_form_get_data($qid, 'mapping');
   if (!$response_tag) {
     // Create new response.
-    $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
+    $rid = pgh_api_set_response($app_id, $qid);
     // Put it into cache.
     $response = node_load($rid);
     $response_tag = $response->title;
