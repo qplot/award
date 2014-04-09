@@ -93,6 +93,8 @@
             <?php endif ?>
             <h3>Suggested Awards</h3>
             <?php echo $form['awards'] ?>
+            <h3>Status</h3>
+            <?php echo $form['status'] ?>
           </div><!-- /#hospital-content-right -->
 
         </div><!-- /#hospital-wrap-inner-info -->

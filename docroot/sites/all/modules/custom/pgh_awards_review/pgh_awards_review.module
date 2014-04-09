@@ -307,6 +307,7 @@ function pgh_awards_review_page($app) {
   $elements = array();
   $form_render = render($form);
   $elements = array(
+    'status' => render($form['status']),
     'qualify' => render($form['qualify']),
     'threshold_met' => render($form['threshold_met']),
     'winning_pfcs' => render($form['winning_pfcs']),
@@ -344,6 +345,15 @@ function pgh_awards_review_page($app) {
 function pgh_awards_review_application_form($form, &$form_state, $app, $scores) {
   $app_wrapper = entity_metadata_wrapper('node', $app);
   $body = $app_wrapper->body->value();
+
+  // Application status.
+  $status = $app_wrapper->field_application_status->raw();
+  $options = array('review-in-progress' => 'Review in progress', 'final-scoring-complete' => 'Final scoring complete');
+  $form['status'] = array(
+    '#type' => 'select',
+    '#options' => $options,
+    '#default_value' => $status,
+  );
 
   $yesno = array(t('No'), t('Yes'));
   $form['qualify'] = array(
@@ -481,6 +491,7 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
     $app_wrapper->field_application_qualify->set($values['qualify']);
     $app_wrapper->field_application_winning_pfcs->set($values['winning_pfcs']);
     $app_wrapper->field_application_designations_s->set($values['awards']);
+    $app_wrapper->field_application_status->set($values['status']);
     $app_wrapper->body->set(array(
       'value' => $values['comment'],
       'format' => 'filtered_html',
