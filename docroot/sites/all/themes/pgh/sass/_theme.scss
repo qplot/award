@@ -11,6 +11,14 @@ body {
   background-color: $green;
 }
 
+hr {
+  color: #ccc;
+  background-color: #ccc;
+  border: none;
+  margin: 1.3em auto;
+  height: 1px;
+}
+
 // !---------------------------- */
 // !-- Typography -------------- */
 // !---------------------------- */
@@ -40,6 +48,12 @@ h3 {
 
 .field-name-body div.field-item { // replaces the P tag margin
   margin: 1.4em 0;
+}
+
+button, input, select, textarea {
+  font-size: 14px;
+  line-height: 18px;
+  font-family: $arial;
 }
 
 // !---------------------------- */
@@ -105,7 +119,8 @@ h3 {
   }
 }
 
-.page-application {
+.page-application,
+.page-review {
 
   #breadcrumb-wrap {
     background-color: $white;
@@ -309,6 +324,26 @@ h3 {
     @include border-radius(2px);
     padding: 5px 14px 3px;
     float: right;
+
+    &:hover {
+      color: $white;
+      background-color: $green;
+      border-color: $green;
+    }
+  }
+
+  .add-mesasge-bu-links a {
+    color: $green;
+    font-size: 11px;
+    line-height: 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid #67a697;
+    @include border-radius(2px);
+    display: block;
+    margin: 5px 0;
+    padding: 5px 14px 3px;
+    width: 240px;
 
     &:hover {
       color: $white;
@@ -868,7 +903,9 @@ h3 {
 // !-- Appication -------------- */
 // !---------------------------- */
 
-.page-application { //node
+//node
+.page-application,
+.page-review {
 
   #header-wrap {
     background-color: $white;
@@ -1016,7 +1053,8 @@ h3 {
 // !-- Application progress ---- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #review-submit-wrap {
     background-color: $white;
@@ -1130,7 +1168,8 @@ h3 {
 // !-- Application sponsor ----- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #sponsor-wrap {
     background-color: #f2f2f2;
@@ -1205,7 +1244,8 @@ h3 {
 // !-- Application menu -------- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #application-menu-container.stuck {
     width: 100%;
@@ -1404,7 +1444,8 @@ h3 {
 // !-- Application categories -- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   #cat-menu-wrap {
     background: #2c2c2c url(../images/menu-app/cat-menu-bg.png) repeat center top;
@@ -1515,7 +1556,8 @@ h3 {
 // !-- Application H1 cat ------ */
 // !---------------------------- */
 
-.page-application.page-application-category {
+.page-application.page-application-category,
+.page-review.page-review-category {
 
   h1#page-title {
     padding: 10px 0;
@@ -1626,7 +1668,8 @@ h3 {
 // !-- Application form -------- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   form {
 
@@ -1725,7 +1768,8 @@ h3 {
   }
 }
 
-.page-application {
+.page-application,
+.page-review {
 
   form {
 
@@ -1830,7 +1874,8 @@ h3 {
 }
 
 // comment
-.page-application {
+.page-application,
+.page-review {
 
   form .comment-form {
     position: relative;
@@ -1943,7 +1988,8 @@ h3 {
 // !-- Application tables ------ */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   td .content-incorrect {
     background-position: 4px 5px;
@@ -2040,7 +2086,8 @@ h3 {
 // !-- Application show errors - */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   table {
     width: 950px;
@@ -2095,7 +2142,8 @@ h3 {
 // !-- saving indicator -------- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   .pgh-form-status-container {
     margin: 0 auto;
@@ -2144,7 +2192,8 @@ h3 {
 // !-- submission warnings ----- */
 // !---------------------------- */
 
-.page-application {
+.page-application,
+.page-review {
 
   .submission_message,
   .submission_warning {
@@ -2170,6 +2219,75 @@ h3 {
     text-shadow: 0 1px 0 $white;
     background: #fadbe1 url(../images/global/icon-error-content.png) no-repeat 9px 45%;
     border-color: #f5bcc7;
+  }
+}
+
+
+// !---------------------------- */
+// !-- Reminders --------------- */
+// !---------------------------- */
+
+form#pgh-user-message-work-group-form {
+  @include clearfix;
+
+  .select-users-wrap {
+    padding-left: 5%;
+    width: 45%;
+    float: right;
+
+    #edit-instructions {
+      font-size: 0.9em;
+    }
+
+    label {
+      font-size: 0.85em;
+    }
+  }
+
+  .form-wrapper {
+    padding-right: 5%;
+    width: 45%;
+    float: right;
+
+    label {
+      font-size: 0.8em;
+    }
+
+    .form-textarea-wrapper {
+
+      textarea {
+        border: 1px solid #d3d3d3;
+        @include border-radius(2px 2px 0 0);
+        @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+        padding: 5px;
+        min-height: 400px;
+      }
+    }
+
+    input.form-submit {
+      color: $white;
+      font-size: 1em;
+      font-family: $arial;
+      font-weight: normal;
+      text-align: center;
+      background: $green url(../images/pgh-form/icon-page-saving.gif?=yellow) no-repeat -100px 8px;
+      border: 1px solid $green;
+      @include border-radius(3px);
+      margin-right: 10px;
+      padding: 7px 0;
+      width: 150px;
+      @include transition(
+        background-color 0.4s ease-out,
+        border-color 0.4s ease-out,
+        width 0.4s ease-out
+      );
+
+      &:hover {
+        background-color: #ffba4e;
+        border-color: #ffb043;
+        @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+      }
+    }
   }
 }
 
@@ -2258,6 +2376,10 @@ h3 {
     }
 
     .dashboard-user a {
+      border-left: 1px solid #67a697;
+    }
+
+    .reviewer-user a {
       border-left: 1px solid #67a697;
     }
   }
@@ -2747,6 +2869,701 @@ a.glossify-link {
 
 
 // !---------------------------- */
+// !-- Reviewer ---------------- */
+// !---------------------------- */
+
+body.section-review {
+
+  #block-pgh-user-info-pgh-user-info {
+
+    .user-links .reviewer-user a {
+      color: #8cc8b9;
+    }
+  }
+
+  table {
+    border-collapse: separate !important;
+    @include border-radius(3px 3px 0 0);
+    width: 100%;
+
+    tr {
+      background-color: transparent !important;
+      border: none !important;
+    }
+
+    th, td {
+      font-size: 0.9em;
+      font-family: $arial;
+      font-weight: normal;
+      padding: 5px 14px;
+      vertical-align: top;
+    }
+
+    th {
+      color: $green;
+      font-size: 11px;
+      line-height: 13px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border: 1px solid #a2d6c9;
+      border-right: none;
+      padding: 12px;
+      @include gradient($white, #f8f8f8);
+
+      &:first-child {
+        @include border-radius(3px 0 0 3px);
+      }
+
+      &:last-child {
+        border-right: 1px solid #a2d6c9;
+        @include border-radius(0 3px 3px 0);
+      }
+    }
+
+    td {
+      font-size: 13px;
+      list-style: 17px;
+      border-bottom: 1px solid #a2d6c9;
+      border-left: 1px solid #ededed;
+
+      &:first-child {
+        border-left: none;
+      }
+    }
+
+    tr.views-row-last {
+
+      td {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+// Global review elements
+body.section-review {
+
+  h1 {
+    padding-bottom: 20px;
+  }
+
+  #main-wrap.main-reviewer {
+    background-color: $grayLight;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0 0 0.3em;
+
+    .label {
+      color: #999;
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+  }
+
+  .form-item {
+    margin: 0;
+  }
+
+  label {
+    color: #999;
+    font-size: 13px;
+    font-weight: normal;
+  }
+}
+
+// reviwer waypoints
+body.section-review {
+
+  #reviewer-wrap #hospital-wrap.stuck {
+    width: 100%;
+    @include box-shadow(0 1px 7px rgba(0,0,0,0.25));
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+
+  &.admin-menu #reviewer-wrap #hospital-wrap.stuck {
+    top: 28px;
+  }
+}
+
+// reviewer hospital
+#reviewer-wrap #hospital-wrap {
+  background: #444 url(../images/global/div-vline.png) repeat-y 33% 0;
+  border-bottom: 3px solid $orange;
+  @include border-radius(3px 3px 0 0);
+  @include box-shadow(0 0 4px rgba(0,0,0,0.1));
+  margin: 0 0 40px;
+
+  #hospital-wrap-inner {
+    background: transparent url(../images/global/div-vline.png) repeat-y 75.5% 0;
+    border-bottom: 1px solid lighten($orange, 7%);
+    @include clearfix;
+  }
+
+  .column {
+    padding: 10px 1.4%;
+    float: left;
+
+    h3 {
+      color: $greenLight;
+      font-size: 15px;
+      line-height: 19px;
+      margin: 0 0 2px;
+    }
+
+    p {
+      color: $white;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    a {
+      color: $greenLight;
+    }
+
+    .label {
+      color: darken($grayLight, 25%);
+    }
+
+    .form-item {
+
+      input.form-checkbox {
+        float: left;
+      }
+
+      label {
+        color: $white;
+        font-size: 13px;
+        line-height: 17px;
+        margin-left: 20px;
+        padding-bottom: 0.3em;
+        display: block;
+      }
+    }
+
+    input.form-submit {
+      border: 1px solid darken($grayLight, 30%);
+
+      &:hover {
+        border-color: #ffb043;
+      }
+    }
+  }
+}
+
+// hospital-content-top
+#reviewer-wrap #hospital-wrap {
+
+  #hospital-content-top {
+    background-color: #444;
+    border-bottom: 1px solid #3a3a3a;
+    @include border-radius(4px 4px 0 0);
+    padding: 10px 1.4%;
+    @include clearfix;
+
+    .colomn-1 {
+      width: 65%;
+      float: left;
+    }
+
+    .colomn-2 {
+      text-align: right;
+      width: 35%;
+      float: left;
+    }
+
+    h2 {
+      color: $white;
+      font-family: $arial;
+      font-size: 16px;
+      line-height: 20px;
+      margin: 0;
+    }
+
+    .institution-name {
+      color: $orange;
+      font-size: 13px;
+      line-height: 15px;
+    }
+
+    a.scoresheets-btn input,
+    input.form-submit {
+      color: $white;
+      font-size: 14px;
+      line-height: 18px;
+      font-family: $arial;
+      font-weight: normal;
+      text-align: center;
+      background: $green;
+      border: 1px solid $greenLight;
+      @include border-radius(3px);
+      margin: 0 0 0 7px;
+      padding: 5px 0;
+      width: 140px;
+      float: right;
+      @include transition(
+        background-color 0.2s ease-out,
+        border-color 0.2s ease-out,
+        width 0.2s ease-out
+      );
+
+      &:hover {
+        background-color: #ffba4e;
+        border-color: #ffb043;
+        @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+      }
+    }
+  }
+}
+
+// hospital-wrap-inner-info
+#reviewer-wrap #hospital-wrap {
+
+  #hospital-wrap-inner-info {
+    @include clearfix;
+  }
+}
+
+// hospital-content-left
+#reviewer-wrap #hospital-wrap {
+
+  #hospital-content-left {
+
+    &.column {
+      width: 30%;
+    }
+
+    p.first-label {
+      padding-top: 5px;
+
+      span + span {
+
+        &:before {
+          color: #333;
+          content: "/ ";
+        }
+      }
+    }
+  }
+}
+
+// hospital-content-mid
+#reviewer-wrap #hospital-wrap {
+
+  #hospital-content-mid {
+
+    &.column {
+      width: 40%;
+    }
+
+    .form-type-textfield {
+      padding-bottom: 5px;
+      @include clearfix;
+
+      label {
+        margin: 0;
+        padding-right: 5%;
+        width: 64%;
+        float: left;
+      }
+
+      input.form-text {
+        border: 1px solid $white;
+        @include border-radius(3px);
+        @include box-shadow(inset 0 0 8px rgba(0,0,0,0.1));
+        margin-top: 2px;
+        padding: 2px 5px;
+        width: auto;
+        float: left;
+      }
+    }
+
+    .qualify,
+    .threshold {
+      padding-top: 5px;
+      @include clearfix;
+
+      p {
+        padding-right: 5%;
+        width: 64%;
+        float: left;
+      }
+
+      & > div {
+        width: 31%;
+        float: left;
+
+        div {
+          display: inline;
+        }
+
+        .form-item-qualify,
+        .form-item-threshold-met {
+            width: 40%;
+            float: left;
+        }
+
+        label {
+          //display: inline;
+          margin-left: 20px;
+        }
+
+        input.form-radio {
+          float: left;
+        }
+      }
+    }
+
+    .qualify {
+
+    }
+
+    p {
+      clear: left;
+    }
+  }
+}
+
+// hospital-content-right
+#reviewer-wrap #hospital-wrap {
+
+  #hospital-content-right {
+
+    &.column {
+      width: 22%;
+      padding-right: 0;
+    }
+  }
+}
+
+// hospital-content-profile
+#reviewer-wrap #hospital-wrap {
+
+  #hospital-content-profile {
+    color: $white;
+
+    .profile-wrap {
+      padding: 2px 0 0;
+
+      .profile-group-wrap {
+        background-color: #333;
+        border-top: 1px solid #2a2a2a;
+        @include clearfix;
+
+        .profile-group {
+          font-size: 13px;
+          line-height: 16px;
+          text-align: center;
+          border-right: 1px solid #2a2a2a;
+          padding: 6px 1%;
+          width: 22%;
+          float: left;
+
+          &:last-child {
+            border-right: none;
+          }
+        }
+
+        .label {
+          color: #999;
+        }
+      }
+    }
+  }
+}
+
+// reviewer scoring
+#reviewer-wrap #scores-wrap {
+
+  #scores-wrap-inner {}
+
+  h2 {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 5px;
+    padding-top: 30px;
+  }
+
+  .scoring-group {
+    background-color: $white;
+    @include border-radius(3px);
+    border: 1px solid #ebebeb;
+    @include box-shadow(0 0 4px rgba(0,0,0,0.05));
+    margin: 10px 0 40px;
+    padding: 0 30px 25px;
+  }
+
+  textarea {
+    border: 1px solid #d3d3d3;
+    @include border-radius(2px 2px 0 0);
+    @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+    padding: 5px;
+  }
+}
+
+// review categories
+#reviewer-wrap #categories-wrap {
+
+  #categories-wrap-inner {}
+
+  h2 {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 25px;
+  }
+
+  .cat-group {
+    background-color: $white;
+    @include border-radius(3px);
+    border: 1px solid #ebebeb;
+    @include box-shadow(0 0 4px rgba(0,0,0,0.05));
+    margin: 25px 0;
+    padding: 0 0 7px;
+
+    .column {
+      padding: 30px 0 30px 20px;
+      float: left;
+
+      &.cat-title.item-1 {
+        padding: 20px 20px 5px;
+        width: 70px;
+      }
+
+      &.item-2 {
+        width: 230px;
+
+        p .label { width: 75px; }
+      }
+
+      &.item-3 {
+        width: 250px;
+
+        p .label { width: 85px; }
+
+        .form-item {
+
+          label {
+            width: 88px;
+            float: left;
+          }
+
+          select {
+            color: #555;
+          }
+        }
+      }
+
+      &.item-4 {
+        width: 300px;
+
+        p .label { width: 97px; }
+
+        label {
+          width: 100px;
+          float: left;
+        }
+
+        input.form-text {
+          border: 1px solid #d3d3d3;
+          @include border-radius(2px);
+          @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+          padding: 5px;
+          width: 190px;
+        }
+      }
+    }
+  }
+
+  p .label {
+    display: inline-block;
+  }
+}
+
+// review metrics
+#reviewer-wrap #categories-wrap {
+
+  .metric-wrap {
+    border-top: 1px dashed #e0e0e0;
+    //@include box-shadow(inset 0 3px 1px -1px rgba(0,0,0,0.04));
+    padding: 20px;
+    clear: left;
+
+    h4 {
+      font-size: 15px;
+      line-height: 19px;
+      font-weight: normal;
+      margin: 0 0 0.8em;
+    }
+
+    .metrics-group-wrap {
+      background: transparent url(../images/global/metrics-div-vline.png) repeat-y 0 0;
+      border: 1px solid #e0e0e0;
+      @include border-radius(3px);
+      margin-bottom: 1em;
+      @include clearfix;
+
+      .metrics-group {
+        font-size: 13px;
+        line-height: 16px;
+        padding: 1%;
+        width: 18%;
+        float: left;
+
+        &:nth-child(6),
+        &:nth-child(11),
+        &:nth-child(17),
+        &:nth-child(21) {
+          clear: left;
+        }
+
+        &:nth-child(n+6) {
+          border-top: 1px solid #e0e0e0;
+        }
+      }
+
+      .label {
+        color: #999;
+      }
+    }
+
+    .form-type-textarea {
+      clear: left;
+
+      textarea {
+        border: 1px solid #d3d3d3;
+        @include border-radius(2px 2px 0 0);
+        @include box-shadow(inset 0 0 8px rgba(0,0,0,0.05));
+        padding: 5px;
+      }
+    }
+  }
+}
+
+// reviewer cat icons
+#reviewer-wrap #categories-wrap {
+
+  .cat-title div {
+    font-size: 13px;
+    line-height: 15px;
+    text-align: center;
+
+    span {
+      color: #666666;
+      background: transparent url(../images/menu-app/cat-h1-icons.png) no-repeat -1142px 0;
+      display: block;
+      margin: 0 auto;
+      width: 48px;
+      height: 52px;
+    }
+
+    // prefix award type
+    @each $awardTypeh1 in pfc, pr, ltc, chcpfc, chcpr {
+
+      $category_other_color: darken(#c49a6c, 10%);
+
+      &.#{$awardTypeh1}-leadership {
+        color: #9159a5;
+        span { background-position: 0 0; }
+      }
+
+      &.#{$awardTypeh1}-waste {
+        color: #046c9c;
+        span { background-position: -76px 0; }
+      }
+
+      &.#{$awardTypeh1}-chemicals {
+        color: #8b9237;
+        span { background-position: -152px 0; }
+      }
+
+      &.#{$awardTypeh1}-gor {
+        color: #0f674e;
+        span { background-position: -228px 0; }
+      }
+
+      &.#{$awardTypeh1}-food {
+        color: #f47a21;
+        span { background-position: -304px 0; }
+      }
+
+      &.#{$awardTypeh1}-epp {
+        color: #7f5725;
+        span { background-position: -380px 0; }
+      }
+
+      &.#{$awardTypeh1}-energy {
+        color: #ea4539;
+        span { background-position: -456px 0; }
+      }
+
+      &.#{$awardTypeh1}-water {
+        color: #28a8e0;
+        span { background-position: -532px 0; }
+      }
+
+      &.#{$awardTypeh1}-climate {
+        color: #febb14;
+        span { background-position: -609px 0; }
+      }
+
+      &.#{$awardTypeh1}-greenbuilding {
+        color: #8bc63f;
+        span { background-position: -685px 0; }
+      }
+
+      &.#{$awardTypeh1}-goals {
+        color: $category_other_color;
+        span { background-position: -761px 0; }
+      }
+
+      &.#{$awardTypeh1}-accuracy {
+        color: $category_other_color;
+        span { background-position: -836px 0; }
+      }
+
+      &.#{$awardTypeh1}-appendixa {
+        color: $category_other_color;
+        span { background-position: -914px 0; }
+      }
+
+      &.#{$awardTypeh1}-appendixb {
+        color: $category_other_color;
+        span { background-position: -990px 0; }
+      }
+
+      &.#{$awardTypeh1}-demographic {
+        color: $category_other_color;
+        span { background-position: -1066px 0; }
+      }
+    }
+  }
+}
+
+// reviewer goals
+#reviewer-wrap #goals-wrap {
+
+  #goals-wrap-inner {}
+
+  h2 {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 25px;
+  }
+
+  .goals-group {
+    background-color: $white;
+    @include border-radius(3px);
+    border: 1px solid #ebebeb;
+    @include box-shadow(0 0 4px rgba(0,0,0,0.05));
+    margin: 25px 0;
+    padding: 10px 20px;
+  }
+}
+
+
+// !---------------------------- */
 // !-- Old browser message ----- */
 // !---------------------------- */
 
@@ -2834,9 +3651,7 @@ p#browser-message {
 //admin menu
 body.admin-menu #admin-menu {
   border-bottom: none;
-  -webkit-box-shadow: 0 0 0 transparent;
-  -moz-box-shadow: 0 0 0 transparent;
-  box-shadow: 0 0 0 transparent;
+  @include box-shadow(none);
   margin: 0;
   padding: 0;
 }

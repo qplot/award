@@ -93,17 +93,30 @@
       <?php if (entity_access('update', 'node', $work_group)): ?>
         <span class="edit-content">
           <?php
+            // @codingStandardsIgnoreStart
             print l(
               'Edit',
               'node/' . $work_group->vid . '/edit',
               array('query' => drupal_get_destination())
             );
+            // @codingStandardsIgnoreEnd
           ?>
         </span>
       <?php endif; ?>
       <h1 class="page__title title"><?php print $work_group->title; ?></h1>
 
       <?php $field_group_body = field_view_field('node', $work_group, 'body', array('label' => 'hidden')); print render($field_group_body); ?>
+      <div class="add-mesasge-bu-links">
+      <?php if (user_access('mass email users')): ?>
+      <?php
+        $options = array(
+          'query' => array(
+            'wid' => $work_group->nid,
+          ),
+        );
+        print l(t('Message users in this Work Group'), 'message', $options);
+      ?>
+      <?php endif; ?>
 
       <?php if (in_array('administrator', array_values($user->roles)) && in_array('PGH Administrator', array_values($user->roles))): ?>
       <?php
@@ -115,6 +128,7 @@
         );
         print l(t('Add a new Business Unit'), 'node/add/business-unit', $options);
       ?>
+    </div>
     <?php endif; ?>
     </div>
 
@@ -197,10 +211,12 @@
               <a href="/node/<?php print $business_unit->vid; ?>/edit#edit-field-business-unit-type">Please update this Business Unit</a>
             </p>
         <?php else: ?>
-    <?php if ($reviewmode && !in_array('administrator', array_values($user->roles)) && !in_array('PGH Administrator', array_values($user->roles))): ?>
-<? print t('Applications are being reviewed.'); ?>
-            
-            <?php else: ?>
+
+          <?php if ($reviewmode && !user_access('administer awards system')): ?>
+            <? print t('Applications are being reviewed.'); ?>
+
+          <?php else: ?>
+
         <div class="applications">
           <?php
             /* Hiding archive link till it's needed.
@@ -288,13 +304,16 @@
               // Ignore coding style warnings so we can use curly brace conditionals in this .tpl.php file.
               $users = array();
               foreach ($business_unit_wrapper->field_users->getIterator() as $user) {
-                $users[] = $user;
+                if ($user) {
+                  $users[] = $user;
+                }
               }
+
               usort($users, 'pgh_sort_users_by_last_access');
 
               foreach ($users as $user) {
                 $last_access = 'Never logged in';
-                if ($user->last_access->value()) {
+                if ($user && $user->last_access->value()) {
                   $last_access = format_date($user->last_access->value(), 'short');
                 }
 

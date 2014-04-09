@@ -439,14 +439,17 @@ function pgh_api_get_response($app_id, $qid) {
     );
   }
   else {
-    watchdog('pgh_api', 'Couldn\'t find response %rid for application %app_id - question %qid in pgh_api_get_response. Creating empty response.', array('%rid' => $rid, '%app_id' => $app_id, '%qid' => $qid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Couldn\'t find response %rid for application %app_id' .
+      ' - question %qid in pgh_api_get_response. Creating empty response.',
+      array('%rid' => $rid, '%app_id' => $app_id, '%qid' => $qid), WATCHDOG_ERROR);
 
     // If a response is not found, automatically generate a new empty response. This will fix issues where an application is
     // in an inconsistent state (missing responses) due to an error on application creation or due to an administrator mistake.
     $rnid = pgh_api_set_response($app_id, $qid, array(), TRUE);
     if ($rnid) {
       return pgh_api_get_response($app_id, $qid);
-    } else {
+    }
+    else {
       return;
     }
   }
@@ -546,7 +549,7 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   $question = node_load($question_nid);
 
   if (!$question) {
-    watchdog('pgh_api', 'Tried to load invalid question nid $id in pgh_api_question_is_active', array('%id' => $question_nid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Tried to load invalid question nid %id in pgh_api_question_is_active', array('%id' => $question_nid), WATCHDOG_ERROR);
     return FALSE;
   }
 
@@ -563,6 +566,8 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   // Unbox the field value.
   $parent_qid = $parent[0]['value'];
   $parent_nid = pgh_api_find_nid($parent_qid, 'question');
+  $parent_question = node_load($parent_nid);
+  $parent_question_wrapper = entity_metadata_wrapper('node', $parent_question);
 
   // Check for questions qhich specify themselves as their own parent. This causes a recursion loop if we don't exit here.
   if ($parent_nid == $question_nid) {
@@ -576,6 +581,7 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   if ($question_parent_required_value) {
     $question_parent_required_value = $question_parent_required_value[0]['value'];
   }
+
 
   // Convert the value to its internal representation.
   $question_parent_required_value = pgh_api_internal_value($parent_nid, $question_parent_required_value);
@@ -591,9 +597,40 @@ function pgh_api_question_is_active($application_nid, $question_nid) {
   $parent_response_wrapper = entity_metadata_wrapper('node', $parent_response);
   $parent_response_value = $parent_response_wrapper->body->value() ? $parent_response_wrapper->body->value->raw() : '';
 
-  // If the parent's response value doesn't match the required value for this question, then this question is not active.
-  if ($parent_response_value != $question_parent_required_value) {
-    return FALSE;
+  //  Special handling for checkboxes.
+  if ($parent_question_wrapper->field_question_type->value() == 'selection' &&
+      $parent_question_wrapper->field_question_style->value() == 'checkboxes') {
+
+    // The required value does not get converted to its internal representation.
+    $question_parent_required_value = field_get_items('node', $question, 'field_question_parent_value');
+
+    // Unbox the required value.
+    if ($question_parent_required_value) {
+      $question_parent_required_value = $question_parent_required_value[0]['value'];
+    }
+
+    $checkbox_options = unserialize($parent_response_value);
+
+    if (!is_array($checkbox_options)) {
+      return FALSE;
+    }
+
+    $selected_options = array();
+    foreach ($checkbox_options as $name => $value) {
+      if ($name === $value) {
+        $selected_options[] = $name;
+      }
+    }
+
+    if (!in_array($question_parent_required_value, $selected_options)) {
+      return FALSE;
+    }
+
+  } else {
+    // If the parent's response value doesn't match the required value for this question, then this question is not active.
+    if ($parent_response_value != $question_parent_required_value) {
+      return FALSE;
+    }
   }
 
   // If the values match, we are only active if our parent is also active.
@@ -658,7 +695,7 @@ function pgh_api_save_response($app_id, $qid, $value) {
     watchdog(
       'pgh',
       'Missing application %app in saving response.',
-      array('%app' =>$app_id),
+      array('%app' => $app_id),
       WATCHDOG_ERROR
     );
     return;
@@ -683,86 +720,10 @@ function pgh_api_save_response($app_id, $qid, $value) {
     $point = $question_wrapper->field_question_point->value();
     $score = $question_wrapper->field_question_score->value();
     $kpi = $question_wrapper->field_question_kpi->value();
+    $options = $question_wrapper->field_question_options->value();
 
-    // Assign points to response.
-    $r_point = 0; $r_score = 0; $r_kpi = '';
-    switch ($type) {
-      case 'text':
-      case 'file':
-        if (!empty($point[0])) {
-          $r_point = $point[0];
-        }
-        if (!empty($value)) {
-          if (!empty($score[0])) {
-            $r_score = $score[0];
-          }
-          if (!empty($kpi[0])) {
-            $r_kpi = $kpi[0];
-          }
-        }
-        break;
+    $answer = pgh_awards_score_calculate_question_autokpi($value, $point, $score, $kpi, $type, $style, $options);
 
-      case 'selection':
-        switch ($style) {
-          case 'checkboxes':
-            if ($point) {
-              $r_point = array_sum($point);
-            }
-            $options = $question_wrapper->field_question_options->value();
-            $i = 0;
-            foreach ($options as $option) {
-              if (!empty($value[$option])) {
-                if (!empty($score[$i])) {
-                  $r_score += $score[$i];
-                }
-                if (!empty($kpi[$i])) {
-                  $r_kpi += $kpi[$i];
-                }
-              }
-              $i++;
-            }
-            // Serialize only applies to checkboxes.
-            $value = serialize($value);
-            break;
-
-          case 'dropdown':
-            if ($point) {
-              $r_point = max($point);
-            }
-            if (!empty($score[$value])) {
-              $r_score = $score[$value];
-            }
-            if (!empty($kpi[$value])) {
-              $r_kpi = $kpi[$value];
-            }
-            break;
-
-          case 'radios':
-          default:
-            if (!empty($point[$value])) {
-              $r_point = $point[$value];
-            }
-            if (!empty($score[$value])) {
-              $r_score = $score[$value];
-            }
-            if (!empty($kpi[$value])) {
-              $r_kpi = $kpi[$value];
-            }
-            break;
-        }
-        break;
-
-      default:
-        //should be error message.
-        break;
-    }
-
-    $answer = array(
-      'value' => $value,
-      'point' => $r_point,
-      'score' => $r_score,
-      'kpi' => $r_kpi,
-    );
     pgh_api_set_response($app_id, $qid, $answer);
   }
 }
@@ -1011,7 +972,7 @@ function pgh_api_progress_for_category($application_nid, $category_nid) {
   $application = node_load($application_nid);
 
   if (!$application) {
-    watchdog('pgh_api', 'Tried to load invalid application nid $id in pgh_api_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Tried to load invalid application nid %id in pgh_api_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
     return 0;
   }
 
@@ -1101,7 +1062,7 @@ function pgh_api_recalculate_progress_for_category($application_nid, $category_n
   $application = node_load($application_nid);
 
   if (!$application) {
-    watchdog('pgh_api', 'Tried to load invalid application nid $id in pgh_api_recalculate_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
+    watchdog('pgh_api', 'Tried to load invalid application nid %id in pgh_api_recalculate_progress_for_category', array('%id' => $application_nid), WATCHDOG_ERROR);
     return 0;
   }
 
@@ -1215,6 +1176,8 @@ function pgh_api_add_user_to_business_unit($user, $business_unit) {
 }
 
 /**
+ * Perform a mass operation on nodes.
+ *
  * Perform a mass operation on nodes, switching based on the specified
  * operation. Currently supports updating and deleting, utilizing the atch
  * API for large numbers of updates.
@@ -1239,7 +1202,10 @@ function node_mass_operation($nodes, $op, $updates = array()) {
   if (count($nodes) > 10) {
     $batch = array(
       'operations' => array(
-        array('_node_mass_operation_batch_process', array($nodes, $op, 'updates'))
+        array(
+          '_node_mass_operation_batch_process',
+          array($nodes, $op, 'updates')
+        )
       ),
       'finished' => '_node_mass_operation_batch_finished',
       'title' => t('Processing'),
@@ -1285,7 +1251,7 @@ function _node_mass_operation_helper($nid, $op, $updates) {
 }
 
 /**
- * Node Mass Operation Batch operation
+ * Node Mass Operation Batch operation.
  *
  * @author Drupal Patch <noname@drupal.org>
  */
@@ -1299,7 +1265,7 @@ function _node_mass_operation_batch_process($nodes, $op, $updates, $context) {
   // Process nodes by groups of 5.
   $count = min(5, count($context['sandbox']['nodes']));
   for ($i = 1; $i <= $count; $i++) {
-    // For each nid, call the opertion helper
+    // For each nid, call the opertion helper.
     $nid = array_shift($context['sandbox']['nodes']);
 
     $node = _node_mass_operation_helper($nid, $op, $updates);
@@ -1312,10 +1278,9 @@ function _node_mass_operation_batch_process($nodes, $op, $updates, $context) {
 
       case 'delete':
         // Store result for post-processing in the finished callback.
-        $context['results'][] = t('Deleted ' . $node->title);
+        $context['results'][] = t(('Deleted ' . $node->title));
         break;
     }
-
 
     // Update our progress information.
     $context['sandbox']['progress']++;
@@ -1380,7 +1345,7 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
 
   $query = new EntityFieldQuery();
 
-  // apply condition to query
+  // Apply condition to query.
   foreach ($conds as $key => $value) {
     $splits = explode('_', $key);
     $type = $splits[0];
@@ -1399,19 +1364,20 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
           $assigned = isset($value[1]) ? $value[1] : $value[0];
           $operator = isset($value[2]) ? $value[2] : '=';
           $query->fieldCondition($key, $property, $assigned, $operator);
-        } else {
+        }
+        else {
           $query->fieldCondition($key, 'value', $value);
         }
         break;
 
-      // rest of them are all property
+      // Rest of them are all property.
       default:
         $query->propertyCondition($key, $value);
         break;
     }
   }
 
-  // apply sort to query
+  // Apply sort to query.
   foreach ($sorts as $key => $value) {
     $splits = explode('_', $key);
     $type = $splits[0];
@@ -1430,12 +1396,13 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
     }
   }
 
-  // apply range
+  // Apply range.
   if (!empty($range)) {
     $rvars = array(0, 0);
     if (is_array($range)) {
       $rvars = $range;
-    } else {
+    }
+    else {
       $rvars[1] = $range;
     }
     $query->range($rvars[0], $rvars[1]);
@@ -1451,10 +1418,12 @@ function pgh_api_find_nodes($conds, $sorts = NULL, $all = FALSE, $range = NULL) 
     else {
       return $keys[0];
     }
-  } else {
+  }
+  else {
     if ($all) {
       return array();
-    } else {
+    }
+    else {
       return 0;
     }
   }

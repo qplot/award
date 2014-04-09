@@ -105,6 +105,12 @@ function pgh_user_invite_form($form, &$form_state, $owner) {
         '#required' => TRUE,
       );
 
+      $form['instructions'] = array(
+        '#prefix' => '<p>',
+        '#markup' => t('You can use this form to resend invitations to email addresses that have not yet logged in. This is useful if the original message was lost.'),
+        '#suffix' => '</p>',
+      );
+
       $form['submit'] = array(
         '#type' => 'submit',
         '#value' => t('Send invitations'),
@@ -327,7 +333,22 @@ function pgh_user_invite_form_process($form, &$form_state) {
 
       drupal_set_message(t('Sent invitation to %email', array('%email' => $email)));
 
-    } else {
+    }
+    elseif (!$invite_user->access > 0) {
+      // User exists but has never logged in, resend the welcome email.
+      $invited_users[] = $invite_user;
+
+      drupal_mail('user',
+        'register_no_approval_required',
+        $invite_user->mail,
+        language_default(),
+        array('account' => $invite_user),
+        variable_get('site_mail', ini_get('sendmail_from')));
+
+      drupal_set_message(t('The invitation to %email has been re-sent.', array('%email' => $email)));
+
+    }
+    else {
       $pending_users[] = $invite_user;
 
       // User account exists.
@@ -340,7 +361,8 @@ function pgh_user_invite_form_process($form, &$form_state) {
     foreach ($invited_users as $invited_user) {
       $invited_users_output .= $invited_user->mail . ' ' . url('user/' . $invited_user->uid, array('absolute' => TRUE)) . "\n";
     }
-  } else {
+  }
+  else {
     $invited_users_output = 'No users were invited';
   }
 
@@ -352,7 +374,8 @@ function pgh_user_invite_form_process($form, &$form_state) {
                                url('user/' . $pending_user->uid, array('absolute' => TRUE)) . ' ' .
                                'View Work Groups: ' . url('admin/user-work-groups', array('absolute' => TRUE, 'query' => array('mail' => $pending_user->mail))) . "\n";
     }
-  } else {
+  }
+  else {
     $pending_users_output = 'No pending users to review';
   }
 
@@ -361,10 +384,9 @@ function pgh_user_invite_form_process($form, &$form_state) {
   drupal_goto('dashboard');
 }
 
-
 /**
-* Implementation of hook_rules_event_info().
-*/
+ * Implementation of hook_rules_event_info().
+ */
 function pgh_user_invite_rules_event_info() {
   return array(
     'pgh_user_invite_invitations_sent' => array(

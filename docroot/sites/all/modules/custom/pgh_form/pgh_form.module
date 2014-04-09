@@ -8,9 +8,6 @@
  * @author Fang Jin <fang@designhammer.com>
  */
 
-// Define a temp variable to hold the questions.
-$_pgh_form_temp_section_questions_ = NULL;
-
 /**
  * Implements hook_menu().
  */
@@ -130,7 +127,7 @@ function theme_pgh_form_table($vars) {
       // dsm($cell);
       if (substr($cell, 0, 5) == 'pghq_') {
         // Find the question.
-        if ($qid = pgh_find_question_id($cell)) {
+        if ($qid = pgh_form_find_qid_by_tag($cell)) {
           $cell_data = render($element[$qid]);
         }
       }
@@ -183,7 +180,13 @@ function pgh_form_application_page($application) {
     return MENU_NOT_FOUND;
   }
 
-  drupal_goto('application/' . $application->nid . '/category/' . $first_category->title);
+  $readonly = (arg(2) == 'readonly');
+  if ($readonly) {
+    drupal_goto('review/' . $application->nid . '/category/' . $first_category->title . '/readonly');
+  }
+  else {
+    drupal_goto('application/' . $application->nid . '/category/' . $first_category->title);
+  }
 }
 
 /**
@@ -239,10 +242,13 @@ function pgh_form_category_page($application, $category_id) {
 
     drupal_set_title($application_title . ': ' . $category_title);
 
-    return drupal_get_form('pgh_application_form', $application->nid, $category_id);
+    // Set readonly through URL.
+    $readonly = (arg(4) == 'readonly');
+
+    return drupal_get_form('pgh_application_form', $application->nid, $category_id, $readonly);
   }
   else {
-    drupal_not_found();
+    return MENU_NOT_FOUND;
   }
 }
 
@@ -266,15 +272,7 @@ function pgh_form_category_page($application, $category_id) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL) {
-  // TODO: This is a very brittle way to skip already rendered questions.
-  // We should not use globals for this.
-  // Also, it leaves technically invalid question
-  // specifiers in the Section objects.
-  // Questions contained within tables/containers should be
-  // filtered out at migration time, not render time.
-  global $_pgh_form_temp_section_questions_;
-
+function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NULL, $readonly = FALSE) {
   $form = array();
 
   if (empty($app_id) || empty($cat_id)) {
@@ -283,79 +281,106 @@ function pgh_application_form($form, &$form_state, $app_id = NULL, $cat_id = NUL
 
   // Load category by name, can be id as well.
   $cat = node_load($cat_id);
-  $questions = array();
+  $cat_wrapper = entity_metadata_wrapper('node', $cat);
 
-  if (!empty($cat->field_category_sections['und'])) {
-    // For debugging purpose add a counter.
-    $debug = 0;
-    $total = variable_get('pgh_form_max_questions', 1000000000);
+  // For debugging purpose add a counter.
+  $debug = 0;
+  $total = variable_get('pgh_form_max_questions', 1000000000);
 
-    $form['ajax_div'] = array(
-      '#markup' => '',
-      '#prefix' => '<div id="pgh_form_ajax_div">',
-      '#suffix' => '</div><!-- #question --><br /><br />',
+  $form['ajax_div'] = array(
+    '#markup' => '',
+    '#prefix' => '<div id="pgh_form_ajax_div">',
+    '#suffix' => '</div><!-- #question --><br /><br />',
+  );
+
+  // Cache application data for future reuse.
+  foreach ($cat_wrapper->field_category_sections->getIterator() as $sec_wrapper) {
+    $qids = $sec_wrapper->field_section_questions->raw();
+
+    // Cache questions.
+    $questions = node_load_multiple($qids);
+    foreach ($questions as &$question) {
+      pgh_form_set_data($question->title, 'question', $question);
+    }
+
+    // Cache responses.
+    $rids = pgh_api_find_nodes(
+      array(
+        'type' => 'response',
+        'field_response_application' => array('target_id', $app_id, '='),
+        'field_response_question' => array('target_id', $qids, 'IN')
+      ),
+      NULL, TRUE
     );
+    $responses = node_load_multiple($rids);
+    foreach ($responses as &$response) {
+      pgh_form_set_data($response->title, 'response', $response);
+      // Need a mapping between question and response.
+      if ($response_wrapper = pgh_form_get_data($response->title, 'response_wrapper')) {
+        $qid = $response_wrapper->field_response_question->raw();
+        pgh_form_set_data($qid, 'mapping', $response->title);
+      }
+    }
+  }
 
-    foreach ($cat->field_category_sections['und'] as $sec_id) {
-      if ($sec = node_load($sec_id['target_id'])) {
-        $sec_wrapper = entity_metadata_wrapper('node', $sec);
+  // Build form.
+  foreach ($cat_wrapper->field_category_sections->getIterator() as $sec_wrapper) {
+    $caption = $sec_wrapper->field_section_label->value();
 
-        $caption = $sec_wrapper->field_section_label->value();
+    // Add a fieldset to hold section info.
+    if (!empty($caption)) {
+      $fieldset = 'fieldset_' . $sec_wrapper->title->value();
+      $form[$fieldset] = array(
+        '#prefix' => '<div><h3 class="legend">' . t($caption) . '</h3>',
+        '#suffix' => '</div>',
+      );
+    }
+    else {
+      $fieldset = 'container_' . $sec_wrapper->title->value();
+      $form[$fieldset] = array(
+        '#type' => 'container',
+      );
+    }
 
-        // Add a fieldset to hold section info.
-        if (!empty($caption)) {
-          $fieldset = 'fieldset_' . $sec_wrapper->title->value();
-          $form[$fieldset] = array(
-            '#prefix' => '<div><h3 class="legend">' . t($caption) . '</h3>',
-            '#suffix' => '</div>',
-          );
-        }
-        else {
-          $fieldset = 'container_' . $sec_wrapper->title->value();
-          $form[$fieldset] = array(
-            '#type' => 'container',
-          );
-        }
+    $qids = $sec_wrapper->field_section_questions->raw();
+    foreach ($qids as $qid) {
 
-        // Add all question inside this section.
-        $_pgh_form_temp_section_questions_ = drupal_map_assoc($sec_wrapper->field_section_questions->raw());
-        // dsm($_pgh_form_temp_section_questions_);
-        foreach ($sec_wrapper->field_section_questions->getIterator() as $q_wrapper) {
+      // Skip processed question.
+      if (pgh_form_get_data($qid, 'processed')) {
+        continue;
+      }
 
-          if (!isset($_pgh_form_temp_section_questions_[$q_wrapper->getIdentifier()])) {
-            continue;
+      if ($q_wrapper = pgh_form_get_data($qid, 'question_wrapper')) {
+
+        $major = 'question_' . $q_wrapper->label();
+        $question_form = pgh_form_render_question_layout($qid, $app_id, $readonly);
+        $form[$fieldset][$major][$qid] = $question_form;
+
+        // Add comment for question for each response.
+        if (!empty($question_form['#response_id'])) {
+          $form_item = pgh_form_render_question_comment($question_form['#response_id']);
+
+          // Respect the visibility of this question.
+          if ($q_wrapper->field_question_parent_qid->value()) {
+            $form_item['#states'] = pgh_form_question_states($qid);
           }
-
-          $major = 'question_' . $q_wrapper->label();
-
-          $question_form = pgh_form_render_question_layout($q_wrapper->value(), $app_id);
-          // dsm($question_form);
-
-          $form[$fieldset][$major][$q_wrapper->getIdentifier()] = $question_form;
-
-          // Add comment for question for each response.
-          if (!empty($question_form['#response_id'])) {
-            $form_item = pgh_form_render_question_comment($question_form['#response_id']);
-
-            // Respect the visibility of this question
-            if ($q_wrapper->field_question_parent_qid->value()) {
-              $form_item['#states'] = pgh_form_question_states($q_wrapper->value());
-            }
-            $form[$fieldset][$major]['comment'] = $form_item;
-          }
-
-          $debug = $debug + 1;
-          if ($debug == $total) {
-            break;
-          }
-
+          $form[$fieldset][$major]['comment'] = $form_item;
         }
+
+        $debug = $debug + 1;
         if ($debug == $total) {
           break;
         }
       }
     }
+
+    if ($debug == $total) {
+      break;
+    }
   }
+
+  global $_pgh_application_data;
+  // dsm($_pgh_application_data);
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -391,22 +416,23 @@ function pgh_application_form_element_callback($form, &$form_state) {
   if (empty($form_state['triggering_element']['#parents'][0])) {
     return;
   }
-  // Find the question.
+  // Find and save form element.
+  $parents = $form_state['triggering_element']['#array_parents'];
+  array_pop($parents);
+  $element = drupal_array_get_nested_value($form, $parents);
+  $q_tag = $element['#question-tag'];
   $qid = $form_state['triggering_element']['#parents'][0];
-  $question = node_load($qid);
-  $wrapper = entity_metadata_wrapper('node', $question);
-
-  // Save the response value.
   $app_id = $form_state['values']['application'];
   $value = $form_state['values'][$qid];
+
   pgh_api_save_response($app_id, $qid, $value);
 
   // Validate the response.
-  $error_msg = '<div id="error-container-' . $wrapper->title->value() . '">';
-  if ($validations = $wrapper->field_question_validation->value()) {
+  $error_msg = '<div id="error-container-' . $q_tag . '">';
+  if ($validations = unserialize($element['#validation-rules'])) {
     $errors = pgh_api_validate_question_value($validations, $value);
     if ($errors) {
-      $error_msg .= pgh_form_error_html($wrapper->title->value(), $errors);
+      $error_msg .= pgh_form_error_html($q_tag, $errors);
     }
   }
   $error_msg .= '</div><!-- #error-container -->';
@@ -454,8 +480,8 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * Sets the default value to a provided answer in a response node if one is available.
  *
- * @param object $question
- *   A fully-loaded question node.
+ * @param int $qid
+ *   NID for a specific question.
  *
  * @param int $app_id
  *   NID for a specific application instance.
@@ -465,10 +491,15 @@ function pgh_application_form_submit($form, &$form_state) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question($question, $app_id = NULL) {
+function pgh_form_render_question($qid, $app_id = NULL, $readonly = FALSE) {
   $form_item = array();
 
-  $question_wrapper = entity_metadata_wrapper('node', $question);
+  if (!($question_wrapper = pgh_form_get_data($qid, 'question_wrapper'))) {
+    return $form_item;
+  }
+
+  $q_tag = $question_wrapper->title->value();
+  $form_item['#question-tag'] = $q_tag;
   $type = $question_wrapper->field_question_type->value();
   $style = $question_wrapper->field_question_style->value();
   $default_formula = $question_wrapper->field_question_formula->value();
@@ -486,12 +517,9 @@ function pgh_form_render_question($question, $app_id = NULL) {
   // Prepare response for question expecting a response.
   // if (!in_array($type, array('html', 'container'))) {
   if (!in_array($type, array('html'))) {
-    $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
-    if (!$rid) {
-      $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
-    }
+    $answer = pgh_form_get_response_answer($qid, $app_id);
+    $rid = $answer['id'];
 
-    $answer = pgh_api_get_response($app_id, $question_wrapper->getIdentifier());
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
     $admin_info[] = ' <small>[S' . intval($answer['score']) . ']</small> ';
@@ -517,11 +545,11 @@ function pgh_form_render_question($question, $app_id = NULL) {
 
   // Dependency display.
   if ($parent_qid = $question_wrapper->field_question_parent_qid->value()) {
-    $form_item['#states'] = pgh_form_question_states($question);
+    $form_item['#states'] = pgh_form_question_states($question_wrapper->getIdentifier());
   }
 
   // Ajax processing.
-  if (_pgh_form_should_use_ajax()) {
+  if (_pgh_form_should_use_ajax() && !$readonly) {
     $form_item['#ajax'] = array(
       'callback' => 'pgh_application_form_element_callback',
       'wrapper' => 'error-container-' . $question_wrapper->title->value(),
@@ -593,8 +621,17 @@ function pgh_form_render_question($question, $app_id = NULL) {
       break;
 
     case 'file':
+      $desc = '';
+      $shared = FALSE;
+      if ($fid = $answer['value']) {
+        $file = file_load($fid);
+        $file_wrapper = entity_metadata_wrapper('file', $file);
+        $desc = $file_wrapper->field_media_description->value();
+        $shared = $file_wrapper->field_media_shared->value();
+      }
       $media = array(
         '#type' => 'media',
+        '#after_build' => array('pgh_form_file_after_build'),
         '#input' => TRUE,
         '#media_options' => array(
           'global' => array(
@@ -606,6 +643,8 @@ function pgh_form_render_question($question, $app_id = NULL) {
         '#extended' => TRUE,
         '#tree' => TRUE,
         '#value' => !empty($answer['value']) ? array('fid' => $answer['value']) : '',
+        '#custom_description' => $desc,
+        '#custom_shared' => $shared,
       );
       $form_item = array_merge($form_item, $media);
       break;
@@ -620,12 +659,14 @@ function pgh_form_render_question($question, $app_id = NULL) {
   $form_item['#description'] = '<div id="error-container-' . $question_wrapper->title->value() . '">';
 
   // Add error validation to description.
+  $validations = array();
   if ((!empty($answer['updated'])) && ($validations = $question_wrapper->field_question_validation->value())) {
     $errors = pgh_api_validate_question_value($validations, $answer['value']);
     if ($errors) {
       $form_item['#description'] .= pgh_form_error_html($question_wrapper->title->value(), $errors);
     }
   }
+  $form_item['#validation-rules'] = serialize($validations);
 
   $form_item['#description'] .= '</div><!-- #error-container -->';
 
@@ -660,6 +701,8 @@ function pgh_form_render_question($question, $app_id = NULL) {
   // Add default question id handling.
   // If no default value is set and a default question id is given,
   // set it to default question response value.
+  // This part can not be cached,
+  // since the question can be outside of this category.
   $form_item['#default_question_id'] = $question_wrapper->field_question_formula->value();
   if (!empty($form_item['#default_question_id'])) {
     // Fetch question.
@@ -672,17 +715,36 @@ function pgh_form_render_question($question, $app_id = NULL) {
     }
   }
 
-  // Disable this question if has default formula
+  // Disable this question if it has a default formula.
   if ($default_formula) {
-    // $form_item['#disabled'] = TRUE;
     $form_item['#attributes'] = array('readonly' => 'readonly');
   }
 
+  // For readonly form, disable element.
+  if ($readonly) {
+    $form_item['#disabled'] = TRUE;
+  }
+
   // Mark this question as processed.
-  global $_pgh_form_temp_section_questions_;
-  unset($_pgh_form_temp_section_questions_[$question_wrapper->getIdentifier()]);
+  pgh_form_set_data($qid, 'processed', 1, TRUE);
 
   return $form_item;
+}
+
+/**
+ * Set permission control to file in read-only mode.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_file_after_build($form, &$form_state) {
+  if (!empty($form['#disabled'])) {
+    $form['title']['#description'] = $form['#custom_description'];
+    $form['title']['#description'] .= ($form['#custom_shared']) ? ' <strong>SHARED</strong>' : '';
+    $form['edit']['#access'] = FALSE;
+    $form['select']['#access'] = FALSE;
+    $form['remove']['#access'] = FALSE;
+  }
+  return $form;
 }
 
 /**
@@ -697,8 +759,8 @@ function pgh_form_render_question($question, $app_id = NULL) {
  * This is not a recursive function. Questions with type 'container' may not contain other questions with
  * type 'container'.
  *
- * @param object $question
- *   A fully-loaded question node. If the question has a layout string, also render the layout.
+ * @param int $qid
+ *   NID for a specific question.
  *
  * @param int $app_id
  *   NID for a specific application instance.
@@ -708,8 +770,13 @@ function pgh_form_render_question($question, $app_id = NULL) {
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_form_render_question_layout($question, $app_id = NULL) {
-  $question_wrapper = entity_metadata_wrapper('node', $question);
+function pgh_form_render_question_layout($qid, $app_id = NULL, $readonly = FALSE) {
+  $form_item = array();
+
+  if (!($question_wrapper = pgh_form_get_data($qid, 'question_wrapper'))) {
+    return $form_item;
+  }
+
   $type = $question_wrapper->field_question_type->value();
   $layout = $question_wrapper->field_question_layout->value();
   $prompt = check_markup($question_wrapper->field_question_prompt->value(), 'question_text', '', FALSE);
@@ -721,16 +788,11 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
   $admin_info[] = ' <small>[' . $question_wrapper->title->value() . ']</small> ';
   $admin_info[] = '<small>' . l(t('[Q]'), 'node/' . $question_wrapper->getIdentifier() . '/edit') . '</small>';
 
-  $form_item = array();
-
   if (!empty($layout) && ($type == 'container')) {
     // Container needs to have a response as well.
-    $rid = pgh_api_find_response_id($app_id, $question_wrapper->getIdentifier());
-    if (!$rid) {
-      $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
-    }
+    $answer = pgh_form_get_response_answer($qid, $app_id);
+    $rid = $answer['id'];
 
-    $answer = pgh_api_get_response($app_id, $question_wrapper->getIdentifier());
     $admin_info[] = '<small>' . l(t('[R]'), 'node/' . $rid . '/edit') . '</small>';
     $admin_info[] = ' <small>[P' . intval($answer['point']) . ']</small> ';
 
@@ -748,7 +810,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
       $classes[] = 'data-parent-id-question-' . $parent_qid;
       $data_attributes[] = 'data-parent-id="question-' . $parent_qid . '"';
 
-      $form_item['#states'] = pgh_form_question_states($question);
+      $form_item['#states'] = pgh_form_question_states($question_wrapper->getIdentifier());
     }
 
     $opening_div = '<div id="question-' . $question_wrapper->title->value() . '" class="' . implode($classes, ' ') . '" ' . implode($data_attributes, ' ') . '>';
@@ -780,10 +842,8 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
     foreach ($parse as $row) {
       foreach ($row as $cell) {
         if (substr($cell, 0, 5) == 'pghq_') {
-          // Find the question.
-          if ($qid = pgh_find_question_id($cell)) {
-            $child = node_load($qid);
-            $form_item[$qid] = pgh_form_render_question($child, $app_id);
+          if ($child_id = pgh_form_find_qid_by_tag($cell)) {
+            $form_item[$child_id] = pgh_form_render_question($child_id, $app_id, $readonly);
           }
         }
       }
@@ -791,7 +851,7 @@ function pgh_form_render_question_layout($question, $app_id = NULL) {
   }
   else {
     // This is the original without layout handling.
-    $form_item = pgh_form_render_question($question, $app_id);
+    $form_item = pgh_form_render_question($qid, $app_id, $readonly);
   }
 
   return $form_item;
@@ -834,64 +894,65 @@ function pgh_form_error_html($question_id, $errors) {
  *
  * This is the code that provides support for the "Dependant Question" feature.
  *
- * @param object $question
- *   The question node object.
+ * @param int $qid
+ *   Question node id
  *
  * @return array
  *   The visibility state array supported by the Drupal form API.
  */
-function pgh_form_question_states($question) {
-  $wrapper = entity_metadata_wrapper('node', $question);
-
-  // Load parent question.
-  $parent_qid = $wrapper->field_question_parent_qid->value();
-  $parent_nid = pgh_find_question_id($parent_qid);
-  $parent_question = node_load($parent_nid);
-  $parent_wrapper = entity_metadata_wrapper('node', $parent_question);
-  $parent_type = $parent_wrapper->field_question_type->value();
-  $parent_style = $parent_wrapper->field_question_style->value();
-
-  $name = $parent_wrapper->getIdentifier();
-  $value = $wrapper->field_question_parent_value->value();
-
-  if ($value === NULL) {
-    drupal_set_message(t('Question %qid specifies parent %pid but does not specify a parent required value.', array('%qid' => $wrapper->title->value(), '%pid' => $parent_qid)), 'error');
+function pgh_form_question_states($qid) {
+  if (!($wrapper = pgh_form_get_data($qid, 'question_wrapper'))) {
     return array();
   }
 
-  $condition = '';
-  switch ($parent_type) {
-    case 'selection':
-      switch ($parent_style) {
-        // Multiple choices.
-        case 'checkboxes':
-          $name = $parent_wrapper->getIdentifier() . '[' . $value . ']';
-          $condition = array('checked' => TRUE);
-          break;
+  // Load parent question.
+  if ($parent_wrapper = pgh_form_get_data($wrapper->field_question_parent_qid->value(), 'question_wrapper')) {
+    $parent_type = $parent_wrapper->field_question_type->value();
+    $parent_style = $parent_wrapper->field_question_style->value();
 
-        // Single choice, ex. radios.
-        default:
-          $options = $parent_wrapper->field_question_options->value();
-          $value = array_search($value, $options);
-          break;
-      }
-      break;
+    $name = $parent_wrapper->getIdentifier();
+    $value = $wrapper->field_question_parent_value->value();
 
-    default:
-      // Noop. Dependant question display is currently only
-      // supported for the 'selection' question type.
-      break;
+    if ($value === NULL) {
+      drupal_set_message(t('Question %qid specifies parent %pid but does not specify a parent required value.', array('%qid' => $wrapper->title->value(), '%pid' => $parent_wrapper->title->value())), 'error');
+      return array();
+    }
+
+    $condition = '';
+    switch ($parent_type) {
+      case 'selection':
+        switch ($parent_style) {
+          // Multiple choices.
+          case 'checkboxes':
+            $name = $parent_wrapper->getIdentifier() . '[' . $value . ']';
+            $condition = array('checked' => TRUE);
+            break;
+
+          // Single choice, ex. radios.
+          default:
+            $options = $parent_wrapper->field_question_options->value();
+            $value = array_search($value, $options);
+            break;
+        }
+        break;
+
+      default:
+        // Noop. Dependant question display is currently only
+        // supported for the 'selection' question type.
+        break;
+    }
+    if (empty($condition)) {
+      $condition = array('value' => $value);
+    }
+    $result = array(
+      'visible' => array(
+        ':input[name="' . $name . '"]' => $condition,
+      ),
+    );
+    return $result;
   }
-  if (empty($condition)) {
-    $condition = array('value' => $value);
-  }
-  $result = array(
-    'visible' => array(
-      ':input[name="' . $name . '"]' => $condition,
-    ),
-  );
 
-  return $result;
+  return array();
 }
 
 /**
@@ -1150,7 +1211,7 @@ function pgh_form_render_question_comment($rid) {
     '#prefix' => '<div class="comment-wrapper"><div id="comment_' . $rid . '">',
     '#suffix' => '</div>',
     '#description' => t('Please use the Comment feature only where necessary for clarification. No points are awarded for comments.'),
-    '#resizable' => false,
+    '#resizable' => FALSE,
     '#default_value' => pgh_form_get_question_comment($rid),
   );
 
@@ -1214,7 +1275,7 @@ function pgh_form_set_question_comment($rid, $body) {
   // But this function is outdated and can be upgraded
   // For now use EntityFieldQuery() manually.
 
-  // Find if the comment already exist
+  // Find if the comment already exist.
   global $user;
   $cid = 0;
   $query = new EntityFieldQuery();
@@ -1229,8 +1290,9 @@ function pgh_form_set_question_comment($rid, $body) {
   $wrapper = NULL;
   if ($cid) {
     $comment = comment_load($cid);
-  } else {
-    // add a new comment
+  }
+  else {
+    // Add a new comment.
     $comment = entity_create('comment', array(
       'type' => 'comment',
       'node_type' => 'comment_node_response',
@@ -1275,4 +1337,108 @@ function pgh_form_get_question_comment($rid) {
     return $wrapper->comment_body->value->raw();
   }
   return '';
+}
+
+/**
+ * Set application global object data.
+ *
+ * @author Fang Jin <fang@designhammer.com>
+ */
+function pgh_form_set_data($question_tag, $object, $data, $overwrite = FALSE) {
+  global $_pgh_application_data;
+
+  if (is_numeric($question_tag)) {
+    if (isset($_pgh_application_data[$question_tag])) {
+      $question_tag = $_pgh_application_data[$question_tag];
+    }
+  }
+
+  if ($overwrite) {
+    if (isset($_pgh_application_data[$question_tag][$object])) {
+      return FALSE;
+    }
+  }
+
+  $_pgh_application_data[$question_tag][$object] = $data;
+
+  if (($object == 'processed') || ($object == 'mapping')) {
+    return TRUE;
+  }
+  $wrapper = entity_metadata_wrapper('node', $_pgh_application_data[$question_tag][$object]);
+  $_pgh_application_data[$question_tag][$object . '_wrapper'] = $wrapper;
+  $_pgh_application_data[$data->nid] = $question_tag;
+
+  return TRUE;
+}
+
+/**
+ * Get application global data.
+ */
+function pgh_form_get_data($question_tag, $object) {
+  global $_pgh_application_data;
+
+  if (is_numeric($question_tag)) {
+    if (isset($_pgh_application_data[$question_tag])) {
+      $question_tag = $_pgh_application_data[$question_tag];
+    }
+  }
+  if (isset($_pgh_application_data[$question_tag][$object])) {
+    return $_pgh_application_data[$question_tag][$object];
+  }
+
+  return array();
+}
+
+/**
+ * Find nid of question given question tag.
+ */
+function pgh_form_find_qid_by_tag($question_tag) {
+  global $_pgh_application_data;
+
+  if ($question = pgh_form_get_data($question_tag, 'question')) {
+    return $question->nid;
+  }
+
+  return 0;
+}
+
+/**
+ * Get response answer.
+ */
+function pgh_form_get_response_answer($qid, $app_id) {
+  // If response doesn't exist.
+  $response_tag = pgh_form_get_data($qid, 'mapping');
+  if (!$response_tag) {
+    // Create new response.
+    $rid = pgh_api_set_response($app_id, $qid);
+    // Put it into cache.
+    $response = node_load($rid);
+    $response_tag = $response->title;
+    pgh_form_set_data($response_tag, 'response', $response, TRUE);
+    pgh_form_set_data($qid, 'mapping', $response_tag);
+  }
+
+  $answer = array(
+    'id' => 0,
+    'value' => '',
+    'point' => 0,
+    'score' => 0,
+    'kpi' => 0,
+    'updated' => 0,
+  );
+
+  if ($response_wrapper = pgh_form_get_data($response_tag, 'response_wrapper')) {
+    $kpi = $response_wrapper->field_response_kpi->value();
+    $rid = $response_wrapper->getIdentifier();
+    $answer = array(
+      'id' => $rid,
+      'value' => $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '',
+      'point' => $response_wrapper->field_response_point->value(),
+      'score' => $response_wrapper->field_response_score->value(),
+      'kpi' => ($kpi === NULL) ? '~' : $kpi,
+      'updated' => $response_wrapper->field_response_updated->value(),
+    );
+  }
+
+  return $answer;
 }

@@ -4,7 +4,8 @@
  * @file
  * Provides internal functionality for handling applications.
  *
- * Other application form specific functionality can be found in the pgh_form module.
+ * Other application form specific functionality can be found in the pgh_form
+ * module.
  *
  * @author Jay Roberts <jay@designhammer.com>
  * @author Fang Jin <fang@designhammer.com>
@@ -31,20 +32,12 @@ function pgh_application_menu() {
 }
 
 /**
- * Implementation of hook_form_node_form_alter().
+ * Implements of hook_form_node_form_alter().
  *
- * Allows a user to specify a Business Unit nid in the query string when adding a new application node. This
- * value will be included in the node add form. This will then be used in hook_node_insert() to update the
- * Business Unit's field_applications with the newly created Application nid.
- *
- * @param array $form
- *   Nested array of form elements that comprise the form.
- *
- * @param array $form_state
- *   A keyed array containing the current state of the form.
- *
- * @param string $form_id
- *   String representing the name of the form itself.
+ * Allows a user to specify a Business Unit nid in the query string when adding
+ * a new application node. This value will be included in the node add form.
+ * This will then be used in hook_node_insert() to update the Business Unit's
+ * field_applications with the newly created Application nid.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
@@ -60,6 +53,9 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
       if ($business_unit) {
         $bid = $business_unit->nid;
       }
+
+      // Disable Application type field from editing.
+      $form['field_application_type']['#disabled'] = TRUE;
     }
 
     // Remove application types which are not valid for this Business Unit.
@@ -78,14 +74,17 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
       '#value' => $bid,
     );
 
-    // We will be auto-generating the node title and body so don't do anything with it here.
+    // We will be auto-generating the node title and body so don't do anything
+    // with it here.
     unset($form['title']);
     unset($form['body']);
 
-    $form['field_application_status'] = array(
-      '#type' => 'hidden',
-      '#value' => array('new'),
-    );
+    // I believe we have field permissions set for status
+    // Jay, can i remove the following lines.
+    // $form['field_application_status'] = array(
+    // '#type' => 'hidden',
+    // '#value' => array('new'),
+    // );
 
     // Redirect to dashboard after saving node.
     $form['actions']['submit']['#submit'][] = 'pgh_application_form_node_form_submit';
@@ -96,16 +95,9 @@ function pgh_application_form_node_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Ensure the Application has valid parent Business Unit which the user has permission to update.
+ * Ensure the Application has valid parent Business Unit.
  *
- * @param object $node
- *   The node being validated.
- *
- * @param array $form
- *   Nested array of form elements that comprise the form.
- *
- * @param array $form_state
- *   A keyed array containing the current state of the form.
+ * Also validate that the user has permission to update the Application.
  *
  * @author  Jay Roberts <jay@designhammer.com>
  */
@@ -153,8 +145,11 @@ function pgh_application_node_validate($node, $form, &$form_state) {
   );
 
   foreach ($business_unit_wrapper->field_applications->getIterator() as $application_wrapper) {
+    // Make sure application type is unique
+    // and make sure we don't check the current application again under edit mode.
     if ($application_wrapper->field_application_type->value() == $node->field_application_type['und'][0]['value'] &&
-        in_array($application_wrapper->field_application_status->value(), $open_statuses)) {
+        in_array($application_wrapper->field_application_status->value(), $open_statuses) &&
+        ($application_wrapper->getIdentifier() != $node->nid)) {
 
       $application_type = pgh_api_application_type_by_id($application_wrapper->field_application_type->value());
       $application_type_wrapper = entity_metadata_wrapper('node', $application_type);
@@ -167,12 +162,9 @@ function pgh_application_node_validate($node, $form, &$form_state) {
 }
 
 /**
- * Implementation of hook_node_presave().
+ * Implements of hook_node_presave().
  *
  * Auto-generate the application title and body.
- *
- * @param object $node
- *   The node that is being inserted or updated.
  *
  * @author  Jay Roberts <jay@designhammer.com>
  */
@@ -182,9 +174,9 @@ function pgh_application_node_presave($node) {
   }
 
   // Auto-generate application title.
-  //
-  // $node->business_unit will be set by the node creation form but may not be available when
-  // saving an application later. Only auto generate if we actually have a business_unit.
+  // $node->business_unit will be set by the node creation form but may not be
+  // available when saving an application later. Only auto generate if we
+  // actually have a business_unit.
   if (isset($node->business_unit)) {
     $business_unit = node_load($node->business_unit);
     $application_type_id = field_get_items('node', $node, 'field_application_type');
@@ -198,9 +190,10 @@ function pgh_application_node_presave($node) {
 }
 
 /**
- * Updates a Business Unit with an entity reference to a newly saved Application node.
+ * Update Business Unit with entity reference to newly saved Application node.
  *
- * Pre-generates Response objects for each question in the Application's Application Type.
+ * Pre-generates Response objects for each question in the Application's
+ * Application Type.
  *
  * @param object $node
  *   The inserted node.
@@ -228,7 +221,7 @@ function pgh_application_node_insert($node) {
 }
 
 /**
- * Updates a Business Unit to remove an entity reference to a deleted Application node.
+ * Update Business Unit to remove entity reference to deleted Application node.
  *
  * @param object $node
  *   The inserted node.
@@ -247,6 +240,7 @@ function pgh_application_node_delete($node) {
     return;
   }
 
+  // @codingStandardsIgnoreStart
   // $business_unit_wrapper = entity_metadata_wrapper('node', $business_unit);
 
   // Remove the deleted Application from the parent Business Unit.
@@ -257,6 +251,7 @@ function pgh_application_node_delete($node) {
   //     break;
   //   }
   // }
+  // @codingStandardsIgnoreEnd
 
   // Remove deleted application from the parent business unit
   // The reason i have to do the following way is to make sure
@@ -293,7 +288,7 @@ function pgh_application_form_node_form_submit($form, &$form_state) {
 
 
 /**
- * Implementation of hook_block_info().
+ * Implements of hook_block_info().
  */
 function pgh_application_block_info() {
   $blocks = array();
@@ -307,7 +302,7 @@ function pgh_application_block_info() {
 }
 
 /**
- * Implementation of hook_block_view().
+ * Implements of hook_block_view().
  */
 function pgh_application_block_view($delta = '') {
   $block = array();
@@ -316,7 +311,8 @@ function pgh_application_block_view($delta = '') {
     case 'application_category_menu':
       $block['subject'] = t('Application Category Menu');
       $application_nid = pgh_application_current_application_nid();
-      $category_links = pgh_application_category_links($application_nid);
+      $readonly = (arg(4) == 'readonly');
+      $category_links = pgh_application_category_links($application_nid, $readonly);
 
       $class = 'category-menu';
       if (count($category_links) == 1) {
@@ -342,25 +338,30 @@ function pgh_application_block_view($delta = '') {
 }
 
 /**
- * Implementation of hook_theme().
+ * Implements of hook_theme().
  */
 function pgh_application_theme() {
   return array(
     'form_table' => array(
-      'render element' => 'element'
-    )
+      'render element' => 'element',
+    ),
   );
 }
 
 /**
- * Returns the nid of the currently displayed application or FALSE if th current page is not a valid application.
+ * Returns the nid of the currently displayed application.
  *
  * @return int
- *   The nid of the currently displayed application or boolean FALSE.
+ *   The nid of the currently displayed application or boolean FALSE if the
+ *   current page is not a valid application.
  */
 function pgh_application_current_application_nid() {
-  if (arg(0) == 'application' && is_numeric(arg(1))) {
+  if (((arg(0) == 'application') || (arg(0) == 'review')) && is_numeric(arg(1))) {
     $application_node = node_load(arg(1));
+    // This is the case for 404 errors.
+    if (!$application_node) {
+      return FALSE;
+    }
     if ($application_node->type == 'application') {
       return $application_node->nid;
     }
@@ -376,17 +377,20 @@ function pgh_application_current_application_nid() {
 }
 
 /**
- * Returns an array of links to category pages for the specified application. Can be passed to theme_item_list().
+ * Returns an array of links to category pages for the specified application.
+ *
+ * Can be passed to theme_item_list().
  *
  * @param int $application_nid
  *   The nid of the application to generate category links for.
  *
  * @return array
- *   An array of links or an empty array if none are found or #application_nid is invalid.
+ *   An array of links or an empty array if none are found or #application_nid
+ *   is invalid.
  *
  * @author Jay Roberts <jay@designhammer.com>
  */
-function pgh_application_category_links($application_nid) {
+function pgh_application_category_links($application_nid, $readonly = FALSE) {
   if (!$application_nid) {
     return array();
   }
@@ -414,9 +418,14 @@ function pgh_application_category_links($application_nid) {
           'category-link',
           strtolower(str_replace('_', '-', $category_wrapper->title->value())),
         ),
-      )
+      ),
     );
-    $items[] = l($title, 'application/' . $application_nid . '/category/' . $category_wrapper->title->value(), $options);
+    if ($readonly) {
+      $items[] = l($title, 'review/' . $application_nid . '/category/' . $category_wrapper->title->value() . '/readonly', $options);
+    }
+    else {
+      $items[] = l($title, 'application/' . $application_nid . '/category/' . $category_wrapper->title->value(), $options);
+    }
   }
 
   return $items;
