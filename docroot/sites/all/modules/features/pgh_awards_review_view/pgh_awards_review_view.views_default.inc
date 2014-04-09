@@ -54,7 +54,7 @@ function pgh_awards_review_view_views_default_views() {
   $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
   $handler->display->display_options['filters']['rid']['field'] = 'rid';
   $handler->display->display_options['filters']['rid']['value'] = array(
-    8 => '8',
+    7 => '7',
   );
 
   /* Display: Entity Reference */
