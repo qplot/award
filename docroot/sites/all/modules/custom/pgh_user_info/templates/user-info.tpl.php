@@ -40,9 +40,9 @@
   </div>
   <div class="user-links">
     <span class="edit-user">
-      <?php 
+      <?php
         print l(
-          'Edit', 
+          'Edit',
           'user/' . $variables['user']->uid . '/edit',
           array('query' => drupal_get_destination())
         );
@@ -50,5 +50,8 @@
     </span>
     <span class="logout-user"><a href="/user/logout">Log out</a></span>
     <span class="dashboard-user"><a href="/dashboard">Dashboard</a></span>
+    <?php if (in_array('Reviewer', $variables['user']->roles) && count($variables['user']->roles) > 2): ?>
+      <span class="reviewer-user"><a href="/review">Review</a></span>
+    <?php endif; ?>
   </div>
 </div>

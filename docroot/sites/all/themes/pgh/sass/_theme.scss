@@ -2378,6 +2378,10 @@ form#pgh-user-message-work-group-form {
     .dashboard-user a {
       border-left: 1px solid #67a697;
     }
+
+    .reviewer-user a {
+      border-left: 1px solid #67a697;
+    }
   }
 }
 
@@ -2869,6 +2873,13 @@ a.glossify-link {
 // !---------------------------- */
 
 body.section-review {
+
+  #block-pgh-user-info-pgh-user-info {
+
+    .user-links .reviewer-user a {
+      color: #8cc8b9;
+    }
+  }
 
   table {
     border-collapse: separate !important;
