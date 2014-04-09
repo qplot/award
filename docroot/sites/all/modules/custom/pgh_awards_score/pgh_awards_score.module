@@ -568,8 +568,8 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
     $body = $cat_response_wrapper->body->value();
 
     $responses['cat_' . $cid] = array(
-      'category_id' => $cid,
-      'response_id' => $crid,
+      'category_id' => intval($cid),
+      'response_id' => intval($crid),
       'final' => $cat_response_wrapper->field_cat_response_final->value(),
       'automatic_p' => $cat_response_wrapper->field_cat_response_automatic_p->value(),
       'automatic' => $cat_response_wrapper->field_cat_response_automatic->value(),

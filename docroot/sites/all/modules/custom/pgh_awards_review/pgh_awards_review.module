@@ -396,7 +396,8 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
   );
   $categories_ids = array();
   foreach ($scores as $cat) {
-    if ($cat) {
+    if ($cat && $cat['category_id']) {
+      $cat['quality'] = !empty($cat['quality']) ? $cat['quality'] : 0;
       $key = 'value_' . $cat['quality'];
       $form['quality_' . $cat['category_id']] = array(
         '#type' => 'select',
@@ -456,7 +457,7 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
     $quality = $values['quality_' . $cat['category_id']];
     $case_study = $values['case_study_' . $cat['category_id']];
     $comment = $values['comment_' . $cat['category_id']];
-    if ($cat_response = node_load($cat['response_id'])) {
+    if ($cat_response = node_load(intval($cat['response_id']))) {
       $cat_response_wrapper = entity_metadata_wrapper('node', $cat_response);
       // Get quality point based on key.
       $parts = explode('_', $quality);
