@@ -23,6 +23,9 @@
         <div id="hospital-wrap-inner-info">
 
           <div id="hospital-content-top">
+            <a href="<?php echo $app['readonly_link'] ?>">
+              <input type="button" value="Scoresheets" />
+            </a>
             <?php echo $form['submit'] ?>
             <h2><?php echo $app['institution'] ?>, <?php echo $app['city'] . ' ' . $app['state'] . ', ' . $app['zipcode'] ?></h2>
             <p class="institution-name"><?php echo $app['health_system'] ?></p>
