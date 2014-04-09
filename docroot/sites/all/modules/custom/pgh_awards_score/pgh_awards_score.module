@@ -1187,7 +1187,7 @@ function pgh_awards_score_checkboxes_op($qid, &$context) {
   $query = array(
     'type' => 'response',
     'field_response_question' => array('target_id', $qid, '='),
-    // 'field_response_application' => array('target_id', 971157, '=')
+    // 'field_response_application' => array('target_id', 155523, '=')
   );
   $rids = pgh_api_find_nodes($query, NULL, TRUE);
   $responses = node_load_multiple($rids);
@@ -1200,10 +1200,18 @@ function pgh_awards_score_checkboxes_op($qid, &$context) {
     do {
       $value = unserialize($value);
     } while (is_string($value));
-    $value = serialize($value);
+
+    if ($value) {
+      $value = serialize($value);
+    }
+    else {
+      $value = '';
+    }
 
     $wrapper->body = array('value' => $value);
-    $wrapper->save();
+    if ($value == '') {
+      $wrapper->save();
+    }
     $records[] = $response->nid;
   }
   if ($records) {
