@@ -1406,13 +1406,16 @@ function pgh_form_find_qid_by_tag($question_tag) {
  * Get response answer.
  */
 function pgh_form_get_response_answer($qid, $app_id) {
-  if (!($rid = pgh_form_get_data($qid, 'mapping'))) {
+  // If response doesn't exist.
+  $response_tag = pgh_form_get_data($qid, 'mapping');
+  if (!$response_tag) {
     // Create new response.
     $rid = pgh_api_set_response($app_id, $question_wrapper->getIdentifier());
     // Put it into cache.
     $response = node_load($rid);
-    pgh_form_set_data($response->title, 'response', $response);
-    pgh_form_set_data($qid, 'mapping', $response->title);
+    $response_tag = $response->title;
+    pgh_form_set_data($response_tag, 'response', $response, TRUE);
+    pgh_form_set_data($qid, 'mapping', $response_tag);
   }
 
   $answer = array(
@@ -1424,8 +1427,9 @@ function pgh_form_get_response_answer($qid, $app_id) {
     'updated' => 0,
   );
 
-  if ($response_wrapper = pgh_form_get_data($rid, 'response_wrapper')) {
+  if ($response_wrapper = pgh_form_get_data($response_tag, 'response_wrapper')) {
     $kpi = $response_wrapper->field_response_kpi->value();
+    $rid = $response_wrapper->getIdentifier();
     $answer = array(
       'id' => $rid,
       'value' => $response_wrapper->body->value() ? $response_wrapper->body->value->raw() : '',
