@@ -356,6 +356,7 @@ button, input, select, textarea {
     .user-links .dashboard-user a {
       color: #8cc8b9;
     }
+
   }
 
   #main {
@@ -2361,6 +2362,10 @@ form#pgh-user-message-work-group-form {
     }
 
     .dashboard-user a {
+      border-left: 1px solid #67a697;
+    }
+
+    .reviewer-user a {
       border-left: 1px solid #67a697;
     }
   }

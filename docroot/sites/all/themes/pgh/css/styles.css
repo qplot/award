@@ -434,7 +434,7 @@ tr.selected td { background: #ffc; }
 /** Progress bar.  @see progress.js */
 .progress { font-weight: bold; }
 .progress .bar { background: #ccc; border-color: #666; margin: 0 0.2em; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
-.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1376896851'); }
+.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1394156282'); }
 
 /** @file Print styling  We provide some sane print styling for Drupal using Zen's layout method. */
 /** By importing this CSS file as media "all", we allow this print file to be aggregated with other stylesheets, for improved front-end performance. */
@@ -1120,6 +1120,7 @@ form#pgh-user-message-work-group-form .form-wrapper input.form-submit:hover { ba
 #block-pgh-user-info-pgh-user-info .user-links a:hover { color: white; background-color: #67a697; }
 #block-pgh-user-info-pgh-user-info .user-links .logout-user a { border-left: 1px solid #67a697; }
 #block-pgh-user-info-pgh-user-info .user-links .dashboard-user a { border-left: 1px solid #67a697; }
+#block-pgh-user-info-pgh-user-info .user-links .reviewer-user a { border-left: 1px solid #67a697; }
 
 .custom-user-login.block { margin: 41px 0 0; float: right; }
 .custom-user-login.block p { border: 1px solid #67a697; -webkit-border-radius: 2px; -moz-border-radius: 2px; -ms-border-radius: 2px; -o-border-radius: 2px; border-radius: 2px; margin: 0; height: 20px; }
