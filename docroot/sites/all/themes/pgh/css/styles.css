@@ -434,7 +434,7 @@ tr.selected td { background: #ffc; }
 /** Progress bar.  @see progress.js */
 .progress { font-weight: bold; }
 .progress .bar { background: #ccc; border-color: #666; margin: 0 0.2em; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
-.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1394156282'); }
+.progress .filled { background-color: #0072b9; background-image: url('../images/progress.gif?1376896851'); }
 
 /** @file Print styling  We provide some sane print styling for Drupal using Zen's layout method. */
 /** By importing this CSS file as media "all", we allow this print file to be aggregated with other stylesheets, for improved front-end performance. */
@@ -1197,6 +1197,7 @@ a.glossify-link:hover .glossify-tooltip { padding-bottom: 20px; max-height: 45em
 a.glossify-link .glossify-tooltip { font-size: 13px; line-height: 17px; display: block; margin-left: 30px; padding-bottom: 0; width: 922px; max-height: 0; overflow: hidden; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; position: absolute; bottom: 0; z-index: 1; -webkit-transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; -moz-transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; -o-transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; transition: padding 0.3s ease-in-out, opacity 0.3s ease-in-out, max-height 0.3s ease-out; }
 a.glossify-link .glossify-tooltip em { color: #00674e; font-weight: normal; font-style: normal; text-decoration: none; background-color: #e4f7f2; border: 1px solid #3bbe9e; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.15); -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.15); box-shadow: 0 1px 7px rgba(0, 0, 0, 0.15); display: block; padding: 10px; width: 900px; height: auto; }
 
+body.section-review #block-pgh-user-info-pgh-user-info .user-links .reviewer-user a { color: #8cc8b9; }
 body.section-review table { border-collapse: separate !important; -webkit-border-radius: 3px 3px 0 0; -moz-border-radius: 3px 3px 0 0; -ms-border-radius: 3px 3px 0 0; -o-border-radius: 3px 3px 0 0; border-radius: 3px 3px 0 0; width: 100%; }
 body.section-review table tr { background-color: transparent !important; border: none !important; }
 body.section-review table th, body.section-review table td { font-size: 0.9em; font-family: Arial, Helvetica, "Nimbus Sans L", sans-serif; font-weight: normal; padding: 5px 14px; vertical-align: top; }
