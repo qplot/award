@@ -2872,30 +2872,6 @@ body.section-review {
     font-size: 13px;
     font-weight: normal;
   }
-
-  input.form-submit {
-    color: $white;
-    font-size: 1em;
-    font-family: $arial;
-    font-weight: normal;
-    text-align: center;
-    background: $green;
-    border: 1px solid $greenLight;
-    @include border-radius(3px);
-    padding: 7px 0;
-    width: 140px;
-    @include transition(
-      background-color 0.4s ease-out,
-      border-color 0.4s ease-out,
-      width 0.4s ease-out
-    );
-
-    &:hover {
-      background-color: #ffba4e;
-      border-color: #ffb043;
-      @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
-    }
-  }
 }
 
 // reviwer waypoints
@@ -2917,36 +2893,41 @@ body.section-review {
 
 // reviewer hospital
 #reviewer-wrap #hospital-wrap {
-  background: #444 url(../images/global/div-vline.png) repeat-y 36% 0;
+  background: #444 url(../images/global/div-vline.png) repeat-y 33% 0;
   border-bottom: 3px solid $orange;
   @include border-radius(3px 3px 0 0);
   @include box-shadow(0 0 4px rgba(0,0,0,0.1));
   margin: 0 0 40px;
 
   #hospital-wrap-inner {
-    background: transparent url(../images/global/div-vline.png) repeat-y 74% 0;
+    background: transparent url(../images/global/div-vline.png) repeat-y 75.5% 0;
     border-bottom: 1px solid lighten($orange, 7%);
     @include clearfix;
   }
 
   .column {
-    padding: 14px 0 12px 3.4%;
+    padding: 10px 1.4%;
     float: left;
 
     h3 {
       color: $greenLight;
       font-size: 15px;
       line-height: 19px;
-      margin: 0 0 0.8em;
+      margin: 0 0 2px;
     }
 
     p {
       color: $white;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    a {
+      color: $greenLight;
     }
 
     .label {
       color: darken($grayLight, 25%);
-      font-size: 14px;
     }
 
     .form-item {
@@ -2957,7 +2938,7 @@ body.section-review {
 
       label {
         color: $white;
-        font-size: 14px;
+        font-size: 13px;
         line-height: 17px;
         margin-left: 20px;
         padding-bottom: 0.3em;
@@ -2982,8 +2963,19 @@ body.section-review {
     background-color: #444;
     border-bottom: 1px solid #3a3a3a;
     @include border-radius(4px 4px 0 0);
-    padding: 10px 3.4%;
+    padding: 10px 1.4%;
     @include clearfix;
+
+    .colomn-1 {
+      width: 65%;
+      float: left;
+    }
+
+    .colomn-2 {
+      text-align: right;
+      width: 35%;
+      float: left;
+    }
 
     h2 {
       color: $white;
@@ -2999,8 +2991,32 @@ body.section-review {
       line-height: 15px;
     }
 
+    a.scoresheets-btn input,
     input.form-submit {
+      color: $white;
+      font-size: 14px;
+      line-height: 18px;
+      font-family: $arial;
+      font-weight: normal;
+      text-align: center;
+      background: $green;
+      border: 1px solid $greenLight;
+      @include border-radius(3px);
+      margin: 0 0 0 7px;
+      padding: 5px 0;
+      width: 140px;
       float: right;
+      @include transition(
+        background-color 0.2s ease-out,
+        border-color 0.2s ease-out,
+        width 0.2s ease-out
+      );
+
+      &:hover {
+        background-color: #ffba4e;
+        border-color: #ffb043;
+        @include box-shadow(inset 0 0 1px rgba(0,0,0,0.1));
+      }
     }
   }
 }
@@ -3019,7 +3035,19 @@ body.section-review {
   #hospital-content-left {
 
     &.column {
-      width: 32%;
+      width: 30%;
+    }
+
+    p.first-label {
+      padding-top: 5px;
+
+      span + span {
+
+        &:before {
+          color: #333;
+          content: "/ ";
+        }
+      }
     }
   }
 }
@@ -3030,15 +3058,17 @@ body.section-review {
   #hospital-content-mid {
 
     &.column {
-      width: 34%;
+      width: 40%;
     }
 
     .form-type-textfield {
+      padding-bottom: 5px;
+      @include clearfix;
 
       label {
-        line-height: 24px;
-        margin-right: 7px;
-        margin-left: 0;
+        margin: 0;
+        padding-right: 5%;
+        width: 64%;
         float: left;
       }
 
@@ -3046,25 +3076,51 @@ body.section-review {
         border: 1px solid $white;
         @include border-radius(3px);
         @include box-shadow(inset 0 0 8px rgba(0,0,0,0.1));
+        margin-top: 2px;
         padding: 2px 5px;
         width: auto;
         float: left;
       }
     }
 
-    .form-type-radio {
-      padding-bottom: 5px;
-      width: 60px;
-      float: left;
+    .qualify,
+    .threshold {
+      padding-top: 5px;
       @include clearfix;
 
-      label {
-        margin-left: 20px;
-      }
-
-      input.form-radio {
+      p {
+        padding-right: 5%;
+        width: 64%;
         float: left;
       }
+
+      & > div {
+        width: 31%;
+        float: left;
+
+        div {
+          display: inline;
+        }
+
+        .form-item-qualify,
+        .form-item-threshold-met {
+            width: 40%;
+            float: left;
+        }
+
+        label {
+          //display: inline;
+          margin-left: 20px;
+        }
+
+        input.form-radio {
+          float: left;
+        }
+      }
+    }
+
+    .qualify {
+
     }
 
     p {
@@ -3079,7 +3135,8 @@ body.section-review {
   #hospital-content-right {
 
     &.column {
-      width: 23.4%;
+      width: 22%;
+      padding-right: 0;
     }
   }
 }
@@ -3091,21 +3148,19 @@ body.section-review {
     color: $white;
 
     .profile-wrap {
-      padding: 10px 3.4%;
+      padding: 2px 0 0;
 
       .profile-group-wrap {
-        background-color: #3a3a3a;
-        border: 1px solid #333;
-        @include border-radius(3px);
-        margin-bottom: 1em;
+        background-color: #333;
+        border-top: 1px solid #2a2a2a;
         @include clearfix;
 
         .profile-group {
           font-size: 13px;
           line-height: 16px;
           text-align: center;
-          border-right: 1px solid #333;
-          padding: 10px 1%;
+          border-right: 1px solid #2a2a2a;
+          padding: 6px 1%;
           width: 22%;
           float: left;
 
