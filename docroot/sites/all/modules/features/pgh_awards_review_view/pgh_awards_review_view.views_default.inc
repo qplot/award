@@ -133,7 +133,7 @@ function pgh_awards_review_view_views_default_views() {
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = 'Scoresheet';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Scoresheet';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'View application';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'review/[nid]/readonly';
   /* Field: Content: Status */

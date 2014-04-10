@@ -621,32 +621,47 @@ function pgh_form_render_question($qid, $app_id = NULL, $readonly = FALSE) {
       break;
 
     case 'file':
-      $desc = '';
-      $shared = FALSE;
-      if ($fid = $answer['value']) {
-        $file = file_load($fid);
-        $file_wrapper = entity_metadata_wrapper('file', $file);
-        $desc = $file_wrapper->field_media_description->value();
-        $shared = $file_wrapper->field_media_shared->value();
-      }
-      $media = array(
-        '#type' => 'media',
-        '#after_build' => array('pgh_form_file_after_build'),
-        '#input' => TRUE,
-        '#media_options' => array(
-          'global' => array(
-            'types' => array('document'),
-            'file_directory' => 'application/' . $app_id,
+      if (!$readonly) {
+        $desc = '';
+        $shared = FALSE;
+        if ($fid = $answer['value']) {
+          $file = file_load($fid);
+          $file_wrapper = entity_metadata_wrapper('file', $file);
+          $desc = $file_wrapper->field_media_description->value();
+          $shared = $file_wrapper->field_media_shared->value();
+        }
+        $media = array(
+          '#type' => 'media',
+          // '#after_build' => array('pgh_form_file_after_build'),
+          '#input' => TRUE,
+          '#media_options' => array(
+            'global' => array(
+              'types' => array('document'),
+              'file_directory' => 'application/' . $app_id,
+            ),
           ),
-        ),
-        '#attached' => array(),
-        '#extended' => TRUE,
-        '#tree' => TRUE,
-        '#value' => !empty($answer['value']) ? array('fid' => $answer['value']) : '',
-        '#custom_description' => $desc,
-        '#custom_shared' => $shared,
-      );
-      $form_item = array_merge($form_item, $media);
+          '#attached' => array(),
+          '#extended' => TRUE,
+          '#tree' => TRUE,
+          '#value' => !empty($answer['value']) ? array('fid' => $answer['value']) : '',
+          '#custom_description' => $desc,
+          '#custom_shared' => $shared,
+        );
+        $form_item = array_merge($form_item, $media);
+      }
+      else {
+        $media = '';
+        if ($fid = $answer['value']) {
+          $file = file_load($fid);
+          $media = theme('file_entity_download_link', array(
+            'file' => $file,
+            'text' => '[file:name]'
+          ));
+        }
+        $form_item['#type'] = 'item';
+        $form_item['#markup'] = t($form_item['#title']) . $media;
+        unset($form_item['#title']);
+      }
       break;
 
     default:

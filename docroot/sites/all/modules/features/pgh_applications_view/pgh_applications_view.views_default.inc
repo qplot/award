@@ -33,11 +33,13 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '20';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['columns'] = array(
     'views_bulk_operations' => 'views_bulk_operations',
     'nid' => 'nid',
     'title' => 'title',
     'field_business_unit_name' => 'field_business_unit_name',
+    'field_health_system' => 'field_health_system',
     'field_primary_first_name' => 'field_primary_first_name',
     'field_primary_last_name' => 'field_primary_last_name',
     'field_primary_phone' => 'field_primary_phone',
@@ -72,6 +74,13 @@ function pgh_applications_view_views_default_views() {
       'empty_column' => 0,
     ),
     'field_business_unit_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_health_system' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -302,6 +311,11 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['field_business_unit_name']['table'] = 'field_data_field_business_unit_name';
   $handler->display->display_options['fields']['field_business_unit_name']['field'] = 'field_business_unit_name';
   $handler->display->display_options['fields']['field_business_unit_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Health System */
+  $handler->display->display_options['fields']['field_health_system']['id'] = 'field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['table'] = 'field_data_field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['field'] = 'field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['relationship'] = 'reverse_field_applications_node';
   /* Field: Content: First name */
   $handler->display->display_options['fields']['field_primary_first_name']['id'] = 'field_primary_first_name';
   $handler->display->display_options['fields']['field_primary_first_name']['table'] = 'field_data_field_primary_first_name';
@@ -362,6 +376,19 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
   $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
   $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
+  /* Field: Content: Business unit type */
+  $handler->display->display_options['fields']['field_business_unit_type']['id'] = 'field_business_unit_type';
+  $handler->display->display_options['fields']['field_business_unit_type']['table'] = 'field_data_field_business_unit_type';
+  $handler->display->display_options['fields']['field_business_unit_type']['field'] = 'field_business_unit_type';
+  $handler->display->display_options['fields']['field_business_unit_type']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Safesforce Account  Owner */
+  $handler->display->display_options['fields']['field_salesforce_owner']['id'] = 'field_salesforce_owner';
+  $handler->display->display_options['fields']['field_salesforce_owner']['table'] = 'field_data_field_salesforce_owner';
+  $handler->display->display_options['fields']['field_salesforce_owner']['field'] = 'field_salesforce_owner';
+  /* Field: Content: Salesforce Id */
+  $handler->display->display_options['fields']['field_business_unit_sfid']['id'] = 'field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['table'] = 'field_data_field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['field'] = 'field_business_unit_sfid';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -508,6 +535,420 @@ function pgh_applications_view_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Bulk operations: Content */
+  $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'node';
+  $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
+  $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '1';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::node_assign_owner_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_delete_item' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_script_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_make_sticky_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_make_unsticky_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_modify_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 1,
+      'label' => 'Assign/Change Reviewers',
+      'settings' => array(
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          'application::field_application_designations' => 'application::field_application_designations',
+          'application::field_application_reviewers' => 'application::field_application_reviewers',
+        ),
+      ),
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'url' => '',
+      ),
+    ),
+    'action::node_promote_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_publish_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpromote_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_save_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_send_email_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpublish_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpublish_by_keyword_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+  );
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = 'ID';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['title']['label'] = 'Business Unit';
+  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Name of Institution */
+  $handler->display->display_options['fields']['field_business_unit_name']['id'] = 'field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['table'] = 'field_data_field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['field'] = 'field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_business_unit_name']['label'] = 'Institution';
+  /* Field: Content: Health System */
+  $handler->display->display_options['fields']['field_health_system']['id'] = 'field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['table'] = 'field_data_field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['field'] = 'field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: First name */
+  $handler->display->display_options['fields']['field_primary_first_name']['id'] = 'field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['table'] = 'field_data_field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['field'] = 'field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Last name */
+  $handler->display->display_options['fields']['field_primary_last_name']['id'] = 'field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['table'] = 'field_data_field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['field'] = 'field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Phone */
+  $handler->display->display_options['fields']['field_primary_phone']['id'] = 'field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['table'] = 'field_data_field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['field'] = 'field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_primary_phone']['exclude'] = TRUE;
+  /* Field: Content: Email */
+  $handler->display->display_options['fields']['field_primary_email']['id'] = 'field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['table'] = 'field_data_field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['field'] = 'field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Billing city */
+  $handler->display->display_options['fields']['field_billing_city']['id'] = 'field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['table'] = 'field_data_field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['field'] = 'field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_billing_city']['label'] = 'City';
+  /* Field: Content: Billing state */
+  $handler->display->display_options['fields']['field_billing_state']['id'] = 'field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['table'] = 'field_data_field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['field'] = 'field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_billing_state']['label'] = 'State';
+  /* Field: Content: Number of Beds */
+  $handler->display->display_options['fields']['field_number_beds']['id'] = 'field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['table'] = 'field_data_field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['field'] = 'field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_number_beds']['label'] = '#Beds';
+  /* Field: Content: Number of ORs */
+  $handler->display->display_options['fields']['field_number_ors']['id'] = 'field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['table'] = 'field_data_field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['field'] = 'field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_number_ors']['label'] = '#ORs';
+  /* Field: Content: Application Type */
+  $handler->display->display_options['fields']['field_application_type']['id'] = 'field_application_type';
+  $handler->display->display_options['fields']['field_application_type']['table'] = 'field_data_field_application_type';
+  $handler->display->display_options['fields']['field_application_type']['field'] = 'field_application_type';
+  /* Field: Content: Reviewers */
+  $handler->display->display_options['fields']['field_application_reviewers']['id'] = 'field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['table'] = 'field_data_field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['field'] = 'field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['settings'] = array(
+    'link' => 0,
+  );
+  $handler->display->display_options['fields']['field_application_reviewers']['delta_offset'] = '0';
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'application' => 'application',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['relationship'] = 'reverse_field_business_units_node';
+  $handler->display->display_options['filters']['title']['operator'] = 'word';
+  $handler->display->display_options['filters']['title']['group'] = 1;
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'in Workgroup';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['filters']['title_1']['table'] = 'node';
+  $handler->display->display_options['filters']['title_1']['field'] = 'title';
+  $handler->display->display_options['filters']['title_1']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['title_1']['operator'] = 'word';
+  $handler->display->display_options['filters']['title_1']['group'] = 1;
+  $handler->display->display_options['filters']['title_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title_1']['expose']['operator_id'] = 'title_1_op';
+  $handler->display->display_options['filters']['title_1']['expose']['label'] = 'in Business Unit ';
+  $handler->display->display_options['filters']['title_1']['expose']['operator'] = 'title_1_op';
+  $handler->display->display_options['filters']['title_1']['expose']['identifier'] = 'title_1';
+  $handler->display->display_options['filters']['title_1']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Billing state (field_billing_state) */
+  $handler->display->display_options['filters']['field_billing_state_value']['id'] = 'field_billing_state_value';
+  $handler->display->display_options['filters']['field_billing_state_value']['table'] = 'field_data_field_billing_state';
+  $handler->display->display_options['filters']['field_billing_state_value']['field'] = 'field_billing_state_value';
+  $handler->display->display_options['filters']['field_billing_state_value']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['field_billing_state_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_billing_state_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['operator_id'] = 'field_billing_state_value_op';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['label'] = 'State';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['operator'] = 'field_billing_state_value_op';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['identifier'] = 'field_billing_state_value';
+  $handler->display->display_options['filters']['field_billing_state_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Health System (field_health_system) */
+  $handler->display->display_options['filters']['field_health_system_value']['id'] = 'field_health_system_value';
+  $handler->display->display_options['filters']['field_health_system_value']['table'] = 'field_data_field_health_system';
+  $handler->display->display_options['filters']['field_health_system_value']['field'] = 'field_health_system_value';
+  $handler->display->display_options['filters']['field_health_system_value']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['field_health_system_value']['operator'] = 'word';
+  $handler->display->display_options['filters']['field_health_system_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_health_system_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_health_system_value']['expose']['operator_id'] = 'field_health_system_value_op';
+  $handler->display->display_options['filters']['field_health_system_value']['expose']['label'] = 'in Health System';
+  $handler->display->display_options['filters']['field_health_system_value']['expose']['operator'] = 'field_health_system_value_op';
+  $handler->display->display_options['filters']['field_health_system_value']['expose']['identifier'] = 'field_health_system_value';
+  $handler->display->display_options['filters']['field_health_system_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
+  );
+  /* Filter criterion: Content: Reviewers (field_application_reviewers) */
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['id'] = 'field_application_reviewers_target_id';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['table'] = 'field_data_field_application_reviewers';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['field'] = 'field_application_reviewers_target_id';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['group'] = 1;
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['operator_id'] = 'field_application_reviewers_target_id_op';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['label'] = 'Reviewers';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['operator'] = 'field_application_reviewers_target_id_op';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['identifier'] = 'field_application_reviewers_target_id';
+  $handler->display->display_options['filters']['field_application_reviewers_target_id']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Status (field_application_status) */
+  $handler->display->display_options['filters']['field_application_status_value']['id'] = 'field_application_status_value';
+  $handler->display->display_options['filters']['field_application_status_value']['table'] = 'field_data_field_application_status';
+  $handler->display->display_options['filters']['field_application_status_value']['field'] = 'field_application_status_value';
+  $handler->display->display_options['filters']['field_application_status_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_application_status_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['operator_id'] = 'field_application_status_value_op';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['label'] = 'Status';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['operator'] = 'field_application_status_value_op';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['identifier'] = 'field_application_status_value';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Application Type (field_application_type) */
+  $handler->display->display_options['filters']['field_application_type_value']['id'] = 'field_application_type_value';
+  $handler->display->display_options['filters']['field_application_type_value']['table'] = 'field_data_field_application_type';
+  $handler->display->display_options['filters']['field_application_type_value']['field'] = 'field_application_type_value';
+  $handler->display->display_options['filters']['field_application_type_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_application_type_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['operator_id'] = 'field_application_type_value_op';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['label'] = 'Application Type';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['operator'] = 'field_application_type_value_op';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['identifier'] = 'field_application_type_value';
+  $handler->display->display_options['filters']['field_application_type_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Number of Beds (field_number_beds) */
+  $handler->display->display_options['filters']['field_number_beds_value']['id'] = 'field_number_beds_value';
+  $handler->display->display_options['filters']['field_number_beds_value']['table'] = 'field_data_field_number_beds';
+  $handler->display->display_options['filters']['field_number_beds_value']['field'] = 'field_number_beds_value';
+  $handler->display->display_options['filters']['field_number_beds_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_number_beds_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['operator_id'] = 'field_number_beds_value_op';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['label'] = 'Beds';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['operator'] = 'field_number_beds_value_op';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['identifier'] = 'field_number_beds_value';
+  $handler->display->display_options['filters']['field_number_beds_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+  );
+  /* Filter criterion: Content: Safesforce Account  Owner (field_salesforce_owner) */
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['id'] = 'field_salesforce_owner_value';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['table'] = 'field_data_field_salesforce_owner';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['field'] = 'field_salesforce_owner_value';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['operator'] = 'word';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['expose']['operator_id'] = 'field_salesforce_owner_value_op';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['expose']['label'] = 'Safesforce Owner';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['expose']['operator'] = 'field_salesforce_owner_value_op';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['expose']['identifier'] = 'field_salesforce_owner_value';
+  $handler->display->display_options['filters']['field_salesforce_owner_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
+  );
+  /* Filter criterion: Content: Awards Designations (field_application_designations) */
+  $handler->display->display_options['filters']['field_application_designations_tid']['id'] = 'field_application_designations_tid';
+  $handler->display->display_options['filters']['field_application_designations_tid']['table'] = 'field_data_field_application_designations';
+  $handler->display->display_options['filters']['field_application_designations_tid']['field'] = 'field_application_designations_tid';
+  $handler->display->display_options['filters']['field_application_designations_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_application_designations_tid']['expose']['operator_id'] = 'field_application_designations_tid_op';
+  $handler->display->display_options['filters']['field_application_designations_tid']['expose']['label'] = 'Awards Designations';
+  $handler->display->display_options['filters']['field_application_designations_tid']['expose']['operator'] = 'field_application_designations_tid_op';
+  $handler->display->display_options['filters']['field_application_designations_tid']['expose']['identifier'] = 'field_application_designations_tid';
+  $handler->display->display_options['filters']['field_application_designations_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
+  );
+  $handler->display->display_options['filters']['field_application_designations_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_application_designations_tid']['vocabulary'] = 'award_designation';
   $handler->display->display_options['path'] = 'admin/reviewers';
 
   /* Display: Data export */
@@ -523,6 +964,233 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['style_options']['replace_newlines'] = 0;
   $handler->display->display_options['style_options']['header'] = 1;
   $handler->display->display_options['style_options']['keep_html'] = 0;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Bulk operations: Content */
+  $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'node';
+  $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
+  $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '1';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::node_assign_owner_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_delete_item' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_script_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_make_sticky_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_make_unsticky_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_modify_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 1,
+      'label' => 'Change Reviewers',
+      'settings' => array(
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          'application::field_application_reviewers' => 'application::field_application_reviewers',
+        ),
+      ),
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'url' => '',
+      ),
+    ),
+    'action::node_promote_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_publish_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpromote_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_save_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_send_email_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpublish_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpublish_by_keyword_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+  );
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = 'ID';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['title']['label'] = 'Business Unit';
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Name of Institution */
+  $handler->display->display_options['fields']['field_business_unit_name']['id'] = 'field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['table'] = 'field_data_field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['field'] = 'field_business_unit_name';
+  $handler->display->display_options['fields']['field_business_unit_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Health System */
+  $handler->display->display_options['fields']['field_health_system']['id'] = 'field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['table'] = 'field_data_field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['field'] = 'field_health_system';
+  $handler->display->display_options['fields']['field_health_system']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: First name */
+  $handler->display->display_options['fields']['field_primary_first_name']['id'] = 'field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['table'] = 'field_data_field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['field'] = 'field_primary_first_name';
+  $handler->display->display_options['fields']['field_primary_first_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Last name */
+  $handler->display->display_options['fields']['field_primary_last_name']['id'] = 'field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['table'] = 'field_data_field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['field'] = 'field_primary_last_name';
+  $handler->display->display_options['fields']['field_primary_last_name']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Phone */
+  $handler->display->display_options['fields']['field_primary_phone']['id'] = 'field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['table'] = 'field_data_field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['field'] = 'field_primary_phone';
+  $handler->display->display_options['fields']['field_primary_phone']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Email */
+  $handler->display->display_options['fields']['field_primary_email']['id'] = 'field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['table'] = 'field_data_field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['field'] = 'field_primary_email';
+  $handler->display->display_options['fields']['field_primary_email']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Billing city */
+  $handler->display->display_options['fields']['field_billing_city']['id'] = 'field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['table'] = 'field_data_field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['field'] = 'field_billing_city';
+  $handler->display->display_options['fields']['field_billing_city']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_billing_city']['label'] = 'City';
+  /* Field: Content: Billing state */
+  $handler->display->display_options['fields']['field_billing_state']['id'] = 'field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['table'] = 'field_data_field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['field'] = 'field_billing_state';
+  $handler->display->display_options['fields']['field_billing_state']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_billing_state']['label'] = 'State';
+  /* Field: Content: Number of Beds */
+  $handler->display->display_options['fields']['field_number_beds']['id'] = 'field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['table'] = 'field_data_field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['field'] = 'field_number_beds';
+  $handler->display->display_options['fields']['field_number_beds']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_number_beds']['label'] = '#Beds';
+  /* Field: Content: Number of ORs */
+  $handler->display->display_options['fields']['field_number_ors']['id'] = 'field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['table'] = 'field_data_field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['field'] = 'field_number_ors';
+  $handler->display->display_options['fields']['field_number_ors']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['fields']['field_number_ors']['label'] = '#ORs';
+  /* Field: Content: Application Type */
+  $handler->display->display_options['fields']['field_application_type']['id'] = 'field_application_type';
+  $handler->display->display_options['fields']['field_application_type']['table'] = 'field_data_field_application_type';
+  $handler->display->display_options['fields']['field_application_type']['field'] = 'field_application_type';
+  /* Field: Content: Reviewers */
+  $handler->display->display_options['fields']['field_application_reviewers']['id'] = 'field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['table'] = 'field_data_field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['field'] = 'field_application_reviewers';
+  $handler->display->display_options['fields']['field_application_reviewers']['settings'] = array(
+    'link' => 0,
+  );
+  $handler->display->display_options['fields']['field_application_reviewers']['delta_offset'] = '0';
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
+  /* Field: Content: Business unit type */
+  $handler->display->display_options['fields']['field_business_unit_type']['id'] = 'field_business_unit_type';
+  $handler->display->display_options['fields']['field_business_unit_type']['table'] = 'field_data_field_business_unit_type';
+  $handler->display->display_options['fields']['field_business_unit_type']['field'] = 'field_business_unit_type';
+  $handler->display->display_options['fields']['field_business_unit_type']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Safesforce Account  Owner */
+  $handler->display->display_options['fields']['field_salesforce_owner']['id'] = 'field_salesforce_owner';
+  $handler->display->display_options['fields']['field_salesforce_owner']['table'] = 'field_data_field_salesforce_owner';
+  $handler->display->display_options['fields']['field_salesforce_owner']['field'] = 'field_salesforce_owner';
+  $handler->display->display_options['fields']['field_salesforce_owner']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Salesforce Id */
+  $handler->display->display_options['fields']['field_business_unit_sfid']['id'] = 'field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['table'] = 'field_data_field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['field'] = 'field_business_unit_sfid';
+  $handler->display->display_options['fields']['field_business_unit_sfid']['relationship'] = 'reverse_field_applications_node';
+  /* Field: Content: Awards Designations */
+  $handler->display->display_options['fields']['field_application_designations']['id'] = 'field_application_designations';
+  $handler->display->display_options['fields']['field_application_designations']['table'] = 'field_data_field_application_designations';
+  $handler->display->display_options['fields']['field_application_designations']['field'] = 'field_application_designations';
+  $handler->display->display_options['fields']['field_application_designations']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_application_designations']['delta_offset'] = '0';
+  /* Field: Content: Suggested Awards Designations */
+  $handler->display->display_options['fields']['field_application_designations_s']['id'] = 'field_application_designations_s';
+  $handler->display->display_options['fields']['field_application_designations_s']['table'] = 'field_data_field_application_designations_s';
+  $handler->display->display_options['fields']['field_application_designations_s']['field'] = 'field_application_designations_s';
+  $handler->display->display_options['fields']['field_application_designations_s']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['path'] = 'admin/reviewers/export';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
