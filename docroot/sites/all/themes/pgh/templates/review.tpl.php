@@ -29,7 +29,7 @@
             </div>
             <div class="colomn-2">
               <?php echo $form['submit'] ?>
-              <a href="<?php echo $app['readonly_link'] ?>" class="scoresheets-btn"><input type="button" value="Scoresheets"></a>
+              <a href="<?php echo $app['readonly_link'] ?>" class="scoresheets-btn"><input type="button" value="View Application"></a>
             </div>
           </div><!-- /#hospital-content-top -->
 
