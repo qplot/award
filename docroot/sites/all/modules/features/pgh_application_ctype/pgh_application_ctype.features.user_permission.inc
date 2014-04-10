@@ -26,6 +26,7 @@ function pgh_application_ctype_user_default_permissions() {
     'name' => 'edit field_application_status',
     'roles' => array(
       'PGH Administrator' => 'PGH Administrator',
+      'Reviewer' => 'Reviewer',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
@@ -36,6 +37,7 @@ function pgh_application_ctype_user_default_permissions() {
     'name' => 'edit own field_application_status',
     'roles' => array(
       'PGH Administrator' => 'PGH Administrator',
+      'Reviewer' => 'Reviewer',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
@@ -47,6 +49,7 @@ function pgh_application_ctype_user_default_permissions() {
     'roles' => array(
       'Client Administrator' => 'Client Administrator',
       'PGH Administrator' => 'PGH Administrator',
+      'Reviewer' => 'Reviewer',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
@@ -58,6 +61,7 @@ function pgh_application_ctype_user_default_permissions() {
     'roles' => array(
       'Client Administrator' => 'Client Administrator',
       'PGH Administrator' => 'PGH Administrator',
+      'Reviewer' => 'Reviewer',
       'administrator' => 'administrator',
     ),
     'module' => 'field_permissions',
