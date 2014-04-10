@@ -126,16 +126,16 @@ function pgh_awards_review_view_views_default_views() {
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Application';
   $handler->display->display_options['fields']['title']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['path'] = 'review/[nid]';
+  $handler->display->display_options['fields']['title']['alter']['path'] = 'review/[nid]/readonly';
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = 'Scoresheet';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'View application';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Scoresheet';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'review/[nid]/readonly';
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'review/[nid]';
   /* Field: Content: Status */
   $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
   $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
