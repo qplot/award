@@ -353,7 +353,7 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
 
   // Application status.
   $status = $app_wrapper->field_application_status->raw();
-  $options = array('review-in-progress' => 'Review in progress', 'final-scoring-complete' => 'Final scoring complete');
+  $options = array('review-in-progress' => 'Review in progress', 'review-complete' => 'Review complete');
   $form['status'] = array(
     '#type' => 'select',
     '#options' => $options,
@@ -439,7 +439,7 @@ function pgh_awards_review_application_form($form, &$form_state, $app, $scores) 
 
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => 'Save worksheet',
+    '#value' => 'Save scoresheet',
   );
 
   // All hidden variables should be added after submit
