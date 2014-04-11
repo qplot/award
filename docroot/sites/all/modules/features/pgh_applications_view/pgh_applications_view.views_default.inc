@@ -666,7 +666,6 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['relationship'] = 'reverse_field_applications_node';
   $handler->display->display_options['fields']['title']['label'] = 'Business Unit';
-  $handler->display->display_options['fields']['title']['exclude'] = TRUE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Name of Institution */
   $handler->display->display_options['fields']['field_business_unit_name']['id'] = 'field_business_unit_name';
