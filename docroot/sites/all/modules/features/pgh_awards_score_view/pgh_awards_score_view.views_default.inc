@@ -661,7 +661,6 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['field_cat_response_automatic_p']['field'] = 'field_cat_response_automatic_p';
   $handler->display->display_options['fields']['field_cat_response_automatic_p']['ui_name'] = 'Automatic P';
   $handler->display->display_options['fields']['field_cat_response_automatic_p']['label'] = 'Auto P';
-  $handler->display->display_options['fields']['field_cat_response_automatic_p']['exclude'] = TRUE;
   /* Field: Automatic */
   $handler->display->display_options['fields']['field_cat_response_automatic']['id'] = 'field_cat_response_automatic';
   $handler->display->display_options['fields']['field_cat_response_automatic']['table'] = 'field_data_field_cat_response_automatic';
@@ -669,52 +668,23 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['field_cat_response_automatic']['ui_name'] = 'Automatic';
   $handler->display->display_options['fields']['field_cat_response_automatic']['label'] = 'Auto';
   /* Field: Automatic % */
-  $handler->display->display_options['fields']['php']['id'] = 'php';
-  $handler->display->display_options['fields']['php']['table'] = 'views';
-  $handler->display->display_options['fields']['php']['field'] = 'php';
-  $handler->display->display_options['fields']['php']['ui_name'] = 'Automatic %';
-  $handler->display->display_options['fields']['php']['label'] = '% Auto';
-  $handler->display->display_options['fields']['php']['use_php_setup'] = 1;
-  $handler->display->display_options['fields']['php']['php_setup'] = '  $view->score[\'weight\'] = array(0.45,0.25,0.15,0.15);
-  $apptype_tag = arg(3);
-  if ($apptype_id = pgh_api_find_nodes(array(\'type\' => \'apptype\', \'title\' => $apptype_tag))) {
-    $apptype = node_load($apptype_id);
-    $apptype_wrapper = entity_metadata_wrapper(\'node\', $apptype);
-    $weight = $apptype_wrapper->field_apptype_score_weights->value();
-    if ($weight) {
-      $view->score[\'weight\'] = explode(\'|\', $weight);
-    }
-  }
-  ';
-  $handler->display->display_options['fields']['php']['php_output'] = '<?php
-  $automatic = $data->field_field_cat_response_automatic[0][\'raw\'][\'value\']; 
-  $automatic_p = $data->field_field_cat_response_automatic_p[0][\'raw\'][\'value\']; 
-  $output = 0;
-  if ($automatic_p) {
-    $output = round($automatic / $automatic_p * 100,2);
-  }
-  $view->score[\'auto\'] = $output;
-  print $output . \'%\';
-?>';
-  $handler->display->display_options['fields']['php']['use_php_click_sortable'] = '4';
-  $handler->display->display_options['fields']['php']['php_click_sortable'] = '';
-  /* Field: Automatic W */
-  $handler->display->display_options['fields']['php_3']['id'] = 'php_3';
-  $handler->display->display_options['fields']['php_3']['table'] = 'views';
-  $handler->display->display_options['fields']['php_3']['field'] = 'php';
-  $handler->display->display_options['fields']['php_3']['ui_name'] = 'Automatic W';
-  $handler->display->display_options['fields']['php_3']['label'] = 'w Auto';
-  $handler->display->display_options['fields']['php_3']['use_php_setup'] = 0;
-  $handler->display->display_options['fields']['php_3']['php_output'] = '<?php print round($view->score[\'auto\'] * $view->score[\'weight\'][0], 2); ?>';
-  $handler->display->display_options['fields']['php_3']['use_php_click_sortable'] = '3';
-  $handler->display->display_options['fields']['php_3']['php_click_sortable'] = '';
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['ui_name'] = 'Automatic %';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Auto %';
+  /* Field: Automatic Weight */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['ui_name'] = 'Automatic Weight';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Auto weight';
   /* Field: KPI P */
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['id'] = 'field_cat_response_kpi_p';
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['table'] = 'field_data_field_cat_response_kpi_p';
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['field'] = 'field_cat_response_kpi_p';
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['ui_name'] = 'KPI P';
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['label'] = 'KPI P';
-  $handler->display->display_options['fields']['field_cat_response_kpi_p']['exclude'] = TRUE;
   /* Field: KPI */
   $handler->display->display_options['fields']['field_cat_response_kpi']['id'] = 'field_cat_response_kpi';
   $handler->display->display_options['fields']['field_cat_response_kpi']['table'] = 'field_data_field_cat_response_kpi';
@@ -722,41 +692,23 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['field_cat_response_kpi']['ui_name'] = 'KPI';
   $handler->display->display_options['fields']['field_cat_response_kpi']['label'] = 'KPI';
   /* Field: KPI % */
-  $handler->display->display_options['fields']['php_2']['id'] = 'php_2';
-  $handler->display->display_options['fields']['php_2']['table'] = 'views';
-  $handler->display->display_options['fields']['php_2']['field'] = 'php';
-  $handler->display->display_options['fields']['php_2']['ui_name'] = 'KPI %';
-  $handler->display->display_options['fields']['php_2']['label'] = '% KPI';
-  $handler->display->display_options['fields']['php_2']['use_php_setup'] = 0;
-  $handler->display->display_options['fields']['php_2']['php_output'] = '<?php
-  $automatic = $data->field_field_cat_response_kpi[0][\'raw\'][\'value\']; 
-  $automatic_p = $data->field_field_cat_response_kpi_p[0][\'raw\'][\'value\']; 
-  $output = 0;
-  if ($automatic_p) {
-    $output = round($automatic / $automatic_p * 100,2);
-  }
-  $view->score[\'kpi\'] = $output;
-  print $output . \'%\';
-?>';
-  $handler->display->display_options['fields']['php_2']['use_php_click_sortable'] = '3';
-  $handler->display->display_options['fields']['php_2']['php_click_sortable'] = '';
-  /* Field: KPI W */
-  $handler->display->display_options['fields']['php_4']['id'] = 'php_4';
-  $handler->display->display_options['fields']['php_4']['table'] = 'views';
-  $handler->display->display_options['fields']['php_4']['field'] = 'php';
-  $handler->display->display_options['fields']['php_4']['ui_name'] = 'KPI W';
-  $handler->display->display_options['fields']['php_4']['label'] = 'w KPI';
-  $handler->display->display_options['fields']['php_4']['use_php_setup'] = 0;
-  $handler->display->display_options['fields']['php_4']['php_output'] = '<?php print round($view->score[\'kpi\'] * $view->score[\'weight\'][1], 2); ?>';
-  $handler->display->display_options['fields']['php_4']['use_php_click_sortable'] = '3';
-  $handler->display->display_options['fields']['php_4']['php_click_sortable'] = '';
+  $handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
+  $handler->display->display_options['fields']['nothing_2']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_2']['ui_name'] = 'KPI %';
+  $handler->display->display_options['fields']['nothing_2']['label'] = 'KPI %';
+  /* Field: KPI Weight */
+  $handler->display->display_options['fields']['nothing_3']['id'] = 'nothing_3';
+  $handler->display->display_options['fields']['nothing_3']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_3']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_3']['ui_name'] = 'KPI Weight';
+  $handler->display->display_options['fields']['nothing_3']['label'] = 'KPI weight';
   /* Field: Metric P */
   $handler->display->display_options['fields']['field_cat_response_metric_p']['id'] = 'field_cat_response_metric_p';
   $handler->display->display_options['fields']['field_cat_response_metric_p']['table'] = 'field_data_field_cat_response_metric_p';
   $handler->display->display_options['fields']['field_cat_response_metric_p']['field'] = 'field_cat_response_metric_p';
   $handler->display->display_options['fields']['field_cat_response_metric_p']['ui_name'] = 'Metric P';
   $handler->display->display_options['fields']['field_cat_response_metric_p']['label'] = 'Metric P';
-  $handler->display->display_options['fields']['field_cat_response_metric_p']['exclude'] = TRUE;
   /* Field: Metric */
   $handler->display->display_options['fields']['field_cat_response_metric']['id'] = 'field_cat_response_metric';
   $handler->display->display_options['fields']['field_cat_response_metric']['table'] = 'field_data_field_cat_response_metric';
@@ -764,34 +716,17 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['field_cat_response_metric']['ui_name'] = 'Metric';
   $handler->display->display_options['fields']['field_cat_response_metric']['label'] = 'Metric';
   /* Field: Metric % */
-  $handler->display->display_options['fields']['php_1']['id'] = 'php_1';
-  $handler->display->display_options['fields']['php_1']['table'] = 'views';
-  $handler->display->display_options['fields']['php_1']['field'] = 'php';
-  $handler->display->display_options['fields']['php_1']['ui_name'] = 'Metric %';
-  $handler->display->display_options['fields']['php_1']['label'] = '% Metric';
-  $handler->display->display_options['fields']['php_1']['use_php_setup'] = 0;
-  $handler->display->display_options['fields']['php_1']['php_output'] = '<?php
-  $automatic = $data->field_field_cat_response_metric[0][\'raw\'][\'value\']; 
-  $automatic_p = $data->field_field_cat_response_metric_p[0][\'raw\'][\'value\']; 
-  $output = 0;
-  if ($automatic_p) {
-    $output = round($automatic / $automatic_p * 100,2);
-  }
-  $view->score[\'metric\'] = $output;
-  print $output . \'%\';
-?>';
-  $handler->display->display_options['fields']['php_1']['use_php_click_sortable'] = '4';
-  $handler->display->display_options['fields']['php_1']['php_click_sortable'] = '';
-  /* Field: Metric W */
-  $handler->display->display_options['fields']['php_5']['id'] = 'php_5';
-  $handler->display->display_options['fields']['php_5']['table'] = 'views';
-  $handler->display->display_options['fields']['php_5']['field'] = 'php';
-  $handler->display->display_options['fields']['php_5']['ui_name'] = 'Metric W';
-  $handler->display->display_options['fields']['php_5']['label'] = 'w Metric';
-  $handler->display->display_options['fields']['php_5']['use_php_setup'] = 0;
-  $handler->display->display_options['fields']['php_5']['php_output'] = '<?php print round($view->score[\'metric\'] * $view->score[\'weight\'][2], 2); ?>';
-  $handler->display->display_options['fields']['php_5']['use_php_click_sortable'] = '3';
-  $handler->display->display_options['fields']['php_5']['php_click_sortable'] = '';
+  $handler->display->display_options['fields']['nothing_4']['id'] = 'nothing_4';
+  $handler->display->display_options['fields']['nothing_4']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_4']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_4']['ui_name'] = 'Metric %';
+  $handler->display->display_options['fields']['nothing_4']['label'] = 'Metric %';
+  /* Field: Metric Weight */
+  $handler->display->display_options['fields']['nothing_5']['id'] = 'nothing_5';
+  $handler->display->display_options['fields']['nothing_5']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_5']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_5']['ui_name'] = 'Metric Weight';
+  $handler->display->display_options['fields']['nothing_5']['label'] = 'Metric Weight';
   /* Field: Content: Quality potential point */
   $handler->display->display_options['fields']['field_cat_response_quality_p']['id'] = 'field_cat_response_quality_p';
   $handler->display->display_options['fields']['field_cat_response_quality_p']['table'] = 'field_data_field_cat_response_quality_p';
