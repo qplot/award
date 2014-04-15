@@ -443,6 +443,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     'question_count' => 0,
     'metric_count' => 0,
     'final' => 0,
+    'final_p' => 0,
   );
   if ($app = node_load($app_id)) {
     // Find app type.
@@ -493,7 +494,9 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
           $wp = array(0.45, 0.25, 0.15, 0.15);
         }
         $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
+        $scores['final_p'] = $wp[0] * $scores['automatic_p'] + $wp[1] * $scores['kpi_p'] + $wp[2] * $scores['metric_p'] + $wp[3] * $scores['quality_p'];
         $cat_response_wrapper->field_cat_response_final->set($scores['final']);
+        $cat_response_wrapper->field_cat_response_final_p->set($scores['final_p']);
 
         $cat_response_wrapper->save();
       }
@@ -580,6 +583,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
       'category_id' => intval($cid),
       'response_id' => intval($crid),
       'final' => $cat_response_wrapper->field_cat_response_final->value(),
+      'final_p' => $cat_response_wrapper->field_cat_response_final_p->value(),
       'automatic_p' => $cat_response_wrapper->field_cat_response_automatic_p->value(),
       'automatic' => $cat_response_wrapper->field_cat_response_automatic->value(),
       'kpi_p' => $cat_response_wrapper->field_cat_response_kpi_p->value(),
