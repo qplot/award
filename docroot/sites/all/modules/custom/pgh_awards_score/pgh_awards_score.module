@@ -377,7 +377,7 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
     $qids = $section_wrapper->field_section_questions->raw();
 
     // Find all response id associated with these questions.
-    if ($qid && ($rids = pgh_api_find_nodes(
+    if ($qids && ($rids = pgh_api_find_nodes(
       array(
         'type' => 'response',
         'field_response_application' => array('target_id', $app_id, '='),
@@ -450,7 +450,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
     $apptype = node_load($apptype_id);
     $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
-    $quality_disable_cids = pgh_awards_score_quality_potential_categories($apptype_tag);
+    $quality_disable_cids = pgh_awards_score_quality_disabled_categories($apptype_tag);
 
     $cids = $apptype_wrapper->field_apptype_categories->raw();
     foreach ($cids as $cat_id) {
@@ -765,14 +765,14 @@ function pgh_awards_score_calculate_apptype_op($app_id, &$context) {
 }
 
 /**
- * Get a list of displayable categories id based on application type.
+ * Get a disabled list of displayable categories id based on application type.
  *
  * @param string $apptype_tag
  *   Application Type Tag String
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_score_quality_potential_categories($apptype_tag) {
+function pgh_awards_score_quality_disabled_categories($apptype_tag) {
   $hiddens = array(
     'partner_for_change' => array(
       'PFC_demographic',
@@ -796,11 +796,11 @@ function pgh_awards_score_quality_potential_categories($apptype_tag) {
       'LTC_appendixB'
     ),
     'champion_for_change_gpo' => array(
-      'CFC_goals',
+      // 'CFC_goals',
       'PFC_accuracy',
     ),
     'champion_for_change_nongpo' => array(
-      'CFC_goals',
+      // 'CFC_goals',
       'PFC_accuracy'
     ),
     'greening_the_or' => array(
