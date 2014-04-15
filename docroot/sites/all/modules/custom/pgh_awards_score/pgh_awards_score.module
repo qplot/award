@@ -398,33 +398,33 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
     $qids = $section_wrapper->field_section_questions->raw();
 
     // Find all response id associated with these questions.
-    $rids = pgh_api_find_nodes(
+    if ($qid && ($rids = pgh_api_find_nodes(
       array(
         'type' => 'response',
         'field_response_application' => array('target_id', $app_id, '='),
         'field_response_question' => array('target_id', $qids, 'IN'),
       ),
       NULL, TRUE
-    );
-
-    // Aggregate the scores.
-    $responses = node_load_multiple($rids);
-    foreach ($responses as &$response) {
-      $response_wrapper = entity_metadata_wrapper('node', $response);
-      // Calculate automatic scores.
-      $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
-      $scores['automatic'] += intval($response_wrapper->field_response_score->value());
-      // Calculate kpi scores.
-      $kpi = $response_wrapper->field_response_kpi->value();
-      if ($kpi !== '') {
-        $scores['kpi_p'] += 1;
-        $scores['kpi'] += intval($kpi);
+    ))) {
+      // Aggregate the scores.
+      $responses = node_load_multiple($rids);
+      foreach ($responses as &$response) {
+        $response_wrapper = entity_metadata_wrapper('node', $response);
+        // Calculate automatic scores.
+        $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
+        $scores['automatic'] += intval($response_wrapper->field_response_score->value());
+        // Calculate kpi scores.
+        $kpi = $response_wrapper->field_response_kpi->value();
+        if ($kpi !== '') {
+          $scores['kpi_p'] += 1;
+          $scores['kpi'] += intval($kpi);
+        }
+        // Calculate other stat.
+        $scores['question_count'] += 1;
+        // dsm($response_wrapper->field_response_question->raw());
+        // dsm($response->nid);
+        // dsm('AP:' . $scores['automatic_p']);
       }
-      // Calculate other stat.
-      $scores['question_count'] += 1;
-      // dsm($response_wrapper->field_response_question->raw());
-      // dsm($response->nid);
-      // dsm('AP:' . $scores['automatic_p']);
     }
   }
 
