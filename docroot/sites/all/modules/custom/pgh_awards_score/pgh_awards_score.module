@@ -507,6 +507,9 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         // Based on the application type, hidden tag is stored as 0 here.
         $quality_p = in_array($cat_id, $quality_disable_cids) ? 0 : 100;
         $cat_response_wrapper->field_cat_response_quality_p->set($quality_p);
+        // Quality score is not calculated, instead it's fetched here.
+        $scores['quality_p'] = $quality_p;
+        $scores['quality'] = $cat_response_wrapper->field_cat_response_quality->value();
 
         // Calculate and store final score.
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
