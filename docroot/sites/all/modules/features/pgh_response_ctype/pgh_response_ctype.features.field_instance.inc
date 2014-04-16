@@ -138,6 +138,52 @@ function pgh_response_ctype_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-response-field_response_kpi_p'
+  $field_instances['node-response-field_response_kpi_p'] = array(
+    'bundle' => 'response',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 8,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_response_kpi_p',
+    'label' => 'KPI Potential',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'node-response-field_response_point'
   $field_instances['node-response-field_response_point'] = array(
     'bundle' => 'response',
@@ -349,6 +395,7 @@ function pgh_response_ctype_field_default_field_instances() {
   t('Application');
   t('Body');
   t('KPI');
+  t('KPI Potential');
   t('Point');
   t('Question');
   t('Score');
