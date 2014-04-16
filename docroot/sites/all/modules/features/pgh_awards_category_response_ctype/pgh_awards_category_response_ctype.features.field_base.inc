@@ -230,6 +230,27 @@ function pgh_awards_category_response_ctype_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_cat_response_final_p'
+  $field_bases['field_cat_response_final_p'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_cat_response_final_p',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(
+      'decimal_separator' => '.',
+    ),
+    'translatable' => 0,
+    'type' => 'number_float',
+  );
+
   // Exported field_base: 'field_cat_response_kpi'
   $field_bases['field_cat_response_kpi'] = array(
     'active' => 1,

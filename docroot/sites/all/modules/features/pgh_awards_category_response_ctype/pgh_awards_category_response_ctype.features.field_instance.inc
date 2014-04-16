@@ -93,7 +93,7 @@ function pgh_awards_category_response_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 1,
+      'weight' => 2,
     ),
   );
 
@@ -256,7 +256,7 @@ function pgh_awards_category_response_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 0,
+      'weight' => 1,
     ),
   );
 
@@ -296,6 +296,52 @@ function pgh_awards_category_response_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
+      'weight' => 14,
+    ),
+  );
+
+  // Exported field_instance: 'node-category_response-field_cat_response_final_p'
+  $field_instances['node-category_response-field_cat_response_final_p'] = array(
+    'bundle' => 'category_response',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 13,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_cat_response_final_p',
+    'label' => 'Final potential point',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
       'weight' => 13,
     ),
   );
@@ -548,6 +594,7 @@ function pgh_awards_category_response_ctype_field_default_field_instances() {
   t('Body');
   t('Case study');
   t('Category');
+  t('Final potential point');
   t('Final score');
   t('KPI potential point');
   t('KPI score');

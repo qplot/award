@@ -180,6 +180,27 @@ function pgh_application_ctype_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_application_final_p'
+  $field_bases['field_application_final_p'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_application_final_p',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(
+      'decimal_separator' => '.',
+    ),
+    'translatable' => 0,
+    'type' => 'number_float',
+  );
+
   // Exported field_base: 'field_application_kpi'
   $field_bases['field_application_kpi'] = array(
     'active' => 1,
@@ -427,18 +448,17 @@ function pgh_application_ctype_field_default_field_bases() {
     'locked' => 0,
     'module' => 'entityreference',
     'settings' => array(
-      'handler' => 'views',
+      'handler' => 'base',
       'handler_settings' => array(
         'behaviors' => array(
           'views-select-list' => array(
             'status' => 1,
           ),
         ),
-        'view' => array(
-          'args' => array(),
-          'display_name' => 'entityreference_1',
-          'view_name' => 'application_reviewers',
+        'sort' => array(
+          'type' => 'none',
         ),
+        'target_bundles' => array(),
       ),
       'target_type' => 'user',
     ),

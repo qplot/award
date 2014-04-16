@@ -168,7 +168,7 @@ function pgh_application_ctype_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 18,
+      'weight' => 19,
     ),
   );
 
@@ -205,7 +205,7 @@ function pgh_application_ctype_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 19,
+      'weight' => 20,
     ),
   );
 
@@ -245,6 +245,52 @@ function pgh_application_ctype_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
+      'weight' => 18,
+    ),
+  );
+
+  // Exported field_instance: 'node-application-field_application_final_p'
+  $field_instances['node-application-field_application_final_p'] = array(
+    'bundle' => 'application',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 19,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_final_p',
+    'label' => 'Final potential point',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
       'weight' => 17,
     ),
   );
@@ -785,6 +831,7 @@ function pgh_application_ctype_field_default_field_instances() {
   t('Awards Designations');
   t('Body');
   t('Category Progress');
+  t('Final potential point');
   t('Final score');
   t('KPI potential point');
   t('KPI score');

@@ -442,10 +442,16 @@ function pgh_awards_score_view_views_default_views() {
     'field_application_qualify' => 'field_application_qualify',
     'field_cat_response_automatic_p' => 'field_cat_response_automatic_p',
     'field_cat_response_automatic' => 'field_cat_response_automatic',
-    'field_cat_response_metric_p' => 'field_cat_response_metric_p',
-    'field_cat_response_metric' => 'field_cat_response_metric',
+    'php' => 'php',
+    'php_3' => 'php_3',
     'field_cat_response_kpi_p' => 'field_cat_response_kpi_p',
     'field_cat_response_kpi' => 'field_cat_response_kpi',
+    'php_2' => 'php_2',
+    'php_4' => 'php_4',
+    'field_cat_response_metric_p' => 'field_cat_response_metric_p',
+    'field_cat_response_metric' => 'field_cat_response_metric',
+    'php_1' => 'php_1',
+    'php_5' => 'php_5',
     'field_cat_response_quality_p' => 'field_cat_response_quality_p',
     'field_cat_response_quality' => 'field_cat_response_quality',
     'field_cat_response_final' => 'field_cat_response_final',
@@ -501,14 +507,14 @@ function pgh_awards_score_view_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_cat_response_metric_p' => array(
+    'php' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_cat_response_metric' => array(
+    'php_3' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -523,6 +529,48 @@ function pgh_awards_score_view_views_default_views() {
       'empty_column' => 0,
     ),
     'field_cat_response_kpi' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_2' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_4' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cat_response_metric_p' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_cat_response_metric' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'php_5' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -607,41 +655,84 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['field_application_qualify']['table'] = 'field_data_field_application_qualify';
   $handler->display->display_options['fields']['field_application_qualify']['field'] = 'field_application_qualify';
   $handler->display->display_options['fields']['field_application_qualify']['relationship'] = 'field_cat_response_application_target_id';
-  /* Field: Content: Automatic potential point */
+  /* Field: Automatic P */
   $handler->display->display_options['fields']['field_cat_response_automatic_p']['id'] = 'field_cat_response_automatic_p';
   $handler->display->display_options['fields']['field_cat_response_automatic_p']['table'] = 'field_data_field_cat_response_automatic_p';
   $handler->display->display_options['fields']['field_cat_response_automatic_p']['field'] = 'field_cat_response_automatic_p';
+  $handler->display->display_options['fields']['field_cat_response_automatic_p']['ui_name'] = 'Automatic P';
   $handler->display->display_options['fields']['field_cat_response_automatic_p']['label'] = 'Auto P';
-  /* Field: Content: Automatic score */
+  /* Field: Automatic */
   $handler->display->display_options['fields']['field_cat_response_automatic']['id'] = 'field_cat_response_automatic';
   $handler->display->display_options['fields']['field_cat_response_automatic']['table'] = 'field_data_field_cat_response_automatic';
   $handler->display->display_options['fields']['field_cat_response_automatic']['field'] = 'field_cat_response_automatic';
+  $handler->display->display_options['fields']['field_cat_response_automatic']['ui_name'] = 'Automatic';
   $handler->display->display_options['fields']['field_cat_response_automatic']['label'] = 'Auto';
-  /* Field: Content: Metric potential point */
-  $handler->display->display_options['fields']['field_cat_response_metric_p']['id'] = 'field_cat_response_metric_p';
-  $handler->display->display_options['fields']['field_cat_response_metric_p']['table'] = 'field_data_field_cat_response_metric_p';
-  $handler->display->display_options['fields']['field_cat_response_metric_p']['field'] = 'field_cat_response_metric_p';
-  $handler->display->display_options['fields']['field_cat_response_metric_p']['label'] = 'Metric P';
-  /* Field: Content: Metric score */
-  $handler->display->display_options['fields']['field_cat_response_metric']['id'] = 'field_cat_response_metric';
-  $handler->display->display_options['fields']['field_cat_response_metric']['table'] = 'field_data_field_cat_response_metric';
-  $handler->display->display_options['fields']['field_cat_response_metric']['field'] = 'field_cat_response_metric';
-  $handler->display->display_options['fields']['field_cat_response_metric']['label'] = 'Metric';
-  /* Field: Content: KPI potential point */
+  /* Field: Automatic % */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['ui_name'] = 'Automatic %';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Auto %';
+  /* Field: Automatic Weight */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['ui_name'] = 'Automatic Weight';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Auto weight';
+  /* Field: KPI P */
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['id'] = 'field_cat_response_kpi_p';
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['table'] = 'field_data_field_cat_response_kpi_p';
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['field'] = 'field_cat_response_kpi_p';
+  $handler->display->display_options['fields']['field_cat_response_kpi_p']['ui_name'] = 'KPI P';
   $handler->display->display_options['fields']['field_cat_response_kpi_p']['label'] = 'KPI P';
-  /* Field: Content: KPI score */
+  /* Field: KPI */
   $handler->display->display_options['fields']['field_cat_response_kpi']['id'] = 'field_cat_response_kpi';
   $handler->display->display_options['fields']['field_cat_response_kpi']['table'] = 'field_data_field_cat_response_kpi';
   $handler->display->display_options['fields']['field_cat_response_kpi']['field'] = 'field_cat_response_kpi';
+  $handler->display->display_options['fields']['field_cat_response_kpi']['ui_name'] = 'KPI';
   $handler->display->display_options['fields']['field_cat_response_kpi']['label'] = 'KPI';
+  /* Field: KPI % */
+  $handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
+  $handler->display->display_options['fields']['nothing_2']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_2']['ui_name'] = 'KPI %';
+  $handler->display->display_options['fields']['nothing_2']['label'] = 'KPI %';
+  /* Field: KPI Weight */
+  $handler->display->display_options['fields']['nothing_3']['id'] = 'nothing_3';
+  $handler->display->display_options['fields']['nothing_3']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_3']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_3']['ui_name'] = 'KPI Weight';
+  $handler->display->display_options['fields']['nothing_3']['label'] = 'KPI weight';
+  /* Field: Metric P */
+  $handler->display->display_options['fields']['field_cat_response_metric_p']['id'] = 'field_cat_response_metric_p';
+  $handler->display->display_options['fields']['field_cat_response_metric_p']['table'] = 'field_data_field_cat_response_metric_p';
+  $handler->display->display_options['fields']['field_cat_response_metric_p']['field'] = 'field_cat_response_metric_p';
+  $handler->display->display_options['fields']['field_cat_response_metric_p']['ui_name'] = 'Metric P';
+  $handler->display->display_options['fields']['field_cat_response_metric_p']['label'] = 'Metric P';
+  /* Field: Metric */
+  $handler->display->display_options['fields']['field_cat_response_metric']['id'] = 'field_cat_response_metric';
+  $handler->display->display_options['fields']['field_cat_response_metric']['table'] = 'field_data_field_cat_response_metric';
+  $handler->display->display_options['fields']['field_cat_response_metric']['field'] = 'field_cat_response_metric';
+  $handler->display->display_options['fields']['field_cat_response_metric']['ui_name'] = 'Metric';
+  $handler->display->display_options['fields']['field_cat_response_metric']['label'] = 'Metric';
+  /* Field: Metric % */
+  $handler->display->display_options['fields']['nothing_4']['id'] = 'nothing_4';
+  $handler->display->display_options['fields']['nothing_4']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_4']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_4']['ui_name'] = 'Metric %';
+  $handler->display->display_options['fields']['nothing_4']['label'] = 'Metric %';
+  /* Field: Metric Weight */
+  $handler->display->display_options['fields']['nothing_5']['id'] = 'nothing_5';
+  $handler->display->display_options['fields']['nothing_5']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_5']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_5']['ui_name'] = 'Metric Weight';
+  $handler->display->display_options['fields']['nothing_5']['label'] = 'Metric Weight';
   /* Field: Content: Quality potential point */
   $handler->display->display_options['fields']['field_cat_response_quality_p']['id'] = 'field_cat_response_quality_p';
   $handler->display->display_options['fields']['field_cat_response_quality_p']['table'] = 'field_data_field_cat_response_quality_p';
   $handler->display->display_options['fields']['field_cat_response_quality_p']['field'] = 'field_cat_response_quality_p';
   $handler->display->display_options['fields']['field_cat_response_quality_p']['label'] = 'Quality P';
+  $handler->display->display_options['fields']['field_cat_response_quality_p']['exclude'] = TRUE;
   /* Field: Content: Quality score */
   $handler->display->display_options['fields']['field_cat_response_quality']['id'] = 'field_cat_response_quality';
   $handler->display->display_options['fields']['field_cat_response_quality']['table'] = 'field_data_field_cat_response_quality';

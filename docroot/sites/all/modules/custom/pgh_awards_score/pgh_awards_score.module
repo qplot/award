@@ -398,33 +398,33 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
     $qids = $section_wrapper->field_section_questions->raw();
 
     // Find all response id associated with these questions.
-    $rids = pgh_api_find_nodes(
+    if ($qids && ($rids = pgh_api_find_nodes(
       array(
         'type' => 'response',
         'field_response_application' => array('target_id', $app_id, '='),
         'field_response_question' => array('target_id', $qids, 'IN'),
       ),
       NULL, TRUE
-    );
-
-    // Aggregate the scores.
-    $responses = node_load_multiple($rids);
-    foreach ($responses as &$response) {
-      $response_wrapper = entity_metadata_wrapper('node', $response);
-      // Calculate automatic scores.
-      $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
-      $scores['automatic'] += intval($response_wrapper->field_response_score->value());
-      // Calculate kpi scores.
-      $kpi = $response_wrapper->field_response_kpi->value();
-      if ($kpi !== '') {
-        $scores['kpi_p'] += 1;
-        $scores['kpi'] += intval($kpi);
+    ))) {
+      // Aggregate the scores.
+      $responses = node_load_multiple($rids);
+      foreach ($responses as &$response) {
+        $response_wrapper = entity_metadata_wrapper('node', $response);
+        // Calculate automatic scores.
+        $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
+        $scores['automatic'] += intval($response_wrapper->field_response_score->value());
+        // Calculate kpi scores.
+        $kpi = $response_wrapper->field_response_kpi->value();
+        if ($kpi !== '') {
+          $scores['kpi_p'] += 1;
+          $scores['kpi'] += intval($kpi);
+        }
+        // Calculate other stat.
+        $scores['question_count'] += 1;
+        // dsm($response_wrapper->field_response_question->raw());
+        // dsm($response->nid);
+        // dsm('AP:' . $scores['automatic_p']);
       }
-      // Calculate other stat.
-      $scores['question_count'] += 1;
-      // dsm($response_wrapper->field_response_question->raw());
-      // dsm($response->nid);
-      // dsm('AP:' . $scores['automatic_p']);
     }
   }
 
@@ -464,6 +464,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     'question_count' => 0,
     'metric_count' => 0,
     'final' => 0,
+    'final_p' => 0,
   );
   if ($app = node_load($app_id)) {
     // Find app type.
@@ -471,7 +472,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     $apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag));
     $apptype = node_load($apptype_id);
     $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
-    $quality_disable_cids = pgh_awards_score_quality_potential_categories($apptype_tag);
+    $quality_disable_cids = pgh_awards_score_quality_disabled_categories($apptype_tag);
 
     $cids = $apptype_wrapper->field_apptype_categories->raw();
     foreach ($cids as $cat_id) {
@@ -506,6 +507,9 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         // Based on the application type, hidden tag is stored as 0 here.
         $quality_p = in_array($cat_id, $quality_disable_cids) ? 0 : 100;
         $cat_response_wrapper->field_cat_response_quality_p->set($quality_p);
+        // Quality score is not calculated, instead it's fetched here.
+        $scores['quality_p'] = $quality_p;
+        $scores['quality'] = $cat_response_wrapper->field_cat_response_quality->value();
 
         // Calculate and store final score.
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
@@ -514,6 +518,8 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
           $wp = array(0.45, 0.25, 0.15, 0.15);
         }
         $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
+        $scores['final_p'] = $wp[0] * $scores['automatic_p'] + $wp[1] * $scores['kpi_p'] + $wp[2] * $scores['metric_p'] + $wp[3] * $scores['quality_p'];
+        $cat_response_wrapper->field_cat_response_final_p->set($scores['final_p']);
         $cat_response_wrapper->field_cat_response_final->set($scores['final']);
 
         $cat_response_wrapper->save();
@@ -536,6 +542,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
       $app_wrapper->field_application_metric->set($sums['metric']);
       $app_wrapper->field_application_quality_p->set($sums['quality_p']);
       $app_wrapper->field_application_quality->set($sums['quality']);
+      $app_wrapper->field_application_final_p->set($sums['final_p']);
       $app_wrapper->field_application_final->set($sums['final']);
 
       $app_wrapper->save();
@@ -601,6 +608,7 @@ function pgh_awards_score_application($app_id, $include_metric = FALSE) {
       'category_id' => intval($cid),
       'response_id' => intval($crid),
       'final' => $cat_response_wrapper->field_cat_response_final->value(),
+      'final_p' => $cat_response_wrapper->field_cat_response_final_p->value(),
       'automatic_p' => $cat_response_wrapper->field_cat_response_automatic_p->value(),
       'automatic' => $cat_response_wrapper->field_cat_response_automatic->value(),
       'kpi_p' => $cat_response_wrapper->field_cat_response_kpi_p->value(),
@@ -787,14 +795,14 @@ function pgh_awards_score_calculate_apptype_op($app_id, &$context) {
 }
 
 /**
- * Get a list of displayable categories id based on application type.
+ * Get a disabled list of displayable categories id based on application type.
  *
  * @param string $apptype_tag
  *   Application Type Tag String
  *
  * @author Fang Jin <fang@designhammer.com>
  */
-function pgh_awards_score_quality_potential_categories($apptype_tag) {
+function pgh_awards_score_quality_disabled_categories($apptype_tag) {
   $hiddens = array(
     'partner_for_change' => array(
       'PFC_demographic',
@@ -818,11 +826,11 @@ function pgh_awards_score_quality_potential_categories($apptype_tag) {
       'LTC_appendixB'
     ),
     'champion_for_change_gpo' => array(
-      'CFC_goals',
+      // 'CFC_goals',
       'PFC_accuracy',
     ),
     'champion_for_change_nongpo' => array(
-      'CFC_goals',
+      // 'CFC_goals',
       'PFC_accuracy'
     ),
     'greening_the_or' => array(
