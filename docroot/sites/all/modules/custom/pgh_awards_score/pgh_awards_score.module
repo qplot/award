@@ -69,6 +69,15 @@ function pgh_awards_score_menu() {
     'access arguments' => array('administer awards system'),
   );
 
+  // Migrate all kpi potential scores for one application type.
+  $items['admin/content/migrate/kpi'] = array(
+    'title' => 'KPI Potential',
+    'description' => 'Fix migrate kpi potential values for application type',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array("pgh_awards_score_kpi_form"),
+    'access arguments' => array('administer awards system'),
+  );
+
   return $items;
 }
 
@@ -414,16 +423,13 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
         $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
         $scores['automatic'] += intval($response_wrapper->field_response_score->value());
         // Calculate kpi scores.
-        $kpi = $response_wrapper->field_response_kpi->value();
-        if ($kpi !== '') {
-          $scores['kpi_p'] += 1;
-          $scores['kpi'] += intval($kpi);
-        }
+        $scores['kpi_p'] += intval($response_wrapper->field_response_kpi_p->value());
+        $scores['kpi'] += intval($response_wrapper->field_response_kpi->value());
         // Calculate other stat.
         $scores['question_count'] += 1;
         // dsm($response_wrapper->field_response_question->raw());
         // dsm($response->nid);
-        // dsm('AP:' . $scores['automatic_p']);
+        // dsm('KP:' . $scores['kpi_p']);
       }
     }
   }
@@ -1248,6 +1254,121 @@ function pgh_awards_score_checkboxes_op($qid, &$context) {
     watchdog('pgh_score', "[$qid] " . implode(",", $records));
   }
 
+  $context['results'][] = $qid;
+  $context['message'] = t('Migrating question @nid with @count responses', array('@nid' => $qid, '@count' => count($rids)));
+}
+
+/**
+ * Migrate kpi potential for app type confirm page.
+ */
+function pgh_awards_score_kpi_form($form, &$form_state) {
+  $form['description'] = array(
+    '#markup' => 'This will take a few minutes to migrate kpi potential for all kpi enabled questions, proceed ? <br />',
+  );
+
+  $form['all'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Process all',
+    '#description' => 'Check this if you are sure you want to calculate all the scores',
+    '#default_value' => 0,
+  );
+  $form['debug'] = array(
+    '#type' => 'textfield',
+    '#title' => '[Debug] Set how many applications to process',
+    '#default_value' => 1,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Calculate',
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for migration.
+ */
+function pgh_awards_score_kpi_form_submit($form, &$form_state) {
+  $values = &$form_state['values'];
+
+  $operations = array();
+  // Debug option.
+  $debug = 0;
+  if (empty($values['all'])) {
+    if (isset($values['debug'])) {
+      $debug = intval($values['debug']);
+    }
+  }
+
+  $i = 0;
+  $pids = pgh_api_find_nodes(
+    array(
+      'type' => 'question',
+      'field_question_kpi' => array('value', 'NULL', '!='),
+    ),
+    NULL, TRUE
+  );
+  foreach ($pids as $nid) {
+    $operations[] = array('pgh_awards_score_kpi_op', array($nid));
+    if ($debug) {
+      $i += 1;
+      if ($i >= $debug) {
+        break;
+      }
+    }
+  }
+  $batch = array(
+    'operations' => $operations,
+    'finished' => 'pgh_awards_score_kpi_form_finished',
+  );
+  batch_set($batch);
+}
+
+/**
+ * Finish handler for migration.
+ */
+function pgh_awards_score_kpi_form_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('@count questions migrated.', array('@count' => count($results))));
+  }
+  else {
+    // An error occurred.
+    // $operations contains the operations that remained unprocessed.
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing id: @args',
+      array('@args' => print_r($error_operation[0], TRUE))));
+  }
+}
+
+/**
+ * Op handler for migration.
+ */
+function pgh_awards_score_kpi_op($qid, &$context) {
+  $question = node_load($qid);
+  $question_wrapper = entity_metadata_wrapper('node', $question);
+
+  // Find out the kpi potential.
+  $kpi = $question_wrapper->field_question_kpi->value();
+  $kpi_p = max($kpi);
+
+  $query = array(
+    'type' => 'response',
+    'field_response_question' => array('target_id', $qid, '='),
+    // 'field_response_application' => array('target_id', 400006, '=')
+  );
+  $rids = pgh_api_find_nodes($query, NULL, TRUE);
+  $responses = node_load_multiple($rids);
+  $records = array();
+  foreach ($responses as &$response) {
+    $wrapper = entity_metadata_wrapper('node', $response);
+    $wrapper->field_response_kpi_p->set($kpi_p);
+    $wrapper->save();
+    $records[] = $response->nid;
+  }
+  if ($records) {
+    watchdog('pgh_score', "[$qid] " . implode(",", $records));
+  }
   $context['results'][] = $qid;
   $context['message'] = t('Migrating question @nid with @count responses', array('@nid' => $qid, '@count' => count($rids)));
 }
