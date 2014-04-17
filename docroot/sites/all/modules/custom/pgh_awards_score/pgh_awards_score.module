@@ -500,7 +500,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
         $wp = explode('|', $weight);
         if (count($wp) < 4) {
-          $wp = array(0.45, 0.25, 0.15, 0.15);
+          $wp = array(0.45, 0.15, 0.25, 0.15);
         }
         $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
         $scores['final_p'] = $wp[0] * $scores['automatic_p'] + $wp[1] * $scores['kpi_p'] + $wp[2] * $scores['metric_p'] + $wp[3] * $scores['quality_p'];
@@ -510,8 +510,11 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         $cat_response_wrapper->save();
       }
 
-      foreach ($scores as $key => $score) {
-        $sums[$key] += $score;
+      // Exclude the disabled category from total calculation.
+      if (!in_array($cat_id, $quality_disable_cids)) {
+        foreach ($scores as $key => $score) {
+          $sums[$key] += $score;
+        }
       }
     }
 
