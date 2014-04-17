@@ -165,6 +165,8 @@ function pgh_awards_review_page($app) {
   $apptype = node_load($apptype_id);
   $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
   $apptype_body = $apptype_wrapper->body->value();
+  $weights = $apptype_wrapper->field_apptype_score_weights->value();
+  $weights = pgh_awards_score_application_weight($weights);
 
   // Get custom metric values.
   $profiles = pgh_awards_review_profile_formulas();
@@ -207,6 +209,7 @@ function pgh_awards_review_page($app) {
   // Get application scores.
   $rows = array();
   $scores = pgh_awards_score_application($app_id, TRUE);
+  $final2 = 0;
   foreach ($scores as &$cat) {
     if ($cat) {
       $category = node_load($cat['category_id']);
@@ -216,7 +219,7 @@ function pgh_awards_review_page($app) {
       $cat['category_class'] = str_replace('_', '-', strtolower($cat['category_tag']));
       $cat['category_name'] = !empty($body['value']) ? $body['value'] : '';
       if ($cat['quality_p']) {
-        $row = pgh_awards_review_score_row($cat);
+        $row = pgh_awards_review_score_row($cat, $weights);
         // Add readonly link here.
         $row[0] = l($row[0],
           "review/$app_id/category/{$cat['category_tag']}/readonly",
@@ -224,6 +227,7 @@ function pgh_awards_review_page($app) {
         );
 
         $rows[] = $row;
+        $final2 += $cat['final2'];
       }
     }
   }
@@ -241,10 +245,11 @@ function pgh_awards_review_page($app) {
     'quality_p' => $app_wrapper->field_application_quality_p->value(),
     'final' => $app_wrapper->field_application_final->value(),
     'final_p' => $app_wrapper->field_application_final_p->value(),
+    'final2' => $final2,
   );
-  $rows[] = pgh_awards_review_score_row($fs);
+  $rows[] = pgh_awards_review_score_row($fs, $weights);
   $cat = array('category_id' => 0);
-  $header = pgh_awards_review_score_row($cat);
+  $header = pgh_awards_review_score_row($cat, $weights);
   $score_view = theme('table', array('header' => $header, 'rows' => $rows));
 
   // Get goals of the app.
@@ -529,7 +534,7 @@ function pgh_awards_review_application_form_submit($form, &$form_state) {
 /**
  * Calculate percentage scores.
  */
-function pgh_awards_review_percentage_score(&$cat) {
+function pgh_awards_review_percentage_score(&$cat, $w) {
   $cat['automatic_pc'] = 0;
   if (!empty($cat['automatic_p'])) {
     $cat['automatic_pc'] = $cat['automatic'] / $cat['automatic_p'] * 100;
@@ -546,17 +551,27 @@ function pgh_awards_review_percentage_score(&$cat) {
   if (!empty($cat['quality_p'])) {
     $cat['quality_pc'] = $cat['quality'] / $cat['quality_p'] * 100;
   }
-  // $cat['final_p'] = $cat['automatic_p'] + $cat['kpi_p'] + $cat['metric_p'] + $cat['quality_p'];
   $cat['final_pc'] = 0;
   if (!empty($cat['final_p'])) {
     $cat['final_pc'] = $cat['final'] / $cat['final_p'] * 100;
+  }
+
+  // New ways of calculating finals.
+  if (empty($cat['final2'])) {
+    $cat['final2'] = $w[0] * $cat['automatic_pc'] + $w[1] * $cat['kpi_pc'] +
+                  $w[2] * $cat['metric_pc'] + $w[3] * $cat['quality_pc'];
+  }
+  $temp = $cat['automatic_p'] + $cat['kpi_p'] + $cat['metric_p'] + $cat['quality_p'];
+  $cat['final2_pc'] = 0;
+  if ($temp) {
+    $cat['final2_pc'] = ($cat['automatic'] + $cat['kpi'] + $cat['metric'] + $cat['quality']) / $temp * 100;
   }
 }
 
 /**
  * Get the header and row of the score table.
  */
-function pgh_awards_review_score_row(&$cat) {
+function pgh_awards_review_score_row(&$cat, $weights) {
   // Return header.
   if ($cat['category_id'] == 0) {
     return array(
@@ -564,13 +579,14 @@ function pgh_awards_review_score_row(&$cat) {
       'Metric', '% Metric',
       'KPI', '% KPI',
       'Quality',
-      'Final', '% Final',
+      // 'Final', '% Final',
       // 'Auto P',
-      // 'KPI P'
+      // 'KPI P',
+      'Final', '% Final',
     );
   }
   // Calculate the percentage score.
-  pgh_awards_review_percentage_score($cat);
+  pgh_awards_review_percentage_score($cat, $weights);
 
   // Round off the score value.
   pgh_awards_review_round_scores($cat);
@@ -584,9 +600,10 @@ function pgh_awards_review_score_row(&$cat) {
     $cat['metric'], $cat['metric_pc'] . '%',
     $cat['kpi'], $cat['kpi_pc'] . '%',
     $cat['quality'],
-    $cat['final'], $cat['final_pc'] . '%',
+    // $cat['final'], $cat['final_pc'] . '%',
     // $cat['automatic_p'],
     // $cat['kpi_p'],
+    $cat['final2'], $cat['final2_pc'] . '%',
   );
 }
 
