@@ -21,31 +21,17 @@
 
   // Fields that stores the score.
   $fields = array(
-    'field_cat_response_automatic' => 'automatic',
-    'field_cat_response_automatic_p' => 'automatic_p',
-    // 'nothing' => 'auto_pc',
-    // 'nothing_1' => 'auto_w',
-    'field_cat_response_kpi' => 'kpi',
-    'field_cat_response_kpi_p' => 'kpi_p',
-    // 'nothing_2' => 'kpi_pc',
-    // 'nothing_3' => 'kpi_w',
-    'field_cat_response_metric' => 'metric',
-    'field_cat_response_metric_p' => 'metric_p',
-    // 'nothing_4' => 'metric_pc',
-    // 'nothing_5' => 'metric_w',
-    'field_cat_response_quality' => 'quality',
-    'field_cat_response_quality_p' => 'quality_p',
-    // 'nothing_8' => 'quality_pc',
-    // 'nothing_7' => 'quality_w',
-    // 'field_cat_response_final' => 'final2',
-    // 'nothing_6' => 'final2_pc'
+    'field_application_automatic' => 'automatic',
+    'field_application_automatic_p' => 'automatic_p',
+    'field_application_kpi' => 'kpi',
+    'field_application_kpi_p' => 'kpi_p',
+    'field_application_metric' => 'metric',
+    'field_application_metric_p' => 'metric_p',
+    'field_application_quality' => 'quality',
+    'field_application_quality_p' => 'quality_p',
   );
   // Fields that needs to be disabled.
   $hiddens = array(
-    'field_cat_response_automatic_p',
-    'field_cat_response_kpi_p',
-    'field_cat_response_metric_p',
-    'field_cat_response_quality_p'
   );
 
   // Weight for this app type.
@@ -77,7 +63,7 @@
     <?php foreach ($rows as $row_count => $row): ?>
 
     <?php 
-      // Assign values
+      // // Assign values
       $values = array();
       foreach ($row as $key => $value) {
         if (array_key_exists($key, $fields)) {
@@ -87,17 +73,9 @@
       // Calculate more scores
       pgh_awards_review_percentage_score($values, $w);
       // Change row values
-      $row['nothing'] = round($values['automatic_pc'], 2) . '%';
-      $row['nothing_1'] = round($w[0], 2);
-      $row['nothing_2'] = round($values['kpi_pc'], 2) . '%';
-      $row['nothing_3'] = round($w[1], 2);
-      $row['field_cat_response_metric'] = round($values['metric'], 2);
-      $row['nothing_4'] = round($values['metric_pc'], 2) . '%';
-      $row['nothing_5'] = round($w[2], 2);
-      $row['nothing_8'] = round($values['quality_pc'], 2) . '%';
-      $row['nothing_7'] = round($w[3], 2);      
-      $row['field_cat_response_final'] = round($values['final2'], 2);
-      $row['nothing_6'] = round($values['final2_pc'], 2);
+      $row['field_application_metric'] = round($values['metric'], 2);
+      $row['field_application_final'] = round($values['final2'], 2);
+      $row['nothing'] = round($values['final2_pc'], 2);
     ?>
       <tr <?php if ($row_classes[$row_count]) { print 'class="' . implode(' ', $row_classes[$row_count]) .'"';  } ?>>
         <?php foreach ($row as $field => $content): ?>
