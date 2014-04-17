@@ -218,11 +218,18 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['field_application_final']['table'] = 'field_data_field_application_final';
   $handler->display->display_options['fields']['field_application_final']['field'] = 'field_application_final';
   $handler->display->display_options['fields']['field_application_final']['label'] = 'Final';
+  /* Field: Final % */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['ui_name'] = 'Final %';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Final %';
   /* Field: Content: Edit link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['label'] = 'Edit';
+  $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
   /* Sort criterion: Content: Nid */
   $handler->display->display_options['sorts']['nid']['id'] = 'nid';
   $handler->display->display_options['sorts']['nid']['table'] = 'node';
@@ -251,11 +258,44 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'application' => 'application',
   );
-  /* Filter criterion: Content: Automatic score (field_application_automatic) */
-  $handler->display->display_options['filters']['field_application_automatic_value']['id'] = 'field_application_automatic_value';
-  $handler->display->display_options['filters']['field_application_automatic_value']['table'] = 'field_data_field_application_automatic';
-  $handler->display->display_options['filters']['field_application_automatic_value']['field'] = 'field_application_automatic_value';
-  $handler->display->display_options['filters']['field_application_automatic_value']['operator'] = 'not empty';
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['relationship'] = 'reverse_field_applications_node';
+  $handler->display->display_options['filters']['title']['operator'] = 'word';
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'in Business Unit';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
+  );
+  /* Filter criterion: Content: Nid */
+  $handler->display->display_options['filters']['nid']['id'] = 'nid';
+  $handler->display->display_options['filters']['nid']['table'] = 'node';
+  $handler->display->display_options['filters']['nid']['field'] = 'nid';
+  $handler->display->display_options['filters']['nid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['nid']['expose']['operator_id'] = 'nid_op';
+  $handler->display->display_options['filters']['nid']['expose']['label'] = 'Application ID';
+  $handler->display->display_options['filters']['nid']['expose']['operator'] = 'nid_op';
+  $handler->display->display_options['filters']['nid']['expose']['identifier'] = 'nid';
+  $handler->display->display_options['filters']['nid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    6 => 0,
+    5 => 0,
+    4 => 0,
+    3 => 0,
+    7 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -679,30 +719,6 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing_1']['ui_name'] = 'Automatic Weight';
   $handler->display->display_options['fields']['nothing_1']['label'] = 'Auto weight';
-  /* Field: KPI P */
-  $handler->display->display_options['fields']['field_cat_response_kpi_p']['id'] = 'field_cat_response_kpi_p';
-  $handler->display->display_options['fields']['field_cat_response_kpi_p']['table'] = 'field_data_field_cat_response_kpi_p';
-  $handler->display->display_options['fields']['field_cat_response_kpi_p']['field'] = 'field_cat_response_kpi_p';
-  $handler->display->display_options['fields']['field_cat_response_kpi_p']['ui_name'] = 'KPI P';
-  $handler->display->display_options['fields']['field_cat_response_kpi_p']['label'] = 'KPI P';
-  /* Field: KPI */
-  $handler->display->display_options['fields']['field_cat_response_kpi']['id'] = 'field_cat_response_kpi';
-  $handler->display->display_options['fields']['field_cat_response_kpi']['table'] = 'field_data_field_cat_response_kpi';
-  $handler->display->display_options['fields']['field_cat_response_kpi']['field'] = 'field_cat_response_kpi';
-  $handler->display->display_options['fields']['field_cat_response_kpi']['ui_name'] = 'KPI';
-  $handler->display->display_options['fields']['field_cat_response_kpi']['label'] = 'KPI';
-  /* Field: KPI % */
-  $handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
-  $handler->display->display_options['fields']['nothing_2']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing_2']['ui_name'] = 'KPI %';
-  $handler->display->display_options['fields']['nothing_2']['label'] = 'KPI %';
-  /* Field: KPI Weight */
-  $handler->display->display_options['fields']['nothing_3']['id'] = 'nothing_3';
-  $handler->display->display_options['fields']['nothing_3']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing_3']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing_3']['ui_name'] = 'KPI Weight';
-  $handler->display->display_options['fields']['nothing_3']['label'] = 'KPI weight';
   /* Field: Metric P */
   $handler->display->display_options['fields']['field_cat_response_metric_p']['id'] = 'field_cat_response_metric_p';
   $handler->display->display_options['fields']['field_cat_response_metric_p']['table'] = 'field_data_field_cat_response_metric_p';
@@ -727,21 +743,64 @@ function pgh_awards_score_view_views_default_views() {
   $handler->display->display_options['fields']['nothing_5']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing_5']['ui_name'] = 'Metric Weight';
   $handler->display->display_options['fields']['nothing_5']['label'] = 'Metric Weight';
+  /* Field: KPI P */
+  $handler->display->display_options['fields']['field_cat_response_kpi_p']['id'] = 'field_cat_response_kpi_p';
+  $handler->display->display_options['fields']['field_cat_response_kpi_p']['table'] = 'field_data_field_cat_response_kpi_p';
+  $handler->display->display_options['fields']['field_cat_response_kpi_p']['field'] = 'field_cat_response_kpi_p';
+  $handler->display->display_options['fields']['field_cat_response_kpi_p']['ui_name'] = 'KPI P';
+  $handler->display->display_options['fields']['field_cat_response_kpi_p']['label'] = 'KPI P';
+  /* Field: KPI */
+  $handler->display->display_options['fields']['field_cat_response_kpi']['id'] = 'field_cat_response_kpi';
+  $handler->display->display_options['fields']['field_cat_response_kpi']['table'] = 'field_data_field_cat_response_kpi';
+  $handler->display->display_options['fields']['field_cat_response_kpi']['field'] = 'field_cat_response_kpi';
+  $handler->display->display_options['fields']['field_cat_response_kpi']['ui_name'] = 'KPI';
+  $handler->display->display_options['fields']['field_cat_response_kpi']['label'] = 'KPI';
+  /* Field: KPI % */
+  $handler->display->display_options['fields']['nothing_2']['id'] = 'nothing_2';
+  $handler->display->display_options['fields']['nothing_2']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_2']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_2']['ui_name'] = 'KPI %';
+  $handler->display->display_options['fields']['nothing_2']['label'] = 'KPI %';
+  /* Field: KPI Weight */
+  $handler->display->display_options['fields']['nothing_3']['id'] = 'nothing_3';
+  $handler->display->display_options['fields']['nothing_3']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_3']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_3']['ui_name'] = 'KPI Weight';
+  $handler->display->display_options['fields']['nothing_3']['label'] = 'KPI weight';
   /* Field: Content: Quality potential point */
   $handler->display->display_options['fields']['field_cat_response_quality_p']['id'] = 'field_cat_response_quality_p';
   $handler->display->display_options['fields']['field_cat_response_quality_p']['table'] = 'field_data_field_cat_response_quality_p';
   $handler->display->display_options['fields']['field_cat_response_quality_p']['field'] = 'field_cat_response_quality_p';
   $handler->display->display_options['fields']['field_cat_response_quality_p']['label'] = 'Quality P';
-  $handler->display->display_options['fields']['field_cat_response_quality_p']['exclude'] = TRUE;
   /* Field: Content: Quality score */
   $handler->display->display_options['fields']['field_cat_response_quality']['id'] = 'field_cat_response_quality';
   $handler->display->display_options['fields']['field_cat_response_quality']['table'] = 'field_data_field_cat_response_quality';
   $handler->display->display_options['fields']['field_cat_response_quality']['field'] = 'field_cat_response_quality';
   $handler->display->display_options['fields']['field_cat_response_quality']['label'] = 'Quality';
-  /* Field: Content: Final score */
+  /* Field: Quality % */
+  $handler->display->display_options['fields']['nothing_8']['id'] = 'nothing_8';
+  $handler->display->display_options['fields']['nothing_8']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_8']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_8']['ui_name'] = 'Quality %';
+  $handler->display->display_options['fields']['nothing_8']['label'] = 'Quality %';
+  /* Field: Quality Weight */
+  $handler->display->display_options['fields']['nothing_7']['id'] = 'nothing_7';
+  $handler->display->display_options['fields']['nothing_7']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_7']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_7']['ui_name'] = 'Quality Weight';
+  $handler->display->display_options['fields']['nothing_7']['label'] = 'Quality Weight';
+  /* Field: Final Category Score */
   $handler->display->display_options['fields']['field_cat_response_final']['id'] = 'field_cat_response_final';
   $handler->display->display_options['fields']['field_cat_response_final']['table'] = 'field_data_field_cat_response_final';
   $handler->display->display_options['fields']['field_cat_response_final']['field'] = 'field_cat_response_final';
+  $handler->display->display_options['fields']['field_cat_response_final']['ui_name'] = 'Final Category Score';
+  $handler->display->display_options['fields']['field_cat_response_final']['label'] = 'Final category score';
+  /* Field: Final Category % */
+  $handler->display->display_options['fields']['nothing_6']['id'] = 'nothing_6';
+  $handler->display->display_options['fields']['nothing_6']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_6']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_6']['ui_name'] = 'Final Category %';
+  $handler->display->display_options['fields']['nothing_6']['label'] = 'Final category %';
   /* Sort criterion: Content: Nid */
   $handler->display->display_options['sorts']['nid']['id'] = 'nid';
   $handler->display->display_options['sorts']['nid']['table'] = 'node';
