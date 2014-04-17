@@ -86,6 +86,7 @@ function pgh_awards_export_form_submit($form, &$form_state) {
     array(
       'type' => 'application',
       'field_application_type' => $apptype_tag,
+      // 'field_application_status' => array('value', 'new', '!=')
     ),
     NULL, TRUE
   );
@@ -291,6 +292,7 @@ function pgh_awards_export_application_row($op_id, &$questions) {
         $response_wrapper = entity_metadata_wrapper('node', $response);
         $qid = $response_wrapper->field_response_question->raw();
         $body = $response_wrapper->body->value();
+
         if (!empty($questions['question_' . $qid])) {
           $question = &$questions['question_' . $qid];
 
@@ -339,7 +341,7 @@ function pgh_awards_export_application_row($op_id, &$questions) {
       // dsm($questions);
       $answers = array();
       foreach ($questions as $key => &$question) {
-        $answers[$key] = $question['value'];
+        $answers[$key] = substr($question['value'], 0, 50);
       }
 
       $row = array_merge(
