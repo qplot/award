@@ -349,6 +349,17 @@ function pgh_awards_score_calculate_application_category_metric($app_id, $cat_id
 }
 
 /**
+ * Given stored weight string, and return weight array.
+ */
+function pgh_awards_score_application_weight($weights) {
+  $weights = explode('|', $weights);
+  if (!is_array($weights) || count($weights) < 4) {
+    $weights = array(0.45, 0.15, 0.25, 0.15);
+  }
+  return $weights;
+}
+
+/**
  * Calculate score for category and store in category response.
  *
  * @param int $app_id
@@ -498,10 +509,7 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
 
         // Calculate and store final score.
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
-        $wp = explode('|', $weight);
-        if (count($wp) < 4) {
-          $wp = array(0.45, 0.15, 0.25, 0.15);
-        }
+        $wp = pgh_awards_score_application_weight($weight);
         $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
         $scores['final_p'] = $wp[0] * $scores['automatic_p'] + $wp[1] * $scores['kpi_p'] + $wp[2] * $scores['metric_p'] + $wp[3] * $scores['quality_p'];
         $cat_response_wrapper->field_cat_response_final_p->set($scores['final_p']);

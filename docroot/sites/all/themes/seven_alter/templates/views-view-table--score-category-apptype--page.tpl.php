@@ -21,8 +21,8 @@
 
   // Fields that stores the score.
   $fields = array(
-    'field_cat_response_automatic' => 'auto',
-    'field_cat_response_automatic_p' => 'auto_p',
+    'field_cat_response_automatic' => 'automatic',
+    'field_cat_response_automatic_p' => 'automatic_p',
     'nothing' => 'auto_pc',
     'nothing_1' => 'auto_w',
     'field_cat_response_kpi' => 'kpi',
@@ -33,24 +33,28 @@
     'field_cat_response_metric_p' => 'metric_p',
     'nothing_4' => 'metric_pc',
     'nothing_5' => 'metric_w',
+    'field_cat_response_quality' => 'quality',
+    'field_cat_response_quality_p' => 'quality_p',
+    'nothing_8' => 'quality_pc',
+    'nothing_7' => 'quality_w',
+    'field_cat_response_final' => 'final2',
+    'nothing_6' => 'final2_pc'
   );
   // Fields that needs to be disabled.
   $hiddens = array(
     'field_cat_response_automatic_p',
     'field_cat_response_kpi_p',
-    'field_cat_response_metric_p'
+    'field_cat_response_metric_p',
+    'field_cat_response_quality_p'
   );
 
   // Weight for this app type.
-  $weight = array(0.45,0.25,0.15,0.15);
   $apptype_tag = arg(3);
   if ($apptype_id = pgh_api_find_nodes(array('type' => 'apptype', 'title' => $apptype_tag))) {
     $apptype = node_load($apptype_id);
     $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
     $value = $apptype_wrapper->field_apptype_score_weights->value();
-    if ($value) {
-      $weight = explode('|', $weight);
-    }
+    $w = pgh_awards_score_application_weight($value);
   }
 ?>
 <table <?php if ($classes) { print 'class="'. $classes . '" '; } ?><?php print $attributes; ?>>
@@ -80,26 +84,20 @@
           $values[$fields[$key]] = $value;
         }
       }
-      // dsm($values);
-
-      if ($values['auto_p']) {
-        $output = $values['auto'] / $values['auto_p'] * 100;
-      }
-      $row['nothing'] = round($output, 0) . '%';
-      $row['nothing_1'] = round($output * $weight[0], 2);
-
-      if ($values['kpi_p']) {
-        $output = $values['kpi'] / $values['kpi_p'] * 100;
-      }
-      $row['nothing_2'] = round($output, 0) . '%';
-      $row['nothing_3'] = round($output * $weight[1], 2);
-
-      if ($values['metric_p']) {
-        $output = $values['metric'] / $values['metric_p'] * 100;
-      }
-      $row['nothing_4'] = round($output, 0) . '%';
-      $row['nothing_5'] = round($output * $weight[2], 2);
-      // break;
+      // Calculate more scores
+      pgh_awards_review_percentage_score($values, $w);
+      // Change row values
+      $row['nothing'] = round($values['automatic_pc'], 2) . '%';
+      $row['nothing_1'] = round($w[0], 2);
+      $row['nothing_2'] = round($values['kpi_pc'], 2) . '%';
+      $row['nothing_3'] = round($w[1], 2);
+      $row['field_cat_response_metric'] = round($values['metric'], 2);
+      $row['nothing_4'] = round($values['metric_pc'], 2) . '%';
+      $row['nothing_5'] = round($w[2], 2);
+      $row['nothing_8'] = round($values['quality_pc'], 2) . '%';
+      $row['nothing_7'] = round($w[3], 2);      
+      $row['field_cat_response_final'] = round($values['final2'], 2);
+      $row['nothing_6'] = round($values['final2_pc'], 2);
     ?>
       <tr <?php if ($row_classes[$row_count]) { print 'class="' . implode(' ', $row_classes[$row_count]) .'"';  } ?>>
         <?php foreach ($row as $field => $content): ?>

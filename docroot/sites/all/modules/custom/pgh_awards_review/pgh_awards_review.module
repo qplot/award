@@ -148,10 +148,7 @@ function pgh_awards_review_page($app) {
   $apptype_wrapper = entity_metadata_wrapper('node', $apptype);
   $apptype_body = $apptype_wrapper->body->value();
   $weights = $apptype_wrapper->field_apptype_score_weights->value();
-  $weights = explode('|', $weights);
-  if (!is_array($weights) || count($weights) < 4) {
-    $weights = array(0.45, 0.15, 0.25, 0.15);
-  }
+  $weights = pgh_awards_score_application_weight($weights);
 
   // Get custom metric values.
   $profiles = pgh_awards_review_profile_formulas();
@@ -194,6 +191,7 @@ function pgh_awards_review_page($app) {
   // Get application scores.
   $rows = array();
   $scores = pgh_awards_score_application($app_id, TRUE);
+  $final2 = 0;
   foreach ($scores as &$cat) {
     if ($cat) {
       $category = node_load($cat['category_id']);
@@ -211,6 +209,7 @@ function pgh_awards_review_page($app) {
         );
 
         $rows[] = $row;
+        $final2 += $cat['final2'];
       }
     }
   }
@@ -228,6 +227,7 @@ function pgh_awards_review_page($app) {
     'quality_p' => $app_wrapper->field_application_quality_p->value(),
     'final' => $app_wrapper->field_application_final->value(),
     'final_p' => $app_wrapper->field_application_final_p->value(),
+    'final2' => $final2,
   );
   $rows[] = pgh_awards_review_score_row($fs, $weights);
   $cat = array('category_id' => 0);
@@ -539,8 +539,10 @@ function pgh_awards_review_percentage_score(&$cat, $w) {
   }
 
   // New ways of calculating finals.
-  $cat['final2'] = $w[0] * $cat['automatic_pc'] + $w[1] * $cat['kpi_pc'] +
+  if (empty($cat['final2'])) {
+    $cat['final2'] = $w[0] * $cat['automatic_pc'] + $w[1] * $cat['kpi_pc'] +
                   $w[2] * $cat['metric_pc'] + $w[3] * $cat['quality_pc'];
+  }
   $temp = $cat['automatic_p'] + $cat['kpi_p'] + $cat['metric_p'] + $cat['quality_p'];
   $cat['final2_pc'] = 0;
   if ($temp) {
