@@ -204,22 +204,60 @@ function pgh_awards_export_writefile($uri, $string) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_application_row($op_id, &$questions) {
+  $header = array(
+    // Application Info.
+    'application' => array(
+      'id' => 'Application ID',
+      'type' => 'Application Type',
+      'status' => 'Application Status',
+
+    ),
+    'business_unit' => array(
+      // 'nid' => 'Business Unit ID',
+      'title' => 'Business Unit Title',
+      'field_business_unit_name' => 'Name of Institution',
+      'body' => 'Description/Notes',
+      'field_health_system' => 'Health System',
+      'field_business_unit_type' => 'Business unit type',
+      'field_business_unit_sfid' => 'Salesforce ID',
+      'field_salesforce_owner' => 'Salesforce Account Owner',
+      'field_users' => 'Users',
+      'field_applications' => 'Applications',
+      'field_number_beds' => 'Number of Beds',
+      'field_number_ors' => 'Number of ORs',
+      'field_phone' => 'Organization Phone',
+      'field_website_url' => 'Website URL',
+      'field_primary_first_name' => 'Primary First name',
+      'field_primary_last_name' => 'Primary Last name',
+      'field_primary_title' => 'Primary Title',
+      'field_primary_phone' => 'Primary Phone',
+      'field_primary_email' => 'Primary Email',
+      'field_billing_address_1' => 'Billing address 1',
+      'field_billing_address_2' => 'Billing address 2',
+      'field_billing_city' => 'Billing city',
+      'field_billing_state' => 'Billing state',
+      'field_billing_zipcode' => 'Billing zip code',
+      'field_billing_country' => 'Billing Country',
+      'field_shipping_address_1' => 'Shipping address 1',
+      'field_shipping_address_2' => 'Shipping address 2',
+      'field_shipping_city' => 'Shipping city',
+      'field_shipping_state' => 'Shipping state',
+      'field_shipping_zipcode' => 'Shipping zip code',
+      'field_shipping_country' => 'Shipping Country',
+      'field_award_letter_first_name' => 'Award First name',
+      'field_award_letter_last_name' => 'Award Last name',
+      'field_award_letter_title' => 'Award Title',
+      'field_award_letter_organization' => 'Award Organization Name',
+      'field_award_letter_address_1' => 'Award Address 1',
+      'field_award_letter_address_2' => 'Award Address 2',
+      'field_award_letter_city' => 'Award City',
+      'field_award_letter_state' => 'Award State',
+      'field_award_letter_zipcode' => 'Award Zip',
+    ),
+  );
+
   // Header row $op id is negative value.
   if ($op_id <= 0) {
-    $header = array(
-      // Application Info.
-      'application' => array(
-        'id' => 'Application ID',
-        'type' => 'Application Type',
-        'status' => 'Application Status',
-      ),
-      'business_unit' => array(
-        'id' => 'Business Unit ID',
-        'title' => 'Business Unit Title',
-        'institution' => 'Name of Institution',
-      ),
-    );
-
     $prompts = array();
     foreach ($questions as $key => &$question) {
       $prompts[$key] = $question['title'] . ":" . substr($question['prompt'], 0, 20);
@@ -250,12 +288,8 @@ function pgh_awards_export_application_row($op_id, &$questions) {
         'status' => $app_wrapper->field_application_status->value(),
       );
 
-      // Find Business Unit.
-      $bunit_info = array(
-        'id' => 0,
-        'title' => 'N/A',
-        'institution' => 'N/A'
-      );
+      // Populate Business Unit.
+      $bunit_info = $header['business_unit'];
       $buid = pgh_api_find_nodes(array(
         'type' => 'business_unit',
         'field_applications' => array('target_id', $app_id, '='),
@@ -263,11 +297,35 @@ function pgh_awards_export_application_row($op_id, &$questions) {
       if ($bunit = node_load($buid)) {
         $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
 
-        $bunit_info = array(
-          'id' => $buid,
-          'title' => $bunit_wrapper->title->value(),
-          'institution' => $bunit_wrapper->field_business_unit_name->value(),
-        );
+        foreach ($header['business_unit'] as $key => $value) {
+          $cell = $bunit_wrapper->$key->raw();
+          switch ($key) {
+            case 'body':
+              $cell = $cell ? substr($cell['value'], 0, 50) : '';
+              break;
+
+            case 'field_users':
+              $items = array();
+              $users = user_load_multiple($cell);
+              foreach ($users as $user) {
+                $items[] = $user->name;
+              }
+              $cell = implode(',', $items);
+              break;
+
+            case 'field_applications':
+              $cell = implode(',', $cell);
+              break;
+
+            case 'field_website_url':
+              $cell = $cell ? $cell['url'] : '';
+              break;
+
+            default:
+              break;
+          }
+          $bunit_info[$key] = $cell;
+        }
       }
 
       // Populate all questions.
@@ -298,6 +356,10 @@ function pgh_awards_export_application_row($op_id, &$questions) {
 
           $value = !empty($body) ? $body['value'] : '';
           switch ($question['type']) {
+            case 'text':
+              $value = substr($value, 0, 50);
+              break;
+
             case 'container':
               $value = 'CONTAINER';
               break;
@@ -341,7 +403,7 @@ function pgh_awards_export_application_row($op_id, &$questions) {
       // dsm($questions);
       $answers = array();
       foreach ($questions as $key => &$question) {
-        $answers[$key] = substr($question['value'], 0, 50);
+        $answers[$key] = $question['value'];
       }
 
       $row = array_merge(
