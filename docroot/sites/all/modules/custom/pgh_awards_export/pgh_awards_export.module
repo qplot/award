@@ -99,7 +99,9 @@ function pgh_awards_export_form_submit($form, &$form_state) {
     }
   }
   // Setup op for headers.
-  $operations[] = array('pgh_awards_export_op', array($apptype_tag, 0));
+  for ($i = 0; $i >= -2; $i--) {
+    $operations[] = array('pgh_awards_export_op', array($apptype_tag, $i));
+  }
   $i = 0;
   foreach ($app_ids as $nid) {
     $operations[] = array('pgh_awards_export_op', array($apptype_tag, $nid));
@@ -147,12 +149,13 @@ function pgh_awards_export_form_finished($success, $results, $operations) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_op($apptype_tag, $op_id, &$context) {
-  if ($op_id <= 0) {
+  if ($op_id == 0) {
     // Init the whole process.
     if (!isset($context['results']['file'])) {
       if ($file = pgh_awards_export_createfile()) {
         $context['results']['file'] = $file;
         $context['results']['questions'] = pgh_awards_export_questions($apptype_tag);
+        // dsm($context['results']['questions']);
       }
     }
   }
@@ -260,12 +263,47 @@ function pgh_awards_export_application_row($op_id, &$questions) {
   if ($op_id <= 0) {
     $prompts = array();
     foreach ($questions as $key => &$question) {
-      $prompts[$key] = $question['title'] . ":" . substr($question['prompt'], 0, 50);
-      if (isset($question['row'])) {
-        $prompts[$key] .= ' (R) ' . $question['row'];
+      // By default header is empty string.
+      $prompt = "";
+
+      // For first row.
+      if ($op_id == 0) {
+        $prompt = $question['title'];
       }
-      if (isset($question['col'])) {
-        $prompts[$key] .= ' (C) ' .  $question['col'];
+      // For second row.
+      if ($op_id == -1) {
+        $prompt = substr($question['prompt'], 0, 50);
+      }
+
+      // For special case.
+      switch ($question['type']) {
+        case 'selection':
+          if ($question['style'] == 'checkboxes') {
+            if (($op_id == -2) && (isset($question['option']))) {
+              $prompt = $question['option'];
+            }
+          }
+          break;
+
+        default:
+          if (($op_id == -1) && (isset($question['row']))) {
+            $prompt = $question['row'];
+          }
+          if (($op_id == -2) && (isset($question['col']))) {
+            $prompt = $question['col'];
+          }
+          break;
+      }
+
+      $prompts[$key] = $prompt;
+    }
+
+    if ($op_id < 0) {
+      foreach ($header['application'] as &$value) {
+        $value = "";
+      }
+      foreach ($header['business_unit'] as &$value) {
+        $value = "";
       }
     }
 
@@ -327,6 +365,17 @@ function pgh_awards_export_application_row($op_id, &$questions) {
           $bunit_info[$key] = $cell;
         }
       }
+      else {
+        foreach ($header['business_unit'] as $key => $value) {
+          $bunit_info[$key] = '';
+        }
+      }
+
+      // Initiate question answers.
+      $answers = array();
+      foreach ($questions as $key => &$question) {
+        $answers[$key] = '';
+      }
 
       // Populate all questions.
       $qids = array();
@@ -374,13 +423,17 @@ function pgh_awards_export_application_row($op_id, &$questions) {
               switch ($question['style']) {
                 case 'checkboxes':
                   $choices = unserialize($value);
-                  $value = array();
+                  $value = 'OPTION';
                   foreach ($choices as $choice) {
                     if ($choice) {
-                      $value[] = $choice;
+                      // $value[] = $choice;
+                      $q_title = 'question_' . $qid . '_' . $choice;
+                      if (isset($questions[$q_title])) {
+                        $answers[$q_title] = 'X';
+                      }
                     }
                   }
-                  $value = implode('|', $value);
+                  // $value = implode('|', $value);
                   break;
 
                 case 'default':
@@ -397,13 +450,8 @@ function pgh_awards_export_application_row($op_id, &$questions) {
               break;
           }
 
-          $question['value'] = $value;
+          $answers['question_' . $qid] = $value;
         }
-      }
-      // dsm($questions);
-      $answers = array();
-      foreach ($questions as $key => &$question) {
-        $answers[$key] = $question['value'];
       }
 
       $row = array_merge(
@@ -443,29 +491,43 @@ function pgh_awards_export_questions($apptype_tag) {
         foreach ($section_wrapper->field_section_questions->getIterator() as $question_wrapper) {
           $title = $question_wrapper->title->value();
           $type = $question_wrapper->field_question_type->value();
+          $style = $question_wrapper->field_question_style->value();
+          $layout = $question_wrapper->field_question_layout->value();
+          $options = $question_wrapper->field_question_options->value();
+          $qid = $question_wrapper->getIdentifier();
+          $key = 'question_' . $qid;
+
+          // Skip for certain type.
           if (in_array($type, $types)) {
             continue;
           }
-          $questions['question_' . $question_wrapper->getIdentifier()] = array(
-            'id' => $question_wrapper->getIdentifier(),
+
+          // Update item.
+          $item = array(
+            'id' => $qid,
             'title' => $title,
             'type' => $type,
-            'style' => $question_wrapper->field_question_style->value(),
+            'style' => $style,
             'prompt' => $question_wrapper->field_question_prompt->value(),
-            'options' => $question_wrapper->field_question_options->value(),
-            'layout' => $question_wrapper->field_question_layout->value(),
+            'options' => $options,
+            'layout' => $layout,
           );
 
-          // @codingStandardsIgnoreStart
-          $i += 1;
-          if ($i > 100000) {
-            // Handle layout field requires post process.
-            foreach ($questions as &$question) {
-              if ($question['type'] == 'container') {
-                $layout = pgh_parse_layout($question['layout']);
-                // Figure out if first col is not a header
+          if (isset($questions[$key])) {
+            $questions[$key] = array_merge($item, $questions[$key]);
+          }
+          else {
+            $questions[$key] = $item;
+          }
+
+          // Post process for certain type.
+          switch ($type) {
+            case 'container':
+              if ($style == 'table') {
+                $layout = pgh_parse_layout($layout);
+                // Figure out if first col is not a header.
                 $col_skipped = !empty($layout[1][0]) ? (substr($layout[1][0], 0, 5) == 'pghq_') : FALSE;
-                $row_skipped = !empty($layout[0][1]) ? (substr($layout[0][1], 0 ,5) == 'pghq_') : FALSE;
+                $row_skipped = !empty($layout[0][1]) ? (substr($layout[0][1], 0, 5) == 'pghq_') : FALSE;
                 $p = 0;
                 foreach ($layout as &$row) {
                   $q = 0;
@@ -487,8 +549,32 @@ function pgh_awards_export_questions($apptype_tag) {
                 }
                 // dsm($layout);
               }
-            }
+              break;
 
+            case 'selection':
+              if ($style == 'checkboxes') {
+                foreach ($options as $value) {
+                  $questions[$key . '_' . $value] = array(
+                    'id' => $qid,
+                    'title' => $title,
+                    'type' => 'selection',
+                    'style' => $style,
+                    'prompt' => '',
+                    'options' => $options,
+                    'layout' => '',
+                    'option' => $value,
+                  );
+                }
+              }
+              break;
+
+            default:
+              break;
+          }
+
+          // @codingStandardsIgnoreStart
+          $i += 1;
+          if ($i > 100000) {
             return $questions;
           }
           // @codingStandardsIgnoreEnd
