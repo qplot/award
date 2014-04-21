@@ -260,7 +260,7 @@ function pgh_awards_export_application_row($op_id, &$questions) {
   if ($op_id <= 0) {
     $prompts = array();
     foreach ($questions as $key => &$question) {
-      $prompts[$key] = $question['title'] . ":" . substr($question['prompt'], 0, 20);
+      $prompts[$key] = $question['title'] . ":" . substr($question['prompt'], 0, 50);
       if (isset($question['row'])) {
         $prompts[$key] .= ' (R) ' . $question['row'];
       }
