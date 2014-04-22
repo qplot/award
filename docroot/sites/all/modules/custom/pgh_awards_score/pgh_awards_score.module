@@ -461,6 +461,8 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
     'metric_count' => 0,
     'final' => 0,
     'final_p' => 0,
+    'final2' => 0,
+    'final2_pc' => 0,
   );
   if ($app = node_load($app_id)) {
     // Find app type.
@@ -510,10 +512,16 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
         // Calculate and store final score.
         $weight = $apptype_wrapper->field_apptype_score_weights->value();
         $wp = pgh_awards_score_application_weight($weight);
-        $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
-        $scores['final_p'] = $wp[0] * $scores['automatic_p'] + $wp[1] * $scores['kpi_p'] + $wp[2] * $scores['metric_p'] + $wp[3] * $scores['quality_p'];
-        $cat_response_wrapper->field_cat_response_final_p->set($scores['final_p']);
-        $cat_response_wrapper->field_cat_response_final->set($scores['final']);
+
+        // Calculate final score.
+        pgh_awards_review_percentage_score($scores, $wp);
+
+        // $scores['final'] = $wp[0] * $scores['automatic'] + $wp[1] * $scores['kpi'] + $wp[2] * $scores['metric'] + $wp[3] * $scores['quality'];
+        // $scores['final_p'] = $wp[0] * $scores['automatic_p'] + $wp[1] * $scores['kpi_p'] + $wp[2] * $scores['metric_p'] + $wp[3] * $scores['quality_p'];
+
+        $cat_response_wrapper->field_cat_response_final->set($scores['final2']);
+        // Keep in mind final_p carries final2_pc value !!.
+        $cat_response_wrapper->field_cat_response_final_p->set($scores['final2_pc']);
 
         $cat_response_wrapper->save();
       }
@@ -521,10 +529,17 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
       // Exclude the disabled category from total calculation.
       if (!in_array($cat_id, $quality_disable_cids)) {
         foreach ($scores as $key => $score) {
-          $sums[$key] += $score;
+          if (substr($key, -3) != '_pc') {
+            $sums[$key] += $score;
+          }
         }
       }
     }
+
+    // Calculate final score of application.
+    $final2 = $sums['final2'];
+    pgh_awards_review_percentage_score($sums, $wp);
+    $sums['final2'] = $final2;
 
     // Save to application.
     if ($save) {
@@ -538,8 +553,8 @@ function pgh_awards_score_calculate_application($app_id, $save = TRUE) {
       $app_wrapper->field_application_metric->set($sums['metric']);
       $app_wrapper->field_application_quality_p->set($sums['quality_p']);
       $app_wrapper->field_application_quality->set($sums['quality']);
-      $app_wrapper->field_application_final_p->set($sums['final_p']);
-      $app_wrapper->field_application_final->set($sums['final']);
+      $app_wrapper->field_application_final_p->set($sums['final2_pc']);
+      $app_wrapper->field_application_final->set($sums['final2']);
 
       $app_wrapper->save();
     }
