@@ -234,6 +234,9 @@ function pgh_awards_score_calculate_formula($app_id, $formula, $reference = 100,
         if ($qid && !isset($variables[$match])) {
           if ($response = pgh_api_get_response($app_id, $qid)) {
             $value = !empty($response['value']) ? $response['value'] : '0';
+            // Strip out symbol , for big integers with separators.
+            $value = str_replace(array(",", " "), "", $value);
+
             // Convert anything into a string, https://bugs.php.net/bug.php?id=39579.
             $value = "'" . $value . "'";
             $variables[$match] = array(
