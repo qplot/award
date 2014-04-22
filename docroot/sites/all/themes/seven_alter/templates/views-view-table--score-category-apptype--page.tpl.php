@@ -97,7 +97,7 @@
       $row['nothing_8'] = round($values['quality_pc'], 2) . '%';
       $row['nothing_7'] = round($w[3], 2);      
       $row['field_cat_response_final'] = round($values['final2'], 2);
-      $row['nothing_6'] = round($values['final2_pc'], 2);
+      // $row['nothing_6'] = round($values['final2_pc'], 2);
     ?>
       <tr <?php if ($row_classes[$row_count]) { print 'class="' . implode(' ', $row_classes[$row_count]) .'"';  } ?>>
         <?php foreach ($row as $field => $content): ?>
