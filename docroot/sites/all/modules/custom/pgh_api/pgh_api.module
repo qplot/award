@@ -391,6 +391,7 @@ function pgh_api_find_response_id($app_id, $qid) {
                   ->propertyCondition('type', 'response')
                   ->fieldCondition('field_response_application', 'target_id', $app_id)
                   ->fieldCondition('field_response_question', 'target_id', $qid)
+                  // ->propertyOrderBy('changed', 'DESC')
                   ->execute();
   if (!empty($result['node'])) {
     $keys = array_keys($result['node']);
