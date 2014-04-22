@@ -99,7 +99,9 @@ function pgh_awards_export_form_submit($form, &$form_state) {
     }
   }
   // Setup op for headers.
-  $operations[] = array('pgh_awards_export_op', array($apptype_tag, 0));
+  for ($i = 0; $i >= -2; $i--) {
+    $operations[] = array('pgh_awards_export_op', array($apptype_tag, $i));
+  }
   $i = 0;
   foreach ($app_ids as $nid) {
     $operations[] = array('pgh_awards_export_op', array($apptype_tag, $nid));
@@ -147,12 +149,13 @@ function pgh_awards_export_form_finished($success, $results, $operations) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_op($apptype_tag, $op_id, &$context) {
-  if ($op_id <= 0) {
+  if ($op_id == 0) {
     // Init the whole process.
     if (!isset($context['results']['file'])) {
       if ($file = pgh_awards_export_createfile()) {
         $context['results']['file'] = $file;
         $context['results']['questions'] = pgh_awards_export_questions($apptype_tag);
+        // dsm($context['results']['questions']);
       }
     }
   }
@@ -204,30 +207,103 @@ function pgh_awards_export_writefile($uri, $string) {
  * @author Fang Jin <fang@designhammer.com>
  */
 function pgh_awards_export_application_row($op_id, &$questions) {
+  $header = array(
+    // Application Info.
+    'application' => array(
+      'id' => 'Application ID',
+      'type' => 'Application Type',
+      'status' => 'Application Status',
+
+    ),
+    'business_unit' => array(
+      // 'nid' => 'Business Unit ID',
+      'title' => 'Business Unit Title',
+      'field_business_unit_name' => 'Name of Institution',
+      'body' => 'Description/Notes',
+      'field_health_system' => 'Health System',
+      'field_business_unit_type' => 'Business unit type',
+      'field_business_unit_sfid' => 'Salesforce ID',
+      'field_salesforce_owner' => 'Salesforce Account Owner',
+      'field_users' => 'Users',
+      'field_applications' => 'Applications',
+      'field_number_beds' => 'Number of Beds',
+      'field_number_ors' => 'Number of ORs',
+      'field_phone' => 'Organization Phone',
+      'field_website_url' => 'Website URL',
+      'field_primary_first_name' => 'Primary First name',
+      'field_primary_last_name' => 'Primary Last name',
+      'field_primary_title' => 'Primary Title',
+      'field_primary_phone' => 'Primary Phone',
+      'field_primary_email' => 'Primary Email',
+      'field_billing_address_1' => 'Billing address 1',
+      'field_billing_address_2' => 'Billing address 2',
+      'field_billing_city' => 'Billing city',
+      'field_billing_state' => 'Billing state',
+      'field_billing_zipcode' => 'Billing zip code',
+      'field_billing_country' => 'Billing Country',
+      'field_shipping_address_1' => 'Shipping address 1',
+      'field_shipping_address_2' => 'Shipping address 2',
+      'field_shipping_city' => 'Shipping city',
+      'field_shipping_state' => 'Shipping state',
+      'field_shipping_zipcode' => 'Shipping zip code',
+      'field_shipping_country' => 'Shipping Country',
+      'field_award_letter_first_name' => 'Award First name',
+      'field_award_letter_last_name' => 'Award Last name',
+      'field_award_letter_title' => 'Award Title',
+      'field_award_letter_organization' => 'Award Organization Name',
+      'field_award_letter_address_1' => 'Award Address 1',
+      'field_award_letter_address_2' => 'Award Address 2',
+      'field_award_letter_city' => 'Award City',
+      'field_award_letter_state' => 'Award State',
+      'field_award_letter_zipcode' => 'Award Zip',
+    ),
+  );
+
   // Header row $op id is negative value.
   if ($op_id <= 0) {
-    $header = array(
-      // Application Info.
-      'application' => array(
-        'id' => 'Application ID',
-        'type' => 'Application Type',
-        'status' => 'Application Status',
-      ),
-      'business_unit' => array(
-        'id' => 'Business Unit ID',
-        'title' => 'Business Unit Title',
-        'institution' => 'Name of Institution',
-      ),
-    );
-
     $prompts = array();
     foreach ($questions as $key => &$question) {
-      $prompts[$key] = $question['title'] . ":" . substr($question['prompt'], 0, 20);
-      if (isset($question['row'])) {
-        $prompts[$key] .= ' (R) ' . $question['row'];
+      // By default header is empty string.
+      $prompt = "";
+
+      // For first row.
+      if ($op_id == 0) {
+        $prompt = $question['title'];
       }
-      if (isset($question['col'])) {
-        $prompts[$key] .= ' (C) ' .  $question['col'];
+      // For second row.
+      if ($op_id == -1) {
+        $prompt = substr($question['prompt'], 0, 50);
+      }
+
+      // For special case.
+      switch ($question['type']) {
+        case 'selection':
+          if ($question['style'] == 'checkboxes') {
+            if (($op_id == -2) && (isset($question['option']))) {
+              $prompt = $question['option'];
+            }
+          }
+          break;
+
+        default:
+          if (($op_id == -1) && (isset($question['row']))) {
+            $prompt = $question['row'];
+          }
+          if (($op_id == -2) && (isset($question['col']))) {
+            $prompt = $question['col'];
+          }
+          break;
+      }
+
+      $prompts[$key] = $prompt;
+    }
+
+    if ($op_id < 0) {
+      foreach ($header['application'] as &$value) {
+        $value = "";
+      }
+      foreach ($header['business_unit'] as &$value) {
+        $value = "";
       }
     }
 
@@ -250,12 +326,8 @@ function pgh_awards_export_application_row($op_id, &$questions) {
         'status' => $app_wrapper->field_application_status->value(),
       );
 
-      // Find Business Unit.
-      $bunit_info = array(
-        'id' => 0,
-        'title' => 'N/A',
-        'institution' => 'N/A'
-      );
+      // Populate Business Unit.
+      $bunit_info = $header['business_unit'];
       $buid = pgh_api_find_nodes(array(
         'type' => 'business_unit',
         'field_applications' => array('target_id', $app_id, '='),
@@ -263,11 +335,46 @@ function pgh_awards_export_application_row($op_id, &$questions) {
       if ($bunit = node_load($buid)) {
         $bunit_wrapper = entity_metadata_wrapper('node', $bunit);
 
-        $bunit_info = array(
-          'id' => $buid,
-          'title' => $bunit_wrapper->title->value(),
-          'institution' => $bunit_wrapper->field_business_unit_name->value(),
-        );
+        foreach ($header['business_unit'] as $key => $value) {
+          $cell = $bunit_wrapper->$key->raw();
+          switch ($key) {
+            case 'body':
+              $cell = $cell ? substr($cell['value'], 0, 50) : '';
+              break;
+
+            case 'field_users':
+              $items = array();
+              $users = user_load_multiple($cell);
+              foreach ($users as $user) {
+                $items[] = $user->name;
+              }
+              $cell = implode(',', $items);
+              break;
+
+            case 'field_applications':
+              $cell = implode(',', $cell);
+              break;
+
+            case 'field_website_url':
+              $cell = $cell ? $cell['url'] : '';
+              break;
+
+            default:
+              break;
+          }
+          $bunit_info[$key] = $cell;
+        }
+      }
+      else {
+        foreach ($header['business_unit'] as $key => $value) {
+          $bunit_info[$key] = '';
+        }
+      }
+
+      // Initiate question answers.
+      $answers = array();
+      foreach ($questions as $key => &$question) {
+        $answers[$key] = '';
       }
 
       // Populate all questions.
@@ -298,6 +405,10 @@ function pgh_awards_export_application_row($op_id, &$questions) {
 
           $value = !empty($body) ? $body['value'] : '';
           switch ($question['type']) {
+            case 'text':
+              $value = substr($value, 0, 50);
+              break;
+
             case 'container':
               $value = 'CONTAINER';
               break;
@@ -312,13 +423,17 @@ function pgh_awards_export_application_row($op_id, &$questions) {
               switch ($question['style']) {
                 case 'checkboxes':
                   $choices = unserialize($value);
-                  $value = array();
+                  $value = 'OPTION';
                   foreach ($choices as $choice) {
                     if ($choice) {
-                      $value[] = $choice;
+                      // $value[] = $choice;
+                      $q_title = 'question_' . $qid . '_' . $choice;
+                      if (isset($questions[$q_title])) {
+                        $answers[$q_title] = 'X';
+                      }
                     }
                   }
-                  $value = implode('|', $value);
+                  // $value = implode('|', $value);
                   break;
 
                 case 'default':
@@ -335,13 +450,8 @@ function pgh_awards_export_application_row($op_id, &$questions) {
               break;
           }
 
-          $question['value'] = $value;
+          $answers['question_' . $qid] = $value;
         }
-      }
-      // dsm($questions);
-      $answers = array();
-      foreach ($questions as $key => &$question) {
-        $answers[$key] = substr($question['value'], 0, 50);
       }
 
       $row = array_merge(
@@ -381,29 +491,43 @@ function pgh_awards_export_questions($apptype_tag) {
         foreach ($section_wrapper->field_section_questions->getIterator() as $question_wrapper) {
           $title = $question_wrapper->title->value();
           $type = $question_wrapper->field_question_type->value();
+          $style = $question_wrapper->field_question_style->value();
+          $layout = $question_wrapper->field_question_layout->value();
+          $options = $question_wrapper->field_question_options->value();
+          $qid = $question_wrapper->getIdentifier();
+          $key = 'question_' . $qid;
+
+          // Skip for certain type.
           if (in_array($type, $types)) {
             continue;
           }
-          $questions['question_' . $question_wrapper->getIdentifier()] = array(
-            'id' => $question_wrapper->getIdentifier(),
+
+          // Update item.
+          $item = array(
+            'id' => $qid,
             'title' => $title,
             'type' => $type,
-            'style' => $question_wrapper->field_question_style->value(),
+            'style' => $style,
             'prompt' => $question_wrapper->field_question_prompt->value(),
-            'options' => $question_wrapper->field_question_options->value(),
-            'layout' => $question_wrapper->field_question_layout->value(),
+            'options' => $options,
+            'layout' => $layout,
           );
 
-          // @codingStandardsIgnoreStart
-          $i += 1;
-          if ($i > 100000) {
-            // Handle layout field requires post process.
-            foreach ($questions as &$question) {
-              if ($question['type'] == 'container') {
-                $layout = pgh_parse_layout($question['layout']);
-                // Figure out if first col is not a header
+          if (isset($questions[$key])) {
+            $questions[$key] = array_merge($item, $questions[$key]);
+          }
+          else {
+            $questions[$key] = $item;
+          }
+
+          // Post process for certain type.
+          switch ($type) {
+            case 'container':
+              if ($style == 'table') {
+                $layout = pgh_parse_layout($layout);
+                // Figure out if first col is not a header.
                 $col_skipped = !empty($layout[1][0]) ? (substr($layout[1][0], 0, 5) == 'pghq_') : FALSE;
-                $row_skipped = !empty($layout[0][1]) ? (substr($layout[0][1], 0 ,5) == 'pghq_') : FALSE;
+                $row_skipped = !empty($layout[0][1]) ? (substr($layout[0][1], 0, 5) == 'pghq_') : FALSE;
                 $p = 0;
                 foreach ($layout as &$row) {
                   $q = 0;
@@ -425,8 +549,32 @@ function pgh_awards_export_questions($apptype_tag) {
                 }
                 // dsm($layout);
               }
-            }
+              break;
 
+            case 'selection':
+              if ($style == 'checkboxes') {
+                foreach ($options as $value) {
+                  $questions[$key . '_' . $value] = array(
+                    'id' => $qid,
+                    'title' => $title,
+                    'type' => 'selection',
+                    'style' => $style,
+                    'prompt' => '',
+                    'options' => $options,
+                    'layout' => '',
+                    'option' => $value,
+                  );
+                }
+              }
+              break;
+
+            default:
+              break;
+          }
+
+          // @codingStandardsIgnoreStart
+          $i += 1;
+          if ($i > 100000) {
             return $questions;
           }
           // @codingStandardsIgnoreEnd

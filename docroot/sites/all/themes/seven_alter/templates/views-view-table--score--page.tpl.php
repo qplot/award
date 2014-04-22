@@ -19,17 +19,6 @@
  * @ingroup views_templates
  */
 
-  // Fields that stores the score.
-  $fields = array(
-    'field_application_automatic' => 'automatic',
-    'field_application_automatic_p' => 'automatic_p',
-    'field_application_kpi' => 'kpi',
-    'field_application_kpi_p' => 'kpi_p',
-    'field_application_metric' => 'metric',
-    'field_application_metric_p' => 'metric_p',
-    'field_application_quality' => 'quality',
-    'field_application_quality_p' => 'quality_p',
-  );
   // Fields that needs to be disabled.
   $hiddens = array(
   );
@@ -63,19 +52,9 @@
     <?php foreach ($rows as $row_count => $row): ?>
 
     <?php 
-      // // Assign values
-      $values = array();
-      foreach ($row as $key => $value) {
-        if (array_key_exists($key, $fields)) {
-          $values[$fields[$key]] = $value;
-        }
-      }
-      // Calculate more scores
-      pgh_awards_review_percentage_score($values, $w);
       // Change row values
-      $row['field_application_metric'] = round($values['metric'], 2);
-      $row['field_application_final'] = round($values['final2'], 2);
-      $row['nothing'] = round($values['final2_pc'], 2);
+      $row['field_application_metric'] = round($row['field_application_metric'], 2);
+      $row['field_application_final'] = round($row['field_application_final'], 2);
     ?>
       <tr <?php if ($row_classes[$row_count]) { print 'class="' . implode(' ', $row_classes[$row_count]) .'"';  } ?>>
         <?php foreach ($row as $field => $content): ?>
