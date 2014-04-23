@@ -1015,6 +1015,13 @@ function pgh_awards_score_migrate_form($form, &$form_state) {
     '#description' => 'Ex. 0,1000'
   );
 
+  $form['checkboxes'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Checkboxes ONLY',
+    '#description' => 'Check this if you want to only address checkboxes question',
+    '#default_value' => 0,
+  );
+
   $form['all'] = array(
     '#type' => 'checkbox',
     '#title' => 'Process all',
@@ -1023,7 +1030,7 @@ function pgh_awards_score_migrate_form($form, &$form_state) {
   );
   $form['debug'] = array(
     '#type' => 'textfield',
-    '#title' => '[Debug] Set how many applications to process',
+    '#title' => '[Debug] Set how many questions to process',
     '#default_value' => 1,
   );
 
@@ -1064,7 +1071,16 @@ function pgh_awards_score_migrate_form_submit($form, &$form_state) {
   }
 
   $i = 0;
-  $pids = pgh_api_find_nodes(array('type' => 'question'), NULL, TRUE);
+  $filter = array('type' => 'question');
+  if (!empty($values['checkboxes'])) {
+    $filter = array_merge($filter, array(
+      'field_question_style' => 'checkboxes'
+    ));
+  }
+  $pids = pgh_api_find_nodes(
+    $filter,
+    NULL, TRUE
+  );
   foreach ($pids as $nid) {
     $operations[] = array('pgh_awards_score_migrate_op', array($nid, $aids));
     if ($debug) {
@@ -1136,6 +1152,10 @@ function pgh_awards_score_migrate_op($qid, $aids, &$context) {
   foreach ($responses as &$response) {
     $wrapper = entity_metadata_wrapper('node', $response);
     $value = $wrapper->body->value() ? $wrapper->body->value->raw() : '';
+    // Make sure we get raw data for checkboxes.
+    if ($style == 'checkboxes') {
+      $value = unserialize($value);
+    }
     $answer = pgh_awards_score_calculate_question_autokpi($value, $point, $score, $kpi, $type, $style, $options);
 
     // Save response back.
