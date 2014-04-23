@@ -415,11 +415,20 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
         'field_response_application' => array('target_id', $app_id, '='),
         'field_response_question' => array('target_id', $qids, 'IN'),
       ),
-      NULL, TRUE
+      array('changed' => 'DESC'),
+      TRUE
     ))) {
       // Aggregate the scores.
       $responses = node_load_multiple($rids);
+      $qids2 = array();
       foreach ($responses as &$response) {
+        // Make sure we don't end with duplicate.
+        $qid = !empty($response->field_response_question['und'][0]['target_id']) ? $response->field_response_question['und'][0]['target_id'] : 0;
+        if (in_array($qid, $qids2)) {
+          continue;
+        }
+        $qids2[] = $qid;
+
         $response_wrapper = entity_metadata_wrapper('node', $response);
         // Calculate automatic scores.
         $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
