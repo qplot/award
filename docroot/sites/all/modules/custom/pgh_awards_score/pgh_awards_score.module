@@ -1404,6 +1404,7 @@ function pgh_awards_score_kpi_op($qid, &$context) {
 function pgh_awards_score_fix_duplicate() {
   $nids = array(226264, 227735, 230477, 233229, 244055, 252710,
     285037, 432479, 456005, 694891, 714877, 877882, 888145, 889687, 892049, 938851);
+  // $nids = array(233229);
   foreach ($nids as $nid) {
     $result = db_query("select COUNT(*) c, title, created, changed from `node` n where (n.type = 'response'  AND SUBSTRING(title, 5, 6)=:nid ) group by n.title having c>1", array(':nid' => $nid));
     $items = array();
@@ -1414,20 +1415,27 @@ function pgh_awards_score_fix_duplicate() {
         $aid = $parts[1];
         $qid = $parts[3];
         if ($node = node_load(intval($qid))) {
-          $output = $node->title . "($qid)";
+          $output = $node->title . "(app_{$nid}_q_{$qid})";
 
           $rids = pgh_api_find_nodes(
             array(
               'type' => 'response',
               'field_response_application' => array('target_id', $aid, '='),
-              'field_response_question' => array('target_id', $qid, '=')
+              'field_response_question' => array('target_id', $qid, '='),
             ),
-            array('created' => 'DESC'),
+            array('created' => 'ASC'),
             TRUE
           );
 
+          $responses = node_load_multiple($rids);
+          $ritems = array();
+          foreach ($responses as $response) {
+            $empty = empty($response->body['und'][0]['value']);
+            $ritems[] = $response->nid . ((!$empty) ? "(*)" : '');
+          }
+
           $type = $node->field_question_type['und'][0]['value'];
-          $output .= "\t\t: $type \t\t" . implode(',', $rids);
+          $output .= "\t\t: $type \t\t" . implode(',', $ritems);
           $items[] = $output;
         }
       }
