@@ -78,6 +78,15 @@ function pgh_awards_score_menu() {
     'access arguments' => array('administer awards system'),
   );
 
+  // Resolve duplicate bug.
+  $items['admin/content/migrate/duplicate'] = array(
+    'title' => 'Duplicate',
+    'description' => 'Fix duplicate issue',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array("pgh_awards_score_fix_duplicate"),
+    'access arguments' => array('administer awards system'),
+  );
+
   return $items;
 }
 
@@ -245,6 +254,9 @@ function pgh_awards_score_calculate_formula($app_id, $formula, $reference = 100,
         if ($qid && !isset($variables[$match])) {
           if ($response = pgh_api_get_response($app_id, $qid)) {
             $value = !empty($response['value']) ? $response['value'] : '0';
+            // Strip out symbol , for big integers with separators.
+            $value = str_replace(array(",", " "), "", $value);
+
             // Convert anything into a string, https://bugs.php.net/bug.php?id=39579.
             $value = "'" . $value . "'";
             $variables[$match] = array(
@@ -424,11 +436,20 @@ function pgh_awards_score_calculate_application_category($app_id, $cat_id, $save
         'field_response_application' => array('target_id', $app_id, '='),
         'field_response_question' => array('target_id', $qids, 'IN'),
       ),
-      NULL, TRUE
+      array('changed' => 'DESC'),
+      TRUE
     ))) {
       // Aggregate the scores.
       $responses = node_load_multiple($rids);
+      $qids2 = array();
       foreach ($responses as &$response) {
+        // Make sure we don't end with duplicate.
+        $qid = !empty($response->field_response_question['und'][0]['target_id']) ? $response->field_response_question['und'][0]['target_id'] : 0;
+        if (in_array($qid, $qids2)) {
+          continue;
+        }
+        $qids2[] = $qid;
+
         $response_wrapper = entity_metadata_wrapper('node', $response);
         // Calculate automatic scores.
         $scores['automatic_p'] += intval($response_wrapper->field_response_point->value());
@@ -1397,4 +1418,37 @@ function pgh_awards_score_kpi_op($qid, &$context) {
   }
   $context['results'][] = $qid;
   $context['message'] = t('Migrating question @nid with @count responses', array('@nid' => $qid, '@count' => count($rids)));
+}
+
+/**
+ * Fix duplicate.
+ */
+function pgh_awards_score_fix_duplicate() {
+  $result = db_query("select COUNT(*) c, title, created, changed from `node` n where (n.type = 'response'  AND SUBSTRING(title, 5, 6)=252710 ) group by n.title having c>1");
+  $items = array();
+  if ($result) {
+    while ($row = $result->fetchAssoc()) {
+      $title = $row['title'];
+      $parts = explode('_', $title);
+      $aid = $parts[1];
+      $qid = $parts[3];
+      if ($node = node_load(intval($qid))) {
+        $output = $node->title . "($qid)";
+
+        $rids = pgh_api_find_nodes(
+          array(
+            'type' => 'response',
+            'field_response_application' => array('target_id', $aid, '='),
+            'field_response_question' => array('target_id', $qid, '=')
+          ),
+          array('created' => 'DESC'),
+          TRUE
+        );
+
+        $output .= ':' . implode(',', $rids);
+        $items[] = $output;
+      }
+    }
+  }
+  echo '<pre>' . print_r($items, TRUE) . '</pre>'; die;
 }
