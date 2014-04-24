@@ -864,6 +864,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['field_application_status_value']['expose']['label'] = 'Status';
   $handler->display->display_options['filters']['field_application_status_value']['expose']['operator'] = 'field_application_status_value_op';
   $handler->display->display_options['filters']['field_application_status_value']['expose']['identifier'] = 'field_application_status_value';
+  $handler->display->display_options['filters']['field_application_status_value']['expose']['multiple'] = TRUE;
   $handler->display->display_options['filters']['field_application_status_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
@@ -871,6 +872,7 @@ function pgh_applications_view_views_default_views() {
     5 => 0,
     4 => 0,
     3 => 0,
+    7 => 0,
   );
   /* Filter criterion: Content: Application Type (field_application_type) */
   $handler->display->display_options['filters']['field_application_type_value']['id'] = 'field_application_type_value';
