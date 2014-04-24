@@ -1154,9 +1154,10 @@ function pgh_awards_score_migrate_op($qid, $aids, &$context) {
     $value = $wrapper->body->value() ? $wrapper->body->value->raw() : '';
     // Make sure we get raw data for checkboxes.
     if ($style == 'checkboxes') {
-      if ($value) {
+      // Before calling calculate, $value needs to be an array.
+      do {
         $value = unserialize($value);
-      }
+      } while (is_string($value));
       if (!$value) {
         $value = array();
       }
