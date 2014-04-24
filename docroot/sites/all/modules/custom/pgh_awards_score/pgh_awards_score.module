@@ -1037,6 +1037,13 @@ function pgh_awards_score_migrate_form($form, &$form_state) {
     '#description' => 'Ex. 0,1000'
   );
 
+  $form['checkboxes'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Checkboxes ONLY',
+    '#description' => 'Check this if you want to only address checkboxes question',
+    '#default_value' => 0,
+  );
+
   $form['all'] = array(
     '#type' => 'checkbox',
     '#title' => 'Process all',
@@ -1045,7 +1052,7 @@ function pgh_awards_score_migrate_form($form, &$form_state) {
   );
   $form['debug'] = array(
     '#type' => 'textfield',
-    '#title' => '[Debug] Set how many applications to process',
+    '#title' => '[Debug] Set how many questions to process',
     '#default_value' => 1,
   );
 
@@ -1086,7 +1093,16 @@ function pgh_awards_score_migrate_form_submit($form, &$form_state) {
   }
 
   $i = 0;
-  $pids = pgh_api_find_nodes(array('type' => 'question'), NULL, TRUE);
+  $filter = array('type' => 'question');
+  if (!empty($values['checkboxes'])) {
+    $filter = array_merge($filter, array(
+      'field_question_style' => 'checkboxes'
+    ));
+  }
+  $pids = pgh_api_find_nodes(
+    $filter,
+    NULL, TRUE
+  );
   foreach ($pids as $nid) {
     $operations[] = array('pgh_awards_score_migrate_op', array($nid, $aids));
     if ($debug) {
@@ -1158,6 +1174,10 @@ function pgh_awards_score_migrate_op($qid, $aids, &$context) {
   foreach ($responses as &$response) {
     $wrapper = entity_metadata_wrapper('node', $response);
     $value = $wrapper->body->value() ? $wrapper->body->value->raw() : '';
+    // Make sure we get raw data for checkboxes.
+    if ($style == 'checkboxes') {
+      $value = unserialize($value);
+    }
     $answer = pgh_awards_score_calculate_question_autokpi($value, $point, $score, $kpi, $type, $style, $options);
 
     // Save response back.
@@ -1424,31 +1444,51 @@ function pgh_awards_score_kpi_op($qid, &$context) {
  * Fix duplicate.
  */
 function pgh_awards_score_fix_duplicate() {
-  $result = db_query("select COUNT(*) c, title, created, changed from `node` n where (n.type = 'response'  AND SUBSTRING(title, 5, 6)=252710 ) group by n.title having c>1");
-  $items = array();
-  if ($result) {
-    while ($row = $result->fetchAssoc()) {
-      $title = $row['title'];
-      $parts = explode('_', $title);
-      $aid = $parts[1];
-      $qid = $parts[3];
-      if ($node = node_load(intval($qid))) {
-        $output = $node->title . "($qid)";
+  $nids = array(226264, 227735, 230477, 233229, 244055, 252710,
+    285037, 432479, 456005, 694891, 714877, 877882, 888145, 889687, 892049, 938851);
+  // $nids = array(233229);
+  foreach ($nids as $nid) {
+    $result = db_query("select COUNT(*) c, title, created, changed from `node` n where (n.type = 'response'  AND SUBSTRING(title, 5, 6)=:nid ) group by n.title having c>1", array(':nid' => $nid));
+    $items = array();
+    if ($result) {
+      while ($row = $result->fetchAssoc()) {
+        $title = $row['title'];
+        $parts = explode('_', $title);
+        $aid = $parts[1];
+        $qid = $parts[3];
+        if ($node = node_load(intval($qid))) {
+          $output = $node->title . "(app_{$nid}_q_{$qid})";
 
-        $rids = pgh_api_find_nodes(
-          array(
-            'type' => 'response',
-            'field_response_application' => array('target_id', $aid, '='),
-            'field_response_question' => array('target_id', $qid, '=')
-          ),
-          array('created' => 'DESC'),
-          TRUE
-        );
+          $rids = pgh_api_find_nodes(
+            array(
+              'type' => 'response',
+              'field_response_application' => array('target_id', $aid, '='),
+              'field_response_question' => array('target_id', $qid, '='),
+            ),
+            array('created' => 'ASC'),
+            TRUE
+          );
 
-        $output .= ':' . implode(',', $rids);
-        $items[] = $output;
+          $responses = node_load_multiple($rids);
+          $ritems = array();
+          foreach ($responses as $response) {
+            $empty = empty($response->body['und'][0]['value']);
+            $ritems[] = $response->nid . ((!$empty) ? "(*)" : '');
+          }
+
+          $type = $node->field_question_type['und'][0]['value'];
+          $output .= "\t\t: $type \t\t" . implode(',', $ritems);
+          $items[] = $output;
+        }
       }
     }
+
+    print "<h1>" . $nid . '</h1>';
+    echo '<pre>';
+    foreach ($items as $value) {
+      print $value . '<br />';
+    }
+    echo '</pre>';
   }
-  echo '<pre>' . print_r($items, TRUE) . '</pre>'; die;
+  die;
 }

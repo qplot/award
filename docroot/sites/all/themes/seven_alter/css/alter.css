@@ -20,3 +20,7 @@ body.admin-menu #admin-menu {
 *:focus {
   outline: 0;
 }
+
+body.page-admin select#edit-bundle-application-field-application-designations-und {
+  height: 250px;
+}
