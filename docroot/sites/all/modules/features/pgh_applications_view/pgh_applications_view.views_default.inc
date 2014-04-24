@@ -735,6 +735,12 @@ function pgh_applications_view_views_default_views() {
     'link' => 0,
   );
   $handler->display->display_options['fields']['field_application_reviewers']['delta_offset'] = '0';
+  /* Field: Content: Awards Designations */
+  $handler->display->display_options['fields']['field_application_designations']['id'] = 'field_application_designations';
+  $handler->display->display_options['fields']['field_application_designations']['table'] = 'field_data_field_application_designations';
+  $handler->display->display_options['fields']['field_application_designations']['field'] = 'field_application_designations';
+  $handler->display->display_options['fields']['field_application_designations']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_application_designations']['delta_offset'] = '0';
   /* Field: Content: Status */
   $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
   $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
@@ -939,6 +945,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['filters']['field_application_designations_tid']['expose']['label'] = 'Awards Designations';
   $handler->display->display_options['filters']['field_application_designations_tid']['expose']['operator'] = 'field_application_designations_tid_op';
   $handler->display->display_options['filters']['field_application_designations_tid']['expose']['identifier'] = 'field_application_designations_tid';
+  $handler->display->display_options['filters']['field_application_designations_tid']['expose']['multiple'] = TRUE;
   $handler->display->display_options['filters']['field_application_designations_tid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
