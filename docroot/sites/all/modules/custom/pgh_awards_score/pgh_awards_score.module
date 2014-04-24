@@ -1176,7 +1176,12 @@ function pgh_awards_score_migrate_op($qid, $aids, &$context) {
     $value = $wrapper->body->value() ? $wrapper->body->value->raw() : '';
     // Make sure we get raw data for checkboxes.
     if ($style == 'checkboxes') {
-      $value = unserialize($value);
+      if ($value) {
+        $value = unserialize($value);
+      }
+      if (!$value) {
+        $value = array();
+      }
     }
     $answer = pgh_awards_score_calculate_question_autokpi($value, $point, $score, $kpi, $type, $style, $options);
 
