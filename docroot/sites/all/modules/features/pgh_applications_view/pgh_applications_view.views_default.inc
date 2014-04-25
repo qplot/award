@@ -591,6 +591,7 @@ function pgh_applications_view_views_default_views() {
       'settings' => array(
         'show_all_tokens' => 1,
         'display_values' => array(
+          'application::field_application_status' => 'application::field_application_status',
           'application::field_application_designations' => 'application::field_application_designations',
           'application::field_application_reviewers' => 'application::field_application_reviewers',
         ),
@@ -660,6 +661,7 @@ function pgh_applications_view_views_default_views() {
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = 'ID';
+  $handler->display->display_options['fields']['nid']['link_to_node'] = TRUE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -735,16 +737,16 @@ function pgh_applications_view_views_default_views() {
     'link' => 0,
   );
   $handler->display->display_options['fields']['field_application_reviewers']['delta_offset'] = '0';
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
+  $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
   /* Field: Content: Awards Designations */
   $handler->display->display_options['fields']['field_application_designations']['id'] = 'field_application_designations';
   $handler->display->display_options['fields']['field_application_designations']['table'] = 'field_data_field_application_designations';
   $handler->display->display_options['fields']['field_application_designations']['field'] = 'field_application_designations';
   $handler->display->display_options['fields']['field_application_designations']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['fields']['field_application_designations']['delta_offset'] = '0';
-  /* Field: Content: Status */
-  $handler->display->display_options['fields']['field_application_status']['id'] = 'field_application_status';
-  $handler->display->display_options['fields']['field_application_status']['table'] = 'field_data_field_application_status';
-  $handler->display->display_options['fields']['field_application_status']['field'] = 'field_application_status';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
